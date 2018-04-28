@@ -1,0 +1,14 @@
+﻿<li class="@ClassCalc">
+    <hr class="@HrClassCalc"/>
+</li>
+
+@functions{
+    protected const string DefaultCssClass = "blazor-context-menu__seperator";
+    protected const string DefaultHrCssClass = "blazor-context-menu__seperator__hr";
+
+    public string CssClass { get; set; }
+    public string HrCssClass { get; set; }
+
+    protected string ClassCalc => CssClass == null ? DefaultCssClass : CssClass;
+    protected string HrClassCalc => HrCssClass == null ? DefaultHrCssClass : HrCssClass;
+}

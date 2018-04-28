@@ -1,0 +1,68 @@
+﻿.blazor-context-menu--default {
+    position: fixed;
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+
+    user-select: none;
+    background-color: #fff;
+
+    -webkit-box-sizing: border-box;
+    box-sizing: border-box;
+
+    -webkit-box-shadow: 0 10px 20px rgba(0,0,0,.3), 0 0 0 1px #eee;
+    box-shadow: 0 10px 20px rgba(0,0,0,.3), 0 0 0 1px #eee;
+
+    padding: 5px 0;
+}
+
+.blazor-context-menu__list {
+    list-style-type: none;
+    padding-left: 5px;
+    padding-right: 5px;
+    margin: 0px;
+}
+
+.blazor-context-menu--hidden {
+    display: none;
+}
+
+.blazor-context-menu__seperator {
+    min-width: 120px;
+    color: #333;
+    position: relative;
+}
+
+.blazor-context-menu__seperator__hr {
+    display: block;
+    margin-top: 0.5em;
+    margin-bottom: 0.5em;
+    margin-left: auto;
+    margin-right: auto;
+    border-style: inset;
+    border-width: 1px;
+}
+
+.blazor-context-menu__item {
+    min-width: 120px;
+    padding: 6px;
+    text-align: left;
+    white-space: nowrap;
+    position: relative;
+    cursor: pointer;
+}
+
+    .blazor-context-menu__item:hover {
+        background-color: gray;
+        color: white;
+    }
+
+.blazor-context-menu__item--disabled {
+    min-width: 120px;
+    padding: 6px;
+    text-align: left;
+    white-space: nowrap;
+    position: relative;
+    cursor: not-allowed;
+    opacity: 0.6;
+}

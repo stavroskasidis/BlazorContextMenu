@@ -1,0 +1,31 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>netcoreapp2.1</TargetFramework>
+    <IsPackable>false</IsPackable>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <Compile Remove="Infrastructure\BasicTestAppTestBase.cs" />
+    <Compile Remove="Tests\BindTest.cs" />
+    <Compile Remove="Tests\ComponentRenderingTest.cs" />
+    <Compile Remove="Tests\HostedInAspNetTest.cs" />
+    <Compile Remove="Tests\HttpClientTest.cs" />
+    <Compile Remove="Tests\MonoSanityTest.cs" />
+    <Compile Remove="Tests\RoutingTest.cs" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Microsoft.AspNetCore.App" Version="2.1.0-preview2-final" />
+    <PackageReference Include="Microsoft.NET.Test.Sdk" Version="15.5.0" />
+    <PackageReference Include="Selenium.Support" Version="3.8.0" />
+    <PackageReference Include="Selenium.WebDriver" Version="3.8.0" />
+    <PackageReference Include="xunit" Version="2.3.1" />
+    <PackageReference Include="xunit.runner.visualstudio" Version="2.3.1" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\BlazorContextMenu.TestApp.Server\BlazorContextMenu.TestApp.Server.csproj" />
+  </ItemGroup>
+
+</Project>

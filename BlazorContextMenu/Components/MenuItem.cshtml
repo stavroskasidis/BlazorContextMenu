@@ -1,0 +1,49 @@
+﻿@using Microsoft.AspNetCore.Blazor.Browser.Interop
+
+<li ref="MenuItemElement" onclick="@OnClickInternal" class="@ClassCalc">
+    @ChildContent
+</li>
+
+@functions {
+    private const string DefaultCssClass = "blazor-context-menu__item";
+    private const string DefaultDisabledCssClass = "blazor-context-menu__item--disabled";
+
+    public string CssClass { get; set; }
+    public string DisabledCssClass { get; set; }
+    public RenderFragment ChildContent { get; set; }
+    public Action<MenuItemEventArgs> Click { get; set; }
+    public Func<MenuItemEventArgs, Task> ClickAsync { get; set; }
+    protected ElementRef MenuItemElement { get; set; }
+    public bool IsEnabled { get; set; } = true;
+    protected string ClassCalc
+    {
+        get
+        {
+            if (IsEnabled)
+            {
+                return CssClass == null ? DefaultCssClass : CssClass;
+            }
+            else
+            {
+                return DisabledCssClass == null ? DefaultDisabledCssClass : DisabledCssClass;
+            }
+        }
+    }
+
+    protected async Task OnClickInternal(UIMouseEventArgs e)
+    {
+        var menuId = RegisteredFunction.Invoke<string>("BlazorContextMenu.MenuItem.GetMenuId", MenuItemElement);
+        var menu = BlazorContextMenuHandler.GetMenu(menuId);
+
+        var args = new MenuItemEventArgs(e, menuId, menu.GetTarget(), MenuItemElement);
+        Click?.Invoke(args);
+        if (ClickAsync != null)
+        {
+            await ClickAsync(args);
+        }
+        if (!args.IsCanceled)
+        {
+            BlazorContextMenuHandler.HideMenu(menuId);
+        }
+    }
+}

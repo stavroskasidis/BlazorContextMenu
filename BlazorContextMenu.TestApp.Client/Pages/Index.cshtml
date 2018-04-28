@@ -1,0 +1,60 @@
+﻿@page "/"
+@inject HttpClient http
+
+<h1>Hello, Blazor context menu !</h1>
+@*<ContextMenu Id="test2">
+        <div>
+            <p>stuf</p>
+        </div>
+    </ContextMenu>*@
+
+<ContextMenuTrigger MenuId="test">
+    <p>Right-click me (test)</p>
+</ContextMenuTrigger>
+
+<ContextMenuTrigger MenuId="test2">
+    <p>Right-click me or text area (test2) (with icons) </p>    
+    <textarea rows="20" cols="50" readonly wrap="hard" bind="@Summaries">
+    </textarea>
+</ContextMenuTrigger>
+
+
+
+<ContextMenu>
+    <MenuItem ClickAsync="FetchDataClick">Fetch Data</MenuItem>
+    <MenuItem Click="IgnoredClick">Canceled Click</MenuItem>
+    <Seperator />
+    <MenuItem IsEnabled="false">Disabled Item</MenuItem>
+</ContextMenu>
+
+<ContextMenu>
+    <MenuItem Click="@OnClick"><i class="far fa-file"></i> New</MenuItem>
+    <MenuItem Click="@OnClick"><i class="fas fa-edit"></i> Edit</MenuItem>
+    <MenuItem Click="@OnClick"><i class="fas fa-trash-alt"></i> Delete</MenuItem>
+    <MenuItem Click="@OnClick"><i class="far fa-save"></i> Save As</MenuItem>
+</ContextMenu>
+
+<NavLink href="/OtherPage">Go to Other Page</NavLink>
+
+@functions{
+
+    protected string Summaries { get; set; }
+    async Task FetchDataClick(MenuItemEventArgs e)
+    {
+        var summaries = await http.GetJsonAsync<string[]>("/api/SampleData/Summaries");
+        Summaries = string.Join(",", summaries);
+        Console.WriteLine($"Item 2 clicked ! => Summaries: {Summaries}");
+        StateHasChanged();
+    }
+
+    void IgnoredClick(MenuItemEventArgs e)
+    {
+        e.IsCanceled = true;
+    }
+
+
+    void OnClick(MenuItemEventArgs e)
+    {
+        Console.WriteLine($"Item Clicked => Menu: {e.ContextMenuId}, MenuTarget: {e.ContextMenuTarget}, IsCanceled: {e.IsCanceled}, MenuItem: {e.MenuItem}, MouseEvent: {e.MouseEvent}");
+    }
+}

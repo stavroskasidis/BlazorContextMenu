@@ -1,0 +1,16 @@
+﻿<div oncontextmenu="blazorContextMenu.OnContextMenu(event, '@MenuId.Replace("'","\\'")');" class="@CssClass">
+    @ChildContent
+</div>
+
+@functions{
+    public string MenuId { get; set; }
+    public RenderFragment ChildContent { get; set; }
+    public string CssClass { get; set; }
+    protected override void OnInit()
+    {
+        if (string.IsNullOrEmpty(MenuId))
+        {
+            throw new ArgumentNullException(nameof(MenuId));
+        }
+    }
+}
