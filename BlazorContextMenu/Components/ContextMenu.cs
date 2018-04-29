@@ -14,17 +14,22 @@ namespace BlazorContextMenu
         protected const string DefaultCssClass = "blazor-context-menu--default";
         protected const string DefaultListCssClass = "blazor-context-menu__list";
 
+        protected virtual string BaseClass => "blazor-context-menu blazor-context-menu__wrapper";
+
         public string Id { get; set; }
         public RenderFragment ChildContent { get; set; }
-        public string CssClass { get; set; }
+		public string CssClass { get; set; }
+        public string ReplaceDefaultCssClass { get; set; }
+        
+        public string ReplaceDefaultListCssClass { get; set; }
         public string ListCssClass { get; set; }
         protected bool IsShowing;
         protected string X { get; set; }
         protected string Y { get; set; }
-        protected ElementRef Target { get; set; }
-        protected string ClassCalc => CssClass == null ? DefaultCssClass : CssClass;
+        protected string TargetId { get; set; }
+        protected string ClassCalc => (ReplaceDefaultCssClass == null ? DefaultCssClass : ReplaceDefaultCssClass) + (CssClass == null ? "" : $" {CssClass}");
         protected string ShowingClassCalc => !IsShowing ? "blazor-context-menu--hidden" : "";
-        protected string ListClassCalc => ListCssClass == null ? DefaultListCssClass : ListCssClass;
+        protected string ListClassCalc => (ReplaceDefaultListCssClass == null ? DefaultListCssClass : ReplaceDefaultListCssClass) + (ListCssClass == null ? "" : $" {ListCssClass}");
 
         protected override void OnInit()
         {
@@ -32,7 +37,6 @@ namespace BlazorContextMenu
             {
                 throw new ArgumentNullException(nameof(Id));
             }
-
             BlazorContextMenuHandler.Register(this);
         }
 
@@ -40,8 +44,8 @@ namespace BlazorContextMenu
         {
             int seq = -1;
             builder.OpenElement(seq++, "div");
-                builder.AddAttribute(seq++, "class", $"blazor-context-menu {ClassCalc} {ShowingClassCalc}");
-                builder.AddAttribute(seq++, "id", Id ?? "");
+                builder.AddAttribute(seq++, "class", $"{BaseClass} {ClassCalc} {ShowingClassCalc}");
+                builder.AddAttribute(seq++, "id", Id);
                 builder.AddAttribute(seq++, "style", $"left:{X}px;top:{Y}px");
 
                 builder.OpenElement(seq++, "ul");
@@ -53,12 +57,12 @@ namespace BlazorContextMenu
             base.BuildRenderTree(builder);
         }
 
-        public void Show(string x, string y, ElementRef target)
+        public void Show(string x, string y, string targetId)
         {
             IsShowing = true;
             X = x;
             Y = y;
-            Target = target;
+            TargetId = targetId;
             StateHasChanged();
         }
 
@@ -68,9 +72,9 @@ namespace BlazorContextMenu
             StateHasChanged();
         }
 
-        public ElementRef GetTarget()
+        public string GetTarget()
         {
-            return Target;
+            return TargetId;
         }
     }
 }

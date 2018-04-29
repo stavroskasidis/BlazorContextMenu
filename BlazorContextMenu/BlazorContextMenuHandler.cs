@@ -1,4 +1,5 @@
 ﻿using Microsoft.AspNetCore.Blazor;
+using Microsoft.AspNetCore.Blazor.Components;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -24,11 +25,11 @@ namespace BlazorContextMenu
             return InitializedMenus[id];
         }
 
-        public static void ShowMenu(string id, string x, string y, ElementRef target)
+        public static void ShowMenu(string id, string x, string y, string target)
         {
             if (InitializedMenus.ContainsKey(id))
             {
-                InitializedMenus[id].Show(x,y,target);
+                InitializedMenus[id].Show(x,y, target);
             }
         }
 

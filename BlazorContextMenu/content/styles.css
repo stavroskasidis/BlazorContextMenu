@@ -53,8 +53,7 @@
 }
 
     .blazor-context-menu__item:hover {
-        background-color: gray;
-        color: white;
+        background-color: rgba(0,0,0,.05);
     }
 
 .blazor-context-menu__item--disabled {

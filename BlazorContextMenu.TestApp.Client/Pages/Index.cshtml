@@ -12,29 +12,38 @@
     <p>Right-click me (test)</p>
 </ContextMenuTrigger>
 
+<textarea rows="20" cols="50" readonly wrap="hard" bind="@Summaries"></textarea>
+
 <ContextMenuTrigger MenuId="test2">
-    <p>Right-click me or text area (test2) (with icons) </p>    
-    <textarea rows="20" cols="50" readonly wrap="hard" bind="@Summaries">
-    </textarea>
+    <p>Right-click me (test2) (with icons)</p>
 </ContextMenuTrigger>
 
 
 
-<ContextMenu>
+<ContextMenu Id="test">
     <MenuItem ClickAsync="FetchDataClick">Fetch Data</MenuItem>
-    <MenuItem Click="IgnoredClick">Canceled Click</MenuItem>
+    <MenuItem Click="ClearDataClick">Clear Data</MenuItem>
     <Seperator />
     <MenuItem IsEnabled="false">Disabled Item</MenuItem>
 </ContextMenu>
 
-<ContextMenu>
+<ContextMenu Id="test2">
     <MenuItem Click="@OnClick"><i class="far fa-file"></i> New</MenuItem>
     <MenuItem Click="@OnClick"><i class="fas fa-edit"></i> Edit</MenuItem>
     <MenuItem Click="@OnClick"><i class="fas fa-trash-alt"></i> Delete</MenuItem>
     <MenuItem Click="@OnClick"><i class="far fa-save"></i> Save As</MenuItem>
+    <Seperator />
+    <SubMenuItem>
+        <i class="far fa-save"></i> Other Options
+        <SubMenu>
+            <MenuItem Click="@OnClick"><i class="far fa-save"></i> Save As</MenuItem>
+            <MenuItem Click="@OnClick"><i class="far fa-save"></i> Save</MenuItem>
+        </SubMenu>
+    </SubMenuItem>
 </ContextMenu>
 
 <NavLink href="/OtherPage">Go to Other Page</NavLink>
+<NavLink href="/TodoList">Go to Todo List</NavLink>
 
 @functions{
 
@@ -47,14 +56,14 @@
         StateHasChanged();
     }
 
-    void IgnoredClick(MenuItemEventArgs e)
+    void ClearDataClick(MenuItemEventArgs e)
     {
-        e.IsCanceled = true;
+        Summaries = null;
     }
 
 
     void OnClick(MenuItemEventArgs e)
     {
-        Console.WriteLine($"Item Clicked => Menu: {e.ContextMenuId}, MenuTarget: {e.ContextMenuTarget}, IsCanceled: {e.IsCanceled}, MenuItem: {e.MenuItem}, MouseEvent: {e.MouseEvent}");
+        Console.WriteLine($"Item Clicked => Menu: {e.ContextMenuId}, MenuTarget: {e.ContextMenuTargetId}, IsCanceled: {e.IsCanceled}, MenuItem: {e.MenuItem}, MouseEvent: {e.MouseEvent}");
     }
 }

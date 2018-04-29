@@ -94,3 +94,14 @@
 .alert-survey a {
     font-weight: bold;
 }
+
+
+/*=============== ICONS ==================*/
+
+.blue-icon {
+    color: #7aa2ff;
+}
+
+.red-icon {
+    color: firebrick;
+}
