@@ -2,17 +2,17 @@
 
 <h1>Todo List</h1>
 <ContextMenuTrigger MenuId="todoItemsMenu">
-    <ul>
+    <ul id="list">
         @foreach (var item in TodoItems)
         {
-            <li><input type="checkbox" bind="item.IsChecked" readonly /> @item.Text</li>
+            <li id="@($"listitem-{TodoItems.IndexOf(item)}")"><input type="checkbox" bind="item.IsChecked" readonly /> @item.Text</li>
         }
     </ul>
 </ContextMenuTrigger>
 
 <ContextMenu Id="todoItemsMenu">
-    <MenuItem Click="@CopyClick"><i class="fas fa-file blue-icon"></i> Copy</MenuItem>
-    <MenuItem Click="@DeleteClick"><i class="fas fa-trash-alt red-icon"></i> Delete</MenuItem>
+    <MenuItem id="menuitem-copy" Click="@CopyClick"><i class="fas fa-file blue-icon"></i> Copy</MenuItem>
+    <MenuItem id="menuitem-delete" Click="@DeleteClick"><i class="fas fa-trash-alt red-icon"></i> Delete</MenuItem>
 </ContextMenu>
 
 @functions{
@@ -23,7 +23,6 @@
         var itemIndex = RegisteredFunction.Invoke<int>("TestApp.TodoList.GetItemIndex", e.ContextMenuTargetId);
         if (itemIndex >= 0)
         {
-            Console.WriteLine($"TodoItem index: {itemIndex}");
             var currentTodoItem = TodoItems.ElementAt(itemIndex);
             TodoItems.Add(new TodoItem
             {
@@ -40,7 +39,6 @@
         var itemIndex = RegisteredFunction.Invoke<int>("TestApp.TodoList.GetItemIndex", e.ContextMenuTargetId);
         if (itemIndex >= 0)
         {
-            Console.WriteLine($"TodoItem index: {itemIndex}");
             var currentTodoItem = TodoItems.ElementAt(itemIndex);
             TodoItems.Remove(currentTodoItem);
             StateHasChanged();

@@ -25,6 +25,8 @@ var blazorContextMenu = function (blazorContextMenu) {
 
     var openMenuId = null;
     var openMenuTarget = null;
+    //Helper functions
+    //========================================
     function guid() {
         function s4() {
             return Math.floor((1 + Math.random()) * 0x10000)
@@ -74,8 +76,24 @@ var blazorContextMenu = function (blazorContextMenu) {
         return foundElements;
     }
 
+    //===========================================
+
     blazorContextMenu.OnContextMenu = function (e, menuId) {
-        blazorContextMenu.Show(menuId, e.x, e.y, e.target);
+        var menu = document.getElementById(menuId);
+        var originalDisplay = menu.style.display;
+        menu.style.display = ""; //this is required to get the menu's width
+        var x = e.x;
+        var y = e.y;
+        if (x + menu.offsetWidth > window.innerWidth) {
+            x -= x + menu.offsetWidth - window.innerWidth;
+        }
+
+        if (y + menu.offsetHeight > window.innerHeight) {
+            y -= y + menu.offsetHeight - window.innerHeight;
+        }
+        menu.style.display = originalDisplay;
+
+        blazorContextMenu.Show(menuId, x, y, e.target);
         openMenuId = menuId;
         openMenuTarget = e.target;
         var currentMenu = document.getElementById(menuId);
@@ -108,7 +126,7 @@ var blazorContextMenu = function (blazorContextMenu) {
     blazorContextMenu.Show = function (menuId, x, y, target) {
         if (!target.id) {
             //add an id to the target dynamically so that it can be referenced later 
-            //TODO: Rewrite once this Blazor limitation is lifted
+            //TODO: Rewrite this once this Blazor limitation is lifted
             target.id = guid();
         }
         var showMenuMethod = Blazor.platform.findMethod("BlazorContextMenu", "BlazorContextMenu", "BlazorContextMenuHandler", "ShowMenu");
@@ -123,7 +141,7 @@ var blazorContextMenu = function (blazorContextMenu) {
     var subMenuTimeout = null;
     blazorContextMenu.OnSubMenuItemMouseOver = function (e, xOffset, boundItem) {
         if (e.target != boundItem) {
-            //skip child mouse overs
+            //skip child mouseovers
             return;
         }
 
@@ -131,10 +149,24 @@ var blazorContextMenu = function (blazorContextMenu) {
             subMenuTimeout = null;
             var currentItem = e.target;
             var subMenu = findFirstChildByClass(currentItem, "blazor-context-submenu");
+            var originalDisplay = subMenu.style.display;
+            subMenu.style.display = ""; //this is required to get the menu's width
+
             var currentMenu = currentItem.closest(".blazor-context-menu__wrapper");
             var currentMenuList = currentMenu.childNodes[0];
             var targetRect = currentItem.getBoundingClientRect();
-            blazorContextMenu.Show(subMenu.id, targetRect.left + currentMenu.clientWidth - xOffset, targetRect.top, openMenuTarget);
+            var x = targetRect.left + currentMenu.clientWidth - xOffset;
+            var y = targetRect.top;
+            if (x + subMenu.offsetWidth > window.innerWidth) {
+                x -= x + subMenu.offsetWidth + subMenu.clientWidth - window.innerWidth;
+            }
+
+            if (y + subMenu.offsetHeight > window.innerHeight) {
+                y -= y + subMenu.offsetHeight - window.innerHeight;
+            }
+
+            subMenu.style.display = originalDisplay;
+            blazorContextMenu.Show(subMenu.id, x, y, openMenuTarget);
 
             var closeSubMenus = function () {
                 var childSubMenus = findAllChildsByClass(currentItem, "blazor-context-submenu");

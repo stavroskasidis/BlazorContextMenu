@@ -1,0 +1,12 @@
+﻿<li id="@Id" class="blazor-context-submenu-item @ClassCalc" onmouseover="blazorContextMenu.OnSubMenuItemMouseOver(event, @XOffset, this);" onmouseout="blazorContextMenu.OnSubMenuItemMouseOut(event);">
+    @ChildContent
+</li>
+
+@functions{
+    public string Id { get; set; }
+    public RenderFragment ChildContent { get; set; }
+    public string OverrideDefaultCssClass { get; set; }
+    public int XOffset { get; set; } = BlazorContextMenuDefaults.SubMenuXPositionPixelsOffset;
+    public string CssClass { get; set; }
+    protected string ClassCalc => (OverrideDefaultCssClass == null ? BlazorContextMenuDefaults.DefaultMenuItemCssClass : OverrideDefaultCssClass) + (CssClass == null ? "" : $" {CssClass}");
+}

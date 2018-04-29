@@ -1,69 +1,72 @@
 ﻿@page "/"
 @inject HttpClient http
 
-<h1>Hello, Blazor context menu !</h1>
-@*<ContextMenu Id="test2">
-        <div>
-            <p>stuf</p>
-        </div>
-    </ContextMenu>*@
+<h1 id="header">Hello, Blazor context menu !</h1>
 
-<ContextMenuTrigger MenuId="test">
-    <p>Right-click me (test)</p>
+<ContextMenuTrigger MenuId="menu1">
+    <p id="test1-trigger">Right-click me (test)</p>
 </ContextMenuTrigger>
 
-<textarea rows="20" cols="50" readonly wrap="hard" bind="@Summaries"></textarea>
+<textarea style="@($"display:{TextAreaDisplay};")" id="test1-textarea" rows="20" cols="50" readonly wrap="hard" bind="@Summaries"></textarea>
 
-<ContextMenuTrigger MenuId="test2">
-    <p>Right-click me (test2) (with icons)</p>
+<ContextMenuTrigger MenuId="menu2">
+    <p id="test2-trigger">Right-click me (test2) (with icons and sub-menus)</p>
 </ContextMenuTrigger>
 
 
 
-<ContextMenu Id="test">
-    <MenuItem ClickAsync="FetchDataClick">Fetch Data</MenuItem>
-    <MenuItem Click="ClearDataClick">Clear Data</MenuItem>
-    <Seperator />
-    <MenuItem IsEnabled="false">Disabled Item</MenuItem>
+<ContextMenu Id="menu1">
+    <MenuItem id="menu1-item1" ClickAsync="FetchDataClick">Fetch Data</MenuItem>
+    <MenuItem  id="menu1-item2" Click="ClearDataClick">Clear Data</MenuItem>
+    <MenuSeperator />
+    <MenuItem id="menu1-item3" IsEnabled="false">Disabled Item </MenuItem>
 </ContextMenu>
 
-<ContextMenu Id="test2">
-    <MenuItem Click="@OnClick"><i class="far fa-file"></i> New</MenuItem>
+<ContextMenu Id="menu2">
+    <MenuItem Id="menu2-item1" Click="@OnClick"><i class="far fa-file"></i> New</MenuItem>
     <MenuItem Click="@OnClick"><i class="fas fa-edit"></i> Edit</MenuItem>
-    <MenuItem Click="@OnClick"><i class="fas fa-trash-alt"></i> Delete</MenuItem>
-    <MenuItem Click="@OnClick"><i class="far fa-save"></i> Save As</MenuItem>
-    <Seperator />
-    <SubMenuItem>
-        <i class="far fa-save"></i> Other Options
-        <SubMenu>
+    <MenuItem Click="@OnClick" IsEnabled="false"><i class="fas fa-trash-alt"></i> Delete</MenuItem>
+    <MenuSeperator />
+    <MenuItemWithSubMenu Id="submenu1-trigger">
+        <i class="fas fa-cogs"></i> More
+        <SubMenu Id="submenu1">
             <MenuItem Click="@OnClick"><i class="far fa-save"></i> Save As</MenuItem>
             <MenuItem Click="@OnClick"><i class="far fa-save"></i> Save</MenuItem>
+            <MenuItemWithSubMenu Id="submenu2-trigger">
+                <i class="fas fa-save"></i> Export as
+                <SubMenu Id="submenu2">
+                    <MenuItem Click="@OnClick"><i class="fas fa-file-pdf"></i> Pdf</MenuItem>
+                    <MenuItem Click="@OnClick"><i class="far fa-file-alt"></i> Text</MenuItem>
+                </SubMenu>
+            </MenuItemWithSubMenu>
         </SubMenu>
-    </SubMenuItem>
+    </MenuItemWithSubMenu>
 </ContextMenu>
 
-<NavLink href="/OtherPage">Go to Other Page</NavLink>
 <NavLink href="/TodoList">Go to Todo List</NavLink>
 
 @functions{
+    protected string TextAreaDisplay { get; set; } = "none";
 
     protected string Summaries { get; set; }
     async Task FetchDataClick(MenuItemEventArgs e)
     {
         var summaries = await http.GetJsonAsync<string[]>("/api/SampleData/Summaries");
         Summaries = string.Join(",", summaries);
-        Console.WriteLine($"Item 2 clicked ! => Summaries: {Summaries}");
+        TextAreaDisplay = "block";
         StateHasChanged();
     }
 
     void ClearDataClick(MenuItemEventArgs e)
     {
-        Summaries = null;
+        Summaries = "";
+        TextAreaDisplay = "none";
+        StateHasChanged();
     }
 
 
     void OnClick(MenuItemEventArgs e)
     {
-        Console.WriteLine($"Item Clicked => Menu: {e.ContextMenuId}, MenuTarget: {e.ContextMenuTargetId}, IsCanceled: {e.IsCanceled}, MenuItem: {e.MenuItem}, MouseEvent: {e.MouseEvent}");
+        Console.WriteLine($"Item Clicked => Menu: {e.ContextMenuId}, MenuTarget: {e.ContextMenuTargetId}, IsCanceled: {e.IsCanceled}, MenuItem: {e.MenuItemElement}, MouseEvent: {e.MouseEvent}");
     }
 }

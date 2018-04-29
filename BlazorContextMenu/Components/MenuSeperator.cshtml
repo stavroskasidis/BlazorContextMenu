@@ -1,0 +1,15 @@
+﻿<li id="@Id" class="@ClassCalc">
+    <hr class="@HrClassCalc"/>
+</li>
+
+@functions{
+    public string OverrideDefaultCssClass { get; set; }
+    public string OverrideDefaultHrCssClass { get; set; }
+
+    public string Id { get; set; }
+    public string CssClass { get; set; }
+    public string HrCssClass { get; set; }
+
+    protected string ClassCalc => (OverrideDefaultCssClass == null ? BlazorContextMenuDefaults.DefaultSeperatorCssClass : OverrideDefaultCssClass) + (CssClass == null ? "" : $" {CssClass}");
+    protected string HrClassCalc => (OverrideDefaultHrCssClass == null ? BlazorContextMenuDefaults.DefaultSeperatorHrCssClass : OverrideDefaultHrCssClass) + (HrCssClass == null ? "" : $" {HrCssClass}");
+}

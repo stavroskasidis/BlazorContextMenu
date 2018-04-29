@@ -19,16 +19,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <BlazorGenerate Remove="Pages\OtherPage.cshtml" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <Content Remove="Pages\OtherPage.cshtml" />
-  </ItemGroup>
-
-  <ItemGroup>
     <None Include="Pages\TodoList.cshtml" />
-    <None Include="Pages\OtherPage.cshtml" />
   </ItemGroup>
 
   <ItemGroup>
