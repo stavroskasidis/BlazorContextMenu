@@ -51,12 +51,12 @@ namespace BlazorContextMenu.Components
         /// Sets the item's enabled state. Default <see cref="true" />
         /// </summary>
         public bool IsEnabled { get; set; } = true;
+
         /// <summary>
         /// The id of the li element. This is optional
         /// </summary>
         public string Id { get; set; }
-
-
+        
 
         protected ElementRef MenuItemElement { get; set; }
 
