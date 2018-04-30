@@ -1,4 +1,4 @@
-<Project Sdk="Microsoft.NET.Sdk.Web">
+﻿<Project Sdk="Microsoft.NET.Sdk.Web">
 
   <PropertyGroup>
     <TargetFramework>netstandard2.0</TargetFramework>
@@ -8,6 +8,17 @@
 
     <!-- This custom package feed is required only when using nightly builds of Blazor -->
     <RestoreSources>https://dotnet.myget.org/F/blazor-dev/api/v3/index.json;$(RestoreSources)</RestoreSources>
+    <GeneratePackageOnBuild>false</GeneratePackageOnBuild>
+    <PackageId>BlazorContextMenu</PackageId>
+    <Authors>Stavros Kasidis (AkiraGTX)</Authors>
+    <PackageLicenseUrl>https://github.com/stavroskasidis/blazor-context-menu/blob/master/LICENSE</PackageLicenseUrl>
+    <PackageProjectUrl>https://github.com/stavroskasidis/blazor-context-menu</PackageProjectUrl>
+    <Description>Context menu component for Blazor</Description>
+    <PackageReleaseNotes>0.1
+Initial release</PackageReleaseNotes>
+    <Copyright />
+    <PackageTags>blazor blazor-component blazor-context-menu context-menu contextmenu menu blazor-menu blazorcontextmenu</PackageTags>
+    <Version>0.1.0</Version>
   </PropertyGroup>
 
   <ItemGroup>
