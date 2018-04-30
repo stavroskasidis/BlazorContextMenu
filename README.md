@@ -41,3 +41,7 @@ Nuget package page can be found [here](https://www.nuget.org/packages/Blazor.Con
 </ContextMenuTrigger>
 
 ```
+
+
+## Special Thanks
+This project is inspired by https://github.com/fkhadra/react-contexify, a context menu for react.
