@@ -1,6 +1,6 @@
 # Blazor Context Menu ![Build Status](https://stavros-kasidis.visualstudio.com/_apis/public/build/definitions/9942c317-bff6-4b9f-9c78-0e97ce00de51/12/badge) ![NuGet Badge](https://buildstats.info/nuget/Blazor.ContextMenu?includePreReleases=true)
 
-A context menu for [Blazor](https://github.com/aspnet/Blazor) !
+A context menu component for [Blazor](https://github.com/aspnet/Blazor) !
 
 ![demo-img](ReadmeResources/blazor-context-menu-demo-1.gif)
 
