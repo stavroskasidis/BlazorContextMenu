@@ -53,8 +53,6 @@ Nuget package page can be found [here](https://www.nuget.org/packages/Blazor.Con
 
 ```
 
-
-
 ## Special Thanks
 
 This project is inspired by https://github.com/fkhadra/react-contexify and https://github.com/vkbansal/react-contextmenu
