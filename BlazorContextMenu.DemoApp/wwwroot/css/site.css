@@ -121,3 +121,11 @@ app {
         display: block;
     }
 }
+
+.blue-icon {
+    color: #7aa2ff;
+}
+
+.red-icon {
+    color: firebrick;
+}

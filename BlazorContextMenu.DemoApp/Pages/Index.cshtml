@@ -1,5 +1,28 @@
 ﻿@page "/"
 
-<h1>Hello, world!</h1>
+<ContextMenuTrigger MenuId="myMenu">
+    <h1>Hello, Blazor Context Menu!</h1>
 
-Welcome to your new app.
+    <p>Right-click on me to show the context menu !!</p>
+</ContextMenuTrigger>
+
+<ContextMenu Id="myMenu">
+    <MenuItem Click="@OnClick">Item 1</MenuItem>
+    <MenuItem Click="@OnClick">Item 2</MenuItem>
+    <MenuItem Click="@OnClick" IsEnabled="false">Item 3 (disabled)</MenuItem>
+    <MenuSeperator />
+    <MenuItemWithSubMenu>
+        Submenu
+        <SubMenu>
+            <MenuItem Click="@OnClick">Submenu Item 1</MenuItem>
+            <MenuItem Click="@OnClick">Submenu Item 2</MenuItem>
+        </SubMenu>
+    </MenuItemWithSubMenu>
+</ContextMenu>
+
+@functions{
+    void OnClick(MenuItemEventArgs e)
+    {
+        Console.WriteLine($"Item Clicked => Menu: {e.ContextMenuId}, MenuTarget: {e.ContextMenuTargetId}, IsCanceled: {e.IsCanceled}, MenuItem: {e.MenuItemElement}, MouseEvent: {e.MouseEvent}");
+    }
+}

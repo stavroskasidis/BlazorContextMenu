@@ -11,35 +11,42 @@
 }
 else
 {
-    <table class="table">
-        <thead>
-            <tr>
-                <th>Date</th>
-                <th>Temp. (C)</th>
-                <th>Temp. (F)</th>
-                <th>Summary</th>
-            </tr>
-        </thead>
-        <tbody>
-            @foreach (var forecast in forecasts)
-            {
+    <ContextMenuTrigger MenuId="tableContextMenu">
+        <table class="table">
+            <thead>
                 <tr>
-                    <td>@forecast.Date.ToShortDateString()</td>
-                    <td>@forecast.TemperatureC</td>
-                    <td>@forecast.TemperatureF</td>
-                    <td>@forecast.Summary</td>
+                    <th>Date</th>
+                    <th>Temp. (C)</th>
+                    <th>Temp. (F)</th>
+                    <th>Summary</th>
                 </tr>
-            }
-        </tbody>
-    </table>
+            </thead>
+            <tbody>
+                @foreach (var forecast in forecasts)
+                {
+                    <tr>
+                        <td>@forecast.Date.ToShortDateString()</td>
+                        <td>@forecast.TemperatureC</td>
+                        <td>@forecast.TemperatureF</td>
+                        <td>@forecast.Summary</td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    </ContextMenuTrigger>
+
+    <ContextMenu Id="tableContextMenu">
+        <MenuItem ClickAsync="@ReloadClick"><i class="fas fa-sync-alt blue-icon"></i> Reload</MenuItem>
+        <MenuItem Click="@DeleteClick"><i class="fas fa-trash-alt red-icon"></i> Delete</MenuItem>
+    </ContextMenu>
 }
 
 @functions {
-    WeatherForecast[] forecasts;
+    List<WeatherForecast> forecasts;
 
     protected override async Task OnInitAsync()
     {
-        forecasts = await Http.GetJsonAsync<WeatherForecast[]>("/sample-data/weather.json");
+        forecasts = (await Http.GetJsonAsync<WeatherForecast[]>("/sample-data/weather.json")).ToList();
     }
 
     class WeatherForecast
@@ -48,5 +55,23 @@ else
         public int TemperatureC { get; set; }
         public int TemperatureF { get; set; }
         public string Summary { get; set; }
+    }
+
+    async Task ReloadClick(MenuItemEventArgs e)
+    {
+        forecasts = (await Http.GetJsonAsync<WeatherForecast[]>("/sample-data/weather.json")).ToList();
+        StateHasChanged();
+    }
+
+    void DeleteClick(MenuItemEventArgs e)
+    {
+        //Interop is required here due to current blazor limitations
+        var itemIndex = RegisteredFunction.Invoke<int>("DemoApp.FetchData.GetItemIndex", e.ContextMenuTargetId);
+        if (itemIndex >= 0)
+        {
+            var currentItem = forecasts.ElementAt(itemIndex);
+            forecasts.Remove(currentItem);
+            StateHasChanged();
+        }
     }
 }
