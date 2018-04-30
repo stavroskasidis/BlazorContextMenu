@@ -1,10 +1,19 @@
 @echo off
 cd "%~dp0"
 set version-suffix=%1
-echo %version-suffix%
+
 dotnet build BlazorContextMenu.sln -c Release
+if %errorlevel% neq 0 exit /b %errorlevel%
+
 dotnet test BlazorContextMenu.E2ETests -c Release --no-build 
-dotnet pack BlazorContextMenu -c Release --no-build --version-suffix %version-suffix%
+if %errorlevel% neq 0 exit /b %errorlevel%
+
+dotnet pack BlazorContextMenu -c Release --no-build /p:VersionSuffix="%version-suffix%"
+if %errorlevel% neq 0 exit /b %errorlevel%
+
 
 dotnet build BlazorContextMenu.DemoApp.sln -c Release
+if %errorlevel% neq 0 exit /b %errorlevel%
+
 dotnet publish BlazorContextMenu.DemoApp -c Release
+if %errorlevel% neq 0 exit /b %errorlevel%

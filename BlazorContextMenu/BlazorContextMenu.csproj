@@ -9,7 +9,7 @@
     <!-- This custom package feed is required only when using nightly builds of Blazor -->
     <RestoreSources>https://dotnet.myget.org/F/blazor-dev/api/v3/index.json;$(RestoreSources)</RestoreSources>
     <GeneratePackageOnBuild>false</GeneratePackageOnBuild>
-    <PackageId>BlazorContextMenu</PackageId>
+    <PackageId>Blazor.ContextMenu</PackageId>
     <Authors>Stavros Kasidis (AkiraGTX)</Authors>
     <PackageLicenseUrl>https://github.com/stavroskasidis/blazor-context-menu/blob/master/LICENSE</PackageLicenseUrl>
     <PackageProjectUrl>https://github.com/stavroskasidis/blazor-context-menu</PackageProjectUrl>
@@ -18,7 +18,10 @@
 Initial release</PackageReleaseNotes>
     <Copyright />
     <PackageTags>blazor blazor-component blazor-context-menu context-menu contextmenu menu blazor-menu blazorcontextmenu</PackageTags>
+    <VersionSuffix>$(VersionSuffix)</VersionSuffix>
     <Version>0.1.0</Version>
+    <Version Condition=" '$(VersionSuffix)' != '' ">$(Version)-$(VersionSuffix)</Version>
+    <Product>Blazor.ContextMenu</Product>
   </PropertyGroup>
 
   <ItemGroup>
