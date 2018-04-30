@@ -1,11 +1,13 @@
 # Blazor Context Menu
 
-A context menu for Blazor 
+A context menu for Blazor !
 
+![demo-img](ReadmeResources/blazor-context-menu-demo-1.gif)
 
 > ⚠️ Warning: This project is build on top of an experimental framework. There will probably be breaking changes from version to version.
 
-
+## Demo
+You can find a live demo [here](https://blazor-context-menu-demo.azurewebsites.net/).
 
 ## Installation
 
@@ -16,7 +18,7 @@ OR
 
 PM> Install-Package Blazor.ContextMenu
 ```
-Nuget package page can be found [here](https://www.nuget.org/packages/Blazor.ContextMenu)
+Nuget package page can be found [here](https://www.nuget.org/packages/Blazor.ContextMenu).
 
 ## Usage
 
@@ -53,4 +55,5 @@ Nuget package page can be found [here](https://www.nuget.org/packages/Blazor.Con
 
 
 ## Special Thanks
-This project is inspired by https://github.com/fkhadra/react-contexify, a context menu for react.
+
+This project is inspired by https://github.com/fkhadra/react-contexify and https://github.com/vkbansal/react-contextmenu
