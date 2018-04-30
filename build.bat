@@ -8,7 +8,7 @@ if %errorlevel% neq 0 exit /b %errorlevel%
 dotnet test BlazorContextMenu.E2ETests -c Release --no-build 
 if %errorlevel% neq 0 exit /b %errorlevel%
 
-dotnet pack BlazorContextMenu -c Release --no-build /p:VersionSuffix="%version-suffix%"
+dotnet pack BlazorContextMenu -c Release --no-build /p:VersionSuffix="%version-suffix%" -o bin\nuget
 if %errorlevel% neq 0 exit /b %errorlevel%
 
 
