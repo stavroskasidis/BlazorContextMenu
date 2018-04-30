@@ -11,16 +11,57 @@ namespace BlazorContextMenu.Components
 {
     public class MenuItem : BlazorComponent
     {
+        /// <summary>
+        /// Allows you to override the default css class of the menu's li element for full customization.
+        /// If you want to override this for all menus, then you could use <see cref="BlazorContextMenuDefaults.DefaultMenuItemCssClass"/>
+        /// </summary>
         public string OverrideDefaultCssClass { get; set; }
+
+        /// <summary>
+        /// Allows you to override the default "disabled" css class of the menu's li element for full customization.
+        /// If you want to override this for all menus, then you could use <see cref="BlazorContextMenuDefaults.DefaultMenuItemDisabledCssClass"/>
+        /// </summary>
         public string OverrideDefaultDisabledCssClass { get; set; }
+
+        /// <summary>
+        /// Additional css class for the menu's li element. Use this to extend the default css
+        /// </summary>
         public string CssClass { get; set; }
+
+        /// <summary>
+        /// Additional css class for the menu's li element when disabled. Use this to extend the default css
+        /// </summary>
         public string DisabledCssClass { get; set; }
-        public RenderFragment ChildContent { get; set; }
+
+        /// <summary>
+        /// The menu item's onclick handler. A <see cref="MenuItemEventArgs"/> is passed to the action.
+        /// If you want to cancel the click (i.e. stop the menu from closing), then set the "IsCanceled" event args property to "true".
+        /// Note: For an async handler use <seealso cref="ClickAsync"/>
+        /// </summary>
         public Action<MenuItemEventArgs> Click { get; set; }
+
+        /// <summary>
+        /// The menu item's onclick async handler. A <see cref="MenuItemEventArgs"/> is passed to the action.
+        /// If you want to cancel the click (i.e. stop the menu from closing), then set the "IsCanceled" event args property to "true".
+        /// Note: For a synchronous handler use <seealso cref="Click"/>
+        /// </summary>
         public Func<MenuItemEventArgs, Task> ClickAsync { get; set; }
-        protected ElementRef MenuItemElement { get; set; }
+
+        /// <summary>
+        /// Sets the item's enabled state. Default <see cref="true" />
+        /// </summary>
         public bool IsEnabled { get; set; } = true;
+        /// <summary>
+        /// The id of the li element. This is optional
+        /// </summary>
         public string Id { get; set; }
+
+
+
+        protected ElementRef MenuItemElement { get; set; }
+
+        public RenderFragment ChildContent { get; set; }
+
         protected string ClassCalc
         {
             get

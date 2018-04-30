@@ -13,12 +13,34 @@ namespace BlazorContextMenu
     {
         protected virtual string BaseClass => "blazor-context-menu blazor-context-menu__wrapper";
 
+        /// <summary>
+        /// The id that the <see cref="Components.ContextMenuTrigger"/> will use to bind to. This parameter is required
+        /// </summary>
         public string Id { get; set; }
-        public RenderFragment ChildContent { get; set; }
+
+        /// <summary>
+        /// Allows you to override the default css class of the menu's div element for full customization. 
+        /// If you want to override this for all menus, then you could use <see cref="BlazorContextMenuDefaults.DefaultMenuCssClass"/>
+        /// </summary>
         public string OverrideDefaultCssClass { get; set; }
+
+        /// <summary>
+        /// Allows you to override the default css class of the menu's ul element for full customization.
+        /// If you want to override this for all menus, then you could use <see cref="BlazorContextMenuDefaults.DefaultMenuListCssClass"/>
+        /// </summary>
         public string OverrideDefaultListCssClass { get; set; }
+
+        /// <summary>
+        /// Additional css class for the menu's div element. Use this to extend the default css
+        /// </summary>
         public string CssClass { get; set; }
+
+        /// <summary>
+        /// Additional css class for the menu's ul element. Use this to extend the default css
+        /// </summary>
         public string ListCssClass { get; set; }
+
+        public RenderFragment ChildContent { get; set; }
         protected bool IsShowing;
         protected string X { get; set; }
         protected string Y { get; set; }
@@ -53,6 +75,7 @@ namespace BlazorContextMenu
             builder.CloseElement();
         }
 
+        [EditorBrowsable(EditorBrowsableState.Never)]
         public void Show(string x, string y, string targetId)
         {
             IsShowing = true;
@@ -62,12 +85,14 @@ namespace BlazorContextMenu
             StateHasChanged();
         }
 
+        [EditorBrowsable(EditorBrowsableState.Never)]
         public void Hide()
         {
             IsShowing = false;
             StateHasChanged();
         }
 
+        [EditorBrowsable(EditorBrowsableState.Never)]
         public string GetTarget()
         {
             return TargetId;
