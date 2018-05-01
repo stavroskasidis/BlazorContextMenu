@@ -4,7 +4,7 @@ A context menu component for [Blazor](https://github.com/aspnet/Blazor) !
 
 ![demo-img](ReadmeResources/blazor-context-menu-demo-1.gif)
 
-> ⚠️ Warning: This project is build on top of an experimental framework. There is a high propability that there will be breaking changes from version to version.
+> ⚠️ Warning: This project is build on top of an experimental framework. There are many limitations and there is a high propability that there will be breaking changes from version to version.
 
 ## Demo
 You can find a live demo [here](https://blazor-context-menu-demo.azurewebsites.net/).
@@ -32,7 +32,7 @@ Nuget package page can be found [here](https://www.nuget.org/packages/Blazor.Con
     <MenuItem Click="@OnClick">Item 2</MenuItem>
     <MenuItem Click="@OnClick" IsEnabled="false">Item 3 (disabled)</MenuItem>
     <MenuSeperator />
-    <MenuItemWithSubMenu>Submenu
+    <MenuItem>Submenu
         <SubMenu>
             <MenuItem Click="@OnClick">Submenu Item 1</MenuItem>
             <MenuItem Click="@OnClick">Submenu Item 2</MenuItem>
@@ -45,7 +45,7 @@ Nuget package page can be found [here](https://www.nuget.org/packages/Blazor.Con
 </ContextMenuTrigger>
 
 @functions{
-    void OnClick(MenuItemEventArgs e)
+    void OnClick(MenuItemClickEventArgs e)
     {
         Console.WriteLine($"Item Clicked => Menu: {e.ContextMenuId}, MenuTarget: {e.ContextMenuTargetId}, IsCanceled: {e.IsCanceled}, MenuItem: {e.MenuItemElement}, MouseEvent: {e.MouseEvent}");
     }

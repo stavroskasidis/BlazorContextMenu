@@ -4,6 +4,7 @@ using Microsoft.AspNetCore.Blazor.Components;
 using Microsoft.AspNetCore.Blazor.RenderTree;
 using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Linq;
 using System.Threading.Tasks;
 
@@ -34,29 +35,47 @@ namespace BlazorContextMenu.Components
         public string DisabledCssClass { get; set; }
 
         /// <summary>
-        /// The menu item's onclick handler. A <see cref="MenuItemEventArgs"/> is passed to the action.
+        /// The menu item's onclick handler. A <see cref="MenuItemClickEventArgs"/> is passed to the action.
         /// If you want to cancel the click (i.e. stop the menu from closing), then set the "IsCanceled" event args property to "true".
         /// Note: For an async handler use <seealso cref="ClickAsync"/>
         /// </summary>
-        public Action<MenuItemEventArgs> Click { get; set; }
+        public Action<MenuItemClickEventArgs> Click { get; set; }
 
         /// <summary>
-        /// The menu item's onclick async handler. A <see cref="MenuItemEventArgs"/> is passed to the action.
+        /// The menu item's onclick async handler. A <see cref="MenuItemClickEventArgs"/> is passed to the action.
         /// If you want to cancel the click (i.e. stop the menu from closing), then set the "IsCanceled" event args property to "true".
         /// Note: For a synchronous handler use <seealso cref="Click"/>
         /// </summary>
-        public Func<MenuItemEventArgs, Task> ClickAsync { get; set; }
+        public Func<MenuItemClickEventArgs, Task> ClickAsync { get; set; }
 
         /// <summary>
         /// Sets the item's enabled state. Default <see cref="true" />
         /// </summary>
-        public bool IsEnabled { get; set; } = true;
+        public bool Enabled { get; set; } = true;
+
+        /// <summary>
+        /// A handler that can be used to set the item's <see cref="Enabled"/> status dynamically
+        /// Note: For an async handler use <seealso cref="EnabledHandlerAsync"/>
+        /// </summary>
+        public Func<MenuItemEnabledHandlerArgs, bool> EnabledHandler { get; set; }
+
+        /// <summary>
+        /// A handler that can be used to set the item's <see cref="Enabled"/> status dynamically
+        /// Note: For a synchronous handler use <seealso cref="EnabledHandler"/>
+        /// </summary>
+        public Func<MenuItemEnabledHandlerArgs, Task<bool>> EnabledHandlerAsync { get; set; }
 
         /// <summary>
         /// The id of the li element. This is optional
         /// </summary>
         public string Id { get; set; }
-        
+
+        /// <summary>
+        /// Allows you to override the default x position offset of the submenu (i.e. the distance of the submenu from it's parent menu).
+        /// If you want to override this for all menus, then you could use <see cref="BlazorContextMenuDefaults.SubMenuXPositionPixelsOffset"/>
+        /// </summary>
+        public int SubmenuXOffset { get; set; } = BlazorContextMenuDefaults.SubMenuXPositionPixelsOffset;
+
 
         protected ElementRef MenuItemElement { get; set; }
 
@@ -66,7 +85,7 @@ namespace BlazorContextMenu.Components
         {
             get
             {
-                if (IsEnabled)
+                if (Enabled)
                 {
                     return (OverrideDefaultCssClass == null ? BlazorContextMenuDefaults.DefaultMenuItemCssClass : OverrideDefaultCssClass) + (CssClass == null ? "" : $" {CssClass}");
                 }
@@ -76,24 +95,47 @@ namespace BlazorContextMenu.Components
                 }
             }
         }
+        
+
+
+        protected override void OnInit()
+        {
+            if (string.IsNullOrEmpty(Id))
+            {
+                Id = Guid.NewGuid().ToString();
+            }
+
+            BlazorContextMenuHandler.RegisterMenuItem(this);
+            base.OnInit();
+        }
 
         protected override void BuildRenderTree(RenderTreeBuilder builder)
         {
-            base.BuildRenderTree(builder);
-
             int seq = -1;
+            var hasEnabledHandler = EnabledHandler != null || EnabledHandlerAsync != null;
             builder.OpenElement(seq++, "li");
             builder.AddAttribute(seq++, "id", Id);
+            if (hasEnabledHandler)
+            {
+                builder.AddAttribute(seq++, "dynamically-enabled", "true");
+            }
             builder.AddAttribute(seq++, "onclick", BindMethods.GetEventHandlerValue<UIMouseEventArgs>((e) => OnClickInternal(e)));
-            builder.AddAttribute(seq++, "class", ClassCalc);
-            builder.AddElementReferenceCapture(seq++, (reference) => MenuItemElement = reference );
+            builder.AddAttribute(seq++, "class", "blazor-context-menu__item " + ClassCalc);
+            if (Enabled)
+            {
+                builder.AddAttribute(seq++, "onmouseover", $"blazorContextMenu.OnMenuItemMouseOver(event, {SubmenuXOffset}, this);");
+                builder.AddAttribute(seq++, "onmouseout", "blazorContextMenu.OnMenuItemMouseOut(event);");
+            }
+            builder.AddElementReferenceCapture(seq++, (reference) => MenuItemElement = reference);
             builder.AddContent(seq++, ChildContent);
             builder.CloseElement();
+
+            base.BuildRenderTree(builder);
         }
 
         protected void OnClickInternal(UIMouseEventArgs e)
         {
-            if (!this.IsEnabled)
+            if (!Enabled)
             {
                 return;
             }
@@ -101,7 +143,7 @@ namespace BlazorContextMenu.Components
             var menuId = RegisteredFunction.Invoke<string>("BlazorContextMenu.MenuItem.GetMenuId", MenuItemElement);
             var menu = BlazorContextMenuHandler.GetMenu(menuId);
             var contextMenuTarget = menu.GetTarget();
-            var args = new MenuItemEventArgs(e, menuId, contextMenuTarget, MenuItemElement, this);
+            var args = new MenuItemClickEventArgs(e, menuId, contextMenuTarget, MenuItemElement, this);
             if (Click != null)
             {
                 Click(args);
@@ -110,8 +152,7 @@ namespace BlazorContextMenu.Components
                     BlazorContextMenuHandler.HideMenu(menuId);
                 }
             }
-
-            if (ClickAsync != null)
+            else if (ClickAsync != null)
             {
                 ClickAsync(args).ContinueWith((t) =>
                 {
@@ -122,5 +163,46 @@ namespace BlazorContextMenu.Components
                 });
             }
         }
+
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public void CalculateEnabled()
+        {
+            if (EnabledHandler == null && EnabledHandlerAsync == null) return;
+            Console.WriteLine($"CalculateEnabled");
+            
+            //TODO: Find a better place for this code (enabled handlers)
+
+            var menuId = RegisteredFunction.Invoke<string>("BlazorContextMenu.MenuItem.GetMenuId", MenuItemElement);
+            var menu = BlazorContextMenuHandler.GetMenu(menuId);
+            var contextMenuTarget = menu.GetTarget();
+
+
+            if (contextMenuTarget == null) {
+                Console.WriteLine($"CalculateEnabled: Contextmenu taget is null");
+                return;
+            }
+            //menu is not showing. TODO: find a better way to figure this out 
+            var args = new MenuItemEnabledHandlerArgs(menuId, contextMenuTarget, MenuItemElement, this);
+            if (EnabledHandler != null)
+            {
+                Enabled = EnabledHandler(args);
+            }
+            else if (EnabledHandlerAsync != null)
+            {
+                Enabled = EnabledHandlerAsync(args).Result; //todo: change this...
+            }
+
+            StateHasChanged();
+
+            //Console.WriteLine($"OldEnabled: {oldEnabledValue}");
+            //Console.WriteLine($"Enabled: {Enabled}");
+
+            //if (oldEnabledValue != Enabled)
+            //{
+            //    Console.WriteLine($"Enabled state has changed");
+            //    StateHasChanged();
+            //}
+        }
     }
 }
+

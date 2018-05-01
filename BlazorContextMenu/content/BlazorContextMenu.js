@@ -80,6 +80,10 @@ var blazorContextMenu = function (blazorContextMenu) {
 
     blazorContextMenu.OnContextMenu = function (e, menuId) {
         var menu = document.getElementById(menuId);
+        openMenuId = menuId;
+        openMenuTarget = e.target;
+
+        //show context menu
         var originalDisplay = menu.style.display;
         menu.style.display = ""; //this is required to get the menu's width
         var x = e.x;
@@ -94,16 +98,36 @@ var blazorContextMenu = function (blazorContextMenu) {
         menu.style.display = originalDisplay;
 
         blazorContextMenu.Show(menuId, x, y, e.target);
-        openMenuId = menuId;
-        openMenuTarget = e.target;
-        var currentMenu = document.getElementById(menuId);
 
-        var childSubMenus = findAllChildsByClass(currentMenu, "blazor-context-submenu");
+
+        //Hide all other open submenus
+        var childSubMenus = findAllChildsByClass(menu, "blazor-context-submenu");
         var i = childSubMenus.length;
         while (i--) {
             var subMenu = childSubMenus[i];
             blazorContextMenu.Hide(subMenu.id);
         }
+
+        //Calculate dynamically enabled menu items
+        var menuItems = findAllChildsByClass(menu, "blazor-context-menu__item");
+        var dynamicallyEnabledMenuItems = menuItems.filter(function (menuItem) {
+            return menuItem.getAttribute("dynamically-enabled");
+        });
+        var i = dynamicallyEnabledMenuItems.length;
+        while (i--) {
+            blazorContextMenu.CalculateItemEnabled(dynamicallyEnabledMenuItems[i].id);
+        }
+
+
+        //Add extra class to items with submenus
+        var menuItemsWithSubmenus = menuItems.filter(function (menuItem) {
+            return findFirstChildByClass(menuItem, "blazor-context-submenu");
+        });
+        var i = menuItemsWithSubmenus.length;
+        while (i--) {
+            menuItemsWithSubmenus[i].className += " blazor-context-menu__item--with-submenu";
+        }
+
 
         e.preventDefault();
         return false;
@@ -138,17 +162,24 @@ var blazorContextMenu = function (blazorContextMenu) {
         Blazor.platform.callMethod(hideMenuMethod, null, [Blazor.platform.toDotNetString(menuId)]);
     }
 
+    blazorContextMenu.CalculateItemEnabled = function (menuItemId) {
+        var calculateMethod = Blazor.platform.findMethod("BlazorContextMenu", "BlazorContextMenu", "BlazorContextMenuHandler", "CalculateMenuItemEnabled");
+        Blazor.platform.callMethod(calculateMethod, null, [Blazor.platform.toDotNetString(menuItemId)]);
+    }
+
     var subMenuTimeout = null;
-    blazorContextMenu.OnSubMenuItemMouseOver = function (e, xOffset, boundItem) {
+    blazorContextMenu.OnMenuItemMouseOver = function (e, xOffset, boundItem) {
         if (e.target != boundItem) {
             //skip child mouseovers
             return;
         }
 
+        var currentItem = e.target;
+        var subMenu = findFirstChildByClass(currentItem, "blazor-context-submenu");
+        if (!subMenu) return; //item does not contain a submenu
+
         subMenuTimeout = setTimeout(function () {
             subMenuTimeout = null;
-            var currentItem = e.target;
-            var subMenu = findFirstChildByClass(currentItem, "blazor-context-submenu");
             var originalDisplay = subMenu.style.display;
             subMenu.style.display = ""; //this is required to get the menu's width
 
@@ -193,7 +224,8 @@ var blazorContextMenu = function (blazorContextMenu) {
             }
         }, 200);
     }
-    blazorContextMenu.OnSubMenuItemMouseOut = function (e) {
+
+    blazorContextMenu.OnMenuItemMouseOut = function (e) {
         if (subMenuTimeout) {
             clearTimeout(subMenuTimeout);
         }
