@@ -30,7 +30,7 @@ Nuget package page can be found [here](https://www.nuget.org/packages/Blazor.Con
 <ContextMenu Id="myMenu">
     <MenuItem Click="@OnClick">Item 1</MenuItem>
     <MenuItem Click="@OnClick">Item 2</MenuItem>
-    <MenuItem Click="@OnClick" IsEnabled="false">Item 3 (disabled)</MenuItem>
+    <MenuItem Click="@OnClick" Enabled="false">Item 3 (disabled)</MenuItem>
     <MenuSeperator />
     <MenuItemWithSubMenu>Submenu
         <SubMenu>

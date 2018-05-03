@@ -36,8 +36,8 @@ else
     </ContextMenuTrigger>
 
     <ContextMenu Id="tableContextMenu">
-        <MenuItem ClickAsync="@ReloadClick"><i class="fas fa-sync-alt blue-icon"></i> Reload</MenuItem>
-        <MenuItem Click="@DeleteClick"><i class="fas fa-trash-alt red-icon"></i> Delete</MenuItem>
+        <Item ClickAsync="@ReloadClick"><i class="fas fa-sync-alt blue-icon"></i> Reload</Item>
+        <Item Click="@DeleteClick"><i class="fas fa-trash-alt red-icon"></i> Delete</Item>
     </ContextMenu>
 }
 
@@ -57,13 +57,13 @@ else
         public string Summary { get; set; }
     }
 
-    async Task ReloadClick(MenuItemEventArgs e)
+    async Task ReloadClick(MenuItemClickEventArgs e)
     {
         forecasts = (await Http.GetJsonAsync<WeatherForecast[]>("/sample-data/weather.json")).ToList();
         StateHasChanged();
     }
 
-    void DeleteClick(MenuItemEventArgs e)
+    void DeleteClick(MenuItemClickEventArgs e)
     {
         //Interop is required here due to current blazor limitations
         var itemIndex = RegisteredFunction.Invoke<int>("DemoApp.FetchData.GetItemIndex", e.ContextMenuTargetId);
