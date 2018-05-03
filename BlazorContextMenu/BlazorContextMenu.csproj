@@ -51,7 +51,6 @@ Initial release</PackageReleaseNotes>
   <ItemGroup>
     <None Include="Components\ContextMenuTrigger.cshtml" />
     <None Include="Components\MenuSeperator.cshtml" />
-    <None Include="Components\MenuItemWithSubMenu.cshtml" />
     <None Include="_ViewImports.cshtml" />
   </ItemGroup>
 
@@ -81,10 +80,6 @@ Initial release</PackageReleaseNotes>
 
   <ItemGroup>
     <BlazorGenerate Remove="Components\MenuSeperator.cshtml" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <BlazorGenerate Remove="Components\MenuItemWithSubMenu.cshtml" />
   </ItemGroup>
 
 </Project>
