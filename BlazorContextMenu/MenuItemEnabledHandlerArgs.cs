@@ -9,7 +9,7 @@ namespace BlazorContextMenu
 {
     public class MenuItemEnabledHandlerArgs
     {
-        public MenuItemEnabledHandlerArgs(string contextMenuId, string contextMenuTargetId, ElementRef menuItemElement, MenuItem menuItem)
+        public MenuItemEnabledHandlerArgs(string contextMenuId, string contextMenuTargetId, ElementRef menuItemElement, Item menuItem)
         {
             ContextMenuId = contextMenuId;
             ContextMenuTargetId = contextMenuTargetId;
@@ -20,6 +20,6 @@ namespace BlazorContextMenu
         public string ContextMenuId { get; protected set; }
         public string ContextMenuTargetId { get; protected set; }
         public ElementRef MenuItemElement { get; protected set; }
-        public MenuItem MenuItem { get; protected set; }
+        public Item MenuItem { get; protected set; }
     }
 }

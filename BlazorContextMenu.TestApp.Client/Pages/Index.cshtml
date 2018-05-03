@@ -16,38 +16,38 @@
 
 
 <ContextMenu Id="menu1">
-    <MenuItem id="menu1-item1" ClickAsync="FetchDataClick">Fetch Data</MenuItem>
-    <MenuItem  id="menu1-item2" Click="ClearDataClick">Clear Data</MenuItem>
-    <MenuSeperator />
-    <MenuItem id="menu1-item3" Enabled="false">Disabled Item </MenuItem>
+    <Item id="menu1-item1" ClickAsync="FetchDataClick">Fetch Data</Item>
+    <Item  id="menu1-item2" Click="ClearDataClick">Clear Data</Item>
+    <Seperator />
+    <Item id="menu1-item3" Enabled="false">Disabled Item </Item>
 </ContextMenu>
 
 <ContextMenu Id="menu2">
-    <MenuItem Id="menu2-item1" Click="@OnClick"><i class="far fa-file"></i> New</MenuItem>
-    <MenuItem Click="@OnClick"><i class="fas fa-edit"></i> Edit</MenuItem>
-    <MenuItem Click="@OnClick" Enabled="false"><i class="fas fa-trash-alt"></i> Delete</MenuItem>
-    <MenuSeperator />
-    <MenuItem Id="submenu1-trigger">
+    <Item Id="menu2-item1" Click="@OnClick"><i class="far fa-file"></i> New</Item>
+    <Item Click="@OnClick"><i class="fas fa-edit"></i> Edit</Item>
+    <Item Click="@OnClick" Enabled="false"><i class="fas fa-trash-alt"></i> Delete</Item>
+    <Seperator />
+    <Item Id="submenu1-trigger">
         <i class="fas fa-cogs"></i> More
         <SubMenu Id="submenu1">
-            <MenuItem Click="@OnClick"><i class="far fa-save"></i> Save As</MenuItem>
-            <MenuItem Click="@OnClick"><i class="far fa-save"></i> Save</MenuItem>
-            <MenuItem Id="submenu2-trigger">
+            <Item Click="@OnClick"><i class="far fa-save"></i> Save As</Item>
+            <Item Click="@OnClick"><i class="far fa-save"></i> Save</Item>
+            <Item Id="submenu2-trigger">
                 <i class="fas fa-save"></i> Export as
                 <SubMenu Id="submenu2">
-                    <MenuItem Click="@OnClick"><i class="fas fa-file-pdf"></i> Pdf</MenuItem>
-                    <MenuItem Click="@OnClick"><i class="far fa-file-alt"></i> Text</MenuItem>
+                    <Item Click="@OnClick"><i class="fas fa-file-pdf"></i> Pdf</Item>
+                    <Item Click="@OnClick"><i class="far fa-file-alt"></i> Text</Item>
                 </SubMenu>
-            </MenuItem>
+            </Item>
         </SubMenu>
-    </MenuItem>
-    <MenuItem Enabled="false">
+    </Item>
+    <Item Enabled="false">
         <i class="fas fa-cogs"></i> Disabled Submenu
         <SubMenu>
-            <MenuItem Click="@OnClick">Item 1</MenuItem>
-            <MenuItem Click="@OnClick">Item 2</MenuItem>
+            <Item Click="@OnClick">Item 1</Item>
+            <Item Click="@OnClick">Item 2</Item>
         </SubMenu>
-    </MenuItem>
+    </Item>
 </ContextMenu>
 
 <NavLink href="/TodoList">Go to Todo List</NavLink>

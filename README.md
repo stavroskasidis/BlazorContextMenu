@@ -28,16 +28,16 @@ Nuget package page can be found [here](https://www.nuget.org/packages/Blazor.Con
 @addTagHelper *, BlazorContextMenu
 
 <ContextMenu Id="myMenu">
-    <MenuItem Click="@OnClick">Item 1</MenuItem>
-    <MenuItem Click="@OnClick">Item 2</MenuItem>
-    <MenuItem Click="@OnClick" IsEnabled="false">Item 3 (disabled)</MenuItem>
-    <MenuSeperator />
-    <MenuItem>Submenu
+    <Item Click="@OnClick">Item 1</Item>
+    <Item Click="@OnClick">Item 2</Item>
+    <Item Click="@OnClick" IsEnabled="false">Item 3 (disabled)</Item>
+    <Seperator />
+    <Item>Submenu
         <SubMenu>
-            <MenuItem Click="@OnClick">Submenu Item 1</MenuItem>
-            <MenuItem Click="@OnClick">Submenu Item 2</MenuItem>
+            <Item Click="@OnClick">Submenu Item 1</Item>
+            <Item Click="@OnClick">Submenu Item 2</Item>
         </SubMenu>
-    </MenuItemWithSubMenu>
+    </Item>
 </ContextMenu>
 
 <ContextMenuTrigger MenuId="myMenu">
@@ -47,11 +47,29 @@ Nuget package page can be found [here](https://www.nuget.org/packages/Blazor.Con
 @functions{
     void OnClick(MenuItemClickEventArgs e)
     {
-        Console.WriteLine($"Item Clicked => Menu: {e.ContextMenuId}, MenuTarget: {e.ContextMenuTargetId}, IsCanceled: {e.IsCanceled}, MenuItem: {e.MenuItemElement}, MouseEvent: {e.MouseEvent}");
+        Console.WriteLine($"Item Clicked => Menu: {e.ContextMenuId}, MenuTarget: {e.ContextMenuTargetId}, IsCanceled: {e.IsCanceled}, Item: {e.ItemElement}, MouseEvent: {e.MouseEvent}");
     }
 }
 
 ```
+
+## ⚠️ Breaking changes ⚠️
+Upgrating from 0.1 to 0.2
+>- Rename "MenuItem" to "Item"
+>- Rename "MenuSeperator" to "Seperator"
+>- Replace "MenuItemWithSubmenu" with a regular "Item" component
+
+
+## Release Notes
+
+### 0.2
+>- Moved to blazor 0.3.0
+>- Renamed "MenuItem" to "Item" to avoid conflicts with the html element "menuitem"
+>- Renamed "MenuSeperator" to "Seperator" for consistency
+>- Removed "MenuItemWithSubmenu" (just use a regular "Item")
+
+### 0.1
+>- Initial release
 
 ## Special Thanks
 

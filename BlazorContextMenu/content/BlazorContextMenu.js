@@ -1,11 +1,4 @@
-﻿//// This file is to show how a library package may provide JavaScript interop features
-//// wrapped in a .NET API
-
-//Blazor.registerFunction('BlazorContextMenu.ExampleJsInterop.Prompt', function (message) {
-//    return prompt(message, 'Type anything here');
-//});
-
-//closest polyfill
+﻿//"closest" polyfill
 if (window.Element && !Element.prototype.closest) {
     Element.prototype.closest =
         function (s) {
@@ -108,15 +101,15 @@ var blazorContextMenu = function (blazorContextMenu) {
             blazorContextMenu.Hide(subMenu.id);
         }
 
-        //Calculate dynamically enabled menu items
         var menuItems = findAllChildsByClass(menu, "blazor-context-menu__item");
-        var dynamicallyEnabledMenuItems = menuItems.filter(function (menuItem) {
-            return menuItem.getAttribute("dynamically-enabled");
-        });
-        var i = dynamicallyEnabledMenuItems.length;
-        while (i--) {
-            blazorContextMenu.CalculateItemEnabled(dynamicallyEnabledMenuItems[i].id);
-        }
+        //Calculate dynamically enabled menu items
+        //var dynamicallyEnabledMenuItems = menuItems.filter(function (menuItem) {
+        //    return menuItem.getAttribute("dynamically-enabled");
+        //});
+        //var i = dynamicallyEnabledMenuItems.length;
+        //while (i--) {
+        //    blazorContextMenu.CalculateItemEnabled(dynamicallyEnabledMenuItems[i].id);
+        //}
 
 
         //Add extra class to items with submenus

@@ -12,5 +12,3 @@ dotnet pack BlazorContextMenu -c Release --no-build /p:VersionSuffix="%version-s
 if %errorlevel% neq 0 exit /b %errorlevel%
 
 
-dotnet publish BlazorContextMenu.DemoApp -c Release
-if %errorlevel% neq 0 exit /b %errorlevel%
