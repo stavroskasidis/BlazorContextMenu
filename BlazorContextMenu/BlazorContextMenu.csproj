@@ -25,9 +25,9 @@
     <Copyright />
     <PackageTags>blazor blazor-component blazor-context-menu context-menu contextmenu menu blazor-menu blazorcontextmenu</PackageTags>
     <VersionSuffix>$(VersionSuffix)</VersionSuffix>
+    <Version>0.2.0</Version>
     <Version Condition=" '$(VersionSuffix)' != '' ">$(Version)-$(VersionSuffix)</Version>
     <Product>Blazor.ContextMenu</Product>
-    <Version>0.2.0</Version>
   </PropertyGroup>
 
   <ItemGroup>
