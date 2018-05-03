@@ -7,21 +7,21 @@
 </ContextMenuTrigger>
 
 <ContextMenu Id="myMenu">
-    <MenuItem Click="@OnClick">Item 1</MenuItem>
-    <MenuItem Click="@OnClick">Item 2</MenuItem>
-    <MenuItem Click="@OnClick" IsEnabled="false">Item 3 (disabled)</MenuItem>
-    <MenuSeperator />
-    <MenuItemWithSubMenu>
+    <Item Click="@OnClick">Item 1</Item>
+    <Item Click="@OnClick">Item 2</Item>
+    <Item Click="@OnClick" Enabled="false">Item 3 (disabled)</Item>
+    <Seperator />
+    <Item>
         Submenu
         <SubMenu>
-            <MenuItem Click="@OnClick">Submenu Item 1</MenuItem>
-            <MenuItem Click="@OnClick">Submenu Item 2</MenuItem>
+            <Item Click="@OnClick">Submenu Item 1</Item>
+            <Item Click="@OnClick">Submenu Item 2</Item>
         </SubMenu>
-    </MenuItemWithSubMenu>
+    </Item>
 </ContextMenu>
 
 @functions{
-    void OnClick(MenuItemEventArgs e)
+    void OnClick(MenuItemClickEventArgs e)
     {
         Console.WriteLine($"Item Clicked => Menu: {e.ContextMenuId}, MenuTarget: {e.ContextMenuTargetId}, IsCanceled: {e.IsCanceled}, MenuItem: {e.MenuItemElement}, MouseEvent: {e.MouseEvent}");
     }
