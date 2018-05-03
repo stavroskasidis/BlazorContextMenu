@@ -11,13 +11,14 @@
 </ContextMenuTrigger>
 
 <ContextMenu Id="todoItemsMenu">
-    <MenuItem id="menuitem-copy" Click="@CopyClick"><i class="fas fa-file blue-icon"></i> Copy</MenuItem>
-    <MenuItem id="menuitem-delete" Click="@DeleteClick"><i class="fas fa-trash-alt red-icon"></i> Delete</MenuItem>
+    <Item id="menuitem-copy" Click="@CopyClick"><i class="fas fa-file blue-icon"></i> Copy</Item>
+    <Item id="menuitem-check" Click="@CheckClick"><i class="fas fa-file blue-icon"></i> Check</Item>
+    <Item id="menuitem-delete" Click="@DeleteClick"><i class="fas fa-trash-alt red-icon"></i> Delete</Item>
 </ContextMenu>
 
 @functions{
 
-    void CopyClick(MenuItemEventArgs e)
+    void CopyClick(MenuItemClickEventArgs e)
     {
         //Interop is required here due to current blazor limitations
         var itemIndex = RegisteredFunction.Invoke<int>("TestApp.TodoList.GetItemIndex", e.ContextMenuTargetId);
@@ -33,7 +34,32 @@
         }
     }
 
-    void DeleteClick(MenuItemEventArgs e)
+    bool CheckEnabledHandler(MenuItemEnabledHandlerArgs e)
+    {
+        //Interop is required here due to current blazor limitations
+        var itemIndex = RegisteredFunction.Invoke<int>("TestApp.TodoList.GetItemIndex", e.ContextMenuTargetId);
+        if (itemIndex >= 0)
+        {
+            var currentTodoItem = TodoItems.ElementAt(itemIndex);
+            return !currentTodoItem.IsChecked;
+        }
+
+        return false;
+    }
+
+    void CheckClick(MenuItemClickEventArgs e)
+    {
+        //Interop is required here due to current blazor limitations
+        var itemIndex = RegisteredFunction.Invoke<int>("TestApp.TodoList.GetItemIndex", e.ContextMenuTargetId);
+        if (itemIndex >= 0)
+        {
+            var currentTodoItem = TodoItems.ElementAt(itemIndex);
+            currentTodoItem.IsChecked = true;
+            StateHasChanged();
+        }
+    }
+
+    void DeleteClick(MenuItemClickEventArgs e)
     {
         //Interop is required here due to current blazor limitations
         var itemIndex = RegisteredFunction.Invoke<int>("TestApp.TodoList.GetItemIndex", e.ContextMenuTargetId);

@@ -16,31 +16,38 @@
 
 
 <ContextMenu Id="menu1">
-    <MenuItem id="menu1-item1" ClickAsync="FetchDataClick">Fetch Data</MenuItem>
-    <MenuItem  id="menu1-item2" Click="ClearDataClick">Clear Data</MenuItem>
-    <MenuSeperator />
-    <MenuItem id="menu1-item3" IsEnabled="false">Disabled Item </MenuItem>
+    <Item id="menu1-item1" ClickAsync="FetchDataClick">Fetch Data</Item>
+    <Item  id="menu1-item2" Click="ClearDataClick">Clear Data</Item>
+    <Seperator />
+    <Item id="menu1-item3" Enabled="false">Disabled Item </Item>
 </ContextMenu>
 
 <ContextMenu Id="menu2">
-    <MenuItem Id="menu2-item1" Click="@OnClick"><i class="far fa-file"></i> New</MenuItem>
-    <MenuItem Click="@OnClick"><i class="fas fa-edit"></i> Edit</MenuItem>
-    <MenuItem Click="@OnClick" IsEnabled="false"><i class="fas fa-trash-alt"></i> Delete</MenuItem>
-    <MenuSeperator />
-    <MenuItemWithSubMenu Id="submenu1-trigger">
+    <Item Id="menu2-item1" Click="@OnClick"><i class="far fa-file"></i> New</Item>
+    <Item Click="@OnClick"><i class="fas fa-edit"></i> Edit</Item>
+    <Item Click="@OnClick" Enabled="false"><i class="fas fa-trash-alt"></i> Delete</Item>
+    <Seperator />
+    <Item Id="submenu1-trigger">
         <i class="fas fa-cogs"></i> More
         <SubMenu Id="submenu1">
-            <MenuItem Click="@OnClick"><i class="far fa-save"></i> Save As</MenuItem>
-            <MenuItem Click="@OnClick"><i class="far fa-save"></i> Save</MenuItem>
-            <MenuItemWithSubMenu Id="submenu2-trigger">
+            <Item Click="@OnClick"><i class="far fa-save"></i> Save As</Item>
+            <Item Click="@OnClick"><i class="far fa-save"></i> Save</Item>
+            <Item Id="submenu2-trigger">
                 <i class="fas fa-save"></i> Export as
                 <SubMenu Id="submenu2">
-                    <MenuItem Click="@OnClick"><i class="fas fa-file-pdf"></i> Pdf</MenuItem>
-                    <MenuItem Click="@OnClick"><i class="far fa-file-alt"></i> Text</MenuItem>
+                    <Item Click="@OnClick"><i class="fas fa-file-pdf"></i> Pdf</Item>
+                    <Item Click="@OnClick"><i class="far fa-file-alt"></i> Text</Item>
                 </SubMenu>
-            </MenuItemWithSubMenu>
+            </Item>
         </SubMenu>
-    </MenuItemWithSubMenu>
+    </Item>
+    <Item Enabled="false">
+        <i class="fas fa-cogs"></i> Disabled Submenu
+        <SubMenu>
+            <Item Click="@OnClick">Item 1</Item>
+            <Item Click="@OnClick">Item 2</Item>
+        </SubMenu>
+    </Item>
 </ContextMenu>
 
 <NavLink href="/TodoList">Go to Todo List</NavLink>
@@ -49,7 +56,7 @@
     protected string TextAreaDisplay { get; set; } = "none";
 
     protected string Summaries { get; set; }
-    async Task FetchDataClick(MenuItemEventArgs e)
+    async Task FetchDataClick(MenuItemClickEventArgs e)
     {
         var summaries = await http.GetJsonAsync<string[]>("/api/SampleData/Summaries");
         Summaries = string.Join(",", summaries);
@@ -57,7 +64,7 @@
         StateHasChanged();
     }
 
-    void ClearDataClick(MenuItemEventArgs e)
+    void ClearDataClick(MenuItemClickEventArgs e)
     {
         Summaries = "";
         TextAreaDisplay = "none";
@@ -65,7 +72,7 @@
     }
 
 
-    void OnClick(MenuItemEventArgs e)
+    void OnClick(MenuItemClickEventArgs e)
     {
         Console.WriteLine($"Item Clicked => Menu: {e.ContextMenuId}, MenuTarget: {e.ContextMenuTargetId}, IsCanceled: {e.IsCanceled}, MenuItem: {e.MenuItemElement}, MouseEvent: {e.MouseEvent}");
     }

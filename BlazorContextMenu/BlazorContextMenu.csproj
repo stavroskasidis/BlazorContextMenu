@@ -14,12 +14,18 @@
     <PackageLicenseUrl>https://github.com/stavroskasidis/blazor-context-menu/blob/master/LICENSE</PackageLicenseUrl>
     <PackageProjectUrl>https://github.com/stavroskasidis/blazor-context-menu</PackageProjectUrl>
     <Description>Context menu component for Blazor</Description>
-    <PackageReleaseNotes>0.1
-Initial release</PackageReleaseNotes>
+    <PackageReleaseNotes>0.2
+- Moved to blazor 0.3.0
+- Renamed "MenuItem" to "Item" to avoid conflicts with the html element "menuitem"
+- Renamed "MenuSeperator" to "Seperator" for consistency
+- Removed "MenuItemWithSubmenu" (just use a regular "Item")
+
+0.1
+- Initial release</PackageReleaseNotes>
     <Copyright />
     <PackageTags>blazor blazor-component blazor-context-menu context-menu contextmenu menu blazor-menu blazorcontextmenu</PackageTags>
     <VersionSuffix>$(VersionSuffix)</VersionSuffix>
-    <Version>0.1.1</Version>
+    <Version>0.2.0</Version>
     <Version Condition=" '$(VersionSuffix)' != '' ">$(Version)-$(VersionSuffix)</Version>
     <Product>Blazor.ContextMenu</Product>
   </PropertyGroup>
@@ -32,9 +38,8 @@ Initial release</PackageReleaseNotes>
   </ItemGroup>
 
   <ItemGroup>
-    <PackageReference Include="Microsoft.AspNetCore.Razor.Design" Version="2.1.0-preview2-final" PrivateAssets="all" />
-    <PackageReference Include="Microsoft.AspNetCore.Blazor.Browser" Version="0.3.0-preview1-10252" />
-    <PackageReference Include="Microsoft.AspNetCore.Blazor.Build" Version="0.3.0-preview1-10252" />
+    <PackageReference Include="Microsoft.AspNetCore.Blazor.Browser" Version="0.3.0" />
+    <PackageReference Include="Microsoft.AspNetCore.Blazor.Build" Version="0.3.0" />
   </ItemGroup>
 
   <ItemGroup>
@@ -51,8 +56,7 @@ Initial release</PackageReleaseNotes>
 
   <ItemGroup>
     <None Include="Components\ContextMenuTrigger.cshtml" />
-    <None Include="Components\MenuSeperator.cshtml" />
-    <None Include="Components\MenuItemWithSubMenu.cshtml" />
+    <None Include="Components\Seperator.cshtml" />
     <None Include="_ViewImports.cshtml" />
   </ItemGroup>
 
@@ -81,11 +85,7 @@ Initial release</PackageReleaseNotes>
   </ItemGroup>
 
   <ItemGroup>
-    <BlazorGenerate Remove="Components\MenuSeperator.cshtml" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <BlazorGenerate Remove="Components\MenuItemWithSubMenu.cshtml" />
+    <BlazorGenerate Remove="Components\Seperator.cshtml" />
   </ItemGroup>
 
 </Project>

@@ -1,5 +1,5 @@
 ﻿
-<div oncontextmenu="blazorContextMenu.OnContextMenu(event, '@MenuId.Replace("'","\\'")');" class="@CssClass">
+<div oncontextmenu="@($"blazorContextMenu.OnContextMenu(event, '{MenuId.Replace("'","\\'")}');")" class="@CssClass">
     @ChildContent
 </div>
 
@@ -7,13 +7,17 @@
     /// <summary>
     /// The id of the <see cref="ContextMenu"/> to open. This parameter is required
     /// </summary>
-    public string MenuId { get; set; }
+    [Parameter]
+    private string MenuId { get; set; }
 
     /// <summary>
     /// Additional css class for the trigger's div wrapper element
     /// </summary>
-    public string CssClass { get; set; }
-    public RenderFragment ChildContent { get; set; }
+    [Parameter]
+    private string CssClass { get; set; }
+
+    [Parameter]
+    protected RenderFragment ChildContent { get; set; }
     protected override void OnInit()
     {
         if (string.IsNullOrEmpty(MenuId))

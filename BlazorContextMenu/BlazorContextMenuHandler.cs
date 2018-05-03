@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Blazor;
+﻿using BlazorContextMenu.Components;
+using Microsoft.AspNetCore.Blazor;
 using Microsoft.AspNetCore.Blazor.Components;
 using System;
 using System.Collections.Generic;
@@ -10,13 +11,20 @@ namespace BlazorContextMenu
 {
     public static class BlazorContextMenuHandler
     {
-        //TODO: Find a better way to manage menus
+        //TODO: Find a better way to keep references
         private static Dictionary<string, ContextMenu> InitializedMenus = new Dictionary<string, ContextMenu>();
+        private static Dictionary<string, Item> InitializedMenuItems = new Dictionary<string, Item>();
 
         [EditorBrowsable(EditorBrowsableState.Never)]
         public static void Register(ContextMenu menu)
         {
-            InitializedMenus[menu.Id] = menu;
+            InitializedMenus[menu.GetId()] = menu;
+        }
+
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public static void RegisterMenuItem(Item menuItem)
+        {
+            InitializedMenuItems[menuItem.GetId()] = menuItem;
         }
 
         [EditorBrowsable(EditorBrowsableState.Never)]
@@ -39,6 +47,14 @@ namespace BlazorContextMenu
             {
                 InitializedMenus[id].Hide();
             }
+        }
+
+        public static void CalculateMenuItemEnabled(string id)
+        {
+            //if (InitializedMenuItems.ContainsKey(id))
+            //{
+            //    InitializedMenuItems[id].CalculateEnabled();
+            //}
         }
     }
 }

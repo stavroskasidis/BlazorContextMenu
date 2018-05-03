@@ -7,9 +7,9 @@ using System.Threading.Tasks;
 
 namespace BlazorContextMenu
 {
-    public class MenuItemEventArgs
+    public class MenuItemClickEventArgs
     {
-        public MenuItemEventArgs(UIMouseEventArgs mouseEvent,string contextMenuId, string contextMenuTargetId, ElementRef menuItemElement, MenuItem menuItem)
+        public MenuItemClickEventArgs(UIMouseEventArgs mouseEvent,string contextMenuId, string contextMenuTargetId, ElementRef menuItemElement, Item menuItem)
         {
             MouseEvent = mouseEvent;
             ContextMenuId = contextMenuId;
@@ -23,6 +23,6 @@ namespace BlazorContextMenu
         public string ContextMenuId { get; protected set; }
         public string ContextMenuTargetId { get; protected set; }
         public ElementRef MenuItemElement { get; protected set; }
-        public MenuItem MenuItem { get; protected set; }
+        public Item MenuItem { get; protected set; }
     }
 }
