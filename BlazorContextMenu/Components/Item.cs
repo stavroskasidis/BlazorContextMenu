@@ -63,19 +63,19 @@ namespace BlazorContextMenu.Components
 
         /*=========================== TODO: Find an implementation that works
          
-        ///// <summary>
-        ///// A handler that can be used to set the item's <see cref="Enabled"/> status dynamically
-        ///// Note: For an async handler use <seealso cref="EnabledHandlerAsync"/>
-        ///// </summary>
-        //[Parameter]
-        //protected Func<MenuItemEnabledHandlerArgs, bool> EnabledHandler { get; set; }
+        /// <summary>
+        /// A handler that can be used to set the item's <see cref="Enabled"/> status dynamically
+        /// Note: For an async handler use <seealso cref="EnabledHandlerAsync"/>
+        /// </summary>
+        [Parameter]
+        protected Func<MenuItemEnabledHandlerArgs, bool> EnabledHandler { get; set; }
 
-        ///// <summary>
-        ///// A handler that can be used to set the item's <see cref="Enabled"/> status dynamically
-        ///// Note: For a synchronous handler use <seealso cref="EnabledHandler"/>
-        ///// </summary>
-        //[Parameter]
-        //protected Func<MenuItemEnabledHandlerArgs, Task<bool>> EnabledHandlerAsync { get; set; }
+        /// <summary>
+        /// A handler that can be used to set the item's <see cref="Enabled"/> status dynamically
+        /// Note: For a synchronous handler use <seealso cref="EnabledHandler"/>
+        /// </summary>
+        [Parameter]
+        protected Func<MenuItemEnabledHandlerArgs, Task<bool>> EnabledHandlerAsync { get; set; }
 
 
         ========================  */
@@ -139,6 +139,7 @@ namespace BlazorContextMenu.Components
             //}
             builder.AddAttribute(seq++, "onclick", BindMethods.GetEventHandlerValue<UIMouseEventArgs>((e) => OnClickInternal(e)));
             builder.AddAttribute(seq++, "class", "blazor-context-menu__item " + ClassCalc);
+            builder.AddAttribute(seq++, "item-enabled", Enabled);
             if (Enabled)
             {
                 builder.AddAttribute(seq++, "onmouseover", $"blazorContextMenu.OnMenuItemMouseOver(event, {SubmenuXOffset}, this);");
@@ -186,6 +187,38 @@ namespace BlazorContextMenu.Components
         public string GetId()
         {
             return Id;
+        }
+
+        protected override Task OnAfterRenderAsync()
+        {
+            if (EnabledHandler == null && EnabledHandlerAsync == null) return;
+
+
+            var menuId = RegisteredFunction.Invoke<string>("BlazorContextMenu.MenuItem.GetMenuId", MenuItemElement);
+            var menu = BlazorContextMenuHandler.GetMenu(menuId);
+            var contextMenuTarget = menu.GetTarget();
+
+            //menu is not showing. TODO: find a better way to figure this out 
+            if (contextMenuTarget == null) {
+                return;
+            }
+
+            var oldEnabledValue = this.Enabled;
+            
+            var args = new MenuItemEnabledHandlerArgs(menuId, contextMenuTarget, MenuItemElement, this);
+            if (EnabledHandler != null)
+            {
+                Enabled = EnabledHandler(args);
+            }
+            else if (EnabledHandlerAsync != null)
+            {
+                Enabled = await EnabledHandlerAsync(args);
+            }
+
+            if(oldEnabledValue != Enabled) 
+            {
+                RegisteredFunction.Invoke<object>("BlazorContextMenu.MenuItem.SetEnabled", MenuItemElement, Enabled, "blazor-context-menu__item " + ClassCalc);
+            }
         }
 
         //[EditorBrowsable(EditorBrowsableState.Never)]

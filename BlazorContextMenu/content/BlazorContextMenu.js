@@ -167,6 +167,8 @@ var blazorContextMenu = function (blazorContextMenu) {
             return;
         }
 
+        if(currentItem.getAttribute("item-enabled") != "true") return;
+
         var currentItem = e.target;
         var subMenu = findFirstChildByClass(currentItem, "blazor-context-submenu");
         if (!subMenu) return; //item does not contain a submenu
@@ -233,4 +235,15 @@ blazorContextMenu.Init();
 Blazor.registerFunction('BlazorContextMenu.MenuItem.GetMenuId', function (menuItem) {
     var menu = menuItem.closest(".blazor-context-menu");
     return menu.id;
+});
+
+Blazor.registerFunction('BlazorContextMenu.MenuItem.SetEnabled', function (menuItem, enabled, className) {
+    if(enabled){
+        menuItem.setAttribute("item-enabled", true);
+    }
+    else{
+        menuItem.removeAttribute("item-enabled");
+    }
+
+    menuItem.setAttribute("class", className);
 });
