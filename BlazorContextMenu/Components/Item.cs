@@ -60,9 +60,6 @@ namespace BlazorContextMenu.Components
         [Parameter]
         protected bool Enabled { get; set; } = true;
 
-
-        /*=========================== TODO: Find an implementation that works
-         
         /// <summary>
         /// A handler that can be used to set the item's <see cref="Enabled"/> status dynamically
         /// Note: For an async handler use <seealso cref="EnabledHandlerAsync"/>
@@ -76,9 +73,6 @@ namespace BlazorContextMenu.Components
         /// </summary>
         [Parameter]
         protected Func<MenuItemEnabledHandlerArgs, Task<bool>> EnabledHandlerAsync { get; set; }
-
-
-        ========================  */
 
         /// <summary>
         /// The id of the li element. This is optional
@@ -113,7 +107,7 @@ namespace BlazorContextMenu.Components
                 }
             }
         }
-        
+
 
 
         protected override void OnInit()
@@ -123,7 +117,7 @@ namespace BlazorContextMenu.Components
                 Id = Guid.NewGuid().ToString();
             }
 
-            BlazorContextMenuHandler.RegisterMenuItem(this);
+            //BlazorContextMenuHandler.RegisterMenuItem(this);
             base.OnInit();
         }
 
@@ -135,16 +129,14 @@ namespace BlazorContextMenu.Components
             builder.AddAttribute(seq++, "id", Id);
             //if (hasEnabledHandler)
             //{
-                //builder.AddAttribute(seq++, "dynamically-enabled", "true");
+            //builder.AddAttribute(seq++, "dynamically-enabled", "true");
             //}
             builder.AddAttribute(seq++, "onclick", BindMethods.GetEventHandlerValue<UIMouseEventArgs>((e) => OnClickInternal(e)));
             builder.AddAttribute(seq++, "class", "blazor-context-menu__item " + ClassCalc);
-            builder.AddAttribute(seq++, "item-enabled", Enabled);
-            if (Enabled)
-            {
-                builder.AddAttribute(seq++, "onmouseover", $"blazorContextMenu.OnMenuItemMouseOver(event, {SubmenuXOffset}, this);");
-                builder.AddAttribute(seq++, "onmouseout", "blazorContextMenu.OnMenuItemMouseOut(event);");
-            }
+            builder.AddAttribute(seq++, "item-enabled", Enabled.ToString().ToLower());
+            builder.AddAttribute(seq++, "onmouseover", Enabled ? $"blazorContextMenu.OnMenuItemMouseOver(event, {SubmenuXOffset}, this);" : "");
+            builder.AddAttribute(seq++, "onmouseout", Enabled ? "blazorContextMenu.OnMenuItemMouseOut(event);" : "");
+
             builder.AddElementReferenceCapture(seq++, (reference) => MenuItemElement = reference);
             builder.AddContent(seq++, ChildContent);
             builder.CloseElement();
@@ -189,8 +181,9 @@ namespace BlazorContextMenu.Components
             return Id;
         }
 
-        protected override Task OnAfterRenderAsync()
+        protected override async Task OnAfterRenderAsync()
         {
+            Console.WriteLine($"Item After render, id: {Id} enabled: {Enabled}");
             if (EnabledHandler == null && EnabledHandlerAsync == null) return;
 
 
@@ -199,67 +192,30 @@ namespace BlazorContextMenu.Components
             var contextMenuTarget = menu.GetTarget();
 
             //menu is not showing. TODO: find a better way to figure this out 
-            if (contextMenuTarget == null) {
-                return;
-            }
+            if (contextMenuTarget == null) return;
 
-            var oldEnabledValue = this.Enabled;
+            //Hacky but works. TODO: Improve this code when this stuff is supported in Blazor
+            Task.Run(async () =>
+            {
+                var oldEnabledValue = this.Enabled;
+
+                var args = new MenuItemEnabledHandlerArgs(menuId, contextMenuTarget, MenuItemElement, this);
+                if (EnabledHandler != null)
+                {
+                    Enabled = EnabledHandler(args);
+                }
+                else if (EnabledHandlerAsync != null)
+                {
+                    Enabled = await EnabledHandlerAsync(args);
+                }
+
+                if (oldEnabledValue != Enabled)
+                {
+                    StateHasChanged();
+                }
+            });
             
-            var args = new MenuItemEnabledHandlerArgs(menuId, contextMenuTarget, MenuItemElement, this);
-            if (EnabledHandler != null)
-            {
-                Enabled = EnabledHandler(args);
-            }
-            else if (EnabledHandlerAsync != null)
-            {
-                Enabled = await EnabledHandlerAsync(args);
-            }
-
-            if(oldEnabledValue != Enabled) 
-            {
-                RegisteredFunction.Invoke<object>("BlazorContextMenu.MenuItem.SetEnabled", MenuItemElement, Enabled, "blazor-context-menu__item " + ClassCalc);
-            }
         }
-
-        //[EditorBrowsable(EditorBrowsableState.Never)]
-        //public void CalculateEnabled()
-        //{
-        //    if (EnabledHandler == null && EnabledHandlerAsync == null) return;
-        //    Console.WriteLine($"CalculateEnabled");
-            
-        //    //TODO: Find a better place for this code (enabled handlers)
-
-        //    var menuId = RegisteredFunction.Invoke<string>("BlazorContextMenu.MenuItem.GetMenuId", MenuItemElement);
-        //    var menu = BlazorContextMenuHandler.GetMenu(menuId);
-        //    var contextMenuTarget = menu.GetTarget();
-
-
-        //    if (contextMenuTarget == null) {
-        //        Console.WriteLine($"CalculateEnabled: Contextmenu taget is null");
-        //        return;
-        //    }
-        //    //menu is not showing. TODO: find a better way to figure this out 
-        //    var args = new MenuItemEnabledHandlerArgs(menuId, contextMenuTarget, MenuItemElement, this);
-        //    if (EnabledHandler != null)
-        //    {
-        //        Enabled = EnabledHandler(args);
-        //    }
-        //    else if (EnabledHandlerAsync != null)
-        //    {
-        //        Enabled = EnabledHandlerAsync(args).Result; //todo: change this...
-        //    }
-
-        //    StateHasChanged();
-
-        //    //Console.WriteLine($"OldEnabled: {oldEnabledValue}");
-        //    //Console.WriteLine($"Enabled: {Enabled}");
-
-        //    //if (oldEnabledValue != Enabled)
-        //    //{
-        //    //    Console.WriteLine($"Enabled state has changed");
-        //    //    StateHasChanged();
-        //    //}
-        //}
     }
 }
 

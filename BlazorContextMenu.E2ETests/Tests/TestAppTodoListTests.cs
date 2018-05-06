@@ -60,5 +60,64 @@ namespace BlazorContextMenu.E2ETests.Tests
             var itemsCount = list.FindElements(By.TagName("li")).Count;
             Assert.Equal(expectedItemsCount, itemsCount);
         }
+
+
+        [Fact]
+        public void TodoItemsMenu_TriggerForFirstItemAndSelectCheck_CheckIsDisabled()
+        {
+            //Arrange
+            var expectedClass= BlazorContextMenuDefaults.DefaultMenuItemDisabledCssClass;
+
+            //Act
+            OpenContextMenuAt("listitem-0");
+            var menuItem = Browser.FindElement(By.Id("menuitem-check"));
+            var classes = menuItem.GetAttribute("class");
+
+            //Assert
+            Assert.Contains(expectedClass, classes);
+        }
+
+        [Fact]
+        public void TodoItemsMenu_TriggerForSecondItemAndSelectCheck_ItemIsChecked()
+        {
+            //Arrange
+            var expectedCheckedStatus = true;
+
+            //Act
+            OpenContextMenuAt("listitem-1");
+            var menuItem = Browser.FindElement(By.Id("menuitem-check"));
+            menuItem.Click();
+            var list = Browser.FindElement(By.Id("list"));
+            var checkBoxes = list.FindElements(By.TagName("input"));
+            var secondBox = checkBoxes[0];
+
+            //Assert
+            Assert.Equal(expectedCheckedStatus,secondBox.Selected);
+        }
+
+
+        [Fact]
+        public void TodoItemsMenu_TriggerForSecondItemAndSelectCheckAndThenTriggerAgain_CheckIsDisabled()
+        {
+            //Arrange
+            var expectedCheckedStatus = true;
+            var expectedClass = BlazorContextMenuDefaults.DefaultMenuItemDisabledCssClass;
+
+            //Act
+            OpenContextMenuAt("listitem-1");
+            var menuItem = Browser.FindElement(By.Id("menuitem-check"));
+            menuItem.Click();
+            OpenContextMenuAt("listitem-1");
+            menuItem = Browser.FindElement(By.Id("menuitem-check"));
+            var classes = menuItem.GetAttribute("class");
+            var list = Browser.FindElement(By.Id("list"));
+            var checkBoxes = list.FindElements(By.TagName("input"));
+            var secondBox = checkBoxes[0];
+
+
+            //Assert
+            Assert.Equal(expectedCheckedStatus, secondBox.Selected);
+            Assert.Contains(expectedClass, classes);
+        }
     }
 }

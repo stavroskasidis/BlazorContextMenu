@@ -21,11 +21,11 @@ namespace BlazorContextMenu
             InitializedMenus[menu.GetId()] = menu;
         }
 
-        [EditorBrowsable(EditorBrowsableState.Never)]
-        public static void RegisterMenuItem(Item menuItem)
-        {
-            InitializedMenuItems[menuItem.GetId()] = menuItem;
-        }
+        //[EditorBrowsable(EditorBrowsableState.Never)]
+        //public static void RegisterMenuItem(Item menuItem)
+        //{
+        //    InitializedMenuItems[menuItem.GetId()] = menuItem;
+        //}
 
         [EditorBrowsable(EditorBrowsableState.Never)]
         public static ContextMenu GetMenu(string id)
@@ -49,12 +49,12 @@ namespace BlazorContextMenu
             }
         }
 
-        public static void CalculateMenuItemEnabled(string id)
-        {
-            //if (InitializedMenuItems.ContainsKey(id))
-            //{
-            //    InitializedMenuItems[id].CalculateEnabled();
-            //}
-        }
+        //public static void CalculateMenuItemEnabled(string id)
+        //{
+        //    //if (InitializedMenuItems.ContainsKey(id))
+        //    //{
+        //    //    InitializedMenuItems[id].CalculateEnabled();
+        //    //}
+        //}
     }
 }
