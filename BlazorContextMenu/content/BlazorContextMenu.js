@@ -102,15 +102,6 @@ var blazorContextMenu = function (blazorContextMenu) {
         }
 
         var menuItems = findAllChildsByClass(menu, "blazor-context-menu__item");
-        //Calculate dynamically enabled menu items
-        //var dynamicallyEnabledMenuItems = menuItems.filter(function (menuItem) {
-        //    return menuItem.getAttribute("dynamically-enabled");
-        //});
-        //var i = dynamicallyEnabledMenuItems.length;
-        //while (i--) {
-        //    blazorContextMenu.CalculateItemEnabled(dynamicallyEnabledMenuItems[i].id);
-        //}
-
 
         //Add extra class to items with submenus
         var menuItemsWithSubmenus = menuItems.filter(function (menuItem) {
@@ -120,7 +111,6 @@ var blazorContextMenu = function (blazorContextMenu) {
         while (i--) {
             menuItemsWithSubmenus[i].className += " blazor-context-menu__item--with-submenu";
         }
-
 
         e.preventDefault();
         return false;
@@ -155,19 +145,15 @@ var blazorContextMenu = function (blazorContextMenu) {
         Blazor.platform.callMethod(hideMenuMethod, null, [Blazor.platform.toDotNetString(menuId)]);
     }
 
-    blazorContextMenu.CalculateItemEnabled = function (menuItemId) {
-        var calculateMethod = Blazor.platform.findMethod("BlazorContextMenu", "BlazorContextMenu", "BlazorContextMenuHandler", "CalculateMenuItemEnabled");
-        Blazor.platform.callMethod(calculateMethod, null, [Blazor.platform.toDotNetString(menuItemId)]);
-    }
-
     var subMenuTimeout = null;
     blazorContextMenu.OnMenuItemMouseOver = function (e, xOffset, boundItem) {
         if (e.target != boundItem) {
             //skip child mouseovers
             return;
         }
-
         var currentItem = e.target;
+        if (currentItem.getAttribute("item-enabled") != "true") return;
+
         var subMenu = findFirstChildByClass(currentItem, "blazor-context-submenu");
         if (!subMenu) return; //item does not contain a submenu
 
