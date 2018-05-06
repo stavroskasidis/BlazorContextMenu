@@ -76,9 +76,9 @@ All components expose a `CssClass` parameter that you can use to add css on top 
 
 #### Overriding default css
 
-You can override the default css classes completely in the following ways. Recommended only if you want to achieve advanced customization.
+You can override the default css classes completely in the following ways (Recommended only if you want to achieve advanced customization).
 
-1. Globally for all ContextMenus using the `BlazorContextMenu.BlazorContextMenuDefaults` API.
+##### 1. Globally for all ContextMenus using the `BlazorContextMenu.BlazorContextMenuDefaults` API.
 
 ```csharp
     using BlazorContextMenu;
@@ -100,7 +100,7 @@ You can override the default css classes completely in the following ways. Recom
     }
 ```
 
-2. Using the `OverrideDefaultXXX` parameters on components. This will override the defaults from the `BlazorContextMenu.BlazorContextMenuDefaults` API.
+##### 2. Using the `OverrideDefaultXXX` parameters on components. This will override the defaults from the `BlazorContextMenu.BlazorContextMenuDefaults` API.
 
 ```xml
 <ContextMenu Id="myMenu" OverrideDefaultCssClass="my-menu">
