@@ -3,37 +3,43 @@
 </li>
 
 @functions{
+
+#pragma warning disable BL9993 // Component parameter is marked public
+
     /// <summary>
     /// Allows you to override the default css class of the menu's li seperator element for full customization.
     /// If you want to override this for all menus, then you could use <see cref="BlazorContextMenuDefaults.DefaultSeperatorCssClass"/>
     /// </summary>
     [Parameter]
-    protected string OverrideDefaultCssClass { get; set; }
+    public string OverrideDefaultCssClass { get; protected set; }
 
     /// <summary>
     /// Allows you to override the default css class of the menu's seperator hr element for full customization.
     /// If you want to override this for all menus, then you could use <see cref="BlazorContextMenuDefaults.DefaultSeperatorHrCssClass"/>
     /// </summary>
     [Parameter]
-    protected string OverrideDefaultHrCssClass { get; set; }
+    public string OverrideDefaultHrCssClass { get; protected set; }
 
     /// <summary>
     /// The id of the li element. This is optional
     /// </summary>
     [Parameter]
-    protected string Id { get; set; }
+    public string Id { get; protected set; }
 
     /// <summary>
     /// Additional css class for the menu's li seperator element. Use this to extend the default css
     /// </summary>
     [Parameter]
-    protected string CssClass { get; set; }
+    public string CssClass { get; protected set; }
 
     /// <summary>
     /// Additional css class for the menu's seperator hr element. Use this to extend the default css
     /// </summary>
     [Parameter]
-    protected string HrCssClass { get; set; }
+    public string HrCssClass { get; protected set; }
+
+
+#pragma warning restore BL9993 // Component parameter is marked public
 
     protected string ClassCalc => (OverrideDefaultCssClass == null ? BlazorContextMenuDefaults.DefaultSeperatorCssClass : OverrideDefaultCssClass) + (CssClass == null ? "" : $" {CssClass}");
     protected string HrClassCalc => (OverrideDefaultHrCssClass == null ? BlazorContextMenuDefaults.DefaultSeperatorHrCssClass : OverrideDefaultHrCssClass) + (HrCssClass == null ? "" : $" {HrCssClass}");

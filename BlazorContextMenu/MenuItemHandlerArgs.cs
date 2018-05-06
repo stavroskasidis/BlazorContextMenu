@@ -7,9 +7,9 @@ using System.Threading.Tasks;
 
 namespace BlazorContextMenu
 {
-    public class MenuItemEnabledHandlerArgs
+    public class MenuItemHandlerArgs
     {
-        public MenuItemEnabledHandlerArgs(string contextMenuId, string contextMenuTargetId, ElementRef menuItemElement, Item menuItem)
+        public MenuItemHandlerArgs(string contextMenuId, string contextMenuTargetId, ElementRef menuItemElement, Item menuItem)
         {
             ContextMenuId = contextMenuId;
             ContextMenuTargetId = contextMenuTargetId;

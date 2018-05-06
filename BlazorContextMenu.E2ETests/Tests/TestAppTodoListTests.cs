@@ -33,7 +33,7 @@ namespace BlazorContextMenu.E2ETests.Tests
         public void TodoItemsMenu_TriggerForFirstItemAndSelectCopy_ItemCopied()
         {
             //Arrange
-            var expectedItemsCount = 3;
+            var expectedItemsCount = 4;
             //Act
             OpenContextMenuAt("listitem-0");
             var menuItem = Browser.FindElement(By.Id("menuitem-copy"));
@@ -49,7 +49,7 @@ namespace BlazorContextMenu.E2ETests.Tests
         public void TodoItemsMenu_TriggerForSecondItemAndSelectDelete_ItemDeleted()
         {
             //Arrange
-            var expectedItemsCount = 1;
+            var expectedItemsCount = 2;
             //Act
             OpenContextMenuAt("listitem-1");
             var menuItem = Browser.FindElement(By.Id("menuitem-delete"));
@@ -89,10 +89,10 @@ namespace BlazorContextMenu.E2ETests.Tests
             menuItem.Click();
             var list = Browser.FindElement(By.Id("list"));
             var checkBoxes = list.FindElements(By.TagName("input"));
-            var secondBox = checkBoxes[0];
+            var secondCheckBox = checkBoxes[1];
 
             //Assert
-            Assert.Equal(expectedCheckedStatus,secondBox.Selected);
+            Assert.Equal(expectedCheckedStatus,secondCheckBox.Selected);
         }
 
 
@@ -118,6 +118,26 @@ namespace BlazorContextMenu.E2ETests.Tests
             //Assert
             Assert.Equal(expectedCheckedStatus, secondBox.Selected);
             Assert.Contains(expectedClass, classes);
+        }
+
+
+        [Fact]
+        public void TodoItemsMenu_UnckeckFirstItemAndTriggerMenu_CheckIsEnabled()
+        {
+            //Arrange
+            var notExpectedClass = BlazorContextMenuDefaults.DefaultMenuItemDisabledCssClass;
+
+            //Act
+            var list = Browser.FindElement(By.Id("list"));
+            var checkBoxes = list.FindElements(By.TagName("input"));
+            var firstCheckBox = checkBoxes[0];
+            firstCheckBox.Click();
+            OpenContextMenuAt("listitem-0");
+            var menuItem = Browser.FindElement(By.Id("menuitem-check"));
+            var classes = menuItem.GetAttribute("class");
+
+            //Assert
+            Assert.DoesNotContain(notExpectedClass, classes);
         }
     }
 }
