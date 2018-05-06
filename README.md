@@ -53,6 +53,62 @@ Nuget package page can be found [here](https://www.nuget.org/packages/Blazor.Con
 
 ```
 
+### Customization
+
+#### Adding css
+
+All components expose a `CssClass` parameter that you can use to add css on top of the default classes.
+
+```html
+<style>
+    .my-menu { color: darkblue; }
+    
+    /* using css specificity to override default background-color */
+    .my-menu .red-menuitem { background-color: #ffb3b3;}
+    .my-menu .red-menuitem:hover { background-color: #c11515;} 
+</style>
+
+<ContextMenu Id="myMenu" CssClass="my-menu">
+    <Item CssClass="red-menuitem">Red looking Item</Item>
+    <Item>Default looking item</Item>
+</ContextMenu>
+```
+
+#### Overriding default css
+
+You can override the default css classes completely in the following ways. Recommended only if you want to achieve advanced customization.
+
+1. Globally for all ContextMenus using the `BlazorContextMenu.BlazorContextMenuDefaults` API.
+
+```csharp
+    using BlazorContextMenu;
+
+    public class Program
+    {
+        static void Main(string[] args)
+        {
+            // Code ommited ...
+
+            BlazorContextMenuDefaults.DefaultMenuCssClass = "my-menu";
+            BlazorContextMenuDefaults.DefaultMenuItemCssClass = "my-menu-item";
+            BlazorContextMenuDefaults.DefaultMenuItemDisabledCssClass = "my-menu-item--disabled";
+            
+            // Code ommited ...
+            
+            new BrowserRenderer(serviceProvider).AddComponent<App>("app");
+        }
+    }
+```
+
+2. Using the `OverrideDefaultXXX` parameters on components. This will override the defaults from the `BlazorContextMenu.BlazorContextMenuDefaults` API.
+
+```xml
+<ContextMenu Id="myMenu" OverrideDefaultCssClass="my-menu">
+    <Item OverrideDefaultCssClass="my-menu-item" OverrideDefaultDisabledCssClass="my-menu-item--disabled">Item 1</Item>
+    <Item OverrideDefaultCssClass="my-menu-item" OverrideDefaultDisabledCssClass="my-menu-item--disabled">Item 2</Item>
+</ContextMenu>
+```
+
 ## ⚠️ Breaking changes ⚠️
 Upgrating from 0.1 to 0.2
 >- Rename "MenuItem" to "Item"

@@ -1,0 +1,12 @@
+﻿@page "/customization"
+
+<h1>Customization</h1>
+
+<ContextMenuTrigger MenuId="myCustMenu">
+    <p>Right-click on me to show the customized context menu !!</p>
+</ContextMenuTrigger>
+
+<ContextMenu Id="myCustMenu" CssClass="my-menu">
+    <Item CssClass="red-menuitem">Red looking Item</Item>
+    <Item>Default looking item</Item>
+</ContextMenu>
