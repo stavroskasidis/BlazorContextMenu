@@ -38,7 +38,6 @@
 
     bool CheckEnabledHandler(MenuItemHandlerArgs e)
     {
-        //Interop is required here due to current blazor limitations
         var itemIndex = RegisteredFunction.Invoke<int>("TestApp.TodoList.GetItemIndex", e.ContextMenuTargetId);
         if (itemIndex >= 0)
         {
@@ -65,7 +64,6 @@
 
     void CheckClick(MenuItemClickEventArgs e)
     {
-        //Interop is required here due to current blazor limitations
         var itemIndex = RegisteredFunction.Invoke<int>("TestApp.TodoList.GetItemIndex", e.ContextMenuTargetId);
         if (itemIndex >= 0)
         {
@@ -77,7 +75,6 @@
 
     void DeleteClick(MenuItemClickEventArgs e)
     {
-        //Interop is required here due to current blazor limitations
         var itemIndex = RegisteredFunction.Invoke<int>("TestApp.TodoList.GetItemIndex", e.ContextMenuTargetId);
         if (itemIndex >= 0)
         {

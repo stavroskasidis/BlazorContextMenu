@@ -66,7 +66,7 @@ namespace BlazorContextMenu.E2ETests.Tests
         public void TodoItemsMenu_TriggerForFirstItemAndSelectCheck_CheckIsDisabled()
         {
             //Arrange
-            var expectedClass= BlazorContextMenuDefaults.DefaultMenuItemDisabledCssClass;
+            var expectedClass = BlazorContextMenuDefaults.DefaultMenuItemDisabledCssClass;
 
             //Act
             OpenContextMenuAt("listitem-0");
@@ -92,7 +92,7 @@ namespace BlazorContextMenu.E2ETests.Tests
             var secondCheckBox = checkBoxes[1];
 
             //Assert
-            Assert.Equal(expectedCheckedStatus,secondCheckBox.Selected);
+            Assert.Equal(expectedCheckedStatus, secondCheckBox.Selected);
         }
 
 
@@ -138,6 +138,51 @@ namespace BlazorContextMenu.E2ETests.Tests
 
             //Assert
             Assert.DoesNotContain(notExpectedClass, classes);
+        }
+
+        [Fact]
+        public void TodoItemsMenu_TriggerForFirstItemAndCheckVisibilityOfLastItem_ItemIsInvisible()
+        {
+            //Arrange
+            var expectedDisplay = "none";
+
+            //Act
+            OpenContextMenuAt("listitem-0");
+            var menuItem = Browser.FindElement(By.Id("menuitem-invisible"));
+            var styles = menuItem.GetAttribute("style");
+
+            //Assert
+            Assert.Contains(expectedDisplay, styles);
+        }
+
+        [Fact]
+        public void TodoItemsMenu_TriggerForFirstItemAndCheckVisibilityOfDelete_ItemIsVisible()
+        {
+            //Arrange
+            var expectedDisplay = "block";
+
+            //Act
+            OpenContextMenuAt("listitem-0");
+            var menuItem = Browser.FindElement(By.Id("menuitem-delete"));
+            var styles = menuItem.GetAttribute("style");
+
+            //Assert
+            Assert.Contains(expectedDisplay, styles);
+        }
+
+        [Fact]
+        public void TodoItemsMenu_TriggerForThirdItemAndCheckVisibilityOfDelete_ItemIsInvisible()
+        {
+            //Arrange
+            var expectedDisplay = "none";
+
+            //Act
+            OpenContextMenuAt("listitem-2");
+            var menuItem = Browser.FindElement(By.Id("menuitem-delete"));
+            var styles = menuItem.GetAttribute("style");
+
+            //Assert
+            Assert.Contains(expectedDisplay, styles);
         }
     }
 }
