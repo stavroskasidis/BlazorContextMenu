@@ -129,3 +129,16 @@ app {
 .red-icon {
     color: firebrick;
 }
+
+
+.my-menu {
+    color: darkblue;
+}
+
+    .my-menu .red-menuitem {
+        background-color: #ffb3b3;
+    }
+
+        .my-menu .red-menuitem:hover {
+            background-color: #c11515;
+        }

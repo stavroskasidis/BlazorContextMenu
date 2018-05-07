@@ -8,35 +8,37 @@ using System.ComponentModel;
 using System.Linq;
 using System.Threading.Tasks;
 
+#pragma warning disable BL9993,CS4014 // Component parameter is marked public
+
 namespace BlazorContextMenu.Components
 {
     public class Item : BlazorComponent
     {
-        /// <summary>
-        /// Allows you to override the default css class of the menu's li element for full customization.
-        /// If you want to override this for all menus, then you could use <see cref="BlazorContextMenuDefaults.DefaultMenuItemCssClass"/>
-        /// </summary>
+                              /// <summary>
+                              /// Allows you to override the default css class of the menu's li element for full customization.
+                              /// If you want to override this for all menus, then you could use <see cref="BlazorContextMenuDefaults.DefaultMenuItemCssClass"/>
+                              /// </summary>
         [Parameter]
-        protected string OverrideDefaultCssClass { get; set; }
+        public string OverrideDefaultCssClass { get; protected set; }
 
         /// <summary>
         /// Allows you to override the default "disabled" css class of the menu's li element for full customization.
         /// If you want to override this for all menus, then you could use <see cref="BlazorContextMenuDefaults.DefaultMenuItemDisabledCssClass"/>
         /// </summary>
         [Parameter]
-        protected string OverrideDefaultDisabledCssClass { get; set; }
+        public string OverrideDefaultDisabledCssClass { get; protected set; }
 
         /// <summary>
         /// Additional css class for the menu's li element. Use this to extend the default css
         /// </summary>
         [Parameter]
-        protected string CssClass { get; set; }
+        public string CssClass { get; protected set; }
 
         /// <summary>
         /// Additional css class for the menu's li element when disabled. Use this to extend the default css
         /// </summary>
         [Parameter]
-        protected string DisabledCssClass { get; set; }
+        public string DisabledCssClass { get; protected set; }
 
         /// <summary>
         /// The menu item's onclick handler. A <see cref="MenuItemClickEventArgs"/> is passed to the action.
@@ -44,7 +46,7 @@ namespace BlazorContextMenu.Components
         /// Note: For an async handler use <seealso cref="ClickAsync"/>
         /// </summary>
         [Parameter]
-        protected Action<MenuItemClickEventArgs> Click { get; set; }
+        public Action<MenuItemClickEventArgs> Click { get; protected set; }
 
         /// <summary>
         /// The menu item's onclick async handler. A <see cref="MenuItemClickEventArgs"/> is passed to the action.
@@ -52,46 +54,60 @@ namespace BlazorContextMenu.Components
         /// Note: For a synchronous handler use <seealso cref="Click"/>
         /// </summary>
         [Parameter]
-        protected Func<MenuItemClickEventArgs, Task> ClickAsync { get; set; }
+        public Func<MenuItemClickEventArgs, Task> ClickAsync { get; protected set; }
 
         /// <summary>
         /// Sets the item's enabled state. Default <see cref="true" />
         /// </summary>
         [Parameter]
-        protected bool Enabled { get; set; } = true;
+        public bool Enabled { get; protected set; } = true;
 
+        /// <summary>
+        /// A handler that can be used to set the item's <see cref="Enabled"/> status dynamically
+        /// Note: For an async handler use <seealso cref="EnabledHandlerAsync"/>
+        /// </summary>
+        [Parameter]
+        public Func<MenuItemHandlerArgs, bool> EnabledHandler { get; protected set; }
 
-        /*=========================== TODO: Find an implementation that works
-         
-        ///// <summary>
-        ///// A handler that can be used to set the item's <see cref="Enabled"/> status dynamically
-        ///// Note: For an async handler use <seealso cref="EnabledHandlerAsync"/>
-        ///// </summary>
-        //[Parameter]
-        //protected Func<MenuItemEnabledHandlerArgs, bool> EnabledHandler { get; set; }
+        /// <summary>
+        /// A handler that can be used to set the item's <see cref="Enabled"/> status dynamically
+        /// Note: For a synchronous handler use <seealso cref="EnabledHandler"/>
+        /// </summary>
+        [Parameter]
+        public Func<MenuItemHandlerArgs, Task<bool>> EnabledHandlerAsync { get; protected set; }
 
-        ///// <summary>
-        ///// A handler that can be used to set the item's <see cref="Enabled"/> status dynamically
-        ///// Note: For a synchronous handler use <seealso cref="EnabledHandler"/>
-        ///// </summary>
-        //[Parameter]
-        //protected Func<MenuItemEnabledHandlerArgs, Task<bool>> EnabledHandlerAsync { get; set; }
+        /// <summary>
+        /// Sets the item's visible state. Default <see cref="true" />
+        /// </summary>
+        [Parameter]
+        public bool Visible { get; protected set; } = true;
 
+        /// <summary>
+        /// A handler that can be used to set the item's <see cref="Visible"/> status dynamically
+        /// Note: For an async handler use <seealso cref="VisibleHandlerAsync"/>
+        /// </summary>
+        [Parameter]
+        public Func<MenuItemHandlerArgs, bool> VisibleHandler { get; protected set; }
 
-        ========================  */
+        /// <summary>
+        /// A handler that can be used to set the item's <see cref="Visible"/> status dynamically
+        /// Note: For a synchronous handler use <seealso cref="VisibleHandler"/>
+        /// </summary>
+        [Parameter]
+        public Func<MenuItemHandlerArgs, Task<bool>> VisibleHandlerAsync { get; protected set; }
 
         /// <summary>
         /// The id of the li element. This is optional
         /// </summary>
         [Parameter]
-        protected string Id { get; set; }
+        public string Id { get; protected set; }
 
         /// <summary>
         /// Allows you to override the default x position offset of the submenu (i.e. the distance of the submenu from it's parent menu).
         /// If you want to override this for all menus, then you could use <see cref="BlazorContextMenuDefaults.SubMenuXPositionPixelsOffset"/>
         /// </summary>
         [Parameter]
-        protected int SubmenuXOffset { get; set; } = BlazorContextMenuDefaults.SubMenuXPositionPixelsOffset;
+        public int? SubmenuXOffset { get; protected set; }
 
 
         protected ElementRef MenuItemElement { get; set; }
@@ -113,8 +129,6 @@ namespace BlazorContextMenu.Components
                 }
             }
         }
-        
-
 
         protected override void OnInit()
         {
@@ -123,27 +137,21 @@ namespace BlazorContextMenu.Components
                 Id = Guid.NewGuid().ToString();
             }
 
-            BlazorContextMenuHandler.RegisterMenuItem(this);
             base.OnInit();
         }
 
         protected override void BuildRenderTree(RenderTreeBuilder builder)
         {
             int seq = -1;
-            //var hasEnabledHandler = EnabledHandler != null || EnabledHandlerAsync != null;
             builder.OpenElement(seq++, "li");
             builder.AddAttribute(seq++, "id", Id);
-            //if (hasEnabledHandler)
-            //{
-                //builder.AddAttribute(seq++, "dynamically-enabled", "true");
-            //}
             builder.AddAttribute(seq++, "onclick", BindMethods.GetEventHandlerValue<UIMouseEventArgs>((e) => OnClickInternal(e)));
             builder.AddAttribute(seq++, "class", "blazor-context-menu__item " + ClassCalc);
-            if (Enabled)
-            {
-                builder.AddAttribute(seq++, "onmouseover", $"blazorContextMenu.OnMenuItemMouseOver(event, {SubmenuXOffset}, this);");
-                builder.AddAttribute(seq++, "onmouseout", "blazorContextMenu.OnMenuItemMouseOut(event);");
-            }
+            builder.AddAttribute(seq++, "style", Visible ? "display:block;" : "display:none;");
+            builder.AddAttribute(seq++, "item-enabled", Enabled.ToString().ToLower());
+            builder.AddAttribute(seq++, "onmouseover", Enabled ? $"blazorContextMenu.OnMenuItemMouseOver(event, {SubmenuXOffset ?? BlazorContextMenuDefaults.SubMenuXPositionPixelsOffset}, this);" : "");
+            builder.AddAttribute(seq++, "onmouseout", Enabled ? "blazorContextMenu.OnMenuItemMouseOut(event);" : "");
+
             builder.AddElementReferenceCapture(seq++, (reference) => MenuItemElement = reference);
             builder.AddContent(seq++, ChildContent);
             builder.CloseElement();
@@ -182,51 +190,50 @@ namespace BlazorContextMenu.Components
             }
         }
 
-        [EditorBrowsable(EditorBrowsableState.Never)]
-        public string GetId()
+        protected override void OnAfterRender()
         {
-            return Id;
+            if (EnabledHandler == null && EnabledHandlerAsync == null && VisibleHandler == null && VisibleHandlerAsync == null) return;
+
+            var menuId = RegisteredFunction.Invoke<string>("BlazorContextMenu.MenuItem.GetMenuId", MenuItemElement);
+            var menu = BlazorContextMenuHandler.GetMenu(menuId);
+            var contextMenuTarget = menu.GetTarget();
+
+            //menu is not showing. TODO: find a better way to figure this out 
+            if (contextMenuTarget == null) return;
+
+            //Hacky but works. TODO: Improve this code when this stuff is supported in Blazor
+            Task.Run(async () =>
+            {
+                var oldEnabledValue = Enabled;
+                var oldVisibleValue = Visible;
+
+                var args = new MenuItemHandlerArgs(menuId, contextMenuTarget, MenuItemElement, this);
+                if (EnabledHandler != null)
+                {
+                    Enabled = EnabledHandler(args);
+                }
+                else if (EnabledHandlerAsync != null)
+                {
+                    Enabled = await EnabledHandlerAsync(args);
+                }
+
+                if (VisibleHandler != null)
+                {
+                    Visible = VisibleHandler(args);
+                }
+                else if (VisibleHandlerAsync != null)
+                {
+                    Visible = await VisibleHandlerAsync(args);
+                }
+
+                if (oldEnabledValue != Enabled || oldVisibleValue != Visible)
+                {
+                    StateHasChanged();
+                }
+            });
         }
-
-        //[EditorBrowsable(EditorBrowsableState.Never)]
-        //public void CalculateEnabled()
-        //{
-        //    if (EnabledHandler == null && EnabledHandlerAsync == null) return;
-        //    Console.WriteLine($"CalculateEnabled");
-            
-        //    //TODO: Find a better place for this code (enabled handlers)
-
-        //    var menuId = RegisteredFunction.Invoke<string>("BlazorContextMenu.MenuItem.GetMenuId", MenuItemElement);
-        //    var menu = BlazorContextMenuHandler.GetMenu(menuId);
-        //    var contextMenuTarget = menu.GetTarget();
-
-
-        //    if (contextMenuTarget == null) {
-        //        Console.WriteLine($"CalculateEnabled: Contextmenu taget is null");
-        //        return;
-        //    }
-        //    //menu is not showing. TODO: find a better way to figure this out 
-        //    var args = new MenuItemEnabledHandlerArgs(menuId, contextMenuTarget, MenuItemElement, this);
-        //    if (EnabledHandler != null)
-        //    {
-        //        Enabled = EnabledHandler(args);
-        //    }
-        //    else if (EnabledHandlerAsync != null)
-        //    {
-        //        Enabled = EnabledHandlerAsync(args).Result; //todo: change this...
-        //    }
-
-        //    StateHasChanged();
-
-        //    //Console.WriteLine($"OldEnabled: {oldEnabledValue}");
-        //    //Console.WriteLine($"Enabled: {Enabled}");
-
-        //    //if (oldEnabledValue != Enabled)
-        //    //{
-        //    //    Console.WriteLine($"Enabled state has changed");
-        //    //    StateHasChanged();
-        //    //}
-        //}
     }
 }
 
+
+#pragma warning restore BL9993, CS4014 // Component parameter is marked public

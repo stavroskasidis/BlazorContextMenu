@@ -9,6 +9,9 @@ using System.Threading.Tasks;
 
 namespace BlazorContextMenu
 {
+
+#pragma warning disable BL9993 // Component parameter is marked public
+
     public class ContextMenu : BlazorComponent
     {
         protected virtual string BaseClass => "blazor-context-menu blazor-context-menu__wrapper";
@@ -17,33 +20,33 @@ namespace BlazorContextMenu
         /// The id that the <see cref="Components.ContextMenuTrigger"/> will use to bind to. This parameter is required
         /// </summary>
         [Parameter]
-        protected string Id { get; set; }
+        public string Id { get; protected set; }
 
         /// <summary>
         /// Allows you to override the default css class of the menu's div element for full customization. 
         /// If you want to override this for all menus, then you could use <see cref="BlazorContextMenuDefaults.DefaultMenuCssClass"/>
         /// </summary>
         [Parameter]
-        protected string OverrideDefaultCssClass { get; set; }
+        public string OverrideDefaultCssClass { get; protected set; }
 
         /// <summary>
         /// Allows you to override the default css class of the menu's ul element for full customization.
         /// If you want to override this for all menus, then you could use <see cref="BlazorContextMenuDefaults.DefaultMenuListCssClass"/>
         /// </summary>
         [Parameter]
-        protected string OverrideDefaultListCssClass { get; set; }
+        public string OverrideDefaultListCssClass { get; protected set; }
 
         /// <summary>
         /// Additional css class for the menu's div element. Use this to extend the default css
         /// </summary>
         [Parameter]
-        protected string CssClass { get; set; }
+        public string CssClass { get; protected set; }
 
         /// <summary>
         /// Additional css class for the menu's ul element. Use this to extend the default css
         /// </summary>
         [Parameter]
-        protected string ListCssClass { get; set; }
+        public string ListCssClass { get; protected set; }
 
         [Parameter]
         protected RenderFragment ChildContent { get; set; }
@@ -113,3 +116,6 @@ namespace BlazorContextMenu
         }
     }
 }
+
+
+#pragma warning restore BL9993 // Component parameter is marked public

@@ -4,17 +4,20 @@
 </div>
 
 @functions{
+
+#pragma warning disable BL9993 // Component parameter is marked public
+
     /// <summary>
     /// The id of the <see cref="ContextMenu"/> to open. This parameter is required
     /// </summary>
     [Parameter]
-    private string MenuId { get; set; }
+    public string MenuId { get; protected set; }
 
     /// <summary>
     /// Additional css class for the trigger's div wrapper element
     /// </summary>
     [Parameter]
-    private string CssClass { get; set; }
+    public string CssClass { get; protected set; }
 
     [Parameter]
     protected RenderFragment ChildContent { get; set; }
@@ -25,4 +28,7 @@
             throw new ArgumentNullException(nameof(MenuId));
         }
     }
+
+
+#pragma warning restore BL9993 // Component parameter is marked public
 }

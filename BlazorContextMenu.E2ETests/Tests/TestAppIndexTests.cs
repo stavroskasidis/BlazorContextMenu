@@ -10,7 +10,7 @@ using Xunit.Abstractions;
 using BlazorContextMenu.E2ETests.Infrastructure;
 using System.Threading.Tasks;
 
-namespace Microsoft.AspNetCore.Blazor.E2ETest.Tests
+namespace BlazorContextMenu.E2ETests.Tests
 {
     public class TestAppIndexTests : TestBase, IDisposable
     {
@@ -26,7 +26,7 @@ namespace Microsoft.AspNetCore.Blazor.E2ETest.Tests
 
         protected void GoToPage()
         {
-            Navigate("/", noReload: true);
+            Navigate("/");
         }
 
         [Fact]
