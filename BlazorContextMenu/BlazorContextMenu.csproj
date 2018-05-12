@@ -34,28 +34,25 @@
     <Product>Blazor.ContextMenu</Product>
   </PropertyGroup>
 
-  <ItemGroup>
-    <!-- .js/.css files will be referenced via <script>/<link> tags; other content files will just be included in the app's 'dist' directory without any tags referencing them -->
+  <!-- .js/.css files will be referenced via <script>/<link> tags; other content files will just be included in the app's 'dist' directory without any tags referencing them -->
+  <ItemGroup Condition="'$(Configuration)'=='Debug'">
     <EmbeddedResource Include="content\**\*.js" LogicalName="blazor:js:%(RecursiveDir)%(Filename)%(Extension)" />
     <EmbeddedResource Include="content\**\*.css" LogicalName="blazor:css:%(RecursiveDir)%(Filename)%(Extension)" />
+  </ItemGroup>
+  
+  <ItemGroup Condition="'$(Configuration)'=='Release'">
+    <EmbeddedResource Include="content\**\*.min.js" LogicalName="blazor:js:%(RecursiveDir)%(Filename)%(Extension)" />
+    <EmbeddedResource Include="content\**\*.min.css" LogicalName="blazor:css:%(RecursiveDir)%(Filename)%(Extension)" />
+  </ItemGroup>
+  
+  <ItemGroup>
     <EmbeddedResource Include="content\**" Exclude="**\*.js;**\*.css" LogicalName="blazor:file:%(RecursiveDir)%(Filename)%(Extension)" />
   </ItemGroup>
+  
 
   <ItemGroup>
     <PackageReference Include="Microsoft.AspNetCore.Blazor.Browser" Version="0.3.0" />
     <PackageReference Include="Microsoft.AspNetCore.Blazor.Build" Version="0.3.0" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <BlazorGenerate Remove="ContextMenu.cshtml" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <BlazorGenerate Remove="_ViewImports.cshtml" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <Content Remove="_ViewImports.cshtml" />
   </ItemGroup>
 
   <ItemGroup>
@@ -64,32 +61,8 @@
     <None Include="_ViewImports.cshtml" />
   </ItemGroup>
 
-  <ItemGroup>
-    <BlazorGenerate Remove="ContextMenuTrigger.cshtml" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <Content Remove="ContextMenuTrigger.cshtml" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <BlazorGenerate Remove="MenuItem.cshtml" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <Compile Remove="ExampleJsInterop.cs" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <BlazorGenerate Remove="Seperator.cshtml" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <Content Remove="Seperator.cshtml" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <BlazorGenerate Remove="Components\Seperator.cshtml" />
-  </ItemGroup>
+  <Target Name="PreBuild" BeforeTargets="PreBuildEvent">
+    <Exec Command="if &quot;$(ConfigurationName)&quot;==&quot;Release&quot; &quot;$(ProjectDir)node_modules\.bin\gulp.cmd&quot; all" />
+  </Target>
 
 </Project>
