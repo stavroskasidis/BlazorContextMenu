@@ -36,8 +36,8 @@
 
   <!-- .js/.css files will be referenced via <script>/<link> tags; other content files will just be included in the app's 'dist' directory without any tags referencing them -->
   <ItemGroup Condition="'$(Configuration)'=='Debug'">
-    <EmbeddedResource Include="content\**\*.js" LogicalName="blazor:js:%(RecursiveDir)%(Filename)%(Extension)" />
-    <EmbeddedResource Include="content\**\*.css" LogicalName="blazor:css:%(RecursiveDir)%(Filename)%(Extension)" />
+    <EmbeddedResource Include="content\**\*.js" Exclude="content\**\*.min.js" LogicalName="blazor:js:%(RecursiveDir)%(Filename)%(Extension)" />
+    <EmbeddedResource Include="content\**\*.css" Exclude="content\**\*.min.css" LogicalName="blazor:css:%(RecursiveDir)%(Filename)%(Extension)" />
   </ItemGroup>
   
   <ItemGroup Condition="'$(Configuration)'=='Release'">
@@ -55,11 +55,6 @@
     <PackageReference Include="Microsoft.AspNetCore.Blazor.Build" Version="0.3.0" />
   </ItemGroup>
 
-  <ItemGroup>
-    <None Include="Components\ContextMenuTrigger.cshtml" />
-    <None Include="Components\Seperator.cshtml" />
-    <None Include="_ViewImports.cshtml" />
-  </ItemGroup>
 
   <Target Name="PreBuild" BeforeTargets="PreBuildEvent">
     <Exec Command="if &quot;$(ConfigurationName)&quot;==&quot;Release&quot; &quot;$(ProjectDir)node_modules\.bin\gulp.cmd&quot; all" />
