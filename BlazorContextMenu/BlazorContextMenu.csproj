@@ -60,6 +60,7 @@
 
   <ItemGroup>
     <None Include="Components\ContextMenuTrigger.cshtml" />
+    <None Include="Components\Item.cshtml" />
     <None Include="Components\Seperator.cshtml" />
     <None Include="_ViewImports.cshtml" />
   </ItemGroup>
@@ -90,6 +91,14 @@
 
   <ItemGroup>
     <BlazorGenerate Remove="Components\Seperator.cshtml" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <BlazorGenerate Remove="Components\Item.cshtml" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Content Remove="Components\Item.cshtml" />
   </ItemGroup>
 
 </Project>
