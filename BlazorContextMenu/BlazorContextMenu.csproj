@@ -57,6 +57,9 @@
 
 
   <Target Name="PreBuild" BeforeTargets="PreBuildEvent">
+    <Message Text="Configuration = $(Configuration)" Importance="high" />
+    <Message Text="ConfigurationName = $(ConfigurationName)" Importance="high" />
+    <Message Condition="'$(Configuration)' == 'Release'" Text="Configuration is release !" Importance="high" />
     <Exec Command="if &quot;$(ConfigurationName)&quot;==&quot;Release&quot; &quot;$(ProjectDir)node_modules\.bin\gulp.cmd&quot; all" />
   </Target>
 
