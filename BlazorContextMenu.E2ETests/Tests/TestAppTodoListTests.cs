@@ -35,7 +35,7 @@ namespace BlazorContextMenu.E2ETests.Tests
             //Arrange
             var expectedItemsCount = 4;
             //Act
-            OpenContextMenuAt("listitem-0", "todoItemsMenu");
+            OpenContextMenuAt("listitem-0");
             var menuItem = Browser.FindElement(By.Id("menuitem-copy"));
             menuItem.Click();
 
@@ -51,7 +51,7 @@ namespace BlazorContextMenu.E2ETests.Tests
             //Arrange
             var expectedItemsCount = 2;
             //Act
-            OpenContextMenuAt("listitem-1", "todoItemsMenu");
+            OpenContextMenuAt("listitem-1");
             var menuItem = Browser.FindElement(By.Id("menuitem-delete"));
             menuItem.Click();
 
@@ -69,7 +69,7 @@ namespace BlazorContextMenu.E2ETests.Tests
             var expectedClass = BlazorContextMenuDefaults.DefaultMenuItemDisabledCssClass;
 
             //Act
-            OpenContextMenuAt("listitem-0", "todoItemsMenu");
+            OpenContextMenuAt("listitem-0");
             var menuItem = Browser.FindElement(By.Id("menuitem-check"));
             var classes = menuItem.GetAttribute("class");
 
@@ -84,7 +84,7 @@ namespace BlazorContextMenu.E2ETests.Tests
             var expectedCheckedStatus = true;
 
             //Act
-            OpenContextMenuAt("listitem-1", "todoItemsMenu");
+            OpenContextMenuAt("listitem-1");
             var menuItem = Browser.FindElement(By.Id("menuitem-check"));
             menuItem.Click();
             var list = Browser.FindElement(By.Id("list"));
@@ -104,10 +104,10 @@ namespace BlazorContextMenu.E2ETests.Tests
             var expectedClass = BlazorContextMenuDefaults.DefaultMenuItemDisabledCssClass;
 
             //Act
-            OpenContextMenuAt("listitem-1", "todoItemsMenu");
+            OpenContextMenuAt("listitem-1");
             var menuItem = Browser.FindElement(By.Id("menuitem-check"));
             menuItem.Click();
-            OpenContextMenuAt("listitem-1", "todoItemsMenu");
+            OpenContextMenuAt("listitem-1");
             menuItem = Browser.FindElement(By.Id("menuitem-check"));
             var classes = menuItem.GetAttribute("class");
             var list = Browser.FindElement(By.Id("list"));
@@ -132,7 +132,7 @@ namespace BlazorContextMenu.E2ETests.Tests
             var checkBoxes = list.FindElements(By.TagName("input"));
             var firstCheckBox = checkBoxes[0];
             firstCheckBox.Click();
-            OpenContextMenuAt("listitem-0", "todoItemsMenu");
+            OpenContextMenuAt("listitem-0");
             var menuItem = Browser.FindElement(By.Id("menuitem-check"));
             var classes = menuItem.GetAttribute("class");
 
@@ -147,7 +147,7 @@ namespace BlazorContextMenu.E2ETests.Tests
             var expectedDisplay = "none";
 
             //Act
-            OpenContextMenuAt("listitem-0", "todoItemsMenu");
+            OpenContextMenuAt("listitem-0");
             var menuItem = Browser.FindElement(By.Id("menuitem-invisible"));
             var styles = menuItem.GetAttribute("style");
 
@@ -162,7 +162,7 @@ namespace BlazorContextMenu.E2ETests.Tests
             var expectedDisplay = "block";
 
             //Act
-            OpenContextMenuAt("listitem-0", "todoItemsMenu");
+            OpenContextMenuAt("listitem-0");
             var menuItem = Browser.FindElement(By.Id("menuitem-delete"));
             var styles = menuItem.GetAttribute("style");
 
@@ -177,7 +177,7 @@ namespace BlazorContextMenu.E2ETests.Tests
             var expectedDisplay = "none";
 
             //Act
-            OpenContextMenuAt("listitem-2", "todoItemsMenu");
+            OpenContextMenuAt("listitem-2");
             var menuItem = Browser.FindElement(By.Id("menuitem-delete"));
             var styles = menuItem.GetAttribute("style");
 
