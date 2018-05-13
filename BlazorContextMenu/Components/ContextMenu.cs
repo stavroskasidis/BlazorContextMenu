@@ -7,7 +7,7 @@ using System.ComponentModel;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace BlazorContextMenu
+namespace BlazorContextMenu.Components
 {
 
 #pragma warning disable BL9993 // Component parameter is marked public

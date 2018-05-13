@@ -118,6 +118,9 @@ Upgrating from 0.1 to 0.2
 
 ## Release Notes
 
+### 0.4
+>- Added minification for included css/js
+
 ### 0.3
 >- Added dynamic EnabledHandlers for menu items
 >- Added Active and dynamic ActiveHandlers for menu items

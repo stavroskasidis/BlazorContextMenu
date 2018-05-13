@@ -14,7 +14,10 @@
     <PackageLicenseUrl>https://github.com/stavroskasidis/blazor-context-menu/blob/master/LICENSE</PackageLicenseUrl>
     <PackageProjectUrl>https://github.com/stavroskasidis/blazor-context-menu</PackageProjectUrl>
     <Description>Context menu component for Blazor</Description>
-    <PackageReleaseNotes>0.3
+    <PackageReleaseNotes>0.4
+- Added minification for included css/js
+
+0.3
 - Added dynamic EnabledHandlers for menu items
 - Added Active and dynamic ActiveHandlers for menu items
 
@@ -29,69 +32,36 @@
     <Copyright />
     <PackageTags>blazor blazor-component blazor-context-menu context-menu contextmenu menu blazor-menu blazorcontextmenu</PackageTags>
     <VersionSuffix>$(VersionSuffix)</VersionSuffix>
-    <Version>0.3.0</Version>
+    <Version>0.4.0</Version>
     <Version Condition=" '$(VersionSuffix)' != '' ">$(Version)-$(VersionSuffix)</Version>
     <Product>Blazor.ContextMenu</Product>
   </PropertyGroup>
 
-  <ItemGroup>
-    <!-- .js/.css files will be referenced via <script>/<link> tags; other content files will just be included in the app's 'dist' directory without any tags referencing them -->
-    <EmbeddedResource Include="content\**\*.js" LogicalName="blazor:js:%(RecursiveDir)%(Filename)%(Extension)" />
-    <EmbeddedResource Include="content\**\*.css" LogicalName="blazor:css:%(RecursiveDir)%(Filename)%(Extension)" />
-    <EmbeddedResource Include="content\**" Exclude="**\*.js;**\*.css" LogicalName="blazor:file:%(RecursiveDir)%(Filename)%(Extension)" />
+  <!-- .js/.css files will be referenced via <script>/<link> tags; other content files will just be included in the app's 'dist' directory without any tags referencing them -->
+  <ItemGroup Condition="'$(Configuration)' == 'Debug'">
+    <EmbeddedResource Include="content\*.js" Exclude="content\*.min.js" LogicalName="blazor:js:%(RecursiveDir)%(Filename)%(Extension)" />
+    <EmbeddedResource Include="content\*.css" Exclude="content\*.min.css" LogicalName="blazor:css:%(RecursiveDir)%(Filename)%(Extension)" />
+    <!--<EmbeddedResource Include="content\**" Exclude="**\*.js;**\*.css" LogicalName="blazor:file:%(RecursiveDir)%(Filename)%(Extension)" />-->
   </ItemGroup>
+  
+  <ItemGroup Condition="'$(Configuration)' == 'Release'">
+    <EmbeddedResource Include="content\*.min.js" LogicalName="blazor:js:%(RecursiveDir)%(Filename)%(Extension)" />
+    <EmbeddedResource Include="content\*.min.css" LogicalName="blazor:css:%(RecursiveDir)%(Filename)%(Extension)" />
+    <!--<EmbeddedResource Include="content\**" Exclude="**\*.js;**\*.css" LogicalName="blazor:file:%(RecursiveDir)%(Filename)%(Extension)" />-->
+  </ItemGroup>  
 
   <ItemGroup>
     <PackageReference Include="Microsoft.AspNetCore.Blazor.Browser" Version="0.4.0-preview1-10285" />
     <PackageReference Include="Microsoft.AspNetCore.Blazor.Build" Version="0.4.0-preview1-10285" />
   </ItemGroup>
 
-  <ItemGroup>
-    <BlazorGenerate Remove="ContextMenu.cshtml" />
-  </ItemGroup>
 
-  <ItemGroup>
-    <BlazorGenerate Remove="_ViewImports.cshtml" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <Content Remove="_ViewImports.cshtml" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <None Include="Components\ContextMenuTrigger.cshtml" />
-    <None Include="Components\Item.cshtml" />
-    <None Include="Components\Seperator.cshtml" />
-    <None Include="_ViewImports.cshtml" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <BlazorGenerate Remove="ContextMenuTrigger.cshtml" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <Content Remove="ContextMenuTrigger.cshtml" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <BlazorGenerate Remove="MenuItem.cshtml" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <Compile Remove="ExampleJsInterop.cs" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <BlazorGenerate Remove="Seperator.cshtml" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <Content Remove="Seperator.cshtml" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <BlazorGenerate Remove="Components\Seperator.cshtml" />
-  </ItemGroup>
+  <!--<Target Name="PreBuild" BeforeTargets="PreBuildEvent">
+    <Message Text="Configuration = $(Configuration)" Importance="high" />
+    <Message Text="ConfigurationName = $(ConfigurationName)" Importance="high" />
+    <Message Condition="'$(Configuration)' == 'Release'" Text="Configuration is release !" Importance="high" />
+    <Exec Command="if &quot;$(ConfigurationName)&quot;==&quot;Release&quot; &quot;$(ProjectDir)node_modules\.bin\gulp.cmd&quot; all" />
+  </Target>-->
 
   <ItemGroup>
     <BlazorGenerate Remove="Components\Item.cshtml" />
