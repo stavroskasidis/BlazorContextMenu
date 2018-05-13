@@ -36,7 +36,7 @@ namespace BlazorContextMenu.E2ETests.Tests
             var expectedDisplay = "block";
 
             //Act
-            OpenContextMenuAt("test1-trigger");
+            OpenContextMenuAt("test1-trigger", "menu1");
 
             //Assert
             var menuElement = Browser.FindElement(By.Id("menu1"));
@@ -51,7 +51,7 @@ namespace BlazorContextMenu.E2ETests.Tests
             var expectedDisplay = "none";
 
             //Act
-            OpenContextMenuAt("test1-trigger");
+            OpenContextMenuAt("test1-trigger", "menu1");
             var headerElement = Browser.FindElement(By.Id("header"));
             headerElement.Click();
 
@@ -68,7 +68,7 @@ namespace BlazorContextMenu.E2ETests.Tests
             var expectedDisplay = "none";
 
             //Act
-            OpenContextMenuAt("test1-trigger");
+            OpenContextMenuAt("test1-trigger", "menu1");
             var menuItem = Browser.FindElement(By.Id("menu1-item1"));
             menuItem.Click();
             new WebDriverWait(Browser, TimeSpan.FromSeconds(10))
@@ -90,7 +90,7 @@ namespace BlazorContextMenu.E2ETests.Tests
             var expectedDisplay = "none";
 
             //Act
-            OpenContextMenuAt("test1-trigger");
+            OpenContextMenuAt("test1-trigger", "menu1");
             var menuItem = Browser.FindElement(By.Id("menu1-item2"));
             menuItem.Click();
 
@@ -110,7 +110,7 @@ namespace BlazorContextMenu.E2ETests.Tests
             var expectedDisplay = "block";
 
             //Act
-            OpenContextMenuAt("test1-trigger");
+            OpenContextMenuAt("test1-trigger", "menu1");
             var menuItem = Browser.FindElement(By.Id("menu1-item3"));
             menuItem.Click();
 
@@ -127,7 +127,7 @@ namespace BlazorContextMenu.E2ETests.Tests
             var expectedDisplay = "block";
 
             //Act
-            OpenContextMenuAt("test2-trigger");
+            OpenContextMenuAt("test2-trigger", "menu2");
             MouseOverElement("submenu1-trigger");
             await Task.Delay(500); //wait for submenu to popup
 
@@ -144,7 +144,7 @@ namespace BlazorContextMenu.E2ETests.Tests
             var expectedDisplay = "none";
 
             //Act
-            OpenContextMenuAt("test2-trigger");
+            OpenContextMenuAt("test2-trigger", "menu2");
             MouseOverElement("submenu1-trigger");
             await Task.Delay(500); //wait for submenu to popup
             MouseOverElement("menu2-item1");
@@ -162,7 +162,7 @@ namespace BlazorContextMenu.E2ETests.Tests
             var expectedDisplay = "block";
 
             //Act
-            OpenContextMenuAt("test2-trigger");
+            OpenContextMenuAt("test2-trigger", "menu2");
             MouseOverElement("submenu1-trigger");
             await Task.Delay(500); //wait for submenu to popup
             MouseOverElement("submenu2-trigger");
