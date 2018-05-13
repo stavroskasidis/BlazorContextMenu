@@ -38,20 +38,17 @@
   </PropertyGroup>
 
   <!-- .js/.css files will be referenced via <script>/<link> tags; other content files will just be included in the app's 'dist' directory without any tags referencing them -->
-  <ItemGroup Condition="'$(Configuration)'=='Debug'">
-    <EmbeddedResource Include="content\**\*.js" Exclude="content\**\*.min.js" LogicalName="blazor:js:%(RecursiveDir)%(Filename)%(Extension)" />
-    <EmbeddedResource Include="content\**\*.css" Exclude="content\**\*.min.css" LogicalName="blazor:css:%(RecursiveDir)%(Filename)%(Extension)" />
+  <ItemGroup Condition="'$(Configuration)' == 'Debug'">
+    <EmbeddedResource Include="content\*.js" Exclude="content\*.min.js" LogicalName="blazor:js:%(RecursiveDir)%(Filename)%(Extension)" />
+    <EmbeddedResource Include="content\*.css" Exclude="content\*.min.css" LogicalName="blazor:css:%(RecursiveDir)%(Filename)%(Extension)" />
+    <!--<EmbeddedResource Include="content\**" Exclude="**\*.js;**\*.css" LogicalName="blazor:file:%(RecursiveDir)%(Filename)%(Extension)" />-->
   </ItemGroup>
   
-  <ItemGroup Condition="'$(Configuration)'=='Release'">
-    <EmbeddedResource Include="content\**\*.min.js" LogicalName="blazor:js:%(RecursiveDir)%(Filename)%(Extension)" />
-    <EmbeddedResource Include="content\**\*.min.css" LogicalName="blazor:css:%(RecursiveDir)%(Filename)%(Extension)" />
-  </ItemGroup>
-  
-  <ItemGroup>
-    <EmbeddedResource Include="content\**" Exclude="**\*.js;**\*.css" LogicalName="blazor:file:%(RecursiveDir)%(Filename)%(Extension)" />
-  </ItemGroup>
-  
+  <ItemGroup Condition="'$(Configuration)' == 'Release'">
+    <EmbeddedResource Include="content\*.min.js" LogicalName="blazor:js:%(RecursiveDir)%(Filename)%(Extension)" />
+    <EmbeddedResource Include="content\*.min.css" LogicalName="blazor:css:%(RecursiveDir)%(Filename)%(Extension)" />
+    <!--<EmbeddedResource Include="content\**" Exclude="**\*.js;**\*.css" LogicalName="blazor:file:%(RecursiveDir)%(Filename)%(Extension)" />-->
+  </ItemGroup>  
 
   <ItemGroup>
     <PackageReference Include="Microsoft.AspNetCore.Blazor.Browser" Version="0.3.0" />
@@ -59,8 +56,11 @@
   </ItemGroup>
 
 
-  <Target Name="PreBuild" BeforeTargets="PreBuildEvent">
+  <!--<Target Name="PreBuild" BeforeTargets="PreBuildEvent">
+    <Message Text="Configuration = $(Configuration)" Importance="high" />
+    <Message Text="ConfigurationName = $(ConfigurationName)" Importance="high" />
+    <Message Condition="'$(Configuration)' == 'Release'" Text="Configuration is release !" Importance="high" />
     <Exec Command="if &quot;$(ConfigurationName)&quot;==&quot;Release&quot; &quot;$(ProjectDir)node_modules\.bin\gulp.cmd&quot; all" />
-  </Target>
+  </Target>-->
 
 </Project>
