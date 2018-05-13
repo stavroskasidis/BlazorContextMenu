@@ -28,7 +28,7 @@ namespace BlazorContextMenu.E2ETests.Infrastructure
             var element = Browser.FindElement(By.Id(triggerElementId));
             var action = new Actions(Browser);
             action.ContextClick(element).Perform();
-            new WebDriverWait(Browser, TimeSpan.FromSeconds(30))
+            new WebDriverWait(Browser, TimeSpan.FromSeconds(5))
                 .Until(ExpectedConditions.ElementIsVisible(By.Id(menuId)));
         }
 
