@@ -118,7 +118,7 @@ Upgrating from 0.1 to 0.2
 
 ## Release Notes
 
-### 0.4
+### 0.4 (In development)
 >- Added minification for included css/js
 
 ### 0.3
