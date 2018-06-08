@@ -8,5 +8,7 @@
     "rimraf": "^2.6.2",
     "run-sequence": "^2.2.1"
   },
-  "scripts": {}
+  "scripts": {
+	"minify": "gulp all"
+  }
 }

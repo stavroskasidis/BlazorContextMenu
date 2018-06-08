@@ -3,7 +3,7 @@ cd "%~dp0"
 set version-suffix=%1
 
 cd BlazorContextMenu
-call "node_modules\.bin\gulp.cmd" all
+call npm run minify
 cd "%~dp0"
 
 dotnet build BlazorContextMenu.sln -c Release
