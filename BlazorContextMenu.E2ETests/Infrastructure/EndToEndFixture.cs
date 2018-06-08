@@ -19,10 +19,6 @@ namespace BlazorContextMenu.E2ETests.Infrastructure
     {
         public IWebDriver Browser { get; }
 
-        public ILogs Logs { get; }
-
-        public ITestOutputHelper Output { get; set; }
-
         public EndToEndFixture()
         {
             _rootUriInitializer = new Lazy<Uri>(() => new Uri(StartAndGetRootUri()));
@@ -48,7 +44,6 @@ namespace BlazorContextMenu.E2ETests.Infrastructure
             {
                 var driver = new RemoteWebDriver(opts);
                 Browser = driver;
-                Logs = new RemoteLogs(driver);
             }
             catch (WebDriverException ex)
             {
@@ -92,7 +87,7 @@ namespace BlazorContextMenu.E2ETests.Infrastructure
         protected IWebHost CreateWebHost()
         {
             //ContentRoot = "..\\..\\..\\..\\BlazorContextMenu.TestApp.Server\\wwwroot";
-            PathBase =    "..\\..\\..\\..\\BlazorContextMenu.TestApp.Server\\";
+            PathBase = "..\\..\\..\\..\\BlazorContextMenu.TestApp.Server\\";
 
             var args = new List<string>
             {

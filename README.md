@@ -118,12 +118,16 @@ Upgrating from 0.1 to 0.2
 
 ## Release Notes
 
+### 0.4
+>- Added minification for included css/js
+>- Updated to Blazor 0.4.0
+
 ### 0.3
 >- Added dynamic EnabledHandlers for menu items
 >- Added Active and dynamic ActiveHandlers for menu items
 
 ### 0.2
->- Moved to blazor 0.3.0
+>- Updated to Blazor 0.3.0
 >- Renamed "MenuItem" to "Item" to avoid conflicts with the html element "menuitem"
 >- Renamed "MenuSeperator" to "Seperator" for consistency
 >- Removed "MenuItemWithSubmenu" (just use a regular "Item")
