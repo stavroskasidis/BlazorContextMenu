@@ -14,13 +14,16 @@ namespace BlazorContextMenu
         //TODO: Find a better way to keep references
         private static Dictionary<string, ContextMenu> InitializedMenus = new Dictionary<string, ContextMenu>();
 
-        [EditorBrowsable(EditorBrowsableState.Never)]
         public static void Register(ContextMenu menu)
         {
-            InitializedMenus[menu.GetId()] = menu;
+            InitializedMenus[menu.Id] = menu;
         }
 
-        [EditorBrowsable(EditorBrowsableState.Never)]
+        public static void Unregister(ContextMenu menu)
+        {
+            InitializedMenus.Remove(menu.Id);
+        }
+
         public static ContextMenu GetMenu(string id)
         {
             return InitializedMenus[id];
@@ -30,7 +33,7 @@ namespace BlazorContextMenu
         {
             if (InitializedMenus.ContainsKey(id))
             {
-                InitializedMenus[id].Show(x,y, target);
+                InitializedMenus[id].Show(x, y, target);
             }
         }
 

@@ -12,7 +12,7 @@ namespace BlazorContextMenu.Components
 
 #pragma warning disable BL9993 // Component parameter is marked public
 
-    public class ContextMenu : BlazorComponent
+    public class ContextMenu : BlazorComponent, IDisposable
     {
         protected virtual string BaseClass => "blazor-context-menu blazor-context-menu__wrapper";
 
@@ -69,6 +69,11 @@ namespace BlazorContextMenu.Components
             BlazorContextMenuHandler.Register(this);
         }
 
+        public void Dispose()
+        {
+            BlazorContextMenuHandler.Unregister(this);
+        }
+
         protected override void BuildRenderTree(RenderTreeBuilder builder)
         {
             base.BuildRenderTree(builder);
@@ -101,12 +106,6 @@ namespace BlazorContextMenu.Components
         {
             IsShowing = false;
             StateHasChanged();
-        }
-
-        [EditorBrowsable(EditorBrowsableState.Never)]
-        public string GetId()
-        {
-            return Id;
         }
 
         [EditorBrowsable(EditorBrowsableState.Never)]

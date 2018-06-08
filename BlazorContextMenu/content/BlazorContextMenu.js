@@ -136,13 +136,28 @@ var blazorContextMenu = function (blazorContextMenu) {
             //TODO: Rewrite this once this Blazor limitation is lifted
             target.id = guid();
         }
-        var showMenuMethod = Blazor.platform.findMethod("BlazorContextMenu", "BlazorContextMenu", "BlazorContextMenuHandler", "ShowMenu");
-        Blazor.platform.callMethod(showMenuMethod, null, [Blazor.platform.toDotNetString(menuId), Blazor.platform.toDotNetString(x.toString()), Blazor.platform.toDotNetString(y.toString()), Blazor.platform.toDotNetString(target.id)]);
+
+        Blazor.invokeDotNetMethod({
+            type: {
+                assembly: 'BlazorContextMenu',
+                name: 'BlazorContextMenu.BlazorContextMenuHandler'
+            },
+            method: {
+                name: 'ShowMenu'
+            }
+        }, menuId, x.toString(), y.toString(), target.id);
     }
 
     blazorContextMenu.Hide = function (menuId) {
-        var hideMenuMethod = Blazor.platform.findMethod("BlazorContextMenu", "BlazorContextMenu", "BlazorContextMenuHandler", "HideMenu");
-        Blazor.platform.callMethod(hideMenuMethod, null, [Blazor.platform.toDotNetString(menuId)]);
+        Blazor.invokeDotNetMethod({
+            type: {
+                assembly: 'BlazorContextMenu',
+                name: 'BlazorContextMenu.BlazorContextMenuHandler'
+            },
+            method: {
+                name: 'HideMenu'
+            }
+        }, menuId);
     }
 
     var subMenuTimeout = null;
