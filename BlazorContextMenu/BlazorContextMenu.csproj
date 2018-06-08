@@ -51,8 +51,8 @@
   </ItemGroup>  
 
   <ItemGroup>
-    <PackageReference Include="Microsoft.AspNetCore.Blazor.Browser" Version="0.4.0-preview1-10285" />
-    <PackageReference Include="Microsoft.AspNetCore.Blazor.Build" Version="0.4.0-preview1-10285" />
+    <PackageReference Include="Microsoft.AspNetCore.Blazor.Browser" Version="0.4.0" />
+    <PackageReference Include="Microsoft.AspNetCore.Blazor.Build" Version="0.4.0" />
   </ItemGroup>
 
 
@@ -65,10 +65,6 @@
 
   <ItemGroup>
     <BlazorGenerate Remove="Components\Item.cshtml" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <Content Remove="Components\Item.cshtml" />
   </ItemGroup>
 
 </Project>
