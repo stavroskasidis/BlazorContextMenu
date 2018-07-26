@@ -118,6 +118,9 @@ Upgrating from 0.1 to 0.2
 
 ## Release Notes
 
+### 0.5
+>- Updated to Blazor 0.5.0
+
 ### 0.4
 >- Added minification for included css/js
 >- Updated to Blazor 0.4.0

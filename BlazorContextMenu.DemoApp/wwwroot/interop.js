@@ -14,7 +14,8 @@ if (window.Element && !Element.prototype.closest) {
 }
 
 
-Blazor.registerFunction('DemoApp.FetchData.GetItemIndex', function (targetItemId) {
+
+DemoApp_GetItemIndex = function (targetItemId) {
     var targetItem = document.getElementById(targetItemId);
     var tr = targetItem.closest("tr");
     if (tr.parentNode.tagName == "THEAD") {
@@ -28,4 +29,4 @@ Blazor.registerFunction('DemoApp.FetchData.GetItemIndex', function (targetItemId
         if (children[i].nodeType == 1) num++;
     }
     return -1;
-});
+};

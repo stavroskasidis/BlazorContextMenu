@@ -1,6 +1,7 @@
 ﻿using BlazorContextMenu.Components;
 using Microsoft.AspNetCore.Blazor;
 using Microsoft.AspNetCore.Blazor.Components;
+using Microsoft.JSInterop;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -9,7 +10,7 @@ using System.Threading.Tasks;
 
 namespace BlazorContextMenu
 {
-    internal static class BlazorContextMenuHandler
+    public static class BlazorContextMenuHandler
     {
         //TODO: Find a better way to keep references
         private static Dictionary<string, ContextMenu> InitializedMenus = new Dictionary<string, ContextMenu>();
@@ -29,6 +30,7 @@ namespace BlazorContextMenu
             return InitializedMenus[id];
         }
 
+        [JSInvokable]
         public static void ShowMenu(string id, string x, string y, string target)
         {
             if (InitializedMenus.ContainsKey(id))
@@ -37,6 +39,7 @@ namespace BlazorContextMenu
             }
         }
 
+        [JSInvokable]
         public static void HideMenu(string id)
         {
             if (InitializedMenus.ContainsKey(id))

@@ -14,7 +14,10 @@
     <PackageLicenseUrl>https://github.com/stavroskasidis/blazor-context-menu/blob/master/LICENSE</PackageLicenseUrl>
     <PackageProjectUrl>https://github.com/stavroskasidis/blazor-context-menu</PackageProjectUrl>
     <Description>Context menu component for Blazor</Description>
-    <PackageReleaseNotes>0.4
+    <PackageReleaseNotes>0.5
+- Updated to Blazor 0.5.0
+
+0.4
 - Added minification for included css/js
 - Updated to Blazor 0.4.0
 
@@ -33,7 +36,7 @@
     <Copyright />
     <PackageTags>blazor blazor-component blazor-context-menu context-menu contextmenu menu blazor-menu blazorcontextmenu</PackageTags>
     <VersionSuffix>$(VersionSuffix)</VersionSuffix>
-    <Version>0.4.0</Version>
+    <Version>0.5.0</Version>
     <Version Condition=" '$(VersionSuffix)' != '' ">$(Version)-$(VersionSuffix)</Version>
     <Product>Blazor.ContextMenu</Product>
   </PropertyGroup>
@@ -52,8 +55,8 @@
   </ItemGroup>  
 
   <ItemGroup>
-    <PackageReference Include="Microsoft.AspNetCore.Blazor.Browser" Version="0.4.0" />
-    <PackageReference Include="Microsoft.AspNetCore.Blazor.Build" Version="0.4.0" />
+    <PackageReference Include="Microsoft.AspNetCore.Blazor.Browser" Version="0.5.0" />
+    <PackageReference Include="Microsoft.AspNetCore.Blazor.Build" Version="0.5.0" />
   </ItemGroup>
 
 
@@ -64,8 +67,6 @@
     <Exec Command="if &quot;$(ConfigurationName)&quot;==&quot;Release&quot; &quot;$(ProjectDir)node_modules\.bin\gulp.cmd&quot; all" />
   </Target>-->
 
-  <ItemGroup>
-    <BlazorGenerate Remove="Components\Item.cshtml" />
-  </ItemGroup>
+
 
 </Project>

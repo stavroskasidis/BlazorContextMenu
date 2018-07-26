@@ -13,8 +13,7 @@ if (window.Element && !Element.prototype.closest) {
         };
 }
 
-
-Blazor.registerFunction('TestApp.TodoList.GetItemIndex', function (targetItemId) {
+TestApp_GetItemIndex =  function (targetItemId) {
     var targetItem = document.getElementById(targetItemId);
     var li = targetItem.closest("li");
     var children = li.parentNode.childNodes;
@@ -24,4 +23,4 @@ Blazor.registerFunction('TestApp.TodoList.GetItemIndex', function (targetItemId)
         if (children[i].nodeType == 1) num++;
     }
     return -1;
-});
+};
