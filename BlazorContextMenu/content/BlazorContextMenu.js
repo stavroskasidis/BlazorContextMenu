@@ -161,7 +161,7 @@ var blazorContextMenu = function (blazorContextMenu) {
             subMenu.style.display = ""; //this is required to get the menu's width
 
             var currentMenu = currentItem.closest(".blazor-context-menu__wrapper");
-            var currentMenuList = currentMenu.childNodes[0];
+            var currentMenuList = currentMenu.children[0];
             var targetRect = currentItem.getBoundingClientRect();
             var x = targetRect.left + currentMenu.clientWidth - xOffset;
             var y = targetRect.top;
