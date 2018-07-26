@@ -136,28 +136,11 @@ var blazorContextMenu = function (blazorContextMenu) {
             //TODO: Rewrite this once this Blazor limitation is lifted
             target.id = guid();
         }
-
-        Blazor.invokeDotNetMethod({
-            type: {
-                assembly: 'BlazorContextMenu',
-                name: 'BlazorContextMenu.BlazorContextMenuHandler'
-            },
-            method: {
-                name: 'ShowMenu'
-            }
-        }, menuId, x.toString(), y.toString(), target.id);
+        DotNet.invokeMethodAsync('BlazorContextMenu', 'ShowMenu', menuId, x.toString(), y.toString(), target.id);
     }
 
     blazorContextMenu.Hide = function (menuId) {
-        Blazor.invokeDotNetMethod({
-            type: {
-                assembly: 'BlazorContextMenu',
-                name: 'BlazorContextMenu.BlazorContextMenuHandler'
-            },
-            method: {
-                name: 'HideMenu'
-            }
-        }, menuId);
+        DotNet.invokeMethodAsync('BlazorContextMenu', 'HideMenu', menuId);
     }
 
     var subMenuTimeout = null;
@@ -167,7 +150,7 @@ var blazorContextMenu = function (blazorContextMenu) {
             return;
         }
         var currentItem = e.target;
-        if (currentItem.getAttribute("item-enabled") != "true") return;
+        if (currentItem.getAttribute("itemEnabled") != "true") return;
 
         var subMenu = findFirstChildByClass(currentItem, "blazor-context-submenu");
         if (!subMenu) return; //item does not contain a submenu
@@ -225,13 +208,14 @@ var blazorContextMenu = function (blazorContextMenu) {
         }
     }
 
+    blazorContextMenu.GetMenuId = function (menuItem) {
+        var menu = menuItem.closest(".blazor-context-menu");
+        return menu.id;
+    };
+
 
     return blazorContextMenu;
 }({});
 
 blazorContextMenu.Init();
 
-Blazor.registerFunction('BlazorContextMenu.MenuItem.GetMenuId', function (menuItem) {
-    var menu = menuItem.closest(".blazor-context-menu");
-    return menu.id;
-});

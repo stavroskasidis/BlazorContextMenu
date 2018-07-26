@@ -1,8 +1,10 @@
-﻿<li id="@Id" 
-    onclick="@((e) => OnClickInternal(e))" 
+﻿@using Microsoft.JSInterop
+
+<li id="@Id" 
+    onclick="@((e) => OnClickInternal(e))"
     class="@("blazor-context-menu__item " + ClassCalc)"
     style="@(Visible ? "display:block;" : "display:none;")"
-    item-enabled="@Enabled.ToString().ToLower()"
+    itemEnabled="@Enabled.ToString().ToLower()"
     onmouseover="@(Enabled ? $"blazorContextMenu.OnMenuItemMouseOver(event, {SubmenuXOffset ?? BlazorContextMenuDefaults.SubMenuXPositionPixelsOffset}, this);" : "")"
     onmouseout="@(Enabled ? "blazorContextMenu.OnMenuItemMouseOut(event);" : "")"
     ref="@MenuItemElement">
@@ -140,14 +142,14 @@
         base.OnInit();
     }
 
-    protected void OnClickInternal(UIMouseEventArgs e)
+    protected async Task OnClickInternal(UIMouseEventArgs e)
     {
         if (!Enabled)
         {
             return;
         }
 
-        var menuId = RegisteredFunction.Invoke<string>("BlazorContextMenu.MenuItem.GetMenuId", MenuItemElement);
+        var menuId = await JSRuntime.Current.InvokeAsync<string>("blazorContextMenu.GetMenuId", MenuItemElement);
         var menu = BlazorContextMenuHandler.GetMenu(menuId);
         var contextMenuTarget = menu.GetTarget();
         var args = new MenuItemClickEventArgs(e, menuId, contextMenuTarget, MenuItemElement, (Item)(object)this);  //TODO: Remove casting when 'this' is fixed in blazor
@@ -171,11 +173,11 @@
         }
     }
 
-    protected override void OnAfterRender()
+    protected override async Task OnAfterRenderAsync()
     {
         if (EnabledHandler == null && EnabledHandlerAsync == null && VisibleHandler == null && VisibleHandlerAsync == null) return;
 
-        var menuId = RegisteredFunction.Invoke<string>("BlazorContextMenu.MenuItem.GetMenuId", MenuItemElement);
+        var menuId = await JSRuntime.Current.InvokeAsync<string>("blazorContextMenu.GetMenuId", MenuItemElement);
         var menu = BlazorContextMenuHandler.GetMenu(menuId);
         var contextMenuTarget = menu.GetTarget();
 

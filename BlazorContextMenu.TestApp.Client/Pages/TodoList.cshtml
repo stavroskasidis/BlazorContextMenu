@@ -1,4 +1,5 @@
 ﻿@page "/TodoList"
+@using Microsoft.JSInterop
 
 <h1>Todo List</h1>
 <ContextMenuTrigger MenuId="todoItemsMenu">
@@ -11,18 +12,19 @@
 </ContextMenuTrigger>
 
 <ContextMenu Id="todoItemsMenu">
-    <Item id="menuitem-copy" Click="@CopyClick"><i class="fas fa-file blue-icon"></i> Copy</Item>
-    <Item id="menuitem-check" Click="@CheckClick" EnabledHandler="@CheckEnabledHandler"><i class="fas fa-file blue-icon"></i> Check</Item>
-    <Item id="menuitem-delete" Click="@DeleteClick" VisibleHandler="@DeleteVisibleHandler"><i class="fas fa-trash-alt red-icon"></i> Delete</Item>
+    <Item id="menuitem-copy" Click="@CopyClick"> <i class="fas fa-file blue-icon"></i> Copy</Item>
+    <Item id="menuitem-check" Click="@CheckClick" EnabledHandlerAsync="@CheckEnabledHandler"> <i class="fas fa-file blue-icon"></i> Check</Item>
+    <Item id="menuitem-delete" Click="@DeleteClick" VisibleHandlerAsync="@DeleteVisibleHandler"> <i class="fas fa-trash-alt red-icon"></i> Delete</Item>
     <Item id="menuitem-invisible" Visible="false">I am invisible</Item>
 </ContextMenu>
 
 @functions{
 
-    void CopyClick(MenuItemClickEventArgs e)
+    async void CopyClick(MenuItemClickEventArgs e)
     {
         //Interop is required here due to current blazor limitations
-        var itemIndex = RegisteredFunction.Invoke<int>("TestApp.TodoList.GetItemIndex", e.ContextMenuTargetId);
+
+        var itemIndex = await JSRuntime.Current.InvokeAsync<int>("TestApp_GetItemIndex", e.ContextMenuTargetId);
         if (itemIndex >= 0)
         {
             var currentTodoItem = TodoItems.ElementAt(itemIndex);
@@ -36,9 +38,9 @@
         }
     }
 
-    bool CheckEnabledHandler(MenuItemHandlerArgs e)
+    async Task<bool> CheckEnabledHandler(MenuItemHandlerArgs e)
     {
-        var itemIndex = RegisteredFunction.Invoke<int>("TestApp.TodoList.GetItemIndex", e.ContextMenuTargetId);
+        var itemIndex = await JSRuntime.Current.InvokeAsync<int>("TestApp_GetItemIndex", e.ContextMenuTargetId);
         if (itemIndex >= 0)
         {
             var currentTodoItem = TodoItems.ElementAt(itemIndex);
@@ -48,10 +50,10 @@
         return false;
     }
 
-    bool DeleteVisibleHandler(MenuItemHandlerArgs e)
+    async Task<bool> DeleteVisibleHandler(MenuItemHandlerArgs e)
     {
 
-        var itemIndex = RegisteredFunction.Invoke<int>("TestApp.TodoList.GetItemIndex", e.ContextMenuTargetId);
+        var itemIndex = await JSRuntime.Current.InvokeAsync<int>("TestApp_GetItemIndex", e.ContextMenuTargetId);
         if (itemIndex >= 0)
         {
             var currentTodoItem = TodoItems.ElementAt(itemIndex);
@@ -62,9 +64,9 @@
     }
 
 
-    void CheckClick(MenuItemClickEventArgs e)
+    async void CheckClick(MenuItemClickEventArgs e)
     {
-        var itemIndex = RegisteredFunction.Invoke<int>("TestApp.TodoList.GetItemIndex", e.ContextMenuTargetId);
+        var itemIndex = await JSRuntime.Current.InvokeAsync<int>("TestApp_GetItemIndex", e.ContextMenuTargetId);
         if (itemIndex >= 0)
         {
             var currentTodoItem = TodoItems.ElementAt(itemIndex);
@@ -73,9 +75,9 @@
         }
     }
 
-    void DeleteClick(MenuItemClickEventArgs e)
+    async void DeleteClick(MenuItemClickEventArgs e)
     {
-        var itemIndex = RegisteredFunction.Invoke<int>("TestApp.TodoList.GetItemIndex", e.ContextMenuTargetId);
+        var itemIndex = await JSRuntime.Current.InvokeAsync<int>("TestApp_GetItemIndex", e.ContextMenuTargetId);
         if (itemIndex >= 0)
         {
             var currentTodoItem = TodoItems.ElementAt(itemIndex);
