@@ -36,8 +36,8 @@ else
     </ContextMenuTrigger>
 
     <ContextMenu Id="tableContextMenu">
-        <Item ClickAsync="@ReloadClick"><i class="fas fa-sync-alt blue-icon"></i> Reload</Item>
-        <Item Click="@DeleteClick"><i class="fas fa-trash-alt red-icon"></i> Delete</Item>
+        <Item ClickAsync="@ReloadClick"> <i class="fas fa-sync-alt blue-icon"></i> Reload</Item>
+        <Item ClickAsync="@DeleteClick"> <i class="fas fa-trash-alt red-icon"></i> Delete</Item>
     </ContextMenu>
 }
 
@@ -63,10 +63,10 @@ else
         StateHasChanged();
     }
 
-    void DeleteClick(MenuItemClickEventArgs e)
+    async Task DeleteClick(MenuItemClickEventArgs e)
     {
         //Interop is required here due to current blazor limitations
-        var itemIndex = RegisteredFunction.Invoke<int>("DemoApp.FetchData.GetItemIndex", e.ContextMenuTargetId);
+        var itemIndex =  await JSRuntime.Current.InvokeAsync<int>("DemoApp_GetItemIndex", e.ContextMenuTargetId);
         if (itemIndex >= 0)
         {
             var currentItem = forecasts.ElementAt(itemIndex);
