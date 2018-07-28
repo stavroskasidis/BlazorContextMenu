@@ -20,99 +20,31 @@ namespace BlazorContextMenu
             return this;
         }
 
-        public BlazorContextMenuSettingsBuilder CssExtensions(Action<BlazorContextMenuAdditionalCssSettings> additional)
+        /// <summary>
+        /// Configures the default template.
+        /// </summary>
+        /// <param name="templateOptions"></param>
+        /// <returns></returns>
+        public BlazorContextMenuSettingsBuilder ConfigureTemplate(Action<BlazorContextMenuTemplate> templateOptions)
         {
-            //var builder = new BlazorContextMenuSettingsAdditionalBuilder(_settings);
-            additional(_settings.AdditionalCssSettings);
+            var template = _settings.GetTemplate(BlazorContextMenuSettings.DefaultTemplateName);
+            templateOptions(template);
             return this;
         }
 
-        public BlazorContextMenuSettingsBuilder SubMenuXPositionPixelsOffset(int offset)
+        /// <summary>
+        /// Configures a named template.
+        /// </summary>
+        /// <param name="templateName"></param>
+        /// <param name="templateOptions"></param>
+        /// <returns></returns>
+        public BlazorContextMenuSettingsBuilder ConfigureTemplate(string templateName,Action<BlazorContextMenuTemplate> templateOptions)
         {
-            _settings.SubMenuXPositionPixelsOffset = offset;
+            var template = new BlazorContextMenuTemplate();
+            templateOptions(template);
+            _settings.Templates.Add(templateName, template);
             return this;
         }
+
     }
-
-    //public class BlazorContextMenuSettingsAdditionalBuilder
-    //{
-    //    private readonly BlazorContextMenuSettings _settings;
-
-    //    public BlazorContextMenuSettingsAdditionalBuilder(BlazorContextMenuSettings settings)
-    //    {
-    //        _settings = settings;
-    //    }
-
-    //    public BlazorContextMenuSettingsAdditionalBuilder Menu(string cssClass)
-    //    {
-    //        _settings.AdditionalMenuCssClass = cssClass;
-    //        return this;
-    //    }
-    //    public BlazorContextMenuSettingsAdditionalBuilder MenuList(string cssClass)
-    //    {
-    //        _settings.AdditionalMenuListCssClass = cssClass;
-    //        return this;
-    //    }
-    //    public BlazorContextMenuSettingsAdditionalBuilder MenuItem(string cssClass)
-    //    {
-    //        _settings.AdditionalMenuItemCssClass = cssClass;
-    //        return this;
-    //    }
-    //    public BlazorContextMenuSettingsAdditionalBuilder MenuItemDisabled(string cssClass)
-    //    {
-    //        _settings.AdditionalMenuItemDisabledCssClass = cssClass;
-    //        return this;
-    //    }
-    //    public BlazorContextMenuSettingsAdditionalBuilder Seperator(string cssClass)
-    //    {
-    //        _settings.AdditionalSeperatorCssClass = cssClass;
-    //        return this;
-    //    }
-    //    public BlazorContextMenuSettingsAdditionalBuilder SeperatorHr(string cssClass)
-    //    {
-    //        _settings.AdditionalSeperatorHrCssClass = cssClass;
-    //        return this;
-    //    }
-    //}
-
-    //public class BlazorContextMenuSettingsOverrideBuilder
-    //{
-    //    private readonly BlazorContextMenuSettings _settings;
-
-    //    public BlazorContextMenuSettingsOverrideBuilder(BlazorContextMenuSettings settings)
-    //    {
-    //        _settings = settings;
-    //    }
-
-    //    public BlazorContextMenuSettingsOverrideBuilder Menu(string cssClass)
-    //    {
-    //        _settings.DefaultMenuCssClass = cssClass;
-    //        return this;
-    //    }
-    //    public BlazorContextMenuSettingsOverrideBuilder MenuList(string cssClass)
-    //    {
-    //        _settings.DefaultMenuListCssClass = cssClass;
-    //        return this;
-    //    }
-    //    public BlazorContextMenuSettingsOverrideBuilder MenuItem(string cssClass)
-    //    {
-    //        _settings.DefaultMenuItemCssClass = cssClass;
-    //        return this;
-    //    }
-    //    public BlazorContextMenuSettingsOverrideBuilder MenuItemDisabled(string cssClass)
-    //    {
-    //        _settings.DefaultMenuItemDisabledCssClass = cssClass;
-    //        return this;
-    //    }
-    //    public BlazorContextMenuSettingsOverrideBuilder Seperator(string cssClass)
-    //    {
-    //        _settings.DefaultSeperatorCssClass = cssClass;
-    //        return this;
-    //    }
-    //    public BlazorContextMenuSettingsOverrideBuilder SeperatorHr(string cssClass)
-    //    {
-    //        _settings.DefaultSeperatorHrCssClass = cssClass;
-    //        return this;
-    //    }
-    //}
 }

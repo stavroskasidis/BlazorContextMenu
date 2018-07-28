@@ -103,15 +103,6 @@ var blazorContextMenu = function (blazorContextMenu) {
 
         var menuItems = findAllChildsByClass(menu, "blazor-context-menu__item");
 
-        //Add extra class to items with submenus
-        var menuItemsWithSubmenus = menuItems.filter(function (menuItem) {
-            return findFirstChildByClass(menuItem, "blazor-context-submenu");
-        });
-        var i = menuItemsWithSubmenus.length;
-        while (i--) {
-            menuItemsWithSubmenus[i].className += " blazor-context-menu__item--with-submenu";
-        }
-
         e.preventDefault();
         return false;
     };
@@ -213,6 +204,9 @@ var blazorContextMenu = function (blazorContextMenu) {
         return menu.id;
     };
 
+    blazorContextMenu.MenuItemHasSubmenu = function (menuItem) {
+        return !!findFirstChildByClass(menuItem, "blazor-context-submenu");
+    }
 
     return blazorContextMenu;
 }({});

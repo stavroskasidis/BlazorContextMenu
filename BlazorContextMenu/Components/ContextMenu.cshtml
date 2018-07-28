@@ -19,6 +19,9 @@
     [Parameter]
     public string Id { get; protected set; }
 
+    [Parameter]
+    public string Template { get; protected set; } = BlazorContextMenuSettings.DefaultTemplateName;
+
     /// <summary>
     /// Allows you to override the default css class of the menu's div element for full customization.
     /// </summary>
@@ -56,7 +59,7 @@
         get
         {
             return Helpers.AppendCssClasses((OverrideDefaultCssClass ?? settings.DefaultCssSettings.MenuCssClass),
-                                            (CssClass ?? settings.AdditionalCssSettings.MenuCssClass));
+                                            (CssClass ?? settings.GetTemplate(Template).MenuCssClass));
         }
     }
 
@@ -67,7 +70,7 @@
         get
         {
             return Helpers.AppendCssClasses((OverrideDefaultListCssClass ?? settings.DefaultCssSettings.MenuListCssClass),
-                                            (ListCssClass ?? settings.AdditionalCssSettings.MenuListCssClass));
+                                            (ListCssClass ?? settings.GetTemplate(Template).MenuListCssClass));
         }
     }
 
