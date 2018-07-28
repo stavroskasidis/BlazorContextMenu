@@ -66,7 +66,8 @@ namespace BlazorContextMenu.E2ETests.Tests
         public void TodoItemsMenu_TriggerForFirstItemAndSelectCheck_CheckIsDisabled()
         {
             //Arrange
-            var expectedClass = BlazorContextMenuDefaults.DefaultMenuItemDisabledCssClass;
+            var settings = new BlazorContextMenuSettings();
+            var expectedClass = settings.DefaultCssSettings.MenuItemDisabledCssClass;
 
             //Act
             OpenContextMenuAt("listitem-0");
@@ -101,7 +102,8 @@ namespace BlazorContextMenu.E2ETests.Tests
         {
             //Arrange
             var expectedCheckedStatus = true;
-            var expectedClass = BlazorContextMenuDefaults.DefaultMenuItemDisabledCssClass;
+            var settings = new BlazorContextMenuSettings();
+            var expectedClass = settings.DefaultCssSettings.MenuItemDisabledCssClass;
 
             //Act
             OpenContextMenuAt("listitem-1");
@@ -125,7 +127,8 @@ namespace BlazorContextMenu.E2ETests.Tests
         public void TodoItemsMenu_UnckeckFirstItemAndTriggerMenu_CheckIsEnabled()
         {
             //Arrange
-            var notExpectedClass = BlazorContextMenuDefaults.DefaultMenuItemDisabledCssClass;
+            var settings = new BlazorContextMenuSettings();
+            var notExpectedClass = settings.DefaultCssSettings.MenuItemDisabledCssClass;
 
             //Act
             var list = Browser.FindElement(By.Id("list"));

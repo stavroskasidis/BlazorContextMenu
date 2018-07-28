@@ -1,11 +1,12 @@
 ﻿@using Microsoft.JSInterop
+@inject BlazorContextMenuSettings settings
 
-<li id="@Id" 
+<li id="@Id"
     onclick="@((e) => OnClickInternal(e))"
     class="@("blazor-context-menu__item " + ClassCalc)"
     style="@(Visible ? "display:block;" : "display:none;")"
     itemEnabled="@Enabled.ToString().ToLower()"
-    onmouseover="@(Enabled ? $"blazorContextMenu.OnMenuItemMouseOver(event, {SubmenuXOffset ?? BlazorContextMenuDefaults.SubMenuXPositionPixelsOffset}, this);" : "")"
+    onmouseover="@(Enabled ? $"blazorContextMenu.OnMenuItemMouseOver(event, {SubmenuXOffset ?? settings.GetTemplate(Template).SubMenuXPositionPixelsOffset}, this);" : "")"
     onmouseout="@(Enabled ? "blazorContextMenu.OnMenuItemMouseOut(event);" : "")"
     ref="@MenuItemElement">
     @ChildContent
@@ -18,14 +19,12 @@
 
     /// <summary>
     /// Allows you to override the default css class of the menu's li element for full customization.
-    /// If you want to override this for all menus, then you could use <see cref="BlazorContextMenuDefaults.DefaultMenuItemCssClass"/>
     /// </summary>
     [Parameter]
     public string OverrideDefaultCssClass { get; protected set; }
 
     /// <summary>
     /// Allows you to override the default "disabled" css class of the menu's li element for full customization.
-    /// If you want to override this for all menus, then you could use <see cref="BlazorContextMenuDefaults.DefaultMenuItemDisabledCssClass"/>
     /// </summary>
     [Parameter]
     public string OverrideDefaultDisabledCssClass { get; protected set; }
@@ -106,13 +105,9 @@
 
     /// <summary>
     /// Allows you to override the default x position offset of the submenu (i.e. the distance of the submenu from it's parent menu).
-    /// If you want to override this for all menus, then you could use <see cref="BlazorContextMenuDefaults.SubMenuXPositionPixelsOffset"/>
     /// </summary>
     [Parameter]
     public int? SubmenuXOffset { get; protected set; }
-
-
-    protected ElementRef MenuItemElement { get; set; }
 
     [Parameter]
     protected RenderFragment ChildContent { get; set; }
@@ -121,18 +116,27 @@
     {
         get
         {
+            string classes = null;
             if (Enabled)
             {
-                return (OverrideDefaultCssClass == null ? BlazorContextMenuDefaults.DefaultMenuItemCssClass : OverrideDefaultCssClass) + (CssClass == null ? "" : $" {CssClass}");
+                classes = Helpers.AppendCssClasses((OverrideDefaultCssClass ?? settings.DefaultCssSettings.MenuItemCssClass),
+                                            (CssClass ?? settings.GetTemplate(Template).MenuItemCssClass));
             }
             else
             {
-                return (OverrideDefaultDisabledCssClass == null ? BlazorContextMenuDefaults.DefaultMenuItemDisabledCssClass : OverrideDefaultDisabledCssClass) + (DisabledCssClass == null ? "" : $" {DisabledCssClass}");
+                classes = Helpers.AppendCssClasses((OverrideDefaultDisabledCssClass ?? settings.DefaultCssSettings.MenuItemDisabledCssClass),
+                                            (DisabledCssClass ?? settings.GetTemplate(Template).MenuItemDisabledCssClass));
             }
+
+            return Helpers.AppendCssClasses(classes, (HasSubMenu ? "blazor-context-menu__item--with-submenu" : ""));
         }
     }
 
-    protected override void OnInit()
+    protected ElementRef MenuItemElement { get; set; }
+    protected string Template { get; set; } = BlazorContextMenuSettings.DefaultTemplateName;
+    protected bool HasSubMenu { get; set; }
+
+    protected override async Task OnInitAsync()
     {
         if (string.IsNullOrEmpty(Id))
         {
@@ -152,13 +156,13 @@
         var menuId = await JSRuntime.Current.InvokeAsync<string>("blazorContextMenu.GetMenuId", MenuItemElement);
         var menu = BlazorContextMenuHandler.GetMenu(menuId);
         var contextMenuTarget = menu.GetTarget();
-        var args = new MenuItemClickEventArgs(e, menuId, contextMenuTarget, MenuItemElement, (Item)(object)this);  //TODO: Remove casting when 'this' is fixed in blazor
+        var args = new MenuItemClickEventArgs(e, menu.Id, contextMenuTarget, MenuItemElement, (Item)(object)this);  //TODO: Remove casting when 'this' is fixed in blazor
         if (Click != null)
         {
             Click(args);
             if (!args.IsCanceled)
             {
-                BlazorContextMenuHandler.HideMenu(menuId);
+                BlazorContextMenuHandler.HideMenu(menu.Id);
             }
         }
         else if (ClickAsync != null)
@@ -167,7 +171,7 @@
             {
                 if (!args.IsCanceled)
                 {
-                    BlazorContextMenuHandler.HideMenu(menuId);
+                    BlazorContextMenuHandler.HideMenu(menu.Id);
                 }
             });
         }
@@ -175,13 +179,18 @@
 
     protected override async Task OnAfterRenderAsync()
     {
-        if (EnabledHandler == null && EnabledHandlerAsync == null && VisibleHandler == null && VisibleHandlerAsync == null) return;
 
         var menuId = await JSRuntime.Current.InvokeAsync<string>("blazorContextMenu.GetMenuId", MenuItemElement);
         var menu = BlazorContextMenuHandler.GetMenu(menuId);
+        var hasSubMenu = await JSRuntime.Current.InvokeAsync<bool>("blazorContextMenu.MenuItemHasSubmenu", MenuItemElement);
         var contextMenuTarget = menu.GetTarget();
 
-        //menu is not showing. TODO: find a better way to figure this out 
+        if (EnabledHandler == null && EnabledHandlerAsync == null &&
+            VisibleHandler == null && VisibleHandlerAsync == null &&
+            Template == menu.Template &&
+            HasSubMenu == hasSubMenu) return;
+
+        //menu is not showing. TODO: find a better way to figure this out
         if (contextMenuTarget == null) return;
 
         //Hacky but works. TODO: Improve this code when this stuff is supported in Blazor
@@ -189,6 +198,10 @@
         {
             var oldEnabledValue = Enabled;
             var oldVisibleValue = Visible;
+            var oldTemplateValue = Template;
+            var oldHasSubmenuValue = HasSubMenu;
+            Template = menu.Template;
+            HasSubMenu = hasSubMenu;
 
             var args = new MenuItemHandlerArgs(menuId, contextMenuTarget, MenuItemElement, (Item)(object)this); //TODO: Remove casting when 'this' is fixed in blazor
             if (EnabledHandler != null)
@@ -209,7 +222,8 @@
                 Visible = await VisibleHandlerAsync(args);
             }
 
-            if (oldEnabledValue != Enabled || oldVisibleValue != Visible)
+            if (oldEnabledValue != Enabled || oldVisibleValue != Visible ||
+                oldTemplateValue != Template || oldHasSubmenuValue != HasSubMenu)
             {
                 StateHasChanged();
             }

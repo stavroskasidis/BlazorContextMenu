@@ -1,4 +1,5 @@
 ﻿@using System.ComponentModel
+@inject BlazorContextMenuSettings settings
 
 <div class="@($"{BaseClass} {ClassCalc}")" id="@Id" style="@($"left:{X}px;top:{Y}px;{StyleDisplayCalc}")">
     <ul class="@ListClassCalc">
@@ -18,16 +19,17 @@
     [Parameter]
     public string Id { get; protected set; }
 
+    [Parameter]
+    public string Template { get; protected set; } = BlazorContextMenuSettings.DefaultTemplateName;
+
     /// <summary>
     /// Allows you to override the default css class of the menu's div element for full customization.
-    /// If you want to override this for all menus, then you could use <see cref="BlazorContextMenuDefaults.DefaultMenuCssClass"/>
     /// </summary>
     [Parameter]
     public string OverrideDefaultCssClass { get; protected set; }
 
     /// <summary>
     /// Allows you to override the default css class of the menu's ul element for full customization.
-    /// If you want to override this for all menus, then you could use <see cref="BlazorContextMenuDefaults.DefaultMenuListCssClass"/>
     /// </summary>
     [Parameter]
     public string OverrideDefaultListCssClass { get; protected set; }
@@ -52,9 +54,25 @@
     protected string X { get; set; }
     protected string Y { get; set; }
     protected string TargetId { get; set; }
-    protected string ClassCalc => (OverrideDefaultCssClass == null ? BlazorContextMenuDefaults.DefaultMenuCssClass : OverrideDefaultCssClass) + (CssClass == null ? "" : $" {CssClass}");
+    protected string ClassCalc
+    {
+        get
+        {
+            return Helpers.AppendCssClasses((OverrideDefaultCssClass ?? settings.DefaultCssSettings.MenuCssClass),
+                                            (CssClass ?? settings.GetTemplate(Template).MenuCssClass));
+        }
+    }
+
+
     protected string StyleDisplayCalc => !IsShowing ? "display: none;" : "";
-    protected string ListClassCalc => (OverrideDefaultListCssClass == null ? BlazorContextMenuDefaults.DefaultMenuListCssClass : OverrideDefaultListCssClass) + (ListCssClass == null ? "" : $" {ListCssClass}");
+    protected string ListClassCalc
+    {
+        get
+        {
+            return Helpers.AppendCssClasses((OverrideDefaultListCssClass ?? settings.DefaultCssSettings.MenuListCssClass),
+                                            (ListCssClass ?? settings.GetTemplate(Template).MenuListCssClass));
+        }
+    }
 
     protected override void OnInit()
     {
