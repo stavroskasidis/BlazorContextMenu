@@ -11,6 +11,7 @@ namespace BlazorContextMenu.TestApp.Client
     {
         public void ConfigureServices(IServiceCollection services)
         {
+            services.AddBlazorContextMenu();
         }
 
         public void Configure(IBlazorApplicationBuilder app)
