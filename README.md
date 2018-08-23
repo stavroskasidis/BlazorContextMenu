@@ -89,7 +89,7 @@ public class Startup
     }
 }
 ```
-```html
+```xml
 <style>
     .my-menu { color: darkblue; }
     
@@ -134,7 +134,7 @@ public class Startup
 #### Explicit customization
 All components expose a `CssClass` parameter that you can use to add css classes. These take precedence over any template classes .
 
-```html
+```xml
 <ContextMenu Id="myMenu" CssClass="my-menu">
     <Item CssClass="red-menuitem">Red looking Item</Item>
     <Item>Default looking item</Item>
