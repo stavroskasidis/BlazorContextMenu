@@ -9,10 +9,11 @@ using Xunit;
 using Xunit.Abstractions;
 using BlazorContextMenu.E2ETests.Infrastructure;
 using System.Threading.Tasks;
+using OpenQA.Selenium.Interactions;
 
 namespace BlazorContextMenu.E2ETests.Tests
 {
-    public class TestAppIndexTests : TestBase, IDisposable
+    public class TestAppIndexTests : TestBase //, IDisposable
     {
         private readonly EndToEndFixture _fixture;
 
@@ -29,14 +30,18 @@ namespace BlazorContextMenu.E2ETests.Tests
             Navigate("/");
         }
 
-        [Fact]
-        public void Menu1_Trigger_Shown()
+        [Theory]
+        [InlineData("test1-trigger", MouseButton.Right)]
+        [InlineData("test3-trigger", MouseButton.Left)]
+        [InlineData("test4-trigger", MouseButton.Right)]
+        [InlineData("test4-trigger", MouseButton.Left)]
+        public void Menu1_Triggers_Shown(string triggerId, MouseButton mouseButton)
         {
             //Arrange
             var expectedDisplay = "block";
 
             //Act
-            OpenContextMenuAt("test1-trigger");
+            OpenContextMenuAt(triggerId, mouseButton);
 
             //Assert
             var menuElement = Browser.FindElement(By.Id("menu1"));
@@ -44,14 +49,18 @@ namespace BlazorContextMenu.E2ETests.Tests
             Assert.Equal(expectedDisplay, display);
         }
 
-        [Fact]
-        public void Menu1_TriggerAndClickOutside_MenuCloses()
+        [Theory]
+        [InlineData("test1-trigger", MouseButton.Right)]
+        [InlineData("test3-trigger", MouseButton.Left)]
+        [InlineData("test4-trigger", MouseButton.Right)]
+        [InlineData("test4-trigger", MouseButton.Left)]
+        public void Menu1_TriggerAndClickOutside_MenuCloses(string triggerId, MouseButton mouseButton)
         {
             //Arrange
             var expectedDisplay = "none";
 
             //Act
-            OpenContextMenuAt("test1-trigger");
+            OpenContextMenuAt(triggerId, mouseButton);
             var headerElement = Browser.FindElement(By.Id("header"));
             headerElement.Click();
 
@@ -61,14 +70,18 @@ namespace BlazorContextMenu.E2ETests.Tests
             Assert.Equal(expectedDisplay, display);
         }
 
-        [Fact]
-        public void Menu1_SelectFetchData_DataFetched()
+        [Theory]
+        [InlineData("test1-trigger", MouseButton.Right)]
+        [InlineData("test3-trigger", MouseButton.Left)]
+        [InlineData("test4-trigger", MouseButton.Right)]
+        [InlineData("test4-trigger", MouseButton.Left)]
+        public void Menu1_SelectFetchData_DataFetched(string triggerId, MouseButton mouseButton)
         {
             //Arrange
             var expectedDisplay = "none";
 
             //Act
-            OpenContextMenuAt("test1-trigger");
+            OpenContextMenuAt(triggerId, mouseButton);
             var menuItem = Browser.FindElement(By.Id("menu1-item1"));
             menuItem.Click();
             new WebDriverWait(Browser, TimeSpan.FromSeconds(10))
@@ -83,14 +96,18 @@ namespace BlazorContextMenu.E2ETests.Tests
             Assert.Equal(expectedDisplay, display);
         }
 
-        [Fact]
-        public void Menu1_SelectClearData_DataCleared()
+        [Theory]
+        [InlineData("test1-trigger", MouseButton.Right)]
+        [InlineData("test3-trigger", MouseButton.Left)]
+        [InlineData("test4-trigger", MouseButton.Right)]
+        [InlineData("test4-trigger", MouseButton.Left)]
+        public void Menu1_SelectClearData_DataCleared(string triggerId, MouseButton mouseButton)
         {
             //Arrange
             var expectedDisplay = "none";
 
             //Act
-            OpenContextMenuAt("test1-trigger");
+            OpenContextMenuAt(triggerId, mouseButton);
             var menuItem = Browser.FindElement(By.Id("menu1-item2"));
             menuItem.Click();
 
@@ -103,14 +120,18 @@ namespace BlazorContextMenu.E2ETests.Tests
             Assert.Equal(expectedDisplay, textAreaDisplay);
         }
 
-        [Fact]
-        public void Menu1_SelectDisabledItem_MenuStaysOpen()
+        [Theory]
+        [InlineData("test1-trigger", MouseButton.Right)]
+        [InlineData("test3-trigger", MouseButton.Left)]
+        [InlineData("test4-trigger", MouseButton.Right)]
+        [InlineData("test4-trigger", MouseButton.Left)]
+        public void Menu1_SelectDisabledItem_MenuStaysOpen(string triggerId, MouseButton mouseButton)
         {
             //Arrange
             var expectedDisplay = "block";
 
             //Act
-            OpenContextMenuAt("test1-trigger");
+            OpenContextMenuAt(triggerId, mouseButton);
             var menuItem = Browser.FindElement(By.Id("menu1-item3"));
             menuItem.Click();
 
@@ -120,14 +141,18 @@ namespace BlazorContextMenu.E2ETests.Tests
             Assert.Equal(expectedDisplay, display);
         }
 
-        [Fact]
-        public async Task Menu2_MouseOverSubMenu_SubMenuOpens()
+        [Theory]
+        [InlineData("test2-trigger", MouseButton.Right)]
+        [InlineData("test5-trigger", MouseButton.Left)]
+        [InlineData("test6-trigger", MouseButton.Right)]
+        [InlineData("test6-trigger", MouseButton.Left)]
+        public async Task Menu2_MouseOverSubMenu_SubMenuOpens(string triggerId, MouseButton mouseButton)
         {
             //Arrange
             var expectedDisplay = "block";
 
             //Act
-            OpenContextMenuAt("test2-trigger");
+            OpenContextMenuAt(triggerId, mouseButton);
             MouseOverElement("submenu1-trigger");
             await Task.Delay(500); //wait for submenu to popup
 
@@ -137,14 +162,18 @@ namespace BlazorContextMenu.E2ETests.Tests
             Assert.Equal(expectedDisplay, display);
         }
 
-        [Fact]
-        public async Task Menu2_MouseOverSubMenuAndThenToOtherItem_SubMenuCloses()
+        [Theory]
+        [InlineData("test2-trigger", MouseButton.Right)]
+        [InlineData("test5-trigger", MouseButton.Left)]
+        [InlineData("test6-trigger", MouseButton.Right)]
+        [InlineData("test6-trigger", MouseButton.Left)]
+        public async Task Menu2_MouseOverSubMenuAndThenToOtherItem_SubMenuCloses(string triggerId, MouseButton mouseButton)
         {
             //Arrange
             var expectedDisplay = "none";
 
             //Act
-            OpenContextMenuAt("test2-trigger");
+            OpenContextMenuAt(triggerId, mouseButton);
             MouseOverElement("submenu1-trigger");
             await Task.Delay(500); //wait for submenu to popup
             MouseOverElement("menu2-item1");
@@ -155,14 +184,18 @@ namespace BlazorContextMenu.E2ETests.Tests
             Assert.Equal(expectedDisplay, display);
         }
 
-        [Fact]
-        public async Task Menu2_MouseOverSubMenuAndThenToSecondSubMenu_SecondSubMenuOpens()
+        [Theory]
+        [InlineData("test2-trigger", MouseButton.Right)]
+        [InlineData("test5-trigger", MouseButton.Left)]
+        [InlineData("test6-trigger", MouseButton.Right)]
+        [InlineData("test6-trigger", MouseButton.Left)]
+        public async Task Menu2_MouseOverSubMenuAndThenToSecondSubMenu_SecondSubMenuOpens(string triggerId, MouseButton mouseButton)
         {
             //Arrange
             var expectedDisplay = "block";
 
             //Act
-            OpenContextMenuAt("test2-trigger");
+            OpenContextMenuAt(triggerId, mouseButton);
             MouseOverElement("submenu1-trigger");
             await Task.Delay(500); //wait for submenu to popup
             MouseOverElement("submenu2-trigger");
@@ -174,10 +207,10 @@ namespace BlazorContextMenu.E2ETests.Tests
             Assert.Equal(expectedDisplay, display);
         }
 
-        public void Dispose()
-        {
-            GoToPage();
-            WaitUntilLoaded();
-        }
+        //public void Dispose()
+        //{
+        //    GoToPage();
+        //    WaitUntilLoaded();
+        //}
     }
 }

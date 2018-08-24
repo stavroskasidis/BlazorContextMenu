@@ -1,12 +1,22 @@
 ﻿@page "/TodoList"
 @using Microsoft.JSInterop
 
-<h1>Todo List</h1>
+<h1>Todo List (Right click)</h1>
 <ContextMenuTrigger MenuId="todoItemsMenu">
-    <ul id="list">
+    <ul id="list1">
         @foreach (var item in TodoItems)
         {
-            <li id="@($"listitem-{TodoItems.IndexOf(item)}")"><input type="checkbox" bind="item.IsChecked" readonly /> @item.Text</li>
+            <li id="@($"list1-{TodoItems.IndexOf(item)}")"><input type="checkbox" bind="item.IsChecked" readonly /> @item.Text</li>
+        }
+    </ul>
+</ContextMenuTrigger>
+
+<h1>Todo List (Left click)</h1>
+<ContextMenuTrigger MenuId="todoItemsMenu" MouseButtonTrigger="MouseButtonTrigger.Left">
+    <ul id="list2">
+        @foreach (var item in TodoItems)
+        {
+            <li id="@($"list2-{TodoItems.IndexOf(item)}")"><input type="checkbox" bind="item.IsChecked" readonly /> @item.Text</li>
         }
     </ul>
 </ContextMenuTrigger>
