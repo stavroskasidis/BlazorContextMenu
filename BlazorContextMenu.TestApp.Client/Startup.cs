@@ -26,14 +26,6 @@ namespace BlazorContextMenu.TestApp.Client
                     template.MenuItemCssClass = "my-menu-item-template";
                     template.SeperatorCssClass = "my-menu-seperator-template";
                 });
-
-                options.CssOverrides(overrides =>
-                {
-                    overrides.MenuCssClass = "custom-menu";
-                    overrides.MenuItemCssClass = "custom-menu-item";
-                    overrides.MenuItemDisabledCssClass = "custom-menu-item--disabled";
-                    //...
-                });
             });
         }
 
