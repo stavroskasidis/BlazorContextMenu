@@ -132,7 +132,7 @@ public class Startup
 }
 ```
 #### Explicit customization
-All components expose a `CssClass` parameter that you can use to add css classes. These take precedence over any template classes .
+All components expose a `CssClass` parameter that you can use to add css classes. These take precedence over any template configuration.
 
 ```xml
 <ContextMenu Id="myMenu" CssClass="my-menu">
@@ -189,6 +189,9 @@ Upgrating from 0.1 to 0.2
 
 
 ## Release Notes
+### 0.7
+>- Added left-click trigger support
+
 ### 0.6
 >- Updated to Blazor 0.5.1
 >- Changed configuration setup
