@@ -1,4 +1,6 @@
-﻿<div oncontextmenu="@($"blazorContextMenu.OnContextMenu(event, '{MenuId.Replace("'","\\'")}');")" class="@CssClass">
+﻿<div onclick="@(MouseButtonTrigger == MouseButtonTrigger.Left || MouseButtonTrigger == MouseButtonTrigger.Both ? $"blazorContextMenu.OnContextMenu(event, '{MenuId.Replace("'","\\'")}'); " : "")"
+     oncontextmenu="@(MouseButtonTrigger == MouseButtonTrigger.Right || MouseButtonTrigger == MouseButtonTrigger.Both ? $"blazorContextMenu.OnContextMenu(event, '{MenuId.Replace("'","\\'")}');": "")"
+     class="@CssClass">
     @ChildContent
 </div>
 
@@ -7,7 +9,7 @@
 #pragma warning disable BL9993 // Component parameter is marked public
 
     /// <summary>
-    /// The id of the <see cref="ContextMenu"/> to open. This parameter is required
+    /// The id of the <see cref="ContextMenu" /> to open. This parameter is required
     /// </summary>
     [Parameter]
     public string MenuId { get; protected set; }
@@ -18,6 +20,9 @@
     [Parameter]
     public string CssClass { get; protected set; }
 
+    /// <summary>
+    [Parameter]
+    public MouseButtonTrigger MouseButtonTrigger { get; protected set; }
     [Parameter]
     protected RenderFragment ChildContent { get; set; }
     protected override void OnInit()

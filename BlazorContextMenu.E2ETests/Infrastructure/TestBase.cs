@@ -23,11 +23,18 @@ namespace BlazorContextMenu.E2ETests.Infrastructure
             _fixture = fixture;
             _browser.Value = fixture.Browser;
         }
-        protected void OpenContextMenuAt(string triggerElementId)
+        protected void OpenContextMenuAt(string triggerElementId, MouseButton mouseButton)
         {
             var element = Browser.FindElement(By.Id(triggerElementId));
             var action = new Actions(Browser);
-            action.ContextClick(element).Perform();
+            if (mouseButton == MouseButton.Left)
+            {
+                action.Click(element).Perform();
+            }
+            else
+            {
+                action.ContextClick(element).Perform();
+            }
         }
 
         protected void MouseOverElement(string elementId)

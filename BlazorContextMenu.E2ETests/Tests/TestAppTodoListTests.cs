@@ -1,5 +1,6 @@
 ﻿using BlazorContextMenu.E2ETests.Infrastructure;
 using OpenQA.Selenium;
+using OpenQA.Selenium.Interactions;
 using System;
 using System.Collections.Generic;
 using System.Text;
@@ -7,7 +8,7 @@ using Xunit;
 
 namespace BlazorContextMenu.E2ETests.Tests
 {
-    public class TestAppTodoListTests : TestBase, IDisposable
+    public class TestAppTodoListTests : TestBase //, IDisposable
     {
         private readonly EndToEndFixture _fixture;
 
@@ -23,54 +24,60 @@ namespace BlazorContextMenu.E2ETests.Tests
             Navigate("/TodoList");
         }
 
-        public void Dispose()
-        {
-            GoToPage();
-            WaitUntilLoaded();
-        }
+        //public void Dispose()
+        //{
+        //    GoToPage();
+        //    WaitUntilLoaded();
+        //}
 
-        [Fact]
-        public void TodoItemsMenu_TriggerForFirstItemAndSelectCopy_ItemCopied()
+        [Theory]
+        [InlineData("list1",MouseButton.Right)]
+        [InlineData("list2", MouseButton.Left)]
+        public void TodoItemsMenu_TriggerForFirstItemAndSelectCopy_ItemCopied(string listId, MouseButton mouseButton)
         {
             //Arrange
             var expectedItemsCount = 4;
             //Act
-            OpenContextMenuAt("listitem-0");
+            OpenContextMenuAt($"{listId}-0", mouseButton);
             var menuItem = Browser.FindElement(By.Id("menuitem-copy"));
             menuItem.Click();
 
             //Assert
-            var list = Browser.FindElement(By.Id("list"));
+            var list = Browser.FindElement(By.Id(listId));
             var itemsCount = list.FindElements(By.TagName("li")).Count;
             Assert.Equal(expectedItemsCount, itemsCount);
         }
 
-        [Fact]
-        public void TodoItemsMenu_TriggerForSecondItemAndSelectDelete_ItemDeleted()
+        [Theory]
+        [InlineData("list1", MouseButton.Right)]
+        [InlineData("list2", MouseButton.Left)]
+        public void TodoItemsMenu_TriggerForSecondItemAndSelectDelete_ItemDeleted(string listId, MouseButton mouseButton)
         {
             //Arrange
             var expectedItemsCount = 2;
             //Act
-            OpenContextMenuAt("listitem-1");
+            OpenContextMenuAt($"{listId}-1", mouseButton);
             var menuItem = Browser.FindElement(By.Id("menuitem-delete"));
             menuItem.Click();
 
             //Assert
-            var list = Browser.FindElement(By.Id("list"));
+            var list = Browser.FindElement(By.Id(listId));
             var itemsCount = list.FindElements(By.TagName("li")).Count;
             Assert.Equal(expectedItemsCount, itemsCount);
         }
 
 
-        [Fact]
-        public void TodoItemsMenu_TriggerForFirstItemAndSelectCheck_CheckIsDisabled()
+        [Theory]
+        [InlineData("list1", MouseButton.Right)]
+        [InlineData("list2", MouseButton.Left)]
+        public void TodoItemsMenu_TriggerForFirstItemAndSelectCheck_CheckIsDisabled(string listId, MouseButton mouseButton)
         {
             //Arrange
             var settings = new BlazorContextMenuSettings();
             var expectedClass = settings.DefaultCssSettings.MenuItemDisabledCssClass;
 
             //Act
-            OpenContextMenuAt("listitem-0");
+            OpenContextMenuAt($"{listId}-0", mouseButton);
             var menuItem = Browser.FindElement(By.Id("menuitem-check"));
             var classes = menuItem.GetAttribute("class");
 
@@ -78,17 +85,19 @@ namespace BlazorContextMenu.E2ETests.Tests
             Assert.Contains(expectedClass, classes);
         }
 
-        [Fact]
-        public void TodoItemsMenu_TriggerForSecondItemAndSelectCheck_ItemIsChecked()
+        [Theory]
+        [InlineData("list1", MouseButton.Right)]
+        [InlineData("list2", MouseButton.Left)]
+        public void TodoItemsMenu_TriggerForSecondItemAndSelectCheck_ItemIsChecked(string listId, MouseButton mouseButton)
         {
             //Arrange
             var expectedCheckedStatus = true;
 
             //Act
-            OpenContextMenuAt("listitem-1");
+            OpenContextMenuAt($"{listId}-1", mouseButton);
             var menuItem = Browser.FindElement(By.Id("menuitem-check"));
             menuItem.Click();
-            var list = Browser.FindElement(By.Id("list"));
+            var list = Browser.FindElement(By.Id(listId));
             var checkBoxes = list.FindElements(By.TagName("input"));
             var secondCheckBox = checkBoxes[1];
 
@@ -97,8 +106,10 @@ namespace BlazorContextMenu.E2ETests.Tests
         }
 
 
-        [Fact]
-        public void TodoItemsMenu_TriggerForSecondItemAndSelectCheckAndThenTriggerAgain_CheckIsDisabled()
+        [Theory]
+        [InlineData("list1", MouseButton.Right)]
+        [InlineData("list2", MouseButton.Left)]
+        public void TodoItemsMenu_TriggerForSecondItemAndSelectCheckAndThenTriggerAgain_CheckIsDisabled(string listId, MouseButton mouseButton)
         {
             //Arrange
             var expectedCheckedStatus = true;
@@ -106,13 +117,13 @@ namespace BlazorContextMenu.E2ETests.Tests
             var expectedClass = settings.DefaultCssSettings.MenuItemDisabledCssClass;
 
             //Act
-            OpenContextMenuAt("listitem-1");
+            OpenContextMenuAt($"{listId}-1", mouseButton);
             var menuItem = Browser.FindElement(By.Id("menuitem-check"));
             menuItem.Click();
-            OpenContextMenuAt("listitem-1");
+            OpenContextMenuAt($"{listId}-1", mouseButton);
             menuItem = Browser.FindElement(By.Id("menuitem-check"));
             var classes = menuItem.GetAttribute("class");
-            var list = Browser.FindElement(By.Id("list"));
+            var list = Browser.FindElement(By.Id(listId));
             var checkBoxes = list.FindElements(By.TagName("input"));
             var secondBox = checkBoxes[0];
 
@@ -123,19 +134,20 @@ namespace BlazorContextMenu.E2ETests.Tests
         }
 
 
-        [Fact]
-        public void TodoItemsMenu_UnckeckFirstItemAndTriggerMenu_CheckIsEnabled()
+        [Theory]
+        [InlineData("list1", MouseButton.Right)]
+        public void TodoItemsMenu_UnckeckFirstItemAndTriggerMenu_CheckIsEnabled(string listId, MouseButton mouseButton)
         {
             //Arrange
             var settings = new BlazorContextMenuSettings();
             var notExpectedClass = settings.DefaultCssSettings.MenuItemDisabledCssClass;
 
             //Act
-            var list = Browser.FindElement(By.Id("list"));
+            var list = Browser.FindElement(By.Id(listId));
             var checkBoxes = list.FindElements(By.TagName("input"));
             var firstCheckBox = checkBoxes[0];
             firstCheckBox.Click();
-            OpenContextMenuAt("listitem-0");
+            OpenContextMenuAt($"{listId}-0", mouseButton);
             var menuItem = Browser.FindElement(By.Id("menuitem-check"));
             var classes = menuItem.GetAttribute("class");
 
@@ -143,14 +155,16 @@ namespace BlazorContextMenu.E2ETests.Tests
             Assert.DoesNotContain(notExpectedClass, classes);
         }
 
-        [Fact]
-        public void TodoItemsMenu_TriggerForFirstItemAndCheckVisibilityOfLastItem_ItemIsInvisible()
+        [Theory]
+        [InlineData("list1", MouseButton.Right)]
+        [InlineData("list2", MouseButton.Left)]
+        public void TodoItemsMenu_TriggerForFirstItemAndCheckVisibilityOfLastItem_ItemIsInvisible(string listId, MouseButton mouseButton)
         {
             //Arrange
             var expectedDisplay = "none";
 
             //Act
-            OpenContextMenuAt("listitem-0");
+            OpenContextMenuAt($"{listId}-0", mouseButton);
             var menuItem = Browser.FindElement(By.Id("menuitem-invisible"));
             var styles = menuItem.GetAttribute("style");
 
@@ -158,14 +172,16 @@ namespace BlazorContextMenu.E2ETests.Tests
             Assert.Contains(expectedDisplay, styles);
         }
 
-        [Fact]
-        public void TodoItemsMenu_TriggerForFirstItemAndCheckVisibilityOfDelete_ItemIsVisible()
+        [Theory]
+        [InlineData("list1", MouseButton.Right)]
+        [InlineData("list2", MouseButton.Left)]
+        public void TodoItemsMenu_TriggerForFirstItemAndCheckVisibilityOfDelete_ItemIsVisible(string listId, MouseButton mouseButton)
         {
             //Arrange
             var expectedDisplay = "block";
 
             //Act
-            OpenContextMenuAt("listitem-0");
+            OpenContextMenuAt($"{listId}-0", mouseButton);
             var menuItem = Browser.FindElement(By.Id("menuitem-delete"));
             var styles = menuItem.GetAttribute("style");
 
@@ -173,14 +189,16 @@ namespace BlazorContextMenu.E2ETests.Tests
             Assert.Contains(expectedDisplay, styles);
         }
 
-        [Fact]
-        public void TodoItemsMenu_TriggerForThirdItemAndCheckVisibilityOfDelete_ItemIsInvisible()
+        [Theory]
+        [InlineData("list1", MouseButton.Right)]
+        [InlineData("list2", MouseButton.Left)]
+        public void TodoItemsMenu_TriggerForThirdItemAndCheckVisibilityOfDelete_ItemIsInvisible(string listId, MouseButton mouseButton)
         {
             //Arrange
             var expectedDisplay = "none";
 
             //Act
-            OpenContextMenuAt("listitem-2");
+            OpenContextMenuAt($"{listId}-2", mouseButton);
             var menuItem = Browser.FindElement(By.Id("menuitem-delete"));
             var styles = menuItem.GetAttribute("style");
 
