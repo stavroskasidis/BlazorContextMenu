@@ -31,8 +31,9 @@ public class Startup
     }
 }
 ```
-**3. Add the following line in your `_ViewImports.cshtml`**
+**3. Add the following lines in your `_ViewImports.cshtml`**
 ```csharp
+@using BlazorContextMenu
 @addTagHelper *, BlazorContextMenu
 ```
 
