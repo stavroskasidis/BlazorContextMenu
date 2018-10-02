@@ -119,8 +119,8 @@ public class Startup
             //Configures the default template
             options.ConfigureTemplate(defaultTemplate =>
             {
-                template.MenuCssClass = "my-default-menu";
-                template.MenuItemCssClass = "my-default-menu-item";
+                defaultTemplate.MenuCssClass = "my-default-menu";
+                defaultTemplate.MenuItemCssClass = "my-default-menu-item";
                 //...
             });
 
