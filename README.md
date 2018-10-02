@@ -4,7 +4,9 @@ A context menu component for [Blazor](https://github.com/aspnet/Blazor) !
 
 ![demo-img](ReadmeResources/blazor-context-menu-demo-1.gif)
 
-> ⚠️ Warning: This project is build on top of an experimental framework. There are many limitations and there is a high propability that there will be breaking changes from version to version.
+> ⚠️ Warning ⚠️
+
+> This project is build on top of an experimental framework. There are many limitations and there is a high propability that there will be breaking changes from version to version.
 
 ## Demo
 You can find a live demo [here](https://blazor-context-menu-demo.azurewebsites.net/).
