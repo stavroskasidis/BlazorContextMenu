@@ -135,7 +135,7 @@ public class Startup
 }
 ```
 #### Explicit customization
-All components expose a `CssClass` parameter that you can use to add css classes. These take precedence over any template configuration.
+All components expose `CssClass` parameters that you can use to add css classes. These take precedence over any template configuration.
 
 ```xml
 <ContextMenu Id="myMenu" CssClass="my-menu">
