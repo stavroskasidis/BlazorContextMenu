@@ -4,7 +4,9 @@ A context menu component for [Blazor](https://github.com/aspnet/Blazor) !
 
 ![demo-img](ReadmeResources/blazor-context-menu-demo-1.gif)
 
-> ⚠️ Warning: This project is build on top of an experimental framework. There are many limitations and there is a high propability that there will be breaking changes from version to version.
+> ⚠️ Warning
+
+> This project is build on top of an experimental framework. There are many limitations and there is a high propability that there will be breaking changes from version to version.
 
 ## Demo
 You can find a live demo [here](https://blazor-context-menu-demo.azurewebsites.net/).
@@ -31,8 +33,9 @@ public class Startup
     }
 }
 ```
-**3. Add the following line in your `_ViewImports.cshtml`**
+**3. Add the following lines in your `_ViewImports.cshtml`**
 ```csharp
+@using BlazorContextMenu
 @addTagHelper *, BlazorContextMenu
 ```
 
@@ -116,8 +119,8 @@ public class Startup
             //Configures the default template
             options.ConfigureTemplate(defaultTemplate =>
             {
-                template.MenuCssClass = "my-default-menu";
-                template.MenuItemCssClass = "my-default-menu-item";
+                defaultTemplate.MenuCssClass = "my-default-menu";
+                defaultTemplate.MenuItemCssClass = "my-default-menu-item";
                 //...
             });
 
@@ -132,7 +135,7 @@ public class Startup
 }
 ```
 #### Explicit customization
-All components expose a `CssClass` parameter that you can use to add css classes. These take precedence over any template configuration.
+All components expose `CssClass` parameters that you can use to add css classes. These take precedence over any template configuration.
 
 ```xml
 <ContextMenu Id="myMenu" CssClass="my-menu">
@@ -189,6 +192,9 @@ Upgrating from 0.1 to 0.2
 
 
 ## Release Notes
+### 0.8
+>- Updated to Blazor 0.6.0
+
 ### 0.7
 >- Added left-click trigger support
 
