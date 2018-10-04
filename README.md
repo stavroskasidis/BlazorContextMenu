@@ -192,6 +192,9 @@ Upgrating from 0.1 to 0.2
 
 
 ## Release Notes
+### 0.8
+>- Updated to Blazor 0.6.0
+
 ### 0.7
 >- Added left-click trigger support
 

@@ -9,6 +9,6 @@
     "run-sequence": "^2.2.1"
   },
   "scripts": {
-	"minify": "gulp all"
+    "minify": "gulp all"
   }
 }
