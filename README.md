@@ -6,7 +6,7 @@ A context menu component for [Blazor](https://github.com/aspnet/Blazor) !
 
 > ⚠️ Warning
 
-> This project is build on top of an experimental framework. There are many limitations and there is a high propability that there will be breaking changes from version to version.
+> This project is build on top of an experimental framework. There are many limitations and there is a high probability that there will be breaking changes from version to version.
 
 ## Demo
 You can find a live demo [here](https://blazor-context-menu-demo.azurewebsites.net/).
