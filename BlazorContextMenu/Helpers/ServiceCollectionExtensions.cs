@@ -1,4 +1,5 @@
 ﻿using BlazorContextMenu;
+using BlazorContextMenu.Services;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -13,6 +14,8 @@ namespace Microsoft.Extensions.DependencyInjection
             var settings = new BlazorContextMenuSettings();
             services.AddSingleton(settings);
 
+            var traverser = new MenuTreeTraverser();
+            services.AddSingleton(traverser);
             return services;
         }
 
@@ -22,6 +25,9 @@ namespace Microsoft.Extensions.DependencyInjection
             var settingsBuilder = new BlazorContextMenuSettingsBuilder(settingsObj);
             settings(settingsBuilder);
             services.AddSingleton(settingsObj);
+
+            var traverser = new MenuTreeTraverser();
+            services.AddSingleton(traverser);
             return services;
         }
 

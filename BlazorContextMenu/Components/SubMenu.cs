@@ -12,6 +12,7 @@ namespace BlazorContextMenu.Components
     public class SubMenu : ContextMenu
     {
         protected override string BaseClass => "blazor-context-submenu blazor-context-menu__wrapper";
+
         protected override void OnInit()
         {
             if (string.IsNullOrEmpty(Id))

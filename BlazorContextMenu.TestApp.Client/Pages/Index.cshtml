@@ -1,5 +1,4 @@
 ﻿@page "/"
-@inject HttpClient http
 
 <h1 id="header">Hello, Blazor context menu !</h1>
 
@@ -74,8 +73,8 @@
     protected string Summaries { get; set; }
     async Task FetchDataClick(MenuItemClickEventArgs e)
     {
-        var summaries = await http.GetJsonAsync<string[]>("/api/SampleData/Summaries");
-        Summaries = string.Join(",", summaries);
+        //var summaries = await http.GetJsonAsync<string[]>("/api/SampleData/Summaries");
+        //Summaries = string.Join(",", summaries);
         TextAreaDisplay = "block";
         StateHasChanged();
     }
