@@ -1,7 +1,9 @@
 ﻿@using Microsoft.JSInterop
+@inherits MenuTreeComponent
 @inject BlazorContextMenuSettings settings
+@inject MenuTreeTraverser menuTreeTraverser
 
-<li id="@Id" class="@ClassCalc"  ref="@MenuItemElement">
+<li id="@Id" class="@ClassCalc" ref="@MenuItemElement">
     <hr class="@HrClassCalc" />
 </li>
 
@@ -65,21 +67,12 @@
         }
     }
 
-    protected override async Task OnAfterRenderAsync()
+    protected override void OnInit()
     {
-        var menuId = await JSRuntime.Current.InvokeAsync<string>("blazorContextMenu.GetMenuId", MenuItemElement);
-        var menu = BlazorContextMenuHandler.GetMenu(menuId);
-        if(Template == menu.Template) return;
+        base.OnInit();
 
-        //Hacky but works. TODO: Improve this code when this stuff is supported in Blazor
-        Task.Run(() =>
-        {
-            var oldTemplateValue = Template;
-            Template = menu.Template;
-            if (oldTemplateValue != Template)
-            {
-                StateHasChanged();
-            }
-        });
+        var menu = menuTreeTraverser.GetClosestContextMenuParent(this);
+        if (menu == null) throw new Exception("Seperator component must be a child of a ContextMenu component");
+        Template = menu.Template;
     }
 }

@@ -1,5 +1,7 @@
 ﻿@using Microsoft.JSInterop
+@inherits MenuTreeComponent
 @inject BlazorContextMenuSettings settings
+@inject MenuTreeTraverser menuTreeTraverser
 
 <li id="@Id"
     onclick="@((e) => OnClickInternal(e))"
@@ -9,7 +11,9 @@
     onmouseover="@(Enabled ? $"blazorContextMenu.OnMenuItemMouseOver(event, {SubmenuXOffset ?? settings.GetTemplate(Template).SubMenuXPositionPixelsOffset}, this);" : "")"
     onmouseout="@(Enabled ? "blazorContextMenu.OnMenuItemMouseOut(event);" : "")"
     ref="@MenuItemElement">
-    @ChildContent
+    <CascadingValue Value="(MenuTreeComponent)this" Name="ParentComponent">
+        @ChildContent
+    </CascadingValue>
 </li>
 
 
@@ -135,6 +139,7 @@
     protected ElementRef MenuItemElement { get; set; }
     protected string Template { get; set; } = BlazorContextMenuSettings.DefaultTemplateName;
     protected bool HasSubMenu { get; set; }
+    protected ContextMenu ParentMenu { get; set; }
 
     protected override async Task OnInitAsync()
     {
@@ -143,26 +148,57 @@
             Id = Guid.NewGuid().ToString();
         }
 
-        base.OnInit();
+        ParentMenu = menuTreeTraverser.GetClosestContextMenuParent(this);
+        if (ParentMenu == null) throw new Exception("Item component must be a child of a ContextMenu component");
+
+        Template = ParentMenu.Template;
+
+        var contextMenuTarget = ParentMenu.GetTarget();
+        var args = new MenuItemHandlerArgs(ParentMenu.Id, contextMenuTarget, (Item)(object)this); //TODO: Remove casting when 'this' is fixed in blazor
+        if (VisibleHandler != null)
+        {
+            Visible = VisibleHandler(args);
+        }
+        else if (VisibleHandlerAsync != null)
+        {
+            Visible = await VisibleHandlerAsync(args);
+        }
+
+        if (EnabledHandler != null)
+        {
+            Enabled = EnabledHandler(args);
+        }
+        else if (EnabledHandlerAsync != null)
+        {
+            Enabled = await EnabledHandlerAsync(args);
+        }
+    }
+
+    protected override void OnAfterRender()
+    {
+        var hasSubMenu = menuTreeTraverser.HasSubMenu(this);
+        if (HasSubMenu == hasSubMenu) return;
+
+        //Hacky but works. TODO: Improve this code when this stuff is supported in Blazor
+        Task.Run(() =>
+        {
+            HasSubMenu = hasSubMenu;
+            StateHasChanged();
+        });
     }
 
     protected async Task OnClickInternal(UIMouseEventArgs e)
     {
-        if (!Enabled)
-        {
-            return;
-        }
+        if (!Enabled) return;
 
-        var menuId = await JSRuntime.Current.InvokeAsync<string>("blazorContextMenu.GetMenuId", MenuItemElement);
-        var menu = BlazorContextMenuHandler.GetMenu(menuId);
-        var contextMenuTarget = menu.GetTarget();
-        var args = new MenuItemClickEventArgs(e, menu.Id, contextMenuTarget, MenuItemElement, (Item)(object)this);  //TODO: Remove casting when 'this' is fixed in blazor
+        var contextMenuTarget = ParentMenu.GetTarget();
+        var args = new MenuItemClickEventArgs(e, ParentMenu.Id, contextMenuTarget, MenuItemElement, (Item)(object)this);  //TODO: Remove casting when 'this' is fixed in blazor
         if (Click != null)
         {
             Click(args);
             if (!args.IsCanceled)
             {
-                BlazorContextMenuHandler.HideMenu(menu.Id);
+                BlazorContextMenuHandler.HideMenu(ParentMenu.Id);
             }
         }
         else if (ClickAsync != null)
@@ -171,63 +207,10 @@
             {
                 if (!args.IsCanceled)
                 {
-                    BlazorContextMenuHandler.HideMenu(menu.Id);
+                    BlazorContextMenuHandler.HideMenu(ParentMenu.Id);
                 }
             });
         }
-    }
-
-    protected override async Task OnAfterRenderAsync()
-    {
-
-        var menuId = await JSRuntime.Current.InvokeAsync<string>("blazorContextMenu.GetMenuId", MenuItemElement);
-        var menu = BlazorContextMenuHandler.GetMenu(menuId);
-        var hasSubMenu = await JSRuntime.Current.InvokeAsync<bool>("blazorContextMenu.MenuItemHasSubmenu", MenuItemElement);
-        var contextMenuTarget = menu.GetTarget();
-
-        if (EnabledHandler == null && EnabledHandlerAsync == null &&
-            VisibleHandler == null && VisibleHandlerAsync == null &&
-            Template == menu.Template &&
-            HasSubMenu == hasSubMenu) return;
-
-        //menu is not showing. TODO: find a better way to figure this out
-        if (contextMenuTarget == null) return;
-
-        //Hacky but works. TODO: Improve this code when this stuff is supported in Blazor
-        Task.Run(async () =>
-        {
-            var oldEnabledValue = Enabled;
-            var oldVisibleValue = Visible;
-            var oldTemplateValue = Template;
-            var oldHasSubmenuValue = HasSubMenu;
-            Template = menu.Template;
-            HasSubMenu = hasSubMenu;
-
-            var args = new MenuItemHandlerArgs(menuId, contextMenuTarget, MenuItemElement, (Item)(object)this); //TODO: Remove casting when 'this' is fixed in blazor
-            if (EnabledHandler != null)
-            {
-                Enabled = EnabledHandler(args);
-            }
-            else if (EnabledHandlerAsync != null)
-            {
-                Enabled = await EnabledHandlerAsync(args);
-            }
-
-            if (VisibleHandler != null)
-            {
-                Visible = VisibleHandler(args);
-            }
-            else if (VisibleHandlerAsync != null)
-            {
-                Visible = await VisibleHandlerAsync(args);
-            }
-
-            if (oldEnabledValue != Enabled || oldVisibleValue != Visible ||
-                oldTemplateValue != Template || oldHasSubmenuValue != HasSubMenu)
-            {
-                StateHasChanged();
-            }
-        });
     }
 #pragma warning restore BL9993, CS4014 // Component parameter is marked public
 }

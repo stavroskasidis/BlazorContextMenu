@@ -1,10 +1,16 @@
 ﻿@using System.ComponentModel
+@inherits MenuTreeComponent
 @inject BlazorContextMenuSettings settings
 
 <div class="@($"{BaseClass} {ClassCalc}")" id="@Id" style="@($"left:{X}px;top:{Y}px;{StyleDisplayCalc}")">
-    <ul class="@ListClassCalc">
-        @ChildContent
-    </ul>
+    @if (IsShowing)
+    {
+        <ul class="@ListClassCalc">
+            <CascadingValue Value="(MenuTreeComponent)this" Name="ParentComponent">
+                @ChildContent
+            </CascadingValue>
+        </ul>
+    }
 </div>
 
 @functions{
@@ -12,7 +18,6 @@
 #pragma warning disable BL9993, CS4014 // Component parameter is marked public
 
     protected virtual string BaseClass => "blazor-context-menu blazor-context-menu__wrapper";
-
     /// <summary>
     /// The id that the <see cref="Components.ContextMenuTrigger"/> will use to bind to. This parameter is required
     /// </summary>
@@ -76,6 +81,7 @@
 
     protected override void OnInit()
     {
+        base.OnInit();
         if (string.IsNullOrEmpty(Id))
         {
             throw new ArgumentNullException(nameof(Id));
@@ -83,8 +89,9 @@
         BlazorContextMenuHandler.Register((ContextMenu)(object)this);
     }
 
-    public void Dispose()
+    public override void Dispose()
     {
+        base.Dispose();
         BlazorContextMenuHandler.Unregister((ContextMenu)(object)this);
     }
 

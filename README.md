@@ -6,7 +6,7 @@ A context menu component for [Blazor](https://github.com/aspnet/Blazor) !
 
 > ⚠️ Warning
 
-> This project is build on top of an experimental framework. There are many limitations and there is a high propability that there will be breaking changes from version to version.
+> This project is build on top of an experimental framework. There are many limitations and there is a high probability that there will be breaking changes from version to version.
 
 ## Demo
 You can find a live demo [here](https://blazor-context-menu-demo.azurewebsites.net/).
@@ -192,6 +192,10 @@ Upgrating from 0.1 to 0.2
 
 
 ## Release Notes
+### 0.9
+>- Updated to Blazor 0.7.0
+>- Removed some js interop in favor of the new Cascading Values feature
+
 ### 0.8
 >- Updated to Blazor 0.6.0
 

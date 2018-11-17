@@ -199,14 +199,14 @@ var blazorContextMenu = function (blazorContextMenu) {
         }
     }
 
-    blazorContextMenu.GetMenuId = function (menuItem) {
-        var menu = menuItem.closest(".blazor-context-menu");
-        return menu.id;
-    };
+    //blazorContextMenu.GetMenuId = function (menuItem) {
+    //    var menu = menuItem.closest(".blazor-context-menu");
+    //    return menu.id;
+    //};
 
-    blazorContextMenu.MenuItemHasSubmenu = function (menuItem) {
-        return !!findFirstChildByClass(menuItem, "blazor-context-submenu");
-    }
+    //blazorContextMenu.MenuItemHasSubmenu = function (menuItem) {
+    //    return !!findFirstChildByClass(menuItem, "blazor-context-submenu");
+    //}
 
     return blazorContextMenu;
 }({});
