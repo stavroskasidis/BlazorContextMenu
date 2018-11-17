@@ -9,7 +9,7 @@
 
   <ItemGroup>
     <PackageReference Include="Microsoft.AspNetCore.App" Version="2.1.2" />
-    <PackageReference Include="Microsoft.AspNetCore.Blazor.Server" Version="0.7.0-preview1-20181017.2" />
+    <PackageReference Include="Microsoft.AspNetCore.Blazor.Server" Version="0.7.0" />
   </ItemGroup>
 
   <ItemGroup>

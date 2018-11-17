@@ -139,6 +139,7 @@
     protected ElementRef MenuItemElement { get; set; }
     protected string Template { get; set; } = BlazorContextMenuSettings.DefaultTemplateName;
     protected bool HasSubMenu { get; set; }
+    protected ContextMenu ParentMenu { get; set; }
 
     protected override async Task OnInitAsync()
     {
@@ -147,13 +148,13 @@
             Id = Guid.NewGuid().ToString();
         }
 
-        var menu = menuTreeTraverser.GetClosestContextMenuParent(this);
-        if (menu == null) throw new Exception("Item component must be a child of a ContextMenu component");
+        ParentMenu = menuTreeTraverser.GetClosestContextMenuParent(this);
+        if (ParentMenu == null) throw new Exception("Item component must be a child of a ContextMenu component");
 
-        Template = menu.Template;
+        Template = ParentMenu.Template;
 
-        var contextMenuTarget = menu.GetTarget();
-        var args = new MenuItemHandlerArgs(menu.Id, contextMenuTarget, (Item)(object)this); //TODO: Remove casting when 'this' is fixed in blazor
+        var contextMenuTarget = ParentMenu.GetTarget();
+        var args = new MenuItemHandlerArgs(ParentMenu.Id, contextMenuTarget, (Item)(object)this); //TODO: Remove casting when 'this' is fixed in blazor
         if (VisibleHandler != null)
         {
             Visible = VisibleHandler(args);
@@ -175,18 +176,12 @@
 
     protected override void OnAfterRender()
     {
-        var menu = menuTreeTraverser.GetClosestContextMenuParent(this);
-        if (menu == null) throw new Exception("Item must be a child of a ContextMenu component");
-
-        //menuTreeTraverser.Debug_PrintChildInfo(this, 0);
-
         var hasSubMenu = menuTreeTraverser.HasSubMenu(this);
         if (HasSubMenu == hasSubMenu) return;
 
         //Hacky but works. TODO: Improve this code when this stuff is supported in Blazor
         Task.Run(() =>
         {
-            Console.WriteLine("Has submenu task run");
             HasSubMenu = hasSubMenu;
             StateHasChanged();
         });
@@ -196,16 +191,14 @@
     {
         if (!Enabled) return;
 
-        var menuId = await JSRuntime.Current.InvokeAsync<string>("blazorContextMenu.GetMenuId", MenuItemElement);
-        var menu = BlazorContextMenuHandler.GetMenu(menuId);
-        var contextMenuTarget = menu.GetTarget();
-        var args = new MenuItemClickEventArgs(e, menu.Id, contextMenuTarget, MenuItemElement, (Item)(object)this);  //TODO: Remove casting when 'this' is fixed in blazor
+        var contextMenuTarget = ParentMenu.GetTarget();
+        var args = new MenuItemClickEventArgs(e, ParentMenu.Id, contextMenuTarget, MenuItemElement, (Item)(object)this);  //TODO: Remove casting when 'this' is fixed in blazor
         if (Click != null)
         {
             Click(args);
             if (!args.IsCanceled)
             {
-                BlazorContextMenuHandler.HideMenu(menu.Id);
+                BlazorContextMenuHandler.HideMenu(ParentMenu.Id);
             }
         }
         else if (ClickAsync != null)
@@ -214,7 +207,7 @@
             {
                 if (!args.IsCanceled)
                 {
-                    BlazorContextMenuHandler.HideMenu(menu.Id);
+                    BlazorContextMenuHandler.HideMenu(ParentMenu.Id);
                 }
             });
         }

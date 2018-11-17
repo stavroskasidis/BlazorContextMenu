@@ -1,4 +1,5 @@
 ﻿@page "/"
+@inject HttpClient http
 
 <h1 id="header">Hello, Blazor context menu !</h1>
 
@@ -32,7 +33,7 @@
 
 <ContextMenu Id="menu1">
     <Item Id="menu1-item1" ClickAsync="FetchDataClick">Fetch Data</Item>
-    <Item  Id="menu1-item2" Click="ClearDataClick">Clear Data</Item>
+    <Item Id="menu1-item2" Click="ClearDataClick">Clear Data</Item>
     <Seperator />
     <Item Id="menu1-item3" Enabled="false">Disabled Item </Item>
 </ContextMenu>
@@ -73,8 +74,10 @@
     protected string Summaries { get; set; }
     async Task FetchDataClick(MenuItemClickEventArgs e)
     {
-        //var summaries = await http.GetJsonAsync<string[]>("/api/SampleData/Summaries");
-        //Summaries = string.Join(",", summaries);
+        Console.WriteLine("Fetching");
+        var summaries = await http.GetJsonAsync<string[]>("/api/SampleData/Summaries");
+        Summaries = string.Join(",", summaries);
+        Console.WriteLine("Fetched: " + summaries);
         TextAreaDisplay = "block";
         StateHasChanged();
     }

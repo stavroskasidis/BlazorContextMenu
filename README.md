@@ -192,6 +192,10 @@ Upgrating from 0.1 to 0.2
 
 
 ## Release Notes
+### 0.9
+>- Updated to Blazor 0.7.0
+>- Removed some js interop in favor of the new Cascading Values feature
+
 ### 0.8
 >- Updated to Blazor 0.6.0
 

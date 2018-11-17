@@ -20,10 +20,10 @@ namespace BlazorContextMenu.TestApp.Server
         {
             services.AddServerSideBlazor<Client.Startup>();
 
-            //services.AddMvc().AddJsonOptions(options =>
-            //{
-            //    options.SerializerSettings.ContractResolver = new DefaultContractResolver();
-            //});
+            services.AddMvc().AddJsonOptions(options =>
+            {
+                options.SerializerSettings.ContractResolver = new DefaultContractResolver();
+            });
 
             services.AddResponseCompression(options =>
             {
@@ -45,12 +45,12 @@ namespace BlazorContextMenu.TestApp.Server
                 app.UseDeveloperExceptionPage();
             }
 
-            //app.UseMvc(routes =>
-            //{
-            //    routes.MapRoute(name: "default", template: "{controller}/{action}/{id?}");
-            //});
+            app.UseMvc(routes =>
+            {
+                routes.MapRoute(name: "default", template: "{controller}/{action}/{id?}");
+            });
 
-            app.UseServerSideBlazor<Client.Startup>();
+            app.UseBlazor<Client.Startup>();
         }
     }
 }
