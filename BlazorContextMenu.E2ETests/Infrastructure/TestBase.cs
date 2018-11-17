@@ -7,6 +7,8 @@ using Xunit;
 using OpenQA.Selenium.Interactions;
 using OpenQA.Selenium.Interactions.Internal;
 using Xunit.Abstractions;
+using System.Linq;
+using System.Threading.Tasks;
 
 namespace BlazorContextMenu.E2ETests.Infrastructure
 {
@@ -23,7 +25,7 @@ namespace BlazorContextMenu.E2ETests.Infrastructure
             _fixture = fixture;
             _browser.Value = fixture.Browser;
         }
-        protected void OpenContextMenuAt(string triggerElementId, MouseButton mouseButton)
+        protected async Task OpenContextMenuAt(string triggerElementId, MouseButton mouseButton)
         {
             var element = Browser.FindElement(By.Id(triggerElementId));
             var action = new Actions(Browser);
@@ -35,6 +37,8 @@ namespace BlazorContextMenu.E2ETests.Infrastructure
             {
                 action.ContextClick(element).Perform();
             }
+
+            await Task.Delay(500);
         }
 
         protected void MouseOverElement(string elementId)
