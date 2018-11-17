@@ -7,7 +7,7 @@
     <BlazorLinkOnBuild>false</BlazorLinkOnBuild>
 
     <!-- This custom package feed is required only when using nightly builds of Blazor -->
-    <RestoreSources>https://dotnet.myget.org/F/blazor-dev/api/v3/index.json;$(RestoreSources)</RestoreSources>
+    <!-- <RestoreSources>https://dotnet.myget.org/F/blazor-dev/api/v3/index.json;$(RestoreSources)</RestoreSources> -->
     <GeneratePackageOnBuild>false</GeneratePackageOnBuild>
     <PackageId>Blazor.ContextMenu</PackageId>
     <Authors>Stavros Kasidis (AkiraGTX)</Authors>

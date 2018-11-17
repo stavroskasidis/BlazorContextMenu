@@ -6,6 +6,9 @@ cd BlazorContextMenu
 call npm run minify
 cd "%~dp0"
 
+dotnet restore BlazorContextMenu.sln
+if %errorlevel% neq 0 exit /b %errorlevel%
+
 dotnet build BlazorContextMenu.sln -c Release
 if %errorlevel% neq 0 exit /b %errorlevel%
 
