@@ -13,9 +13,9 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="Blazor.ContextMenu" Version="0.6.0-beta-208" />
-    <PackageReference Include="Microsoft.AspNetCore.Blazor.Browser" Version="0.5.1" />
-    <PackageReference Include="Microsoft.AspNetCore.Blazor.Build" Version="0.5.1" />
+    <PackageReference Include="Blazor.ContextMenu" Version="0.8.0" />
+    <PackageReference Include="Microsoft.AspNetCore.Blazor.Browser" Version="0.7.0" />
+    <PackageReference Include="Microsoft.AspNetCore.Blazor.Build" Version="0.7.0" />
     <DotNetCliToolReference Include="Microsoft.AspNetCore.Blazor.Cli" Version="0.5.1" />
   </ItemGroup>
 </Project>
