@@ -10,28 +10,29 @@ using System.Threading.Tasks;
 
 namespace BlazorContextMenu
 {
-    public static class BlazorContextMenuHandler
+    public class BlazorContextMenuHandler
     {
-        //TODO: Find a better way to keep references
-        private static Dictionary<string, ContextMenu> InitializedMenus = new Dictionary<string, ContextMenu>();
+        private Dictionary<string, ContextMenu> InitializedMenus = new Dictionary<string, ContextMenu>();
 
-        public static void Register(ContextMenu menu)
+        internal void Register(ContextMenu menu)
         {
             InitializedMenus[menu.Id] = menu;
         }
 
-        public static void Unregister(ContextMenu menu)
+        internal bool ReferencePassedToJs { get; set; } = false;
+
+        internal void Unregister(ContextMenu menu)
         {
             InitializedMenus.Remove(menu.Id);
         }
 
-        public static ContextMenu GetMenu(string id)
+        internal ContextMenu GetMenu(string id)
         {
             return InitializedMenus[id];
         }
 
         [JSInvokable]
-        public static void ShowMenu(string id, string x, string y, string target)
+        public void ShowMenu(string id, string x, string y, string target)
         {
             if (InitializedMenus.ContainsKey(id))
             {
@@ -40,7 +41,7 @@ namespace BlazorContextMenu
         }
 
         [JSInvokable]
-        public static void HideMenu(string id)
+        public void HideMenu(string id)
         {
             if (InitializedMenus.ContainsKey(id))
             {

@@ -1,20 +1,22 @@
-﻿//"closest" polyfill
-if (window.Element && !Element.prototype.closest) {
-    Element.prototype.closest =
-        function (s) {
-            var matches = (this.document || this.ownerDocument).querySelectorAll(s),
-                i,
-                el = this;
+﻿var blazorContextMenu = function (blazorContextMenu) {
+
+    var closest = null;
+    if (window.Element && !Element.prototype.closest) {
+        closest = function (el, s) {
+            var matches = (el.document || el.ownerDocument).querySelectorAll(s), i;
             do {
                 i = matches.length;
                 while (--i >= 0 && matches.item(i) !== el) { };
             } while ((i < 0) && (el = el.parentElement));
             return el;
         };
-}
+    }
+    else {
+        closest = function (el, s) {
+            return el.closest(s);
+        };
+    }
 
-
-var blazorContextMenu = function (blazorContextMenu) {
 
     var openMenuId = null;
     var openMenuTarget = null;
@@ -71,8 +73,17 @@ var blazorContextMenu = function (blazorContextMenu) {
 
     //===========================================
 
+    var menuHandlerReference = null;
+
+    blazorContextMenu.SetMenuHandlerReference = function (dotnetRef) {
+        if (!menuHandlerReference) {
+            menuHandlerReference = dotnetRef;
+        }
+    }
+
     blazorContextMenu.OnContextMenu = function (e, menuId) {
         var menu = document.getElementById(menuId);
+        if (!menu) throw new Error("No context menu with id '" + menuId + "' was found");
         openMenuId = menuId;
         openMenuTarget = e.target;
 
@@ -127,11 +138,11 @@ var blazorContextMenu = function (blazorContextMenu) {
             //TODO: Rewrite this once this Blazor limitation is lifted
             target.id = guid();
         }
-        DotNet.invokeMethodAsync('BlazorContextMenu', 'ShowMenu', menuId, x.toString(), y.toString(), target.id);
+        menuHandlerReference.invokeMethodAsync('ShowMenu', menuId, x.toString(), y.toString(), target.id);
     }
 
     blazorContextMenu.Hide = function (menuId) {
-        DotNet.invokeMethodAsync('BlazorContextMenu', 'HideMenu', menuId);
+        menuHandlerReference.invokeMethodAsync('HideMenu', menuId);
     }
 
     var subMenuTimeout = null;
@@ -151,7 +162,7 @@ var blazorContextMenu = function (blazorContextMenu) {
             var originalDisplay = subMenu.style.display;
             subMenu.style.display = ""; //this is required to get the menu's width
 
-            var currentMenu = currentItem.closest(".blazor-context-menu__wrapper");
+            var currentMenu = closest(currentItem,".blazor-context-menu__wrapper");
             var currentMenuList = currentMenu.children[0];
             var targetRect = currentItem.getBoundingClientRect();
             var x = targetRect.left + currentMenu.clientWidth - xOffset;
@@ -199,17 +210,7 @@ var blazorContextMenu = function (blazorContextMenu) {
         }
     }
 
-    //blazorContextMenu.GetMenuId = function (menuItem) {
-    //    var menu = menuItem.closest(".blazor-context-menu");
-    //    return menu.id;
-    //};
-
-    //blazorContextMenu.MenuItemHasSubmenu = function (menuItem) {
-    //    return !!findFirstChildByClass(menuItem, "blazor-context-submenu");
-    //}
-
     return blazorContextMenu;
 }({});
 
 blazorContextMenu.Init();
-
