@@ -1,6 +1,6 @@
 # Blazor Context Menu ![Build Status](https://stavros-kasidis.visualstudio.com/_apis/public/build/definitions/9942c317-bff6-4b9f-9c78-0e97ce00de51/12/badge) ![NuGet Badge](https://buildstats.info/nuget/Blazor.ContextMenu?includePreReleases=true)
 
-A context menu component for [Blazor](https://github.com/aspnet/Blazor) !
+A context menu component for [Blazor](https://github.com/aspnet/Blazor) and [Razor Components](https://github.com/aspnet/AspNetCore/tree/master/src/Components) (aka server-side Blazor)!
 
 ![demo-img](ReadmeResources/blazor-context-menu-demo-1.gif)
 
@@ -192,6 +192,9 @@ Upgrating from 0.1 to 0.2
 
 
 ## Release Notes
+### 0.10
+>- Added proper support for Razor Components (aka server-side Blazor)
+
 ### 0.9
 >- Updated to Blazor 0.7.0
 >- Removed some js interop in favor of the new Cascading Values feature
