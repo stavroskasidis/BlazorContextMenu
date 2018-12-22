@@ -177,12 +177,12 @@
 
     protected override void OnAfterRender()
     {
-        var hasSubMenu = menuTreeTraverser.HasSubMenu(this);
-        if (HasSubMenu == hasSubMenu) return;
-
-        //Hacky but works. TODO: Improve this code when this stuff is supported in Blazor
-        Task.Run(() =>
+        Task.Run(async () =>
         {
+            var hasSubMenu = menuTreeTraverser.HasSubMenu(this);
+            if (HasSubMenu == hasSubMenu) return;
+
+            //Hacky but works. TODO: Improve this code when this stuff is supported in Blazor
             HasSubMenu = hasSubMenu;
             StateHasChanged();
         });

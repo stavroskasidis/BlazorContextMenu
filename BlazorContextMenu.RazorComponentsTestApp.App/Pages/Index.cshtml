@@ -1,0 +1,97 @@
+﻿@page "/"
+@inject SampleDataService sampleDataService
+
+<h1 id="header">Hello, Blazor context menu !</h1>
+
+<ContextMenuTrigger MenuId="menu1">
+    <p id="test1-trigger">Right-click me (menu1)</p>
+</ContextMenuTrigger>
+
+<textarea style="@($"display:{TextAreaDisplay};")" id="test1-textarea" rows="20" cols="50" readonly wrap="hard" bind="@Summaries"></textarea>
+
+<ContextMenuTrigger MenuId="menu2">
+    <p id="test2-trigger">Right-click me (menu2 - with icons and sub-menus)</p>
+</ContextMenuTrigger>
+
+
+<ContextMenuTrigger MenuId="menu1" MouseButtonTrigger="MouseButtonTrigger.Left">
+    <p id="test3-trigger">Left-click me (menu1)</p>
+</ContextMenuTrigger>
+
+<ContextMenuTrigger MenuId="menu1" MouseButtonTrigger="MouseButtonTrigger.Both">
+    <p id="test4-trigger">Click me with left or right mouse button (menu1)</p>
+</ContextMenuTrigger>
+
+<ContextMenuTrigger MenuId="menu2" MouseButtonTrigger="MouseButtonTrigger.Left">
+    <p id="test5-trigger">Left-click me (menu2 - with icons and sub-menus)</p>
+</ContextMenuTrigger>
+
+<ContextMenuTrigger MenuId="menu2" MouseButtonTrigger="MouseButtonTrigger.Both">
+    <p id="test6-trigger">Right or left-click me (menu2 - with icons and sub-menus)</p>
+</ContextMenuTrigger>
+
+
+<ContextMenu Id="menu1">
+    <Item Id="menu1-item1" ClickAsync="FetchDataClick">Fetch Data</Item>
+    <Item Id="menu1-item2" Click="ClearDataClick">Clear Data</Item>
+    <Seperator />
+    <Item Id="menu1-item3" Enabled="false">Disabled Item </Item>
+</ContextMenu>
+
+<ContextMenu Id="menu2" Template="testtemplate">
+    <Item Id="menu2-item1" Click="@OnClick"> <i class="far fa-file"></i> New</Item>
+    <Item Click="@OnClick"> <i class="fas fa-edit"></i> Edit</Item>
+    <Item Click="@OnClick" Enabled="false"> <i class="fas fa-trash-alt"></i> Delete</Item>
+    <Seperator />
+    <Item Id="submenu1-trigger">
+        <i class="fas fa-cogs"></i> More
+        <SubMenu Id="submenu1">
+            <Item Click="@OnClick"> <i class="far fa-save"></i> Save As</Item>
+            <Item Click="@OnClick"> <i class="far fa-save"></i> Save</Item>
+            <Item Id="submenu2-trigger">
+                <i class="fas fa-save"></i> Export as
+                <SubMenu Id="submenu2">
+                    <Item Click="@OnClick"> <i class="fas fa-file-pdf"></i> Pdf</Item>
+                    <Item Click="@OnClick"> <i class="far fa-file-alt"></i> Text</Item>
+                </SubMenu>
+            </Item>
+        </SubMenu>
+    </Item>
+    <Item Enabled="false">
+        <i class="fas fa-cogs"></i> Disabled Submenu
+        <SubMenu>
+            <Item Click="@OnClick">Item 1</Item>
+            <Item Click="@OnClick">Item 2</Item>
+        </SubMenu>
+    </Item>
+</ContextMenu>
+
+<NavLink href="/TodoList">Go to Todo List</NavLink>
+
+@functions{
+    protected string TextAreaDisplay { get; set; } = "none";
+
+    protected string Summaries { get; set; }
+    async Task FetchDataClick(MenuItemClickEventArgs e)
+    {
+        Console.WriteLine("Fetching");
+        var summaries = await sampleDataService.GetSampleData();
+        Summaries = string.Join(",", summaries);
+        Console.WriteLine("Fetched: " + summaries);
+        TextAreaDisplay = "block";
+        StateHasChanged();
+    }
+
+    void ClearDataClick(MenuItemClickEventArgs e)
+    {
+        Summaries = "";
+        TextAreaDisplay = "none";
+        StateHasChanged();
+    }
+
+
+    void OnClick(MenuItemClickEventArgs e)
+    {
+        Console.WriteLine($"Item Clicked => Menu: {e.ContextMenuId}, MenuTarget: {e.ContextMenuTargetId}, IsCanceled: {e.IsCanceled}, MenuItem: {e.MenuItemElement}, MouseEvent: {e.MouseEvent}");
+    }
+}

@@ -101,19 +101,17 @@
         }
         menu.style.display = originalDisplay;
 
-        blazorContextMenu.Show(menuId, x, y, e.target);
+        blazorContextMenu.Show(menuId, x, y, e.target).then(function () {
+            //Hide all other open submenus
+            var childSubMenus = findAllChildsByClass(menu, "blazor-context-submenu");
+            var i = childSubMenus.length;
+            while (i--) {
+                var subMenu = childSubMenus[i];
+                blazorContextMenu.Hide(subMenu.id);
+            }
 
-
-        //Hide all other open submenus
-        var childSubMenus = findAllChildsByClass(menu, "blazor-context-submenu");
-        var i = childSubMenus.length;
-        while (i--) {
-            var subMenu = childSubMenus[i];
-            blazorContextMenu.Hide(subMenu.id);
-        }
-
-        var menuItems = findAllChildsByClass(menu, "blazor-context-menu__item");
-
+            var menuItems = findAllChildsByClass(menu, "blazor-context-menu__item");
+        });
         e.preventDefault();
         return false;
     };
@@ -138,7 +136,7 @@
             //TODO: Rewrite this once this Blazor limitation is lifted
             target.id = guid();
         }
-        menuHandlerReference.invokeMethodAsync('ShowMenu', menuId, x.toString(), y.toString(), target.id);
+        return menuHandlerReference.invokeMethodAsync('ShowMenu', menuId, x.toString(), y.toString(), target.id);
     }
 
     blazorContextMenu.Hide = function (menuId) {
@@ -162,7 +160,7 @@
             var originalDisplay = subMenu.style.display;
             subMenu.style.display = ""; //this is required to get the menu's width
 
-            var currentMenu = closest(currentItem,".blazor-context-menu__wrapper");
+            var currentMenu = closest(currentItem, ".blazor-context-menu__wrapper");
             var currentMenuList = currentMenu.children[0];
             var targetRect = currentItem.getBoundingClientRect();
             var x = targetRect.left + currentMenu.clientWidth - xOffset;
@@ -176,31 +174,31 @@
             }
 
             subMenu.style.display = originalDisplay;
-            blazorContextMenu.Show(subMenu.id, x, y, openMenuTarget);
+            blazorContextMenu.Show(subMenu.id, x, y, openMenuTarget).then(function () {
+                var closeSubMenus = function () {
+                    var childSubMenus = findAllChildsByClass(currentItem, "blazor-context-submenu");
+                    var i = childSubMenus.length;
+                    while (i--) {
+                        var subMenu = childSubMenus[i];
+                        blazorContextMenu.Hide(subMenu.id);
+                    }
 
-            var closeSubMenus = function () {
-                var childSubMenus = findAllChildsByClass(currentItem, "blazor-context-submenu");
-                var i = childSubMenus.length;
-                while (i--) {
-                    var subMenu = childSubMenus[i];
-                    blazorContextMenu.Hide(subMenu.id);
-                }
+                    i = currentMenuList.childNodes.length;
+                    while (i--) {
+                        var childNode = currentMenuList.childNodes[i];
+                        if (childNode == currentItem) continue;
+                        childNode.removeEventListener("mouseover", closeSubMenus);
+                    }
+                };
 
-                i = currentMenuList.childNodes.length;
+                var i = currentMenuList.childNodes.length;
                 while (i--) {
                     var childNode = currentMenuList.childNodes[i];
                     if (childNode == currentItem) continue;
-                    childNode.removeEventListener("mouseover", closeSubMenus);
+
+                    childNode.addEventListener("mouseover", closeSubMenus);
                 }
-            };
-
-            var i = currentMenuList.childNodes.length;
-            while (i--) {
-                var childNode = currentMenuList.childNodes[i];
-                if (childNode == currentItem) continue;
-
-                childNode.addEventListener("mouseover", closeSubMenus);
-            }
+            });
         }, 200);
     }
 
