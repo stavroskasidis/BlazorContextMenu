@@ -44,6 +44,7 @@ namespace BlazorContextMenu.TestsCommon.Infrastructure
             try
             {
                 var driver = new RemoteWebDriver(opts);
+                driver.Manage().Timeouts().ImplicitWait = TimeSpan.FromSeconds(3);
                 Browser = driver;
             }
             catch (WebDriverException ex)
