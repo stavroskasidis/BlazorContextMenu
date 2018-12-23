@@ -33,6 +33,7 @@ namespace BlazorContextMenu.Components
             if(ParentComponent != null)
             {
                 ParentComponent.RegisterChild(this);
+                ParentComponent.StateHasChanged();
             }
         }
 

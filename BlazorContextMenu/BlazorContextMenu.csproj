@@ -13,8 +13,11 @@
     <Authors>Stavros Kasidis (AkiraGTX)</Authors>
     <PackageLicenseUrl>https://github.com/stavroskasidis/blazor-context-menu/blob/master/LICENSE</PackageLicenseUrl>
     <PackageProjectUrl>https://github.com/stavroskasidis/blazor-context-menu</PackageProjectUrl>
-    <Description>Context menu component for Blazor</Description>
-    <PackageReleaseNotes>0.9
+    <Description>Context menu component for Blazor and Razor Components</Description>
+    <PackageReleaseNotes>0.10
+- Added proper support for Razor Components (aka server-side Blazor)
+
+0.9
 - Updated to Blazor 0.7.0
 - Removed some js interop in favor of the new Cascading Values feature
 
@@ -49,9 +52,9 @@
 0.1
 - Initial release</PackageReleaseNotes>
     <Copyright />
-    <PackageTags>blazor blazor-component blazor-context-menu context-menu contextmenu menu blazor-menu blazorcontextmenu</PackageTags>
+    <PackageTags>blazor blazor-component blazor-context-menu context-menu contextmenu menu blazor-menu blazorcontextmenu razor razor-components razorcomponents</PackageTags>
     <VersionSuffix>$(VersionSuffix)</VersionSuffix>
-    <Version>0.9.0</Version>
+    <Version>0.10.0</Version>
     <Version Condition=" '$(VersionSuffix)' != '' ">$(Version)-$(VersionSuffix)</Version>
     <Product>Blazor.ContextMenu</Product>
   </PropertyGroup>

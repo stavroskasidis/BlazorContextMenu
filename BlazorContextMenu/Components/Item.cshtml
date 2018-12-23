@@ -2,6 +2,7 @@
 @inherits MenuTreeComponent
 @inject BlazorContextMenuSettings settings
 @inject MenuTreeTraverser menuTreeTraverser
+@inject BlazorContextMenuHandler contextMenuHandler
 
 <li id="@Id"
     onclick="@((e) => OnClickInternal(e))"
@@ -176,12 +177,12 @@
 
     protected override void OnAfterRender()
     {
-        var hasSubMenu = menuTreeTraverser.HasSubMenu(this);
-        if (HasSubMenu == hasSubMenu) return;
-
-        //Hacky but works. TODO: Improve this code when this stuff is supported in Blazor
-        Task.Run(() =>
+        Task.Run(async () =>
         {
+            var hasSubMenu = menuTreeTraverser.HasSubMenu(this);
+            if (HasSubMenu == hasSubMenu) return;
+
+            //Hacky but works. TODO: Improve this code when this stuff is supported in Blazor
             HasSubMenu = hasSubMenu;
             StateHasChanged();
         });
@@ -198,7 +199,7 @@
             Click(args);
             if (!args.IsCanceled)
             {
-                BlazorContextMenuHandler.HideMenu(ParentMenu.Id);
+                contextMenuHandler.HideMenu(ParentMenu.Id);
             }
         }
         else if (ClickAsync != null)
@@ -207,7 +208,7 @@
             {
                 if (!args.IsCanceled)
                 {
-                    BlazorContextMenuHandler.HideMenu(ParentMenu.Id);
+                    contextMenuHandler.HideMenu(ParentMenu.Id);
                 }
             });
         }

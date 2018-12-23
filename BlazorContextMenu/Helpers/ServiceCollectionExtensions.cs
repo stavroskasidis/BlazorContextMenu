@@ -11,11 +11,9 @@ namespace Microsoft.Extensions.DependencyInjection
     {
         public static IServiceCollection AddBlazorContextMenu(this IServiceCollection services)
         {
-            var settings = new BlazorContextMenuSettings();
-            services.AddSingleton(settings);
+            services.AddSingleton<BlazorContextMenuSettings>();
 
-            var traverser = new MenuTreeTraverser();
-            services.AddSingleton(traverser);
+            CommonRegistrations(services);
             return services;
         }
 
@@ -26,9 +24,15 @@ namespace Microsoft.Extensions.DependencyInjection
             settings(settingsBuilder);
             services.AddSingleton(settingsObj);
 
+            CommonRegistrations(services);
+            return services;
+        }
+
+        private static void CommonRegistrations(IServiceCollection services)
+        {
             var traverser = new MenuTreeTraverser();
             services.AddSingleton(traverser);
-            return services;
+            services.AddScoped<BlazorContextMenuHandler>();
         }
 
     }

@@ -1,6 +1,7 @@
 ﻿@using System.ComponentModel
 @inherits MenuTreeComponent
 @inject BlazorContextMenuSettings settings
+@inject BlazorContextMenuHandler contextMenuHandler
 
 <div class="@($"{BaseClass} {ClassCalc}")" id="@Id" style="@($"left:{X}px;top:{Y}px;{StyleDisplayCalc}")">
     @if (IsShowing)
@@ -86,13 +87,13 @@
         {
             throw new ArgumentNullException(nameof(Id));
         }
-        BlazorContextMenuHandler.Register((ContextMenu)(object)this);
+        contextMenuHandler.Register((ContextMenu)(object)this);
     }
 
     public override void Dispose()
     {
         base.Dispose();
-        BlazorContextMenuHandler.Unregister((ContextMenu)(object)this);
+        contextMenuHandler.Unregister((ContextMenu)(object)this);
     }
 
     [EditorBrowsable(EditorBrowsableState.Never)]

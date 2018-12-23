@@ -9,7 +9,10 @@ cd "%~dp0"
 dotnet build BlazorContextMenu.sln -c Release
 if %errorlevel% neq 0 exit /b %errorlevel%
 
-dotnet test BlazorContextMenu.E2ETests -c Release --no-build 
+dotnet test BlazorContextMenu.BlazorE2ETests -c Release --no-build 
+if %errorlevel% neq 0 exit /b %errorlevel%
+
+dotnet test BlazorContextMenu.RazorComponentsE2ETests -c Release --no-build 
 if %errorlevel% neq 0 exit /b %errorlevel%
 
 dotnet pack BlazorContextMenu -c Release --no-build /p:VersionSuffix="%version-suffix%" -o bin\nuget
