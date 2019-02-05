@@ -1,4 +1,4 @@
-﻿using Microsoft.AspNetCore.Blazor.Components;
+﻿using Microsoft.AspNetCore.Components;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace BlazorContextMenu.Components
 {
-    public abstract class MenuTreeComponent : BlazorComponent, IDisposable
+    public abstract class MenuTreeComponent : ComponentBase, IDisposable
     {
         [CascadingParameter(Name = "ParentComponent")]
         public MenuTreeComponent ParentComponent { get; protected set; }

@@ -1,5 +1,5 @@
 using BlazorContextMenu.RazorComponentsTestApp.App.Services;
-using Microsoft.AspNetCore.Blazor.Builder;
+using Microsoft.AspNetCore.Components.Builder;
 using Microsoft.Extensions.DependencyInjection;
 
 namespace BlazorContextMenu.RazorComponentsTestApp.App
@@ -30,7 +30,7 @@ namespace BlazorContextMenu.RazorComponentsTestApp.App
             });
         }
 
-        public void Configure(IBlazorApplicationBuilder app)
+        public void Configure(IComponentsApplicationBuilder app)
         {
             app.AddComponent<App>("app");
         }

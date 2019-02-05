@@ -1,6 +1,4 @@
 ﻿using BlazorContextMenu.Components;
-using Microsoft.AspNetCore.Blazor;
-using Microsoft.AspNetCore.Blazor.Components;
 using Microsoft.JSInterop;
 using System;
 using System.Collections.Generic;
