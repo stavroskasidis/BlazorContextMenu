@@ -191,10 +191,10 @@ Upgrating from 0.1 to 0.2
 >- Replace "MenuItemWithSubmenu" with a regular "Item" component
 
 ## Release Notes
-### 0.11
+### 0.11-beta-*
 >- Updated to Blazor 0.8.0
+>- Razor Components are not yet supported => [#6349](https://github.com/aspnet/AspNetCore/issues/6349)
 
-## Release Notes
 ### 0.10
 >- Added proper support for Razor Components (aka server-side Blazor)
 
