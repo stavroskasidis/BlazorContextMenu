@@ -1,10 +1,8 @@
-﻿<Project Sdk="Microsoft.NET.Sdk.Web">
+﻿<Project Sdk="Microsoft.NET.Sdk.Razor">
 
   <PropertyGroup>
     <TargetFramework>netstandard2.0</TargetFramework>
-    <OutputType>library</OutputType>
     <IsPackable>true</IsPackable>
-    <BlazorLinkOnBuild>false</BlazorLinkOnBuild>
 
     <!-- This custom package feed is required only when using nightly builds of Blazor -->
     <!-- <RestoreSources>https://dotnet.myget.org/F/blazor-dev/api/v3/index.json;$(RestoreSources)</RestoreSources> -->
@@ -14,7 +12,10 @@
     <PackageLicenseUrl>https://github.com/stavroskasidis/blazor-context-menu/blob/master/LICENSE</PackageLicenseUrl>
     <PackageProjectUrl>https://github.com/stavroskasidis/blazor-context-menu</PackageProjectUrl>
     <Description>Context menu component for Blazor and Razor Components</Description>
-    <PackageReleaseNotes>0.10
+    <PackageReleaseNotes>0.11
+- Updated to Blazor 0.8.0
+
+0.10
 - Added proper support for Razor Components (aka server-side Blazor)
 
 0.9
@@ -54,7 +55,7 @@
     <Copyright />
     <PackageTags>blazor blazor-component blazor-context-menu context-menu contextmenu menu blazor-menu blazorcontextmenu razor razor-components razorcomponents</PackageTags>
     <VersionSuffix>$(VersionSuffix)</VersionSuffix>
-    <Version>0.10.0</Version>
+    <Version>0.11.0</Version>
     <Version Condition=" '$(VersionSuffix)' != '' ">$(Version)-$(VersionSuffix)</Version>
     <Product>Blazor.ContextMenu</Product>
   </PropertyGroup>
@@ -73,8 +74,8 @@
   </ItemGroup>  
 
   <ItemGroup>
-    <PackageReference Include="Microsoft.AspNetCore.Blazor.Browser" Version="0.7.0" />
-    <PackageReference Include="Microsoft.AspNetCore.Blazor.Build" Version="0.7.0" />
+    <PackageReference Include="Microsoft.AspNetCore.Components.Browser" Version="3.0.0-preview-19075-0444" />
+    <PackageReference Include="Microsoft.AspNetCore.Components.Build" Version="3.0.0-preview-19075-0444" PrivateAssets="all" />
   </ItemGroup>
 
 

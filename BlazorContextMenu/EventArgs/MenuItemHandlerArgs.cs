@@ -1,5 +1,4 @@
 ﻿using BlazorContextMenu.Components;
-using Microsoft.AspNetCore.Blazor;
 using System;
 using System.Collections.Generic;
 using System.Linq;

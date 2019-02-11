@@ -190,6 +190,9 @@ Upgrating from 0.1 to 0.2
 >- Rename "MenuSeperator" to "Seperator"
 >- Replace "MenuItemWithSubmenu" with a regular "Item" component
 
+## Release Notes
+### 0.11
+>- Updated to Blazor 0.8.0
 
 ## Release Notes
 ### 0.10
