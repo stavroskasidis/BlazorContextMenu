@@ -16,5 +16,5 @@ rem DISABLE TEMPORARILLY
 rem dotnet test BlazorContextMenu.RazorComponentsE2ETests -c Release --no-build 
 rem if %errorlevel% neq 0 exit /b %errorlevel%
 
-dotnet pack BlazorContextMenu -c Release --no-build /p:VersionSuffix="%version-suffix%" -o bin\nuget
+dotnet pack BlazorContextMenu -c Release --no-build /p:VersionSuffix="%version-suffix%" -o artifacts/nuget
 if %errorlevel% neq 0 exit /b %errorlevel%
