@@ -63,7 +63,7 @@ public class Startup
 @functions{
     void OnClick(MenuItemClickEventArgs e)
     {
-        Console.WriteLine($"Item Clicked => Menu: {e.ContextMenuId}, MenuTarget: {e.ContextMenuTargetId}, IsCanceled: {e.IsCanceled}, Item: {e.ItemElement}, MouseEvent: {e.MouseEvent}");
+        Console.WriteLine($"Item Clicked => Menu: {e.ContextMenuId}, MenuTarget: {e.ContextMenuTargetId}, IsCanceled: {e.IsCanceled}, MenuItem: {e.MenuItemElement}, MouseEvent: {e.MouseEvent}");
     }
 }
 
