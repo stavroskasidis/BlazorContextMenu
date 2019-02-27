@@ -31,14 +31,14 @@
 </ContextMenuTrigger>
 
 
-<ContextMenu Id="menu1">
+<ContextMenu Id="menu1" Template="dark">
     <Item Id="menu1-item1" ClickAsync="FetchDataClick">Fetch Data</Item>
     <Item Id="menu1-item2" Click="ClearDataClick">Clear Data</Item>
     <Seperator />
     <Item Id="menu1-item3" Enabled="false">Disabled Item </Item>
 </ContextMenu>
 
-<ContextMenu Id="menu2" Template="testtemplate">
+<ContextMenu Id="menu2" Template="red">
     <Item Id="menu2-item1" Click="@OnClick"> <i class="far fa-file"></i> New</Item>
     <Item Click="@OnClick"> <i class="fas fa-edit"></i> Edit</Item>
     <Item Click="@OnClick" Enabled="false"> <i class="fas fa-trash-alt"></i> Delete</Item>

@@ -21,11 +21,23 @@ namespace BlazorContextMenu.RazorComponentsTestApp.App
                     defaultTemplate.SeperatorCssClass = "my-menu-seperator";
                 });
 
-                options.ConfigureTemplate("testtemplate", template =>
+                options.ConfigureTemplate("red", template =>
                 {
-                    template.MenuCssClass = "my-menu-template";
-                    template.MenuItemCssClass = "my-menu-item-template";
-                    template.SeperatorCssClass = "my-menu-seperator-template";
+                    template.MenuCssClass = "red-menu";
+                    template.MenuItemCssClass = "red-menu-item";
+                    template.MenuItemDisabledCssClass = "red-menu-item--disabled";
+                    template.SeperatorHrCssClass = "red-menu-seperator-hr";
+                    template.MenuItemWithSubMenuCssClass = "red-menu-item--with-submenu";
+                    template.Animation = Animation.FadeIn;
+                });
+
+                options.ConfigureTemplate("dark", template =>
+                {
+                    template.MenuCssClass = "dark-menu";
+                    template.MenuItemCssClass = "dark-menu-item";
+                    template.MenuItemDisabledCssClass = "dark-menu-item--disabled";
+                    template.SeperatorHrCssClass = "dark-menu-seperator-hr";
+                    template.MenuItemWithSubMenuCssClass = "dark-menu-item--with-submenu";
                 });
             });
         }

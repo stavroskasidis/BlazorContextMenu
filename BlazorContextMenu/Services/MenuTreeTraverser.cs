@@ -8,11 +8,18 @@ namespace BlazorContextMenu.Services
 {
     internal class MenuTreeTraverser
     {
-        public ContextMenu GetClosestContextMenuParent(MenuTreeComponent menuTreeComponent)
+        public ContextMenu GetRootContextMenu(MenuTreeComponent menuTreeComponent)
         {
             if (menuTreeComponent.ParentComponent == null) return null;
             if (menuTreeComponent.ParentComponent.GetType() == typeof(ContextMenu)) return menuTreeComponent.ParentComponent as ContextMenu;
-            return GetClosestContextMenuParent(menuTreeComponent.ParentComponent);
+            return GetRootContextMenu(menuTreeComponent.ParentComponent);
+        }
+
+        public ContextMenu GetClosestContextMenu(MenuTreeComponent menuTreeComponent)
+        {
+            if (menuTreeComponent.ParentComponent == null) return null;
+            if (typeof(ContextMenu).IsAssignableFrom(menuTreeComponent.ParentComponent.GetType())) return menuTreeComponent.ParentComponent as ContextMenu;
+            return GetClosestContextMenu(menuTreeComponent.ParentComponent);
         }
 
         public bool HasSubMenu(MenuTreeComponent menuTreeComponent)
@@ -26,20 +33,5 @@ namespace BlazorContextMenu.Services
 
             return false;
         }
-
-        //public void Debug_PrintChildInfo(MenuTreeComponent menuTreeComponent, int level)
-        //{
-        //    foreach(var child in menuTreeComponent.GetChildComponents())
-        //    {
-        //        if(level - 1 >= 0)
-        //        {
-        //            var levelChars = new string('─', (level - 1) * 2);
-        //            Console.Write("├─" + levelChars);
-        //        }
-        //        Console.WriteLine(child.GetType().Name);
-
-        //        Debug_PrintChildInfo(child, level + 1);
-        //    }
-        //}
     }
 }

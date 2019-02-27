@@ -26,6 +26,7 @@ namespace BlazorContextMenu
         public string MenuCssClass { get; set; } = "blazor-context-menu--default";
         public string MenuListCssClass { get; set; } = "blazor-context-menu__list";
         public string MenuItemCssClass { get; set; } = "blazor-context-menu__item--default";
+        public string MenuItemWithSubMenuCssClass { get; set; } = "blazor-context-menu__item--with-submenu";
         public string MenuItemDisabledCssClass { get; set; } = "blazor-context-menu__item--default-disabled";
         public string SeperatorCssClass { get; set; } = "blazor-context-menu__seperator";
         public string SeperatorHrCssClass { get; set; } = "blazor-context-menu__seperator__hr";
@@ -36,6 +37,7 @@ namespace BlazorContextMenu
         public string MenuCssClass { get; set; }
         public string MenuListCssClass { get; set; }
         public string MenuItemCssClass { get; set; }
+        public string MenuItemWithSubMenuCssClass { get; set; }
         public string MenuItemDisabledCssClass { get; set; }
         public string SeperatorCssClass { get; set; }
         public string SeperatorHrCssClass { get; set; }

@@ -20,6 +20,8 @@
     <Content Remove="wwwroot\css\site.css" />
     <Content Remove="wwwroot\index.html" />
     <Content Remove="wwwroot\interop.js" />
+    <Content Remove="wwwroot\styles.css" />
+    <Content Remove="wwwroot\styles.min.css" />
   </ItemGroup>
 
   <ItemGroup>

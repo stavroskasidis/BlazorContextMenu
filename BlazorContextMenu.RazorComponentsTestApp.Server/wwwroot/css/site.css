@@ -114,3 +114,52 @@
 .red-icon {
     color: firebrick;
 }
+
+
+
+div.red-menu {
+    color: #000000;
+    background-color: #ffb3b3;
+}
+
+.red-menu .red-menu-item--with-submenu:after {
+    border-left-color: #FFFFFF;
+}
+
+.red-menu .red-menu-seperator-hr {
+    border-color: red;
+}
+
+.red-menu .red-menu-item--disabled,
+.red-menu .red-menu-item {
+    background-color: #ffb3b3;
+}
+
+    .red-menu .red-menu-item--disabled:hover,
+    .red-menu .red-menu-item:hover {
+        background-color: #c11515;
+    }
+
+
+div.dark-menu {
+    color: #FFFFFF;
+    background-color: #444;
+}
+
+.dark-menu .dark-menu-item--with-submenu:after {
+    border-left-color: #d3d3d3;
+}
+
+.dark-menu .my-menu-seperator-hr-dark-menu {
+    border-color: red;
+}
+
+.dark-menu .dark-menu-item--disabled,
+.dark-menu .dark-menu-item {
+    background-color: #444;
+}
+
+    .dark-menu .dark-menu-item--disabled:hover,
+    .dark-menu .dark-menu-item:hover {
+        background-color: #000000;
+    }
