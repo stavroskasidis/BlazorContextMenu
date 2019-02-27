@@ -58,6 +58,13 @@
     public string ListCssClass { get; protected set; }
 
     [Parameter]
+    /// <summary>
+    /// Allows you to set the context menu <see cref="Animation" />.
+    ///
+    /// </summary>
+    public Animation? Animation {get; protected set;}
+
+    [Parameter]
     protected RenderFragment ChildContent { get; set; }
 
 
@@ -79,8 +86,7 @@
     {
         get
         {
-           var showingClass = "blazor-context-menu__animations--fadeIn-shown";
-           var hiddenClass = "blazor-context-menu--hidden blazor-context-menu__animations--fadeIn";
+           var (showingClass, hiddenClass) = GetDisplayClasses(Animation.HasValue ? Animation.Value : settings.GetTemplate(Template).Animation);
            return IsShowing ? showingClass : hiddenClass;
         }
     }
@@ -90,6 +96,19 @@
         {
             return Helpers.AppendCssClasses((OverrideDefaultListCssClass ?? settings.DefaultCssSettings.MenuListCssClass),
                                             (ListCssClass ?? settings.GetTemplate(Template).MenuListCssClass));
+        }
+    }
+
+    protected (string showingClass, string hiddenClass) GetDisplayClasses(Animation animation)
+    {
+        switch(animation)
+        {
+            case BlazorContextMenu.Animation.None:
+                return ("", "blazor-context-menu--hidden");
+            case BlazorContextMenu.Animation.FadeIn:
+                return ("blazor-context-menu__animations--fadeIn-shown", "blazor-context-menu--hidden blazor-context-menu__animations--fadeIn");
+            default:
+                throw new Exception("Animation not supported");
         }
     }
 

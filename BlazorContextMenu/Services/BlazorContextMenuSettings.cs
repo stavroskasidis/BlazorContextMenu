@@ -40,5 +40,12 @@ namespace BlazorContextMenu
         public string SeperatorCssClass { get; set; }
         public string SeperatorHrCssClass { get; set; }
         public int SubMenuXPositionPixelsOffset { get; set; } = 4;
+        public Animation Animation {get; set;}
+    }
+
+    public enum Animation
+    {
+        None,
+        FadeIn
     }
 }

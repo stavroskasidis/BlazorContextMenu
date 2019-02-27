@@ -84,12 +84,12 @@
 .blazor-context-menu__animations--fadeIn{
     animation-name: fadeIn;
     animation-direction: reverse;
-    animation-duration: 0.5s;
+    animation-duration: 0.3s;
 }
 
 .blazor-context-menu__animations--fadeIn-shown{
     animation-name: fadeIn;
-    animation-duration: 0.5s;
+    animation-duration: 0.3s;
 }
 
 @keyframes fadeIn {
