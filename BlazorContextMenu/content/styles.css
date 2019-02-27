@@ -80,12 +80,19 @@
 }
 
 /*------------ ANIMATIONS ------------*/
-
+ 
 .blazor-context-menu__animations--fadeIn{
-    transition: all .5s ease-in-out;
-    opacity: 0;
+    animation-name: fadeIn;
+    animation-direction: reverse;
+    animation-duration: 0.5s;
 }
 
 .blazor-context-menu__animations--fadeIn-shown{
-    opacity: 1;
+    animation-name: fadeIn;
+    animation-duration: 0.5s;
 }
+
+@keyframes fadeIn {
+    0%   {opacity: 0;}
+    100% {opacity: 1;}
+  }
