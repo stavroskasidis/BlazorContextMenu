@@ -49,6 +49,20 @@
     public string OverrideDefaultCssClass { get; protected set; }
 
     /// <summary>
+    /// Allows you to override the default css class of the menu's div element (when shown) for full customization.
+    ///
+    /// </summary>
+    [Parameter]
+    public string OverrideDefaultShownCssClass { get; protected set; }
+
+     /// <summary>
+    /// Allows you to override the default css class of the menu's div element (when hidden) for full customization.
+    ///
+    /// </summary>
+    [Parameter]
+    public string OverrideDefaultHiddenCssClass { get; protected set; }
+
+    /// <summary>
     /// Allows you to override the default css class of the menu's ul element for full customization.
     ///
     /// </summary>
@@ -61,6 +75,20 @@
     /// </summary>
     [Parameter]
     public string CssClass { get; protected set; }
+
+    /// <summary>
+    /// Additional css class for the menu's div element when shown. Use this to extend the default css
+    ///
+    /// </summary>
+    [Parameter]
+    public string ShownCssClass { get; protected set; }
+
+    /// <summary>
+    /// Additional css class for the menu's div element when shown. Use this to extend the default css
+    ///
+    /// </summary>
+    [Parameter]
+    public string HiddenCssClass { get; protected set; }
 
     /// <summary>
     /// Additional css class for the menu's ul element. Use this to extend the default css
@@ -130,8 +158,14 @@
     {
         get
         {
-            var (showingClass, hiddenClass) = GetDisplayClasses(GetActiveAnimation());
-            return IsShowing ? showingClass : hiddenClass;
+            var (showingAnimationClass, hiddenAnimationClass) = GetAnimationClasses(GetActiveAnimation());
+            return IsShowing ?
+                Helpers.AppendCssClasses(OverrideDefaultShownCssClass ?? settings.DefaultCssSettings.MenuShownCssClass, 
+                                         showingAnimationClass, 
+                                         ShownCssClass ?? settings.GetTemplate(GetActiveTemplate()).MenuShownCssClass) :
+                Helpers.AppendCssClasses(OverrideDefaultHiddenCssClass ?? settings.DefaultCssSettings.MenuHiddenCssClass, 
+                                         hiddenAnimationClass, 
+                                         HiddenCssClass ?? settings.GetTemplate(GetActiveTemplate()).MenuHiddenCssClass);
         }
     }
     protected string ListClassCalc
@@ -143,14 +177,14 @@
         }
     }
 
-    protected (string showingClass, string hiddenClass) GetDisplayClasses(Animation animation)
+    protected (string showingClass, string hiddenClass) GetAnimationClasses(Animation animation)
     {
         switch (animation)
         {
             case BlazorContextMenu.Animation.None:
-                return ("", "blazor-context-menu--hidden");
+                return ("", "");
             case BlazorContextMenu.Animation.FadeIn:
-                return ("blazor-context-menu__animations--fadeIn-shown", "blazor-context-menu--hidden blazor-context-menu__animations--fadeIn");
+                return ("blazor-context-menu__animations--fadeIn-shown", "blazor-context-menu__animations--fadeIn");
             default:
                 throw new Exception("Animation not supported");
         }
