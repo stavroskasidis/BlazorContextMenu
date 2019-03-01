@@ -1,6 +1,4 @@
-﻿@page "/TodoList"
-
-<h1>Todo List (Right click)</h1>
+﻿<h1>Todo List (Right click)</h1>
 <ContextMenuTrigger MenuId="todoItemsMenu">
     <ul id="list1">
         @foreach (var item in TodoItems)
@@ -96,7 +94,7 @@
     }
 
     List<TodoItem> TodoItems = new List<TodoItem>
-    {
+{
         new TodoItem
         {
             Text = "Item 1",

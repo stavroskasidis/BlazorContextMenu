@@ -14,7 +14,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\BlazorContextMenu\BlazorContextMenu.csproj" />
+    <ProjectReference Include="..\..\BlazorContextMenu.TestAppsCommon\BlazorContextMenu.TestAppsCommon.csproj" />
   </ItemGroup>
 
 </Project>

@@ -1,4 +1,6 @@
-﻿using Microsoft.AspNetCore.Components.Builder;
+﻿using BlazorContextMenu.BlazorTestApp.Client.Services;
+using BlazorContextMenu.TestAppsCommon;
+using Microsoft.AspNetCore.Components.Builder;
 using Microsoft.Extensions.DependencyInjection;
 using System;
 using System.Collections.Generic;
@@ -11,6 +13,7 @@ namespace BlazorContextMenu.BlazorTestApp.Client
     {
         public void ConfigureServices(IServiceCollection services)
         {
+            services.AddSingleton<ISampleDataService, SampleDataService>();
             services.AddBlazorContextMenu(options =>
             {
                 options.ConfigureTemplate(defaultTemplate =>

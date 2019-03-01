@@ -1,11 +1,12 @@
-﻿using System;
+﻿using BlazorContextMenu.TestAppsCommon;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
 namespace BlazorContextMenu.RazorComponentsTestApp.App.Services
 {
-    public class SampleDataService
+    public class SampleDataService : ISampleDataService
     {
         public Task<string[]> GetSampleData()
         {

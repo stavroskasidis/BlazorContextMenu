@@ -1,4 +1,5 @@
 using BlazorContextMenu.RazorComponentsTestApp.App.Services;
+using BlazorContextMenu.TestAppsCommon;
 using Microsoft.AspNetCore.Components.Builder;
 using Microsoft.Extensions.DependencyInjection;
 
@@ -8,9 +9,7 @@ namespace BlazorContextMenu.RazorComponentsTestApp.App
     {
         public void ConfigureServices(IServiceCollection services)
         {
-            // Since Blazor is running on the server, we can use an application service
-            // to read the forecast data.
-            services.AddSingleton<SampleDataService>();
+            services.AddSingleton<ISampleDataService, SampleDataService>();
 
             services.AddBlazorContextMenu(options =>
             {

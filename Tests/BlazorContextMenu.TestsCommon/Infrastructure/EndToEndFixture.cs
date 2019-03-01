@@ -7,6 +7,7 @@ using OpenQA.Selenium.Chrome;
 using OpenQA.Selenium.Remote;
 using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading;
@@ -27,7 +28,7 @@ namespace BlazorContextMenu.TestsCommon.Infrastructure
             var opts = new ChromeOptions();
 
             // Comment this out if you want to watch or interact with the browser (e.g., for debugging)
-            opts.AddArgument("--headless");
+            //opts.AddArgument("--headless");
 
             // Log errors
             opts.SetLoggingPreference(LogType.Browser, LogLevel.All);
@@ -82,25 +83,16 @@ namespace BlazorContextMenu.TestsCommon.Infrastructure
                 .Get<IServerAddressesFeature>()
                 .Addresses.Single();
         }
-        
-        private string ContentRoot { get; set; }
 
         protected IWebHost CreateWebHost()
         {
-            //ContentRoot = "..\\..\\..\\..\\BlazorContextMenu.BlazorTestApp.Server\\wwwroot";
-            //PathBase = "..\\..\\..\\..\\BlazorContextMenu.RazorComponentsTestApp.Server\\";
+            var contentRoot = Path.GetFullPath(PathBase);
+            var webRoot = Directory.Exists($"{PathBase}wwwroot") ? Path.GetFullPath($"{PathBase}wwwroot") :"" ;
 
-            var args = new List<string>
-            {
-                "--urls", "http://127.0.0.1:0",
-                //"--contentroot", ContentRoot,
-                "--pathbase", PathBase
-            };
-
-            return WebHost.CreateDefaultBuilder(args.ToArray())
-                .UseConfiguration(new ConfigurationBuilder()
-                    .AddCommandLine(args.ToArray())
-                    .Build())
+            return WebHost.CreateDefaultBuilder()
+                .UseWebRoot(webRoot)
+                .UseContentRoot(contentRoot)
+                .UseUrls("http://127.0.0.1:0")
                 .UseStartup<TStartup>()
                 .Build();
         }
