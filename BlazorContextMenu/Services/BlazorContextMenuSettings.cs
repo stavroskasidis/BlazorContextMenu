@@ -54,6 +54,7 @@ namespace BlazorContextMenu
         None,
         FadeIn,
         Grow,
-        Slide
+        Slide,
+        Zoom
     }
 }
