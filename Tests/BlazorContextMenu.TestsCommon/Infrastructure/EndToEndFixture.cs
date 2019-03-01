@@ -28,7 +28,7 @@ namespace BlazorContextMenu.TestsCommon.Infrastructure
             var opts = new ChromeOptions();
 
             // Comment this out if you want to watch or interact with the browser (e.g., for debugging)
-            //opts.AddArgument("--headless");
+            opts.AddArgument("--headless");
 
             // Log errors
             opts.SetLoggingPreference(LogType.Browser, LogLevel.All);
@@ -87,7 +87,7 @@ namespace BlazorContextMenu.TestsCommon.Infrastructure
         protected IWebHost CreateWebHost()
         {
             var contentRoot = Path.GetFullPath(PathBase);
-            var webRoot = Directory.Exists($"{PathBase}wwwroot") ? Path.GetFullPath($"{PathBase}wwwroot") :"" ;
+            var webRoot = Directory.Exists($"{PathBase}\\wwwroot") ? Path.GetFullPath($"{PathBase}\\wwwroot") :"" ;
 
             return WebHost.CreateDefaultBuilder()
                 .UseWebRoot(webRoot)
