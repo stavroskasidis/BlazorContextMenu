@@ -104,7 +104,7 @@
     [Parameter]
     public Animation? Animation { get; protected set; }
 
-    [CascadingParameter(Name ="CascadingAnimation")]
+    [CascadingParameter(Name = "CascadingAnimation")]
     protected Animation? CascadingAnimation { get; set; }
 
     [Parameter]
@@ -187,6 +187,8 @@
                 return ("blazor-context-menu__animations--fadeIn-shown", "blazor-context-menu__animations--fadeIn");
             case BlazorContextMenu.Animation.Grow:
                 return ("blazor-context-menu__animations--grow-shown", "blazor-context-menu__animations--grow");
+            case BlazorContextMenu.Animation.Slide:
+                return ("blazor-context-menu__animations--slide-shown", "blazor-context-menu__animations--slide");
             default:
                 throw new Exception("Animation not supported");
         }

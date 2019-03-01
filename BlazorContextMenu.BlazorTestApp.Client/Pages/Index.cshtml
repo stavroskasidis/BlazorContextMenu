@@ -2,7 +2,6 @@
 @inject HttpClient http
 
 <h1 id="header">Hello, Blazor context menu !</h1>
-
 <ContextMenuTrigger MenuId="menu1">
     <p id="test1-trigger">Right-click me (menu1)</p>
 </ContextMenuTrigger>
@@ -38,9 +37,9 @@
     <Item Id="menu1-item3" Enabled="false">Disabled Item </Item>
 </ContextMenu>
 
-<ContextMenu Id="menu2" Template="red" Animation="Animation.Grow">
+<ContextMenu Id="menu2" Template="red" Animation="Animation.Slide">
     <Item Id="menu2-item1" Click="@OnClick"> <i class="far fa-file"></i> New</Item>
-    <Item Click="@OnClick"> <i class="fas fa-edit"></i> Edit</Item>
+    <Item Click="@OnClick"><i class="fas fa-edit"></i> Edit</Item>
     <Item Click="@OnClick" Enabled="false"> <i class="fas fa-trash-alt"></i> Delete</Item>
     <Seperator />
     <Item Id="submenu1-trigger">
@@ -67,7 +66,6 @@
 </ContextMenu>
 
 <NavLink href="/TodoList">Go to Todo List</NavLink>
-
 @functions{
     protected string TextAreaDisplay { get; set; } = "none";
 

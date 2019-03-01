@@ -53,6 +53,7 @@ namespace BlazorContextMenu
     {
         None,
         FadeIn,
-        Grow
+        Grow,
+        Slide
     }
 }

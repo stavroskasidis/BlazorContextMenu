@@ -145,11 +145,11 @@
 
     var subMenuTimeout = null;
     blazorContextMenu.OnMenuItemMouseOver = function (e, xOffset, boundItem) {
-        if (e.target != boundItem) {
-            //skip child mouseovers
+        if (closest(e.target, ".blazor-context-menu__wrapper") != closest(boundItem, ".blazor-context-menu__wrapper")) {
+            //skip child menu mouseovers
             return;
         }
-        var currentItem = e.target;
+        var currentItem = boundItem;
         if (currentItem.getAttribute("itemEnabled") != "true") return;
 
         var subMenu = findFirstChildByClass(currentItem, "blazor-context-submenu");
