@@ -55,7 +55,7 @@
     [Parameter]
     public string OverrideDefaultShownCssClass { get; protected set; }
 
-     /// <summary>
+    /// <summary>
     /// Allows you to override the default css class of the menu's div element (when hidden) for full customization.
     ///
     /// </summary>
@@ -160,11 +160,11 @@
         {
             var (showingAnimationClass, hiddenAnimationClass) = GetAnimationClasses(GetActiveAnimation());
             return IsShowing ?
-                Helpers.AppendCssClasses(OverrideDefaultShownCssClass ?? settings.DefaultCssSettings.MenuShownCssClass, 
-                                         showingAnimationClass, 
+                Helpers.AppendCssClasses(OverrideDefaultShownCssClass ?? settings.DefaultCssSettings.MenuShownCssClass,
+                                         showingAnimationClass,
                                          ShownCssClass ?? settings.GetTemplate(GetActiveTemplate()).MenuShownCssClass) :
-                Helpers.AppendCssClasses(OverrideDefaultHiddenCssClass ?? settings.DefaultCssSettings.MenuHiddenCssClass, 
-                                         hiddenAnimationClass, 
+                Helpers.AppendCssClasses(OverrideDefaultHiddenCssClass ?? settings.DefaultCssSettings.MenuHiddenCssClass,
+                                         hiddenAnimationClass,
                                          HiddenCssClass ?? settings.GetTemplate(GetActiveTemplate()).MenuHiddenCssClass);
         }
     }
@@ -185,6 +185,8 @@
                 return ("", "");
             case BlazorContextMenu.Animation.FadeIn:
                 return ("blazor-context-menu__animations--fadeIn-shown", "blazor-context-menu__animations--fadeIn");
+            case BlazorContextMenu.Animation.Grow:
+                return ("blazor-context-menu__animations--grow-shown", "blazor-context-menu__animations--grow");
             default:
                 throw new Exception("Animation not supported");
         }

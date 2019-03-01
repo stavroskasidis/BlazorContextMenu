@@ -75,8 +75,8 @@
     display: none;
 }
 
-/*------------ ANIMATIONS ------------*/
-
+/*============== ANIMATIONS ==============*/
+/*-------------- FadeIn ------------------*/
 .blazor-context-menu__animations--fadeIn {
     animation-name: fadeIn;
     animation-direction: reverse;
@@ -94,5 +94,31 @@
     }
     100% {
         opacity: 1;
+    }
+}
+
+
+/*-------------- Grow ------------------*/
+
+.blazor-context-menu__animations--grow {
+    animation-name: grow;
+    animation-direction: reverse;
+    animation-duration: 0.2s;
+}
+
+.blazor-context-menu__animations--grow-shown {
+    animation-name: grow;
+    animation-duration: 0.2s;
+}
+
+@keyframes grow {
+    0% {
+        transform: scale(0);
+        transform-origin: top left;
+    }
+
+    100% {
+        transform: scale(1);
+        transform-origin: top left;
     }
 }

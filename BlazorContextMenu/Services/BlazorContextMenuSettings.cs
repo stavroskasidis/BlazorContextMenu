@@ -52,6 +52,7 @@ namespace BlazorContextMenu
     public enum Animation
     {
         None,
-        FadeIn
+        FadeIn,
+        Grow
     }
 }
