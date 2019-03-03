@@ -142,3 +142,8 @@ app {
         .my-menu .red-menuitem:hover {
             background-color: #c11515;
         }
+
+
+.z-10{
+    z-index:10;
+}

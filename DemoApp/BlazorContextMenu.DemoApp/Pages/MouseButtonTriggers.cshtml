@@ -1,0 +1,29 @@
+﻿@page "/mousebuttontriggers"
+
+<h1>Mouse Button Triggers</h1>
+
+<p>You can set the trigger to left or either click</p>
+<div class="btn-group-vertical">
+
+    <button>
+        <ContextMenuTrigger MenuId="triggerMenu" MouseButtonTrigger="MouseButtonTrigger.Left">
+            Click me!
+        </ContextMenuTrigger>
+    </button>
+
+
+    <button>
+        <ContextMenuTrigger MenuId="triggerMenu" MouseButtonTrigger="MouseButtonTrigger.Both">
+            Click or right-click me!
+        </ContextMenuTrigger>
+    </button>
+
+</div>
+
+<ContextMenu Id="triggerMenu" CssClass="z-10">
+    <Item>Item 1</Item>
+    <Item>Item 2</Item>
+    <Item>Item 3</Item>
+    <Item>Item 4</Item>
+    <Item>Item 5</Item>
+</ContextMenu>
