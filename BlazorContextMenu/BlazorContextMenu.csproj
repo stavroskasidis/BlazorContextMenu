@@ -14,6 +14,7 @@
     <Description>Context menu component for Blazor and Razor Components</Description>
     <PackageReleaseNotes>0.11
 - Updated to Blazor 0.8.0
+- Added animations
 
 0.10
 - Added proper support for Razor Components (aka server-side Blazor)
