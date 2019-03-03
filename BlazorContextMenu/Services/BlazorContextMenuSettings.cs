@@ -8,7 +8,6 @@ namespace BlazorContextMenu
     public class BlazorContextMenuSettings
     {
         public const string DefaultTemplateName = "default_{89930AFB-8CC8-4672-80D1-EA8BBE65B52A}";
-        public BlazorContextMenuDefaultCssSettings DefaultCssSettings { get; set; } = new BlazorContextMenuDefaultCssSettings();
         public Dictionary<string, BlazorContextMenuTemplate> Templates = new Dictionary<string, BlazorContextMenuTemplate>()
         {
             { DefaultTemplateName, new BlazorContextMenuTemplate() }
@@ -47,6 +46,12 @@ namespace BlazorContextMenu
         public string SeperatorHrCssClass { get; set; }
         public int SubMenuXPositionPixelsOffset { get; set; } = 4;
         public Animation Animation {get; set;}
+
+        /// <summary>
+        /// Provides the ability to override the default css classes for complete customization. Only recommended if you cannot 
+        /// achieve customization otherwise.
+        /// </summary>
+        public BlazorContextMenuDefaultCssSettings DefaultCssOverrides { get; set; } = new BlazorContextMenuDefaultCssSettings();
     }
 
     public enum Animation

@@ -13,12 +13,6 @@ namespace BlazorContextMenu
         {
             _settings = settings;
         }
-        
-        public BlazorContextMenuSettingsBuilder CssOverrides(Action<BlazorContextMenuDefaultCssSettings> overrides)
-        {
-            overrides(_settings.DefaultCssSettings); 
-            return this;
-        }
 
         /// <summary>
         /// Configures the default template.

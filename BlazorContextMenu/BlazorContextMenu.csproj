@@ -15,6 +15,7 @@
     <PackageReleaseNotes>0.11
 - Updated to Blazor 0.8.0
 - Added animations
+- Default css overrides are now part of the Templates API so that you can easily have multiple custom overriden menus
 
 0.10
 - Added proper support for Razor Components (aka server-side Blazor)

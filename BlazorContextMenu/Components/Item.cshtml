@@ -133,15 +133,16 @@
     {
         get
         {
+            var template = settings.GetTemplate(Template);
             string classes = null;
             if (Enabled)
             {
-                classes = Helpers.AppendCssClasses((OverrideDefaultCssClass ?? settings.DefaultCssSettings.MenuItemCssClass),
+                classes = Helpers.AppendCssClasses((OverrideDefaultCssClass ?? template.DefaultCssOverrides.MenuItemCssClass),
                                             (CssClass ?? settings.GetTemplate(Template).MenuItemCssClass));
             }
             else
             {
-                classes = Helpers.AppendCssClasses((OverrideDefaultDisabledCssClass ?? settings.DefaultCssSettings.MenuItemDisabledCssClass),
+                classes = Helpers.AppendCssClasses((OverrideDefaultDisabledCssClass ?? template.DefaultCssOverrides.MenuItemDisabledCssClass),
                                             (DisabledCssClass ?? settings.GetTemplate(Template).MenuItemDisabledCssClass));
             }
 
@@ -149,7 +150,7 @@
             if (hasSubMenu)
             {
                 classes = Helpers.AppendCssClasses(classes,
-                        (OverrideDefaultCssClassWithSubMenu ?? settings.DefaultCssSettings.MenuItemWithSubMenuCssClass),
+                        (OverrideDefaultCssClassWithSubMenu ?? template.DefaultCssOverrides.MenuItemWithSubMenuCssClass),
                         (CssClassWithSubMenu ?? settings.GetTemplate(Template).MenuItemWithSubMenuCssClass));
             }
 

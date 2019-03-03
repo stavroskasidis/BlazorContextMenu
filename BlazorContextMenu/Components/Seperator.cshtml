@@ -51,8 +51,9 @@
     {
         get
         {
+            var template = settings.GetTemplate(Template);
             return Helpers.AppendCssClasses(
-                (OverrideDefaultCssClass ?? settings.DefaultCssSettings.SeperatorCssClass),
+                (OverrideDefaultCssClass ?? template.DefaultCssOverrides.SeperatorCssClass),
                 (CssClass ?? settings.GetTemplate(Template).SeperatorCssClass));
         }
     }
@@ -61,8 +62,9 @@
     {
         get
         {
+            var template = settings.GetTemplate(Template);
             return Helpers.AppendCssClasses(
-               (OverrideDefaultHrCssClass ?? settings.DefaultCssSettings.SeperatorHrCssClass),
+               (OverrideDefaultHrCssClass ?? template.DefaultCssOverrides.SeperatorHrCssClass),
                (HrCssClass ?? settings.GetTemplate(Template).SeperatorHrCssClass));
         }
     }

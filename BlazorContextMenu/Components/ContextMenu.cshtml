@@ -119,8 +119,9 @@
     {
         get
         {
-            return Helpers.AppendCssClasses((OverrideDefaultCssClass ?? settings.DefaultCssSettings.MenuCssClass),
-                                            (CssClass ?? settings.GetTemplate(GetActiveTemplate()).MenuCssClass));
+            var template = settings.GetTemplate(GetActiveTemplate());
+            return Helpers.AppendCssClasses((OverrideDefaultCssClass ?? template.DefaultCssOverrides.MenuCssClass),
+                                            (CssClass ?? template.MenuCssClass));
         }
     }
 
@@ -158,12 +159,13 @@
     {
         get
         {
+            var template = settings.GetTemplate(GetActiveTemplate());
             var (showingAnimationClass, hiddenAnimationClass) = GetAnimationClasses(GetActiveAnimation());
             return IsShowing ?
-                Helpers.AppendCssClasses(OverrideDefaultShownCssClass ?? settings.DefaultCssSettings.MenuShownCssClass,
+                Helpers.AppendCssClasses(OverrideDefaultShownCssClass ?? template.DefaultCssOverrides.MenuShownCssClass,
                                          showingAnimationClass,
                                          ShownCssClass ?? settings.GetTemplate(GetActiveTemplate()).MenuShownCssClass) :
-                Helpers.AppendCssClasses(OverrideDefaultHiddenCssClass ?? settings.DefaultCssSettings.MenuHiddenCssClass,
+                Helpers.AppendCssClasses(OverrideDefaultHiddenCssClass ?? template.DefaultCssOverrides.MenuHiddenCssClass,
                                          hiddenAnimationClass,
                                          HiddenCssClass ?? settings.GetTemplate(GetActiveTemplate()).MenuHiddenCssClass);
         }
@@ -172,7 +174,8 @@
     {
         get
         {
-            return Helpers.AppendCssClasses((OverrideDefaultListCssClass ?? settings.DefaultCssSettings.MenuListCssClass),
+            var template = settings.GetTemplate(GetActiveTemplate());
+            return Helpers.AppendCssClasses((OverrideDefaultListCssClass ?? template.DefaultCssOverrides.MenuListCssClass),
                                             (ListCssClass ?? settings.GetTemplate(GetActiveTemplate()).MenuListCssClass));
         }
     }

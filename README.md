@@ -148,7 +148,7 @@ All components expose `CssClass` parameters that you can use to add css classes.
 
 You can override the default css classes completely in the following ways (not recommended unless  you want to achieve advanced customization).
 
-#### Globally for all context menus
+#### Override default css using templates
 
 ```csharp
 public class Startup
@@ -157,20 +157,19 @@ public class Startup
     {
         services.AddBlazorContextMenu(options =>
         {
-            //This will override the default css classes
-            options.CssOverrides(overrides =>
+            //This will override the default css classes for the default tenplate
+            options.ConfigureTemplate(defaultTemplate =>
             {
-                overrides.MenuCssClass = "custom-menu";
-                overrides.MenuItemCssClass = "custom-menu-item";
-                overrides.MenuItemDisabledCssClass = "custom-menu-item--disabled";
-                //...
+                defaultTemplate.DefaultCssOverrides.MenuCssClass  = "custom-menu";
+                defaultTemplate.DefaultCssOverrides.MenuItemCssClass= "custom-menu-item";
+                defaultTemplate.DefaultCssOverrides.MenuItemDisabledCssClass = "custom-menu-item--disabled";
             });
         });
     }
 }
 ```
 
-#### Using the `OverrideDefaultXXX` parameters on components. These take precedence over the global overrides.
+#### Using the `OverrideDefaultXXX` parameters on components. These take precedence over the template overrides.
 
 ```xml
 <ContextMenu Id="myMenu" OverrideDefaultCssClass="custom-menu">
@@ -181,6 +180,10 @@ public class Startup
 
 
 ## ⚠️ Breaking changes ⚠️
+Upgrading from 0.10 to 0.11
+>- The `CssOverrides` API is removed and override configuration is moved into templates. The `DefaultCssOverrides` of the `ConfigureTemplate` API must be used.
+
+
 Upgrating from 0.5 to 0.6
 >- You must add in `Startup.ConfigureServices` of your Blazor client side project the following line `services.AddBlazorContextMenu();`
 >- The `BlazorContextMenu.BlazorContextMenuDefaults` API is removed. Use the API provided in the service configuration.
@@ -194,6 +197,7 @@ Upgrating from 0.1 to 0.2
 ### 0.11-beta
 >- Updated to Blazor 0.8.0
 >- Added animations
+>- Default css overrides are now part of the `Templates` API so that you can easily have multiple custom overriden menus
 >- Razor Components are not yet supported => [#6349](https://github.com/aspnet/AspNetCore/issues/6349)
 
 ### 0.10
