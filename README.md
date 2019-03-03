@@ -183,7 +183,6 @@ public class Startup
 Upgrading from 0.10 to 0.11
 >- The `CssOverrides` API is removed and override configuration is moved into templates. The `DefaultCssOverrides` of the `ConfigureTemplate` API must be used.
 
-
 Upgrating from 0.5 to 0.6
 >- You must add in `Startup.ConfigureServices` of your Blazor client side project the following line `services.AddBlazorContextMenu();`
 >- The `BlazorContextMenu.BlazorContextMenuDefaults` API is removed. Use the API provided in the service configuration.
