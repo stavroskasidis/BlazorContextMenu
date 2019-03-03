@@ -163,6 +163,7 @@ public class Startup
                 defaultTemplate.DefaultCssOverrides.MenuCssClass  = "custom-menu";
                 defaultTemplate.DefaultCssOverrides.MenuItemCssClass= "custom-menu-item";
                 defaultTemplate.DefaultCssOverrides.MenuItemDisabledCssClass = "custom-menu-item--disabled";
+                //...
             });
         });
     }
