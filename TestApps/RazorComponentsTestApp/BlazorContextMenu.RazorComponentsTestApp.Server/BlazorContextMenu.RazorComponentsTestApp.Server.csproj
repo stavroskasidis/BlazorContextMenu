@@ -5,44 +5,6 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <Content Remove="wwwroot\css\bootstrap\bootstrap-native.min.js" />
-    <Content Remove="wwwroot\css\bootstrap\bootstrap.min.css" />
-    <Content Remove="wwwroot\css\bootstrap\bootstrap.min.css.map" />
-    <Content Remove="wwwroot\css\open-iconic\FONT-LICENSE" />
-    <Content Remove="wwwroot\css\open-iconic\font\css\open-iconic-bootstrap.min.css" />
-    <Content Remove="wwwroot\css\open-iconic\font\fonts\open-iconic.eot" />
-    <Content Remove="wwwroot\css\open-iconic\font\fonts\open-iconic.otf" />
-    <Content Remove="wwwroot\css\open-iconic\font\fonts\open-iconic.svg" />
-    <Content Remove="wwwroot\css\open-iconic\font\fonts\open-iconic.ttf" />
-    <Content Remove="wwwroot\css\open-iconic\font\fonts\open-iconic.woff" />
-    <Content Remove="wwwroot\css\open-iconic\ICON-LICENSE" />
-    <Content Remove="wwwroot\css\open-iconic\README.md" />
-    <Content Remove="wwwroot\css\site.css" />
-    <Content Remove="wwwroot\index.html" />
-    <Content Remove="wwwroot\interop.js" />
-    <Content Remove="wwwroot\styles.css" />
-    <Content Remove="wwwroot\styles.min.css" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <None Include="wwwroot\css\bootstrap\bootstrap-native.min.js" />
-    <None Include="wwwroot\css\bootstrap\bootstrap.min.css" />
-    <None Include="wwwroot\css\bootstrap\bootstrap.min.css.map" />
-    <None Include="wwwroot\css\open-iconic\FONT-LICENSE" />
-    <None Include="wwwroot\css\open-iconic\font\css\open-iconic-bootstrap.min.css" />
-    <None Include="wwwroot\css\open-iconic\font\fonts\open-iconic.eot" />
-    <None Include="wwwroot\css\open-iconic\font\fonts\open-iconic.otf" />
-    <None Include="wwwroot\css\open-iconic\font\fonts\open-iconic.svg" />
-    <None Include="wwwroot\css\open-iconic\font\fonts\open-iconic.ttf" />
-    <None Include="wwwroot\css\open-iconic\font\fonts\open-iconic.woff" />
-    <None Include="wwwroot\css\open-iconic\ICON-LICENSE" />
-    <None Include="wwwroot\css\open-iconic\README.md" />
-    <None Include="wwwroot\css\site.css" />
-    <None Include="wwwroot\index.html" />
-    <None Include="wwwroot\interop.js" />
-  </ItemGroup>
-
-  <ItemGroup>
     <PackageReference Include="Microsoft.AspNetCore.Components.Server" Version="3.0.0-preview-19075-0444" />
   </ItemGroup>
 

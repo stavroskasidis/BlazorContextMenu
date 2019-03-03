@@ -1,0 +1,203 @@
+﻿.blazor-context-menu--default {
+    position: fixed;
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
+    background-color: #fff;
+    -webkit-box-sizing: border-box;
+    box-sizing: border-box;
+    -webkit-box-shadow: 0 10px 20px rgba(0,0,0,.3), 0 0 0 1px #eee;
+    box-shadow: 0 10px 20px rgba(0,0,0,.3), 0 0 0 1px #eee;
+    padding: 5px 0;
+}
+
+
+.blazor-context-menu__list {
+    list-style-type: none;
+    padding-left: 5px;
+    padding-right: 5px;
+    margin: 0px;
+}
+
+.blazor-context-menu__seperator {
+    min-width: 120px;
+    color: #333;
+    position: relative;
+}
+
+.blazor-context-menu__seperator__hr {
+    display: block;
+    margin-top: 0.5em;
+    margin-bottom: 0.5em;
+    margin-left: auto;
+    margin-right: auto;
+    border-style: inset;
+    border-width: 1px;
+}
+
+.blazor-context-menu__item--default {
+    min-width: 120px;
+    padding: 6px;
+    text-align: left;
+    white-space: nowrap;
+    position: relative;
+    cursor: pointer;
+}
+
+    .blazor-context-menu__item--default:hover {
+        background-color: rgba(0,0,0,.05);
+    }
+
+
+.blazor-context-menu__item--with-submenu:after {
+    content: "";
+    position: absolute;
+    right: -8px;
+    top: 50%;
+    -webkit-transform: translateY(-50%);
+    transform: translateY(-50%);
+    border: 6px solid transparent;
+    border-left-color: #615c5c;
+}
+
+.blazor-context-menu__item--default-disabled {
+    min-width: 120px;
+    padding: 6px;
+    text-align: left;
+    white-space: nowrap;
+    position: relative;
+    cursor: not-allowed;
+    opacity: 0.6;
+}
+
+.blazor-context-menu--hidden {
+    display: none;
+}
+
+/*============== ANIMATIONS ==============*/
+/*-------------- FadeIn ------------------*/
+.blazor-context-menu__animations--fadeIn {
+    animation-name: fadeIn;
+    animation-direction: reverse;
+    animation-duration: 0.2s;
+}
+
+.blazor-context-menu__animations--fadeIn-shown {
+    animation-name: fadeIn;
+    animation-duration: 0.2s;
+}
+
+@keyframes fadeIn {
+    0% {
+        opacity: 0;
+    }
+    100% {
+        opacity: 1;
+    }
+}
+
+
+/*-------------- Grow ------------------*/
+
+.blazor-context-menu__animations--grow {
+    animation-name: grow;
+    animation-direction: reverse;
+    animation-duration: 0.2s;
+}
+
+.blazor-context-menu__animations--grow-shown {
+    animation-name: grow;
+    animation-duration: 0.2s;
+}
+
+@keyframes grow {
+    0% {
+        transform: scale(0);
+        transform-origin: top left;
+        opacity: 0;
+    }
+
+    100% {
+        transform: scale(1);
+        transform-origin: top left;
+        opacity: 1;
+    }
+}
+
+/*-------------- Slide ------------------*/
+
+.blazor-context-menu.blazor-context-menu__animations--slide {
+    animation-name: slide;
+    animation-direction: reverse;
+    animation-duration: 0.2s;
+}
+
+.blazor-context-menu.blazor-context-menu__animations--slide-shown {
+    animation-name: slide;
+    animation-duration: 0.2s;
+}
+
+@keyframes slide {
+    0% {
+        transform: translateX(-5px);
+        opacity: 0;
+    }
+
+    100% {
+        transform: translateX(0px);
+        opacity: 1;
+    }
+}
+
+.blazor-context-submenu.blazor-context-menu__animations--slide {
+    animation-name: slide-submenu;
+    animation-direction: reverse;
+    animation-duration: 0.2s;
+}
+
+.blazor-context-submenu.blazor-context-menu__animations--slide-shown {
+    animation-name: slide-submenu;
+    animation-duration: 0.2s;
+}
+
+@keyframes slide-submenu {
+    0% {
+        transform: translateX(-25px);
+        z-index: -1;
+        opacity: 0;
+    }
+    90% {
+        z-index: -1;
+    }
+    100% {
+        transform: translateX(0px);
+        z-index: unset;
+        opacity: 1;
+    }
+}
+
+/*-------------- Zoom ------------------*/
+
+.blazor-context-menu__animations--zoom {
+    animation-name: zoom;
+    animation-direction: reverse;
+    animation-duration: 0.2s;
+}
+
+.blazor-context-menu__animations--zoom-shown {
+    animation-name: zoom;
+    animation-duration: 0.2s;
+}
+
+@keyframes zoom {
+    0% {
+        transform: scale(0.5);
+        opacity: 0;
+    }
+
+    100% {
+        transform: scale(1);
+        opacity: 1;
+    }
+}

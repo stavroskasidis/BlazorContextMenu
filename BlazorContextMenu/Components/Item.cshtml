@@ -145,7 +145,8 @@
                                             (DisabledCssClass ?? settings.GetTemplate(Template).MenuItemDisabledCssClass));
             }
 
-            if (HasSubMenu)
+            var hasSubMenu = menuTreeTraverser.HasSubMenu(this);
+            if (hasSubMenu)
             {
                 classes = Helpers.AppendCssClasses(classes,
                         (OverrideDefaultCssClassWithSubMenu ?? settings.DefaultCssSettings.MenuItemWithSubMenuCssClass),
@@ -158,7 +159,6 @@
 
     protected ElementRef MenuItemElement { get; set; }
     protected string Template { get; set; }
-    protected bool HasSubMenu { get; set; }
     protected ContextMenu RootMenu { get; set; }
     protected ContextMenu ParentMenu { get; set; }
 
@@ -193,19 +193,6 @@
         {
             Enabled = await EnabledHandlerAsync(args);
         }
-    }
-
-    protected override void OnAfterRender()
-    {
-        Task.Run(async () =>
-        {
-            var hasSubMenu = menuTreeTraverser.HasSubMenu(this);
-            if (HasSubMenu == hasSubMenu) return;
-
-            //Hacky but works. TODO: Improve this code when this stuff is supported in Blazor
-            HasSubMenu = hasSubMenu;
-            StateHasChanged();
-        });
     }
 
     protected async Task OnClickInternal(UIMouseEventArgs e)

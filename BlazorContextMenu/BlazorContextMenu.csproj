@@ -71,12 +71,23 @@
     <EmbeddedResource Include="content\*.min.js" LogicalName="blazor:js:%(RecursiveDir)%(Filename)%(Extension)" />
     <EmbeddedResource Include="content\*.min.css" LogicalName="blazor:css:%(RecursiveDir)%(Filename)%(Extension)" />
     <!--<EmbeddedResource Include="content\**" Exclude="**\*.js;**\*.css" LogicalName="blazor:file:%(RecursiveDir)%(Filename)%(Extension)" />-->
+  </ItemGroup>
+  
+  <ItemGroup>
+    <Compile Remove="node_modules\**" />
+    <Content Remove="node_modules\**" />
+    <EmbeddedResource Remove="node_modules\**" />
+    <None Remove="node_modules\**" />
   </ItemGroup>  
 
   <ItemGroup>
     <PackageReference Include="Microsoft.AspNetCore.Components.Browser" Version="3.0.0-preview-19075-0444" />
     <PackageReference Include="Microsoft.AspNetCore.Components.Build" Version="3.0.0-preview-19075-0444" PrivateAssets="all" />
-  </ItemGroup>
+  </ItemGroup>  
+
+  <Target Name="PostBuild" AfterTargets="PostBuildEvent">
+    <Exec Command="xcopy &quot;$(ProjectDir)content\*.*&quot; &quot;$(ProjectDir)..\TestApps\RazorComponentsTestApp\BlazorContextMenu.RazorComponentsTestApp.Server\wwwroot&quot; /y /s" />
+  </Target>
 
 
   <!--<Target Name="PreBuild" BeforeTargets="PreBuildEvent">

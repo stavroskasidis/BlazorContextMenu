@@ -37,6 +37,7 @@ namespace BlazorContextMenu.RazorComponentsTestApp.App
                     template.MenuItemDisabledCssClass = "dark-menu-item--disabled";
                     template.SeperatorHrCssClass = "dark-menu-seperator-hr";
                     template.MenuItemWithSubMenuCssClass = "dark-menu-item--with-submenu";
+                    template.Animation = Animation.FadeIn;
                 });
             });
         }
