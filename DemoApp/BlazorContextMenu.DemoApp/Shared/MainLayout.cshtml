@@ -14,3 +14,32 @@
     </div>
 </div>
 
+<ContextMenu Id="indexMenu">
+    <Item Click="@OnClick">Item 1</Item>
+    <Item Click="@OnClick">Item 2</Item>
+    <Item Click="@OnClick" Enabled="false">Item 3 (disabled)</Item>
+    <Seperator />
+    <Item>
+        Submenu
+        <SubMenu>
+            <Item Click="@OnClick">Submenu Item 1</Item>
+            <Item Click="@OnClick">Submenu Item 2</Item>
+        </SubMenu>
+    </Item>
+</ContextMenu>
+
+
+<ContextMenu Id="triggerMenu" CssClass="z-10">
+    <Item Click="@OnClick">Item 1</Item>
+    <Item Click="@OnClick">Item 2</Item>
+    <Item Click="@OnClick">Item 3</Item>
+    <Item Click="@OnClick">Item 4</Item>
+    <Item Click="@OnClick">Item 5</Item>
+</ContextMenu>
+
+@functions{
+    void OnClick(MenuItemClickEventArgs e)
+    {
+        Console.WriteLine($"Item Clicked => Menu: {e.ContextMenuId}, MenuTarget: {e.ContextMenuTargetId}, IsCanceled: {e.IsCanceled}, MenuItem: {e.MenuItemElement}, MouseEvent: {e.MouseEvent}");
+    }
+}
