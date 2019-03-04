@@ -147,3 +147,8 @@ app {
 .z-10{
     z-index:10;
 }
+
+
+.ml-10{
+    margin-left: 10px
+}
