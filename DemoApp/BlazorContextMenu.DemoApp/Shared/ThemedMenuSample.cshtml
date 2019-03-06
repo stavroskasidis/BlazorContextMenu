@@ -5,7 +5,7 @@
     <Seperator />
     <Item>
         Submenu
-        <SubMenu>
+        <SubMenu Template="@SubMenuTemplate">
             <Item Click="@OnClick">Submenu Item 1</Item>
             <Item Click="@OnClick">Submenu Item 2</Item>
         </SubMenu>
@@ -16,6 +16,7 @@
 
     [Parameter] string Id { get; set; }
     [Parameter] string Template { get; set; }
+    [Parameter] string SubMenuTemplate { get; set; }
 
     void OnClick(MenuItemClickEventArgs e)
     {

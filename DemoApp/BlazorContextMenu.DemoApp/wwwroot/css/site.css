@@ -153,6 +153,10 @@ app {
     margin-left: 10px
 }
 
+.mt-50 {
+    margin-top: 50px;
+}
+
 
 div.dark-menu {
     color: #FFFFFF;
@@ -163,10 +167,6 @@ div.dark-menu {
     border-left-color: #d3d3d3;
 }
 
-.dark-menu .my-menu-seperator-hr-dark-menu {
-    border-color: red;
-}
-
 .dark-menu .dark-menu-item--disabled,
 .dark-menu .dark-menu-item {
     background-color: #444;
@@ -175,4 +175,29 @@ div.dark-menu {
     .dark-menu .dark-menu-item--disabled:hover,
     .dark-menu .dark-menu-item:hover {
         background-color: #000000;
+    }
+
+
+div.pink-menu {
+    color: #000000;
+    background-color: #ffb3b3;
+}
+
+.pink-menu .pink-menu-item--with-submenu:after {
+    border-left-color: #FFFFFF;
+}
+
+.pink-menu .pink-menu-seperator-hr {
+    border-color: red;
+}
+
+.pink-menu .pink-menu-item--disabled,
+.pink-menu .pink-menu-item {
+    background-color: #ffb3b3;
+}
+
+    .pink-menu .pink-menu-item--disabled:hover,
+    .pink-menu .pink-menu-item:hover {
+        background-color: #c11515;
+        color: white;
     }

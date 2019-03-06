@@ -18,9 +18,18 @@ namespace BlazorContextMenu.DemoApp
                     template.MenuCssClass = "dark-menu";
                     template.MenuItemCssClass = "dark-menu-item";
                     template.MenuItemDisabledCssClass = "dark-menu-item--disabled";
-                    template.SeperatorHrCssClass = "dark-menu-seperator-hr";
                     template.MenuItemWithSubMenuCssClass = "dark-menu-item--with-submenu";
                     template.Animation = Animation.FadeIn;
+                });
+
+                options.ConfigureTemplate("pink", template =>
+                {
+                    template.MenuCssClass = "pink-menu";
+                    template.MenuItemCssClass = "pink-menu-item";
+                    template.MenuItemDisabledCssClass = "pink-menu-item--disabled";
+                    template.SeperatorHrCssClass = "pink-menu-seperator-hr";
+                    template.MenuItemWithSubMenuCssClass = "pink-menu-item--with-submenu";
+                    template.Animation = Animation.Slide;
                 });
             });
         }
