@@ -2,7 +2,7 @@
 
 A context menu component for [Blazor](https://github.com/aspnet/Blazor) and [Razor Components](https://github.com/aspnet/AspNetCore/tree/master/src/Components) (aka server-side Blazor)!
 
-![demo-img](ReadmeResources/blazor-context-menu-demo-1.gif)
+![demo-img](ReadmeResources/blazor-context-menu-demo-2.gif)
 
 > ⚠️ Warning
 
