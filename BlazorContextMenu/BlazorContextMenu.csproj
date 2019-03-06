@@ -2,6 +2,7 @@
 
   <PropertyGroup>
     <TargetFramework>netstandard2.0</TargetFramework>
+    <LangVersion>7.3</LangVersion>
     <IsPackable>true</IsPackable>
 
     <!-- This custom package feed is required only when using nightly builds of Blazor -->
@@ -88,7 +89,7 @@
   </ItemGroup>  
 
   <Target Name="PostBuild" AfterTargets="PostBuildEvent">
-    <Exec Command="xcopy &quot;$(ProjectDir)content\*.*&quot; &quot;$(ProjectDir)..\TestApps\RazorComponentsTestApp\BlazorContextMenu.RazorComponentsTestApp.Server\wwwroot&quot; /y /s" />
+    <Exec Command="xcopy &quot;$(ProjectDir)content\*.*&quot; &quot;$(ProjectDir)..\TestApps\RazorComponentsTestApp\BlazorContextMenu.RazorComponentsTestApp\wwwroot&quot; /y /s" />
   </Target>
 
 

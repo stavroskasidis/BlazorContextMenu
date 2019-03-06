@@ -44,27 +44,27 @@
 
 
 <ContextMenu Id="menu1" Template="dark">
-    <Item Id="menu1-item1" ClickAsync="FetchDataClick">Fetch Data</Item>
-    <Item Id="menu1-item2" Click="ClearDataClick">Clear Data</Item>
+    <Item Id="menu1-item1" OnClick="FetchDataClick">Fetch Data</Item>
+    <Item Id="menu1-item2" OnClick="ClearDataClick">Clear Data</Item>
     <Seperator />
     <Item Id="menu1-item3" Enabled="false">Disabled Item </Item>
 </ContextMenu>
 
 <ContextMenu Id="menu2" Template="red" Animation="Animation">
-    <Item Id="menu2-item1" Click="@OnClick"> <i class="far fa-file"></i> New</Item>
-    <Item Click="@OnClick"><i class="fas fa-edit"></i> Edit</Item>
-    <Item Click="@OnClick" Enabled="false"> <i class="fas fa-trash-alt"></i> Delete</Item>
+    <Item Id="menu2-item1" OnClick="OnClick"> <i class="far fa-file"></i> New</Item>
+    <Item OnClick="OnClick"><i class="fas fa-edit"></i> Edit</Item>
+    <Item OnClick="OnClick" Enabled="false"> <i class="fas fa-trash-alt"></i> Delete</Item>
     <Seperator />
     <Item Id="submenu1-trigger">
         <i class="fas fa-cogs"></i> More
         <SubMenu Id="submenu1" Template="dark">
-            <Item Click="@OnClick"> <i class="far fa-save"></i> Save As</Item>
-            <Item Click="@OnClick"> <i class="far fa-save"></i> Save</Item>
+            <Item OnClick="OnClick"> <i class="far fa-save"></i> Save As</Item>
+            <Item OnClick="OnClick"> <i class="far fa-save"></i> Save</Item>
             <Item Id="submenu2-trigger">
                 <i class="fas fa-save"></i> Export as
                 <SubMenu Id="submenu2">
-                    <Item Click="@OnClick"> <i class="fas fa-file-pdf"></i> Pdf</Item>
-                    <Item Click="@OnClick"> <i class="far fa-file-alt"></i> Text</Item>
+                    <Item OnClick="OnClick"> <i class="fas fa-file-pdf"></i> Pdf</Item>
+                    <Item OnClick="OnClick"> <i class="far fa-file-alt"></i> Text</Item>
                 </SubMenu>
             </Item>
         </SubMenu>
@@ -72,8 +72,8 @@
     <Item Enabled="false">
         <i class="fas fa-cogs"></i> Disabled Submenu
         <SubMenu>
-            <Item Click="@OnClick">Item 1</Item>
-            <Item Click="@OnClick">Item 2</Item>
+            <Item OnClick="@OnClick">Item 1</Item>
+            <Item OnClick="@OnClick">Item 2</Item>
         </SubMenu>
     </Item>
 </ContextMenu>

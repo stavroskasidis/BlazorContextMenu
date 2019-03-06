@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 using OpenQA.Selenium.Interactions;
 using BlazorContextMenu.TestsCommon.Infrastructure;
 using BlazorContextMenu.E2ETests.Tests;
-using BlazorContextMenu.RazorComponentsTestApp.Server;
+using BlazorContextMenu.RazorComponentsTestApp;
 
 namespace BlazorContextMenu.RazorComponentsE2ETests.Tests
 {

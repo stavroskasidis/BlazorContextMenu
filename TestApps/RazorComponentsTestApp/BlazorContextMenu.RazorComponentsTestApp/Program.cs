@@ -9,7 +9,7 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
 
-namespace BlazorContextMenu.RazorComponentsTestApp.Server
+namespace BlazorContextMenu.RazorComponentsTestApp
 {
     public class Program
     {

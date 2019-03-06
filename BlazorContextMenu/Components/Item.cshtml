@@ -61,18 +61,9 @@
     /// <summary>
     /// The menu item's onclick handler. A <see cref="MenuItemClickEventArgs"/> is passed to the action.
     /// If you want to cancel the click (i.e. stop the menu from closing), then set the "IsCanceled" event args property to "true".
-    /// Note: For an async handler use <seealso cref="ClickAsync"/>
     /// </summary>
     [Parameter]
-    public Action<MenuItemClickEventArgs> Click { get; protected set; }
-
-    /// <summary>
-    /// The menu item's onclick async handler. A <see cref="MenuItemClickEventArgs"/> is passed to the action.
-    /// If you want to cancel the click (i.e. stop the menu from closing), then set the "IsCanceled" event args property to "true".
-    /// Note: For a synchronous handler use <seealso cref="Click"/>
-    /// </summary>
-    [Parameter]
-    public Func<MenuItemClickEventArgs, Task> ClickAsync { get; protected set; }
+    protected EventCallback<MenuItemClickEventArgs> OnClick { get; set; }
 
     /// <summary>
     /// Sets the item's enabled state. Default <see cref="true" />
@@ -81,18 +72,10 @@
     public bool Enabled { get; protected set; } = true;
 
     /// <summary>
-    /// A handler that can be used to set the item's <see cref="Enabled"/> status dynamically
-    /// Note: For an async handler use <seealso cref="EnabledHandlerAsync"/>
+    /// A handler that can be used to set the item's <see cref="Enabled"/> status dynamically by setting the <see cref="MenuItemEnabledHandlerArgs.IsEnabled"/> property
     /// </summary>
     [Parameter]
-    public Func<MenuItemHandlerArgs, bool> EnabledHandler { get; protected set; }
-
-    /// <summary>
-    /// A handler that can be used to set the item's <see cref="Enabled"/> status dynamically
-    /// Note: For a synchronous handler use <seealso cref="EnabledHandler"/>
-    /// </summary>
-    [Parameter]
-    public Func<MenuItemHandlerArgs, Task<bool>> EnabledHandlerAsync { get; protected set; }
+    protected EventCallback<MenuItemEnabledHandlerArgs> EnabledHandler { get; set; }
 
     /// <summary>
     /// Sets the item's visible state. Default <see cref="true" />
@@ -101,18 +84,10 @@
     public bool Visible { get; protected set; } = true;
 
     /// <summary>
-    /// A handler that can be used to set the item's <see cref="Visible"/> status dynamically
-    /// Note: For an async handler use <seealso cref="VisibleHandlerAsync"/>
+    /// A handler that can be used to set the item's <see cref="Visible"/> status dynamically by setting the <see cref="MenuItemVisibleHandlerArgs.IsVisible"/> property
     /// </summary>
     [Parameter]
-    public Func<MenuItemHandlerArgs, bool> VisibleHandler { get; protected set; }
-
-    /// <summary>
-    /// A handler that can be used to set the item's <see cref="Visible"/> status dynamically
-    /// Note: For a synchronous handler use <seealso cref="VisibleHandler"/>
-    /// </summary>
-    [Parameter]
-    public Func<MenuItemHandlerArgs, Task<bool>> VisibleHandlerAsync { get; protected set; }
+    protected EventCallback<MenuItemVisibleHandlerArgs> VisibleHandler { get; set; }
 
     /// <summary>
     /// The id of the li element. This is optional
@@ -176,23 +151,20 @@
         Template = ParentMenu.GetActiveTemplate();
 
         var contextMenuTarget = RootMenu.GetTarget();
-        var args = new MenuItemHandlerArgs(RootMenu.Id, contextMenuTarget, (Item)(object)this); //TODO: Remove casting when 'this' is fixed in blazor
-        if (VisibleHandler != null)
+        if (VisibleHandler.HasDelegate)
         {
-            Visible = VisibleHandler(args);
-        }
-        else if (VisibleHandlerAsync != null)
-        {
-            Visible = await VisibleHandlerAsync(args);
+            //TODO: Remove casting when 'this' is fixed in blazor
+            var visibleArgs = new MenuItemVisibleHandlerArgs(RootMenu.Id, contextMenuTarget, (Item)(object)this, Visible);
+            await VisibleHandler.InvokeAsync(visibleArgs);
+            Visible = visibleArgs.IsVisible;
         }
 
-        if (EnabledHandler != null)
+        if (EnabledHandler.HasDelegate)
         {
-            Enabled = EnabledHandler(args);
-        }
-        else if (EnabledHandlerAsync != null)
-        {
-            Enabled = await EnabledHandlerAsync(args);
+            //TODO: Remove casting when 'this' is fixed in blazor
+            var enabledArgs = new MenuItemEnabledHandlerArgs(RootMenu.Id, contextMenuTarget, (Item)(object)this, Enabled);
+            await EnabledHandler.InvokeAsync(enabledArgs);
+            Enabled = enabledArgs.IsEnabled;
         }
     }
 
@@ -201,24 +173,15 @@
         if (!Enabled) return;
 
         var contextMenuTarget = RootMenu.GetTarget();
-        var args = new MenuItemClickEventArgs(e, RootMenu.Id, contextMenuTarget, MenuItemElement, (Item)(object)this);  //TODO: Remove casting when 'this' is fixed in blazor
-        if (Click != null)
+        //TODO: Remove casting when 'this' is fixed in blazor
+        var args = new MenuItemClickEventArgs(e, RootMenu.Id, contextMenuTarget, MenuItemElement, (Item)(object)this);
+        if (OnClick.HasDelegate)
         {
-            Click(args);
+            await OnClick.InvokeAsync(args);
             if (!args.IsCanceled)
             {
                 contextMenuHandler.HideMenu(RootMenu.Id);
             }
-        }
-        else if (ClickAsync != null)
-        {
-            ClickAsync(args).ContinueWith((t) =>
-            {
-                if (!args.IsCanceled)
-                {
-                    contextMenuHandler.HideMenu(RootMenu.Id);
-                }
-            });
         }
     }
 #pragma warning restore BL9993, CS4014 // Component parameter is marked public

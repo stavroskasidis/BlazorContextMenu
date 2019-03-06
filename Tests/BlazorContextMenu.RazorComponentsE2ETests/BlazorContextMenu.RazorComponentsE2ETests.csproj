@@ -26,8 +26,9 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\..\TestApps\RazorComponentsTestApp\BlazorContextMenu.RazorComponentsTestApp.Server\BlazorContextMenu.RazorComponentsTestApp.Server.csproj" />
+    <ProjectReference Include="..\..\TestApps\RazorComponentsTestApp\BlazorContextMenu.RazorComponentsTestApp\BlazorContextMenu.RazorComponentsTestApp.csproj" />
     <ProjectReference Include="..\BlazorContextMenu.TestsCommon\BlazorContextMenu.TestsCommon.csproj" />
   </ItemGroup>
+
 
 </Project>
