@@ -2,7 +2,7 @@
 
 A context menu component for [Blazor](https://github.com/aspnet/Blazor) and [Razor Components](https://github.com/aspnet/AspNetCore/tree/master/src/Components) (aka server-side Blazor)!
 
-![demo-img](ReadmeResources/blazor-context-menu-demo-1.gif)
+![demo-img](ReadmeResources/blazor-context-menu-demo-2.gif)
 
 > ⚠️ Warning
 
@@ -163,6 +163,7 @@ public class Startup
                 defaultTemplate.DefaultCssOverrides.MenuCssClass  = "custom-menu";
                 defaultTemplate.DefaultCssOverrides.MenuItemCssClass= "custom-menu-item";
                 defaultTemplate.DefaultCssOverrides.MenuItemDisabledCssClass = "custom-menu-item--disabled";
+                //...
             });
         });
     }
@@ -197,7 +198,7 @@ Upgrating from 0.1 to 0.2
 >- Updated to Blazor 0.8.0
 >- Added animations
 >- Default css overrides are now part of the `Templates` API so that you can easily have multiple custom overriden menus
->- Razor Components are not yet supported => [#6349](https://github.com/aspnet/AspNetCore/issues/6349)
+>- Razor Components are not loading the static files included in the library => [#6349](https://github.com/aspnet/AspNetCore/issues/6349). As a workaround you can download and reference directly the **.css** and **.js** from the `/BlazorContextMenu/content` folder until the issue is resolved.
 
 ### 0.10
 >- Added proper support for Razor Components (aka server-side Blazor)

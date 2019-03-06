@@ -1,29 +1,11 @@
 ﻿@page "/"
 
-<ContextMenuTrigger MenuId="myMenu">
-    <h1>Hello, Blazor Context Menu!</h1>
+<h1>Blazor Context Menu Samples App</h1>
 
-    <p>Right-click on this text to show the context menu</p>
+<!-- Menu is in Shared/MainLayout-->
+<ContextMenuTrigger MenuId="indexMenu">
+
+    <p>Right-click on this text to show a basic context menu sample</p>
     <i style="visibility:hidden" class="fas fa-exclamation"></i> @*Added to force fa load *@
 </ContextMenuTrigger>
 
-<ContextMenu Id="myMenu">
-    <Item Click="@OnClick">Item 1</Item>
-    <Item Click="@OnClick">Item 2</Item>
-    <Item Click="@OnClick" Enabled="false">Item 3 (disabled)</Item>
-    <Seperator />
-    <Item>
-        Submenu
-        <SubMenu>
-            <Item Click="@OnClick">Submenu Item 1</Item>
-            <Item Click="@OnClick">Submenu Item 2</Item>
-        </SubMenu>
-    </Item>
-</ContextMenu>
-
-@functions{
-    void OnClick(MenuItemClickEventArgs e)
-    {
-        Console.WriteLine($"Item Clicked => Menu: {e.ContextMenuId}, MenuTarget: {e.ContextMenuTargetId}, IsCanceled: {e.IsCanceled}, MenuItem: {e.MenuItemElement}, MouseEvent: {e.MouseEvent}");
-    }
-}

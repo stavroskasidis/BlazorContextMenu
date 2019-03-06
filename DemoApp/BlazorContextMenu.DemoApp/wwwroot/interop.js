@@ -30,3 +30,7 @@ DemoApp_GetItemIndex = function (targetItemId) {
     }
     return -1;
 };
+
+DemoApp_RunPrism = function () {
+    Prism.highlightAll();
+}

@@ -150,10 +150,6 @@ div.dark-menu {
     border-left-color: #d3d3d3;
 }
 
-.dark-menu .my-menu-seperator-hr-dark-menu {
-    border-color: red;
-}
-
 .dark-menu .dark-menu-item--disabled,
 .dark-menu .dark-menu-item {
     background-color: #444;
