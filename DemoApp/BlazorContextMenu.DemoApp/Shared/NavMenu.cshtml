@@ -6,7 +6,7 @@
 </div>
 
 <div class=@(collapseNavMenu ? "collapse" : null) onclick=@ToggleNavMenu>
-    <ul class="nav flex-column">
+    <ul class="nav flex-column nav-menu">
         <li class="nav-item px-3">
             <NavLink class="nav-link" href="/" Match=NavLinkMatch.All>
                 <span class="oi oi-home" aria-hidden="true"></span> Home
@@ -25,6 +25,11 @@
         <li class="nav-item px-3">
             <NavLink class="nav-link" href="/animations">
                 <span class="oi oi-audio-spectrum" aria-hidden="true"></span> Animations
+            </NavLink>
+        </li>
+        <li class="nav-item px-3">
+            <NavLink class="nav-link" href="/templating">
+                <span class="oi oi-list-rich" aria-hidden="true"></span> Templating
             </NavLink>
         </li>
         <li class="nav-item px-3">
