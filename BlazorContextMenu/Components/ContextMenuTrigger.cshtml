@@ -1,4 +1,5 @@
 ﻿@inject BlazorContextMenuHandler blazorContextMenuHandler
+@inject IJSRuntime jsRuntime
 
 <div onclick="@(MouseButtonTrigger == MouseButtonTrigger.Left || MouseButtonTrigger == MouseButtonTrigger.Both ? $"blazorContextMenu.OnContextMenu(event, '{MenuId.Replace("'","\\'")}'); " : "")"
      oncontextmenu="@(MouseButtonTrigger == MouseButtonTrigger.Right || MouseButtonTrigger == MouseButtonTrigger.Both ? $"blazorContextMenu.OnContextMenu(event, '{MenuId.Replace("'","\\'")}');": "")"
@@ -38,7 +39,7 @@
 
         if (!blazorContextMenuHandler.ReferencePassedToJs)
         {
-            JSRuntime.Current.InvokeAsync<object>("blazorContextMenu.SetMenuHandlerReference", new DotNetObjectRef(blazorContextMenuHandler));
+            jsRuntime.InvokeAsync<object>("blazorContextMenu.SetMenuHandlerReference", new DotNetObjectRef(blazorContextMenuHandler));
             blazorContextMenuHandler.ReferencePassedToJs = true;
         }
     }

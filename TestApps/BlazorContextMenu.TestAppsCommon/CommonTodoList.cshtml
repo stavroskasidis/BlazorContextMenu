@@ -1,4 +1,6 @@
-﻿<h1>Todo List (Right click)</h1>
+﻿@inject IJSRuntime jsRuntime
+
+<h1>Todo List (Right click)</h1>
 <ContextMenuTrigger MenuId="todoItemsMenu">
     <ul id="list1">
         @foreach (var item in TodoItems)
@@ -31,7 +33,7 @@
     {
         //Interop is required here due to current blazor limitations
 
-        var itemIndex = await JSRuntime.Current.InvokeAsync<int>("TestApp_GetItemIndex", e.ContextMenuTargetId);
+        var itemIndex = await jsRuntime.InvokeAsync<int>("TestApp_GetItemIndex", e.ContextMenuTargetId);
         if (itemIndex >= 0)
         {
             var currentTodoItem = TodoItems.ElementAt(itemIndex);
@@ -47,7 +49,7 @@
 
     async Task<bool> CheckEnabledHandler(MenuItemHandlerArgs e)
     {
-        var itemIndex = await JSRuntime.Current.InvokeAsync<int>("TestApp_GetItemIndex", e.ContextMenuTargetId);
+        var itemIndex = await jsRuntime.InvokeAsync<int>("TestApp_GetItemIndex", e.ContextMenuTargetId);
         if (itemIndex >= 0)
         {
             var currentTodoItem = TodoItems.ElementAt(itemIndex);
@@ -60,7 +62,7 @@
     async Task<bool> DeleteVisibleHandler(MenuItemHandlerArgs e)
     {
 
-        var itemIndex = await JSRuntime.Current.InvokeAsync<int>("TestApp_GetItemIndex", e.ContextMenuTargetId);
+        var itemIndex = await jsRuntime.InvokeAsync<int>("TestApp_GetItemIndex", e.ContextMenuTargetId);
         if (itemIndex >= 0)
         {
             var currentTodoItem = TodoItems.ElementAt(itemIndex);
@@ -73,7 +75,7 @@
 
     async void CheckClick(MenuItemClickEventArgs e)
     {
-        var itemIndex = await JSRuntime.Current.InvokeAsync<int>("TestApp_GetItemIndex", e.ContextMenuTargetId);
+        var itemIndex = await jsRuntime.InvokeAsync<int>("TestApp_GetItemIndex", e.ContextMenuTargetId);
         if (itemIndex >= 0)
         {
             var currentTodoItem = TodoItems.ElementAt(itemIndex);
@@ -84,7 +86,7 @@
 
     async void DeleteClick(MenuItemClickEventArgs e)
     {
-        var itemIndex = await JSRuntime.Current.InvokeAsync<int>("TestApp_GetItemIndex", e.ContextMenuTargetId);
+        var itemIndex = await jsRuntime.InvokeAsync<int>("TestApp_GetItemIndex", e.ContextMenuTargetId);
         if (itemIndex >= 0)
         {
             var currentTodoItem = TodoItems.ElementAt(itemIndex);
