@@ -194,6 +194,9 @@ Upgrating from 0.1 to 0.2
 >- Replace "MenuItemWithSubmenu" with a regular "Item" component
 
 ## Release Notes
+### 0.12-beta
+>- Updated to Blazor 0.9.0
+
 ### 0.11
 >- Updated to Blazor 0.8.0
 >- Added animations

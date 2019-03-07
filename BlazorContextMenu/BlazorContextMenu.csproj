@@ -13,7 +13,10 @@
     <PackageLicenseUrl>https://github.com/stavroskasidis/blazor-context-menu/blob/master/LICENSE</PackageLicenseUrl>
     <PackageProjectUrl>https://github.com/stavroskasidis/blazor-context-menu</PackageProjectUrl>
     <Description>Context menu component for Blazor and Razor Components</Description>
-    <PackageReleaseNotes>0.11
+    <PackageReleaseNotes>0.12
+- Updated to Blazor 0.9.0
+
+0.11
 - Updated to Blazor 0.8.0
 - Added animations
 - Default css overrides are now part of the Templates API so that you can easily have multiple custom overriden menus
@@ -58,7 +61,7 @@
     <Copyright />
     <PackageTags>blazor blazor-component blazor-context-menu context-menu contextmenu menu blazor-menu blazorcontextmenu razor razor-components razorcomponents</PackageTags>
     <VersionSuffix>$(VersionSuffix)</VersionSuffix>
-    <Version>0.11.0</Version>
+    <Version>0.12.0</Version>
     <Version Condition=" '$(VersionSuffix)' != '' ">$(Version)-$(VersionSuffix)</Version>
     <Product>Blazor.ContextMenu</Product>
   </PropertyGroup>
