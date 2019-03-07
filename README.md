@@ -44,14 +44,14 @@ public class Startup
 ```xml
 
 <ContextMenu Id="myMenu">
-    <Item Click="@OnClick">Item 1</Item>
-    <Item Click="@OnClick">Item 2</Item>
-    <Item Click="@OnClick" Enabled="false">Item 3 (disabled)</Item>
+    <Item Click="OnClick">Item 1</Item>
+    <Item Click="OnClick">Item 2</Item>
+    <Item Click="OnClick" Enabled="false">Item 3 (disabled)</Item>
     <Seperator />
     <Item>Submenu
         <SubMenu>
-            <Item Click="@OnClick">Submenu Item 1</Item>
-            <Item Click="@OnClick">Submenu Item 2</Item>
+            <Item Click="OnClick">Submenu Item 1</Item>
+            <Item Click="OnClick">Submenu Item 2</Item>
         </SubMenu>
     </Item>
 </ContextMenu>
@@ -194,7 +194,7 @@ Upgrating from 0.1 to 0.2
 >- Replace "MenuItemWithSubmenu" with a regular "Item" component
 
 ## Release Notes
-### 0.11-beta
+### 0.11
 >- Updated to Blazor 0.8.0
 >- Added animations
 >- Default css overrides are now part of the `Templates` API so that you can easily have multiple custom overriden menus
