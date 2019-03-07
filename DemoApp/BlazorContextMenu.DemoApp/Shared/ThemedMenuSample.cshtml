@@ -1,0 +1,25 @@
+﻿<ContextMenu Id="@Id" Template="@Template">
+    <Item Click="@OnClick">Item 1</Item>
+    <Item Click="@OnClick">Item 2</Item>
+    <Item Click="@OnClick" Enabled="false">Item 3 (disabled)</Item>
+    <Seperator />
+    <Item>
+        Submenu
+        <SubMenu Template="@SubMenuTemplate">
+            <Item Click="@OnClick">Submenu Item 1</Item>
+            <Item Click="@OnClick">Submenu Item 2</Item>
+        </SubMenu>
+    </Item>
+</ContextMenu>
+
+@functions{
+
+    [Parameter] string Id { get; set; }
+    [Parameter] string Template { get; set; }
+    [Parameter] string SubMenuTemplate { get; set; }
+
+    void OnClick(MenuItemClickEventArgs e)
+    {
+        Console.WriteLine($"Item Clicked => Menu: {e.ContextMenuId}, MenuTarget: {e.ContextMenuTargetId}, IsCanceled: {e.IsCanceled}, MenuItem: {e.MenuItemElement}, MouseEvent: {e.MouseEvent}");
+    }
+}

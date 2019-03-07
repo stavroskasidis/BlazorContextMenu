@@ -13,12 +13,6 @@ namespace BlazorContextMenu
         {
             _settings = settings;
         }
-        
-        public BlazorContextMenuSettingsBuilder CssOverrides(Action<BlazorContextMenuDefaultCssSettings> overrides)
-        {
-            overrides(_settings.DefaultCssSettings); 
-            return this;
-        }
 
         /// <summary>
         /// Configures the default template.
@@ -40,8 +34,10 @@ namespace BlazorContextMenu
         /// <returns></returns>
         public BlazorContextMenuSettingsBuilder ConfigureTemplate(string templateName,Action<BlazorContextMenuTemplate> templateOptions)
         {
+            if (_settings.Templates.ContainsKey(templateName)) throw new Exception($"Template '{templateName}' is already defined");
             var template = new BlazorContextMenuTemplate();
             templateOptions(template);
+            
             _settings.Templates.Add(templateName, template);
             return this;
         }

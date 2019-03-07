@@ -45,14 +45,15 @@
 #pragma warning restore BL9993 // Component parameter is marked public
 
     protected ElementRef MenuItemElement { get; set; }
-    protected string Template { get; set; } = BlazorContextMenuSettings.DefaultTemplateName;
+    protected string Template { get; set; }
 
     protected string ClassCalc
     {
         get
         {
+            var template = settings.GetTemplate(Template);
             return Helpers.AppendCssClasses(
-                (OverrideDefaultCssClass ?? settings.DefaultCssSettings.SeperatorCssClass),
+                (OverrideDefaultCssClass ?? template.DefaultCssOverrides.SeperatorCssClass),
                 (CssClass ?? settings.GetTemplate(Template).SeperatorCssClass));
         }
     }
@@ -61,8 +62,9 @@
     {
         get
         {
+            var template = settings.GetTemplate(Template);
             return Helpers.AppendCssClasses(
-               (OverrideDefaultHrCssClass ?? settings.DefaultCssSettings.SeperatorHrCssClass),
+               (OverrideDefaultHrCssClass ?? template.DefaultCssOverrides.SeperatorHrCssClass),
                (HrCssClass ?? settings.GetTemplate(Template).SeperatorHrCssClass));
         }
     }
@@ -71,8 +73,9 @@
     {
         base.OnInit();
 
-        var menu = menuTreeTraverser.GetClosestContextMenuParent(this);
-        if (menu == null) throw new Exception("Seperator component must be a child of a ContextMenu component");
-        Template = menu.Template;
+        var rootMenu = menuTreeTraverser.GetRootContextMenu(this);
+        if (rootMenu == null) throw new Exception("Seperator component must be a child of a ContextMenu component");
+        var parentMenu = menuTreeTraverser.GetClosestContextMenu(this);
+        Template = parentMenu.GetActiveTemplate();
     }
 }

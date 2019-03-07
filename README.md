@@ -2,11 +2,11 @@
 
 A context menu component for [Blazor](https://github.com/aspnet/Blazor) and [Razor Components](https://github.com/aspnet/AspNetCore/tree/master/src/Components) (aka server-side Blazor)!
 
-![demo-img](ReadmeResources/blazor-context-menu-demo-1.gif)
+![demo-img](ReadmeResources/blazor-context-menu-demo-2.gif)
 
 > ⚠️ Warning
 
-> This project is build on top of an experimental framework. There are many limitations and there is a high probability that there will be breaking changes from version to version.
+> This project is build on top of an experimental framework. There are many limitations and there is a high probability that there will be breaking changes each version.
 
 ## Demo
 You can find a live demo [here](https://blazor-context-menu-demo.azurewebsites.net/).
@@ -44,14 +44,14 @@ public class Startup
 ```xml
 
 <ContextMenu Id="myMenu">
-    <Item Click="@OnClick">Item 1</Item>
-    <Item Click="@OnClick">Item 2</Item>
-    <Item Click="@OnClick" Enabled="false">Item 3 (disabled)</Item>
+    <Item Click="OnClick">Item 1</Item>
+    <Item Click="OnClick">Item 2</Item>
+    <Item Click="OnClick" Enabled="false">Item 3 (disabled)</Item>
     <Seperator />
     <Item>Submenu
         <SubMenu>
-            <Item Click="@OnClick">Submenu Item 1</Item>
-            <Item Click="@OnClick">Submenu Item 2</Item>
+            <Item Click="OnClick">Submenu Item 1</Item>
+            <Item Click="OnClick">Submenu Item 2</Item>
         </SubMenu>
     </Item>
 </ContextMenu>
@@ -63,7 +63,7 @@ public class Startup
 @functions{
     void OnClick(MenuItemClickEventArgs e)
     {
-        Console.WriteLine($"Item Clicked => Menu: {e.ContextMenuId}, MenuTarget: {e.ContextMenuTargetId}, IsCanceled: {e.IsCanceled}, Item: {e.ItemElement}, MouseEvent: {e.MouseEvent}");
+        Console.WriteLine($"Item Clicked => Menu: {e.ContextMenuId}, MenuTarget: {e.ContextMenuTargetId}, IsCanceled: {e.IsCanceled}, MenuItem: {e.MenuItemElement}, MouseEvent: {e.MouseEvent}");
     }
 }
 
@@ -148,7 +148,7 @@ All components expose `CssClass` parameters that you can use to add css classes.
 
 You can override the default css classes completely in the following ways (not recommended unless  you want to achieve advanced customization).
 
-#### Globally for all context menus
+#### Override default css using templates
 
 ```csharp
 public class Startup
@@ -157,12 +157,12 @@ public class Startup
     {
         services.AddBlazorContextMenu(options =>
         {
-            //This will override the default css classes
-            options.CssOverrides(overrides =>
+            //This will override the default css classes for the default tenplate
+            options.ConfigureTemplate(defaultTemplate =>
             {
-                overrides.MenuCssClass = "custom-menu";
-                overrides.MenuItemCssClass = "custom-menu-item";
-                overrides.MenuItemDisabledCssClass = "custom-menu-item--disabled";
+                defaultTemplate.DefaultCssOverrides.MenuCssClass  = "custom-menu";
+                defaultTemplate.DefaultCssOverrides.MenuItemCssClass= "custom-menu-item";
+                defaultTemplate.DefaultCssOverrides.MenuItemDisabledCssClass = "custom-menu-item--disabled";
                 //...
             });
         });
@@ -170,7 +170,7 @@ public class Startup
 }
 ```
 
-#### Using the `OverrideDefaultXXX` parameters on components. These take precedence over the global overrides.
+#### Using the `OverrideDefaultXXX` parameters on components. These take precedence over the template overrides.
 
 ```xml
 <ContextMenu Id="myMenu" OverrideDefaultCssClass="custom-menu">
@@ -181,6 +181,9 @@ public class Startup
 
 
 ## ⚠️ Breaking changes ⚠️
+Upgrading from 0.10 to 0.11
+>- The `CssOverrides` API is removed and override configuration is moved into templates. The `DefaultCssOverrides` of the `ConfigureTemplate` API must be used.
+
 Upgrating from 0.5 to 0.6
 >- You must add in `Startup.ConfigureServices` of your Blazor client side project the following line `services.AddBlazorContextMenu();`
 >- The `BlazorContextMenu.BlazorContextMenuDefaults` API is removed. Use the API provided in the service configuration.
@@ -190,8 +193,13 @@ Upgrating from 0.1 to 0.2
 >- Rename "MenuSeperator" to "Seperator"
 >- Replace "MenuItemWithSubmenu" with a regular "Item" component
 
-
 ## Release Notes
+### 0.11
+>- Updated to Blazor 0.8.0
+>- Added animations
+>- Default css overrides are now part of the `Templates` API so that you can easily have multiple custom overriden menus
+>- Razor Components are not loading the static files included in the library => [#6349](https://github.com/aspnet/AspNetCore/issues/6349). As a workaround you can download and reference directly the **.css** and **.js** from the `/BlazorContextMenu/content` folder until the issue is resolved.
+
 ### 0.10
 >- Added proper support for Razor Components (aka server-side Blazor)
 
