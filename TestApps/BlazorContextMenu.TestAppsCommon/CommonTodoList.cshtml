@@ -21,15 +21,15 @@
 </ContextMenuTrigger>
 
 <ContextMenu Id="todoItemsMenu">
-    <Item id="menuitem-copy" OnClick="CopyClick"> <i class="fas fa-file blue-icon"></i> Copy</Item>
-    <Item id="menuitem-check" OnClick="CheckClick" EnabledHandler="CheckEnabledHandler"> <i class="fas fa-file blue-icon"></i> Check</Item>
-    <Item id="menuitem-delete" OnClick="DeleteClick" VisibleHandler="DeleteVisibleHandler"> <i class="fas fa-trash-alt red-icon"></i> Delete</Item>
+    <Item id="menuitem-copy" Click="CopyClick"> <i class="fas fa-file blue-icon"></i> Copy</Item>
+    <Item id="menuitem-check" Click="CheckClick" EnabledHandler="CheckEnabledHandler"> <i class="fas fa-file blue-icon"></i> Check</Item>
+    <Item id="menuitem-delete" Click="DeleteClick" VisibleHandler="DeleteVisibleHandler"> <i class="fas fa-trash-alt red-icon"></i> Delete</Item>
     <Item id="menuitem-invisible" Visible="false">I am invisible</Item>
 </ContextMenu>
 
 @functions{
 
-    async void CopyClick(MenuItemClickEventArgs e)
+    async Task CopyClick(MenuItemClickEventArgs e)
     {
         //Interop is required here due to current blazor limitations
 
@@ -77,7 +77,7 @@
     }
 
 
-    async void CheckClick(MenuItemClickEventArgs e)
+    async Task CheckClick(MenuItemClickEventArgs e)
     {
         var itemIndex = await jsRuntime.InvokeAsync<int>("TestApp_GetItemIndex", e.ContextMenuTargetId);
         if (itemIndex >= 0)
@@ -88,7 +88,7 @@
         }
     }
 
-    async void DeleteClick(MenuItemClickEventArgs e)
+    async Task DeleteClick(MenuItemClickEventArgs e)
     {
         var itemIndex = await jsRuntime.InvokeAsync<int>("TestApp_GetItemIndex", e.ContextMenuTargetId);
         if (itemIndex >= 0)

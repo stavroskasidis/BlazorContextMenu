@@ -63,7 +63,7 @@
     /// If you want to cancel the click (i.e. stop the menu from closing), then set the "IsCanceled" event args property to "true".
     /// </summary>
     [Parameter]
-    protected EventCallback<MenuItemClickEventArgs> OnClick { get; set; }
+    protected EventCallback<MenuItemClickEventArgs> Click { get; set; }
 
     /// <summary>
     /// Sets the item's enabled state. Default <see cref="true" />
@@ -175,9 +175,9 @@
         var contextMenuTarget = RootMenu.GetTarget();
         //TODO: Remove casting when 'this' is fixed in blazor
         var args = new MenuItemClickEventArgs(e, RootMenu.Id, contextMenuTarget, MenuItemElement, (Item)(object)this);
-        if (OnClick.HasDelegate)
+        if (Click.HasDelegate)
         {
-            await OnClick.InvokeAsync(args);
+            await Click.InvokeAsync(args);
             if (!args.IsCanceled)
             {
                 contextMenuHandler.HideMenu(RootMenu.Id);
