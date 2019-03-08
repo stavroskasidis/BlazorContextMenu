@@ -15,6 +15,7 @@
     <Description>Context menu component for Blazor and Razor Components</Description>
     <PackageReleaseNotes>0.12
 - Updated to Blazor 0.9.0
+- Changed event handlers to the new EventCallback. As a consequence the following handlers are no longer needed and they are removed: ClickAsync, EnabledHandlerAsync, VisibleHandlerAsync
 
 0.11
 - Updated to Blazor 0.8.0

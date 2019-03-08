@@ -181,6 +181,9 @@ public class Startup
 
 
 ## ⚠️ Breaking changes ⚠️
+Upgrading from 0.11 to 0.12
+>- The following handlers are removed as they are no longer needed: `ClickAsync`, `EnabledHandlerAsync`, `VisibleHandlerAsync`
+
 Upgrading from 0.10 to 0.11
 >- The `CssOverrides` API is removed and override configuration is moved into templates. The `DefaultCssOverrides` of the `ConfigureTemplate` API must be used.
 
@@ -196,6 +199,7 @@ Upgrating from 0.1 to 0.2
 ## Release Notes
 ### 0.12-beta
 >- Updated to Blazor 0.9.0
+>- Changed event handlers to the new `EventCallback<>`. As a consequence the following handlers are no longer needed and they are removed: `ClickAsync`, `EnabledHandlerAsync`, `VisibleHandlerAsync`
 
 ### 0.11
 >- Updated to Blazor 0.8.0
