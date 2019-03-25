@@ -144,15 +144,14 @@
     }
 
     var subMenuTimeout = null;
-    blazorContextMenu.OnMenuItemMouseOver = function (e, xOffset, boundItem) {
-        if (closest(e.target, ".blazor-context-menu__wrapper") != closest(boundItem, ".blazor-context-menu__wrapper")) {
+    blazorContextMenu.OnMenuItemMouseOver = function (e, xOffset, currentItemElement) {
+        if (closest(e.target, ".blazor-context-menu__wrapper") != closest(currentItemElement, ".blazor-context-menu__wrapper")) {
             //skip child menu mouseovers
             return;
         }
-        var currentItem = boundItem;
-        if (currentItem.getAttribute("itemEnabled") != "true") return;
+        if (currentItemElement.getAttribute("itemEnabled") != "true") return;
 
-        var subMenu = findFirstChildByClass(currentItem, "blazor-context-submenu");
+        var subMenu = findFirstChildByClass(currentItemElement, "blazor-context-submenu");
         if (!subMenu) return; //item does not contain a submenu
 
         subMenuTimeout = setTimeout(function () {
@@ -160,9 +159,9 @@
             var originalDisplay = subMenu.style.display;
             subMenu.style.display = ""; //this is required to get the menu's width
 
-            var currentMenu = closest(currentItem, ".blazor-context-menu__wrapper");
+            var currentMenu = closest(currentItemElement, ".blazor-context-menu__wrapper");
             var currentMenuList = currentMenu.children[0];
-            var targetRect = currentItem.getBoundingClientRect();
+            var targetRect = currentItemElement.getBoundingClientRect();
             var x = targetRect.left + currentMenu.clientWidth - xOffset;
             var y = targetRect.top;
             if (x + subMenu.offsetWidth > window.innerWidth) {
@@ -176,7 +175,7 @@
             subMenu.style.display = originalDisplay;
             blazorContextMenu.Show(subMenu.id, x, y, openMenuTarget).then(function () {
                 var closeSubMenus = function () {
-                    var childSubMenus = findAllChildsByClass(currentItem, "blazor-context-submenu");
+                    var childSubMenus = findAllChildsByClass(currentItemElement, "blazor-context-submenu");
                     var i = childSubMenus.length;
                     while (i--) {
                         var subMenu = childSubMenus[i];
@@ -186,7 +185,7 @@
                     i = currentMenuList.childNodes.length;
                     while (i--) {
                         var childNode = currentMenuList.childNodes[i];
-                        if (childNode == currentItem) continue;
+                        if (childNode == currentItemElement) continue;
                         childNode.removeEventListener("mouseover", closeSubMenus);
                     }
                 };
@@ -194,7 +193,7 @@
                 var i = currentMenuList.childNodes.length;
                 while (i--) {
                     var childNode = currentMenuList.childNodes[i];
-                    if (childNode == currentItem) continue;
+                    if (childNode == currentItemElement) continue;
 
                     childNode.addEventListener("mouseover", closeSubMenus);
                 }

@@ -4,18 +4,17 @@
 @inject BlazorContextMenuHandler contextMenuHandler
 
 <div class="@($"{BaseClass} {ClassCalc} {DisplayClassCalc}")" id="@Id" style="@($"left:{X}px;top:{Y}px;")">
-    @if (IsShowing)
-    {
-        <ul class="@ListClassCalc">
-            <CascadingValue Value="(MenuTreeComponent)this" Name="ParentComponent">
-                <CascadingValue Value="@(Template != null ? Template : CascadingTemplate)" Name="CascadingTemplate">
-                    <CascadingValue Value="@(Animation.HasValue ? Animation.Value : CascadingAnimation)" Name="CascadingAnimation">
+    <ul class="@ListClassCalc">
+        <CascadingValue Value="(MenuTreeComponent)this" Name="ParentComponent">
+            <CascadingValue Value="@(Template != null ? Template : CascadingTemplate)" Name="CascadingTemplate">
+                <CascadingValue Value="@(Animation.HasValue ? Animation.Value : CascadingAnimation)" Name="CascadingAnimation">
+                    <CascadingValue Value="@IsShowing" Name="ParentMenuIsShowing">
                         @ChildContent
                     </CascadingValue>
                 </CascadingValue>
             </CascadingValue>
-        </ul>
-    }
+        </CascadingValue>
+    </ul>
 </div>
 
 @functions{
