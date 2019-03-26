@@ -143,6 +143,7 @@
 
     protected override void OnInit()
     {
+        base.OnInit();
         if (string.IsNullOrEmpty(Id))
         {
             Id = Guid.NewGuid().ToString();

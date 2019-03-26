@@ -89,7 +89,9 @@
 
         //show context menu
         var originalDisplay = menu.style.display;
-        menu.style.display = ""; //this is required to get the menu's width
+        var originalVisibility = menu.style.visibility;
+        menu.style.visibility = "hidden";
+        menu.style.display = "block"; //this is required to get the menu's width
         var x = e.x;
         var y = e.y;
         if (x + menu.offsetWidth > window.innerWidth) {
@@ -100,18 +102,9 @@
             y -= y + menu.offsetHeight - window.innerHeight;
         }
         menu.style.display = originalDisplay;
+        menu.style.visibility = originalVisibility;
 
-        blazorContextMenu.Show(menuId, x, y, e.target).then(function () {
-            //Hide all other open submenus
-            var childSubMenus = findAllChildsByClass(menu, "blazor-context-submenu");
-            var i = childSubMenus.length;
-            while (i--) {
-                var subMenu = childSubMenus[i];
-                blazorContextMenu.Hide(subMenu.id);
-            }
-
-            var menuItems = findAllChildsByClass(menu, "blazor-context-menu__item");
-        });
+        blazorContextMenu.Show(menuId, x, y, e.target);
         e.preventDefault();
         return false;
     };
@@ -157,7 +150,9 @@
         subMenuTimeout = setTimeout(function () {
             subMenuTimeout = null;
             var originalDisplay = subMenu.style.display;
-            subMenu.style.display = ""; //this is required to get the menu's width
+            var originalVisibility = subMenu.style.visibility;
+            subMenu.style.visibility = "hidden";
+            subMenu.style.display = "block"; //this is required to get the menu's width
 
             var currentMenu = closest(currentItemElement, ".blazor-context-menu__wrapper");
             var currentMenuList = currentMenu.children[0];
@@ -173,6 +168,7 @@
             }
 
             subMenu.style.display = originalDisplay;
+            subMenu.style.visibility = originalVisibility;
             blazorContextMenu.Show(subMenu.id, x, y, openMenuTarget).then(function () {
                 var closeSubMenus = function () {
                     var childSubMenus = findAllChildsByClass(currentItemElement, "blazor-context-submenu");
