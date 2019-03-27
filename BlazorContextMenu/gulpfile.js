@@ -2,7 +2,6 @@
     cssmin = require("gulp-cssmin"),
     rename = require("gulp-rename"),
     uglify = require("gulp-uglify"),
-    runSequence = require("run-sequence"),
     rimraf = require("rimraf");
 
 
@@ -32,11 +31,6 @@ gulp.task("min:js", function () {
         .pipe(gulp.dest("."));
 });
 
-gulp.task("clean", ["clean:js", "clean:css"]);
-gulp.task("min", ["min:css", "min:js"]);
-
-gulp.task("all", function (done) {
-    runSequence("clean", "min", function () {
-        done();
-    });
-}); 
+gulp.task("clean", gulp.parallel("clean:js", "clean:css"));
+gulp.task("min",  gulp.parallel("min:css", "min:js"));
+gulp.task("all", gulp.series("clean", "min")); 

@@ -51,6 +51,7 @@ namespace BlazorContextMenu.TestsCommon.Infrastructure
 
         protected void WaitUntilLoaded()
         {
+            Browser.Manage().Window.Maximize();
             new WebDriverWait(Browser, TimeSpan.FromSeconds(30)).Until(
                 driver => driver.FindElement(By.TagName("app")).Text != "Loading...");
         }
