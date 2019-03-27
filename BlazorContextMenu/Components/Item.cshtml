@@ -22,9 +22,9 @@
 
 #pragma warning disable BL9993, CS4014 // Component parameter is marked public
 
-        /// <summary>
-        /// Allows you to override the default css class of the menu's li element for full customization.
-        /// </summary>
+    /// <summary>
+    /// Allows you to override the default css class of the menu's li element for full customization.
+    /// </summary>
     [Parameter]
     public string OverrideDefaultCssClass { get; protected set; }
 
@@ -104,8 +104,6 @@
     [Parameter]
     protected RenderFragment ChildContent { get; set; }
 
-    [CascadingParameter(Name = "ParentMenuIsShowing")]
-    protected bool ParentMenuIsShowing {get; set;}
 
     protected string ClassCalc
     {
@@ -141,9 +139,8 @@
     protected ContextMenu RootMenu { get; set; }
     protected ContextMenu ParentMenu { get; set; }
 
-    protected override void OnInit()
+    protected override async Task OnInitAsync()
     {
-        base.OnInit();
         if (string.IsNullOrEmpty(Id))
         {
             Id = Guid.NewGuid().ToString();
@@ -153,30 +150,24 @@
         if (RootMenu == null) throw new Exception("Item component must be a child of a ContextMenu component");
         ParentMenu = menuTreeTraverser.GetClosestContextMenu(this);
         Template = ParentMenu.GetActiveTemplate();
-    }
-
-    protected override async Task OnParametersSetAsync()
-    {
-        if (ParentMenuIsShowing)
+        var contextMenuTarget = RootMenu.GetTarget();
+        if (VisibleHandler.HasDelegate)
         {
-            var contextMenuTarget = RootMenu.GetTarget();
-            if (VisibleHandler.HasDelegate)
-            {
-                //TODO: Remove casting when 'this' is fixed in blazor
-                var visibleArgs = new MenuItemVisibleHandlerArgs(RootMenu.Id, contextMenuTarget, (Item)(object)this, Visible);
-                await VisibleHandler.InvokeAsync(visibleArgs);
-                Visible = visibleArgs.IsVisible;
-            }
+            //TODO: Remove casting when 'this' is fixed in blazor
+            var visibleArgs = new MenuItemVisibleHandlerArgs(RootMenu.Id, contextMenuTarget, (Item)(object)this, Visible);
+            await VisibleHandler.InvokeAsync(visibleArgs);
+            Visible = visibleArgs.IsVisible;
+        }
 
-            if (EnabledHandler.HasDelegate)
-            {
-                //TODO: Remove casting when 'this' is fixed in blazor
-                var enabledArgs = new MenuItemEnabledHandlerArgs(RootMenu.Id, contextMenuTarget, (Item)(object)this, Enabled);
-                await EnabledHandler.InvokeAsync(enabledArgs);
-                Enabled = enabledArgs.IsEnabled;
-            }
+        if (EnabledHandler.HasDelegate)
+        {
+            //TODO: Remove casting when 'this' is fixed in blazor
+            var enabledArgs = new MenuItemEnabledHandlerArgs(RootMenu.Id, contextMenuTarget, (Item)(object)this, Enabled);
+            await EnabledHandler.InvokeAsync(enabledArgs);
+            Enabled = enabledArgs.IsEnabled;
         }
     }
+
 
     protected async Task OnClickInternal(UIMouseEventArgs e)
     {
