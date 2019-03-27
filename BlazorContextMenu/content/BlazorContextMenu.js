@@ -86,25 +86,19 @@
         if (!menu) throw new Error("No context menu with id '" + menuId + "' was found");
         openMenuId = menuId;
         openMenuTarget = e.target;
-
         //show context menu
-        var originalDisplay = menu.style.display;
-        var originalVisibility = menu.style.visibility;
-        menu.style.visibility = "hidden";
-        menu.style.display = "block"; //this is required to get the menu's width
-        var x = e.x;
-        var y = e.y;
-        if (x + menu.offsetWidth > window.innerWidth) {
-            x -= x + menu.offsetWidth - window.innerWidth;
-        }
+        blazorContextMenu.Show(menuId, e.x, e.y, e.target).then(function () {
+            //check for overflow
+            var leftOverflownPixels = menu.offsetLeft + menu.clientWidth - window.innerWidth;
+            if (leftOverflownPixels > 0) {
+                menu.style.left = (menu.offsetLeft - menu.clientWidth) + "px";
+            }
 
-        if (y + menu.offsetHeight > window.innerHeight) {
-            y -= y + menu.offsetHeight - window.innerHeight;
-        }
-        menu.style.display = originalDisplay;
-        menu.style.visibility = originalVisibility;
-
-        blazorContextMenu.Show(menuId, x, y, e.target);
+            var topOverflownPixels = menu.offsetTop + menu.clientHeight - window.innerHeight;
+            if (topOverflownPixels > 0) {
+                menu.style.top = (menu.offsetTop - menu.clientHeight) + "px";
+            }
+        });
         e.preventDefault();
         return false;
     };
@@ -149,27 +143,24 @@
 
         subMenuTimeout = setTimeout(function () {
             subMenuTimeout = null;
-            var originalDisplay = subMenu.style.display;
-            var originalVisibility = subMenu.style.visibility;
-            subMenu.style.visibility = "hidden";
-            subMenu.style.display = "block"; //this is required to get the menu's width
 
             var currentMenu = closest(currentItemElement, ".blazor-context-menu__wrapper");
             var currentMenuList = currentMenu.children[0];
             var targetRect = currentItemElement.getBoundingClientRect();
             var x = targetRect.left + currentMenu.clientWidth - xOffset;
             var y = targetRect.top;
-            if (x + subMenu.offsetWidth > window.innerWidth) {
-                x -= x + subMenu.offsetWidth + subMenu.clientWidth - window.innerWidth;
-            }
 
-            if (y + subMenu.offsetHeight > window.innerHeight) {
-                y -= y + subMenu.offsetHeight - window.innerHeight;
-            }
-
-            subMenu.style.display = originalDisplay;
-            subMenu.style.visibility = originalVisibility;
             blazorContextMenu.Show(subMenu.id, x, y, openMenuTarget).then(function () {
+                var leftOverflownPixels = subMenu.offsetLeft + subMenu.clientWidth - window.innerWidth;
+                if (leftOverflownPixels > 0) {
+                    subMenu.style.left = (subMenu.offsetLeft - subMenu.clientWidth - currentMenu.clientWidth - xOffset) + "px"
+                }
+
+                var topOverflownPixels = subMenu.offsetTop + subMenu.clientHeight - window.innerHeight;
+                if (topOverflownPixels > 0) {
+                    subMenu.style.top = (subMenu.offsetTop - topOverflownPixels) + "px";
+                }
+
                 var closeSubMenus = function () {
                     var childSubMenus = findAllChildsByClass(currentItemElement, "blazor-context-submenu");
                     var i = childSubMenus.length;

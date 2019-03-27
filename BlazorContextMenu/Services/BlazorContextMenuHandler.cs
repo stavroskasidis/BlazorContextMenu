@@ -44,27 +44,8 @@ namespace BlazorContextMenu
         {
             if (_initializedMenus.ContainsKey(id))
             {
-                var subMenus = GetSubMenus(_initializedMenus[id]);
-                foreach(var submenu in subMenus)
-                {
-                    submenu.Hide();
-                }
                 _initializedMenus[id].Hide();
             }
-        }
-
-        private IEnumerable<SubMenu> GetSubMenus(MenuTreeComponent treeComponent)
-        {
-            var result = new List<SubMenu>();
-            var childComponents = treeComponent.GetChildComponents();
-            var subMenus = childComponents.Where(x => x is SubMenu).Cast<SubMenu>();
-            result.AddRange(subMenus);
-            foreach (var child in childComponents)
-            {
-                result.AddRange(GetSubMenus(child));
-            }
-
-            return result;
         }
     }
 }
