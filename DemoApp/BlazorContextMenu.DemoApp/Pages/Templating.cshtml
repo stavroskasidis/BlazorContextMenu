@@ -1,4 +1,5 @@
 @page "/templating"
+@inject IJSRuntime jsRuntime
 <h1>Templating</h1>
 
 <p>You can create templates that you can easily apply to your context menus</p>
@@ -156,6 +157,6 @@
 @functions{ 
     protected override async Task OnAfterRenderAsync()
     {
-        await Microsoft.JSInterop.JSRuntime.Current.InvokeAsync<object>("DemoApp_RunPrism");
+        await jsRuntime.InvokeAsync<object>("DemoApp_RunPrism");
     }
 }

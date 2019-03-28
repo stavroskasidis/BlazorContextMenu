@@ -215,8 +215,7 @@
         contextMenuHandler.Unregister((ContextMenu)(object)this);
     }
 
-    [EditorBrowsable(EditorBrowsableState.Never)]
-    public void Show(string x, string y, string targetId)
+    internal void Show(string x, string y, string targetId)
     {
         IsShowing = true;
         X = x;
@@ -225,15 +224,13 @@
         Invoke(() => StateHasChanged());
     }
 
-    [EditorBrowsable(EditorBrowsableState.Never)]
-    public void Hide()
+    internal void Hide()
     {
         IsShowing = false;
         Invoke(() => StateHasChanged());
     }
 
-    [EditorBrowsable(EditorBrowsableState.Never)]
-    public string GetTarget()
+    internal string GetTarget()
     {
         return TargetId;
     }

@@ -1,4 +1,5 @@
-# Blazor Context Menu ![Build Status](https://stavros-kasidis.visualstudio.com/_apis/public/build/definitions/9942c317-bff6-4b9f-9c78-0e97ce00de51/12/badge) ![NuGet Badge](https://buildstats.info/nuget/Blazor.ContextMenu?includePreReleases=true)
+# Blazor Context Menu
+![Build Status](https://stavros-kasidis.visualstudio.com/_apis/public/build/definitions/9942c317-bff6-4b9f-9c78-0e97ce00de51/12/badge) ![NuGet Badge](https://buildstats.info/nuget/Blazor.ContextMenu?includePreReleases=true) [![Donate](https://img.shields.io/badge/Donate-PayPal-green.svg)](https://www.paypal.com/cgi-bin/webscr?cmd=_donations&business=7CRGWPYB5AKJQ&currency_code=EUR&source=url)
 
 A context menu component for [Blazor](https://github.com/aspnet/Blazor) and [Razor Components](https://github.com/aspnet/AspNetCore/tree/master/src/Components) (aka server-side Blazor)!
 
@@ -12,7 +13,7 @@ A context menu component for [Blazor](https://github.com/aspnet/Blazor) and [Raz
 You can find a live demo [here](https://blazor-context-menu-demo.azurewebsites.net/).
 
 ## Installation
-**1. Add the nuget package in your Blazor client project**
+**1. Add the nuget package in your Blazor Client / Razor Components project**
 ```
 > dotnet add package Blazor.ContextMenu
 
@@ -22,7 +23,7 @@ PM> Install-Package Blazor.ContextMenu
 ```
 *Nuget package page can be found [here](https://www.nuget.org/packages/Blazor.ContextMenu).*
 
-**2. Add the following line in your Blazor client project's startup class**
+**2. Add the following line in your Blazor Client / Razor Component project's startup class**
 
 ```csharp
 public class Startup
@@ -38,20 +39,23 @@ public class Startup
 @using BlazorContextMenu
 @addTagHelper *, BlazorContextMenu
 ```
+**4. Reference the static files (Temporary requirement ONLY for Razor Component projects)**
 
-### Sample usage
+Download and reference the .css and .js from the `/BlazorContextMenu/content` folder or use the following package from SQL-MisterMagoo https://github.com/SQL-MisterMagoo/BlazorEmbedLibrary 
+
+### Basic usage
 
 ```xml
 
 <ContextMenu Id="myMenu">
-    <Item Click="OnClick">Item 1</Item>
-    <Item Click="OnClick">Item 2</Item>
-    <Item Click="OnClick" Enabled="false">Item 3 (disabled)</Item>
+    <Item OnClick="OnClick">Item 1</Item>
+    <Item OnClick="OnClick">Item 2</Item>
+    <Item OnClick="OnClick" Enabled="false">Item 3 (disabled)</Item>
     <Seperator />
     <Item>Submenu
         <SubMenu>
-            <Item Click="OnClick">Submenu Item 1</Item>
-            <Item Click="OnClick">Submenu Item 2</Item>
+            <Item OnClick="OnClick">Submenu Item 1</Item>
+            <Item OnClick="OnClick">Submenu Item 2</Item>
         </SubMenu>
     </Item>
 </ContextMenu>
@@ -61,7 +65,7 @@ public class Startup
 </ContextMenuTrigger>
 
 @functions{
-    void OnClick(MenuItemClickEventArgs e)
+    void OnClick(ItemClickEventArgs e)
     {
         Console.WriteLine($"Item Clicked => Menu: {e.ContextMenuId}, MenuTarget: {e.ContextMenuTargetId}, IsCanceled: {e.IsCanceled}, MenuItem: {e.MenuItemElement}, MouseEvent: {e.MouseEvent}");
     }
@@ -181,6 +185,13 @@ public class Startup
 
 
 ## ⚠️ Breaking changes ⚠️
+Upgrading from 0.11 to 0.12
+>- The following handlers are removed as they are no longer needed: `ClickAsync`, `EnabledHandlerAsync`, `VisibleHandlerAsync`
+>- The `Click` handler has been renamed to `OnClick` to keep consistency with the framework/suggested event names
+>- The `MenuItemClickEventArgs` class has been renamed to the more appropriate `ItemClickEventArgs`
+>- The `EnabledHandler` and `VisibleHandler` parameters have been removed and replaced with the new `OnAppearing` event handler
+>- The `MenuItemEnabledHandlerArgs` and `MenuItemVisibleHandlerArgs` classes have been removed and replaced with the new `ItemAppearingEventArgs`
+
 Upgrading from 0.10 to 0.11
 >- The `CssOverrides` API is removed and override configuration is moved into templates. The `DefaultCssOverrides` of the `ConfigureTemplate` API must be used.
 
@@ -194,6 +205,15 @@ Upgrating from 0.1 to 0.2
 >- Replace "MenuItemWithSubmenu" with a regular "Item" component
 
 ## Release Notes
+### 0.12
+>- Updated to Blazor 0.9.0
+>- Changed event handlers to the new `EventCallback<>`. As a consequence the following handlers are no longer needed and they are removed: `ClickAsync`, `EnabledHandlerAsync`, `VisibleHandlerAsync`
+>- Fixed menu display position when it doesn't fit on screen
+>- The `Click` handler has been renamed to `OnClick` to keep consistency with the framework/suggested event names
+>- The `MenuItemClickEventArgs` class has been renamed to the more appropriate `ItemClickEventArgs`
+>- The `EnabledHandler` and `VisibleHandler` parameters have been removed and replaced with the new `OnAppearing` event handler
+>- The `MenuItemEnabledHandlerArgs` and `MenuItemVisibleHandlerArgs` classes have been removed and replaced with the new `ItemAppearingEventArgs`
+
 ### 0.11
 >- Updated to Blazor 0.8.0
 >- Added animations

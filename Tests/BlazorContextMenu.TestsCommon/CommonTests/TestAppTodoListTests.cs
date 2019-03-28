@@ -35,6 +35,7 @@ namespace BlazorContextMenu.E2ETests.Tests
             await OpenContextMenuAt($"{listId}-0", mouseButton);
             var menuItem = Browser.FindElement(By.Id("menuitem-copy"));
             menuItem.Click();
+            await Task.Delay(500);
 
             //Assert
             var list = Browser.FindElement(By.Id(listId));
@@ -53,6 +54,7 @@ namespace BlazorContextMenu.E2ETests.Tests
             await OpenContextMenuAt($"{listId}-1", mouseButton);
             var menuItem = Browser.FindElement(By.Id("menuitem-delete"));
             menuItem.Click();
+            await Task.Delay(500);
 
             //Assert
             var list = Browser.FindElement(By.Id(listId));
@@ -91,6 +93,8 @@ namespace BlazorContextMenu.E2ETests.Tests
             await OpenContextMenuAt($"{listId}-1", mouseButton);
             var menuItem = Browser.FindElement(By.Id("menuitem-check"));
             menuItem.Click();
+            await Task.Delay(500);
+
             var list = Browser.FindElement(By.Id(listId));
             var checkBoxes = list.FindElements(By.TagName("input"));
             var secondCheckBox = checkBoxes[1];

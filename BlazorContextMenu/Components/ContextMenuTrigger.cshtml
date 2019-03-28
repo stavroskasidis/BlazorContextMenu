@@ -1,4 +1,5 @@
 ﻿@inject BlazorContextMenuHandler blazorContextMenuHandler
+@inject IJSRuntime jsRuntime
 
 <div onclick="@(MouseButtonTrigger == MouseButtonTrigger.Left || MouseButtonTrigger == MouseButtonTrigger.Both ? $"blazorContextMenu.OnContextMenu(event, '{MenuId.Replace("'","\\'")}'); " : "")"
      oncontextmenu="@(MouseButtonTrigger == MouseButtonTrigger.Right || MouseButtonTrigger == MouseButtonTrigger.Both ? $"blazorContextMenu.OnContextMenu(event, '{MenuId.Replace("'","\\'")}');": "")"
@@ -38,8 +39,16 @@
 
         if (!blazorContextMenuHandler.ReferencePassedToJs)
         {
-            JSRuntime.Current.InvokeAsync<object>("blazorContextMenu.SetMenuHandlerReference", new DotNetObjectRef(blazorContextMenuHandler));
-            blazorContextMenuHandler.ReferencePassedToJs = true;
+            try
+            {
+                jsRuntime.InvokeAsync<object>("blazorContextMenu.SetMenuHandlerReference", new DotNetObjectRef(blazorContextMenuHandler));
+                blazorContextMenuHandler.ReferencePassedToJs = true;
+            }
+            catch (InvalidOperationException ex) when (ex.Message == "The JavaScript runtime is not available during prerendering.")
+            {
+                //prerendering
+                //TODO: Change if the framework provides a better way to check if prerendering
+            }
         }
     }
 

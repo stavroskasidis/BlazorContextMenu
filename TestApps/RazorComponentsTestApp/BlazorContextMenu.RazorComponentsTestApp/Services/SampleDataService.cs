@@ -4,7 +4,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace BlazorContextMenu.RazorComponentsTestApp.App.Services
+namespace BlazorContextMenu.RazorComponentsTestApp.Services
 {
     public class SampleDataService : ISampleDataService
     {

@@ -1,4 +1,5 @@
 ﻿using BlazorContextMenu.Components;
+using BlazorContextMenu.Services;
 using Microsoft.JSInterop;
 using System;
 using System.Collections.Generic;
@@ -10,40 +11,40 @@ namespace BlazorContextMenu
 {
     public class BlazorContextMenuHandler
     {
-        private Dictionary<string, ContextMenu> InitializedMenus = new Dictionary<string, ContextMenu>();
+        private Dictionary<string, ContextMenu> _initializedMenus = new Dictionary<string, ContextMenu>();
 
         internal void Register(ContextMenu menu)
         {
-            InitializedMenus[menu.Id] = menu;
+            _initializedMenus[menu.Id] = menu;
         }
 
         internal bool ReferencePassedToJs { get; set; } = false;
 
         internal void Unregister(ContextMenu menu)
         {
-            InitializedMenus.Remove(menu.Id);
+            _initializedMenus.Remove(menu.Id);
         }
 
         internal ContextMenu GetMenu(string id)
         {
-            return InitializedMenus[id];
+            return _initializedMenus[id];
         }
 
         [JSInvokable]
         public void ShowMenu(string id, string x, string y, string target)
         {
-            if (InitializedMenus.ContainsKey(id))
+            if (_initializedMenus.ContainsKey(id))
             {
-                InitializedMenus[id].Show(x, y, target);
+                _initializedMenus[id].Show(x, y, target);
             }
         }
 
         [JSInvokable]
         public void HideMenu(string id)
         {
-            if (InitializedMenus.ContainsKey(id))
+            if (_initializedMenus.ContainsKey(id))
             {
-                InitializedMenus[id].Hide();
+                _initializedMenus[id].Hide();
             }
         }
     }

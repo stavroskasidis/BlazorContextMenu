@@ -25,7 +25,7 @@ namespace BlazorContextMenu.Services
         public bool HasSubMenu(MenuTreeComponent menuTreeComponent)
         {
             var children = menuTreeComponent.GetChildComponents();
-            if (children.Any(x => x.GetType() == typeof(SubMenu))) return true;
+            if (children.Any(x => x is SubMenu)) return true;
             foreach(var child in children)
             {
                 if (HasSubMenu(child)) return true;
@@ -33,5 +33,6 @@ namespace BlazorContextMenu.Services
 
             return false;
         }
+
     }
 }

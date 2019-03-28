@@ -1,5 +1,5 @@
 ﻿using BlazorContextMenu.E2ETests.Tests;
-using BlazorContextMenu.RazorComponentsTestApp.Server;
+using BlazorContextMenu.RazorComponentsTestApp;
 using BlazorContextMenu.TestsCommon.Infrastructure;
 using OpenQA.Selenium;
 using OpenQA.Selenium.Interactions;

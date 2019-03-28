@@ -1,16 +1,18 @@
-﻿<!DOCTYPE html>
+﻿@page "{*clientPath}"
+<!DOCTYPE html>
 <html>
 <head>
     <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width">
-    <title>BlazorContextMenu.RazorComponentsTestApp</title>
-    <base href="/" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>lazorContextMenu.RazorComponentsTestApp</title>
+    <base href="~/" />
     <link href="css/bootstrap/bootstrap.min.css" rel="stylesheet" />
     <link href="css/site.css" rel="stylesheet" />
     <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.0.10/css/all.css" integrity="sha384-+d0P83n9kaQMCwj8F4RJB66tzIwOKmrdb46+porD/OvrJ+37WqIM7UoBtwHO6Nlg" crossorigin="anonymous" />
     <link href="styles.css" rel="stylesheet" /> <!-- TODO: Remove when razor components work with libraries -->
 </head>
 <body>
+    @*<app>@(await Html.RenderComponentAsync<App>())</app>*@
     <app>Loading...</app>
 
     <script src="interop.js"></script>

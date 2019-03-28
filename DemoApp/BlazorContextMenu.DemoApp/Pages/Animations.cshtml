@@ -30,32 +30,32 @@
 
 
 <ContextMenu Id="animationsMenu" Animation="@animation">
-    <Item Click="@OnClick">Item 1</Item>
-    <Item Click="@OnClick">Item 2</Item>
+    <Item OnClick="@OnClick">Item 1</Item>
+    <Item OnClick="@OnClick">Item 2</Item>
     <Seperator />
     <Item>
         Submenu
         <SubMenu>
-            <Item Click="@OnClick">Submenu Item 1</Item>
-            <Item Click="@OnClick">Submenu Item 2</Item>
+            <Item OnClick="@OnClick">Submenu Item 1</Item>
+            <Item OnClick="@OnClick">Submenu Item 2</Item>
         </SubMenu>
     </Item>
 </ContextMenu>
 
 
 <ContextMenu Id="animationsMenu2" Animation="@Animation.FadeIn">
-    <Item Click="@OnClick">Item 1</Item>
-    <Item Click="@OnClick">Item 2</Item>
+    <Item OnClick="@OnClick">Item 1</Item>
+    <Item OnClick="@OnClick">Item 2</Item>
     <Seperator />
     <Item>
         Submenu With '@Animation.Zoom'
         <SubMenu Animation="@Animation.Zoom">
-            <Item Click="@OnClick">Submenu Item 1</Item>
-            <Item Click="@OnClick">
+            <Item OnClick="@OnClick">Submenu Item 1</Item>
+            <Item OnClick="@OnClick">
                 Submenu with '@Animation.Slide'
                 <SubMenu Animation="@Animation.Slide">
-                    <Item Click="@OnClick">Subsubmenu Item 1</Item>
-                    <Item Click="@OnClick">Subsubmenu Item 2</Item>
+                    <Item OnClick="@OnClick">Subsubmenu Item 1</Item>
+                    <Item OnClick="@OnClick">Subsubmenu Item 2</Item>
                 </SubMenu>
             </Item>
         </SubMenu>
@@ -65,7 +65,7 @@
 @functions{
     private BlazorContextMenu.Animation animation = Animation.FadeIn;
 
-    void OnClick(MenuItemClickEventArgs e)
+    void OnClick(ItemClickEventArgs e)
     {
         Console.WriteLine($"Item Clicked => Menu: {e.ContextMenuId}, MenuTarget: {e.ContextMenuTargetId}, IsCanceled: {e.IsCanceled}, MenuItem: {e.MenuItemElement}, MouseEvent: {e.MouseEvent}");
     }

@@ -86,31 +86,18 @@
         if (!menu) throw new Error("No context menu with id '" + menuId + "' was found");
         openMenuId = menuId;
         openMenuTarget = e.target;
-
         //show context menu
-        var originalDisplay = menu.style.display;
-        menu.style.display = ""; //this is required to get the menu's width
-        var x = e.x;
-        var y = e.y;
-        if (x + menu.offsetWidth > window.innerWidth) {
-            x -= x + menu.offsetWidth - window.innerWidth;
-        }
-
-        if (y + menu.offsetHeight > window.innerHeight) {
-            y -= y + menu.offsetHeight - window.innerHeight;
-        }
-        menu.style.display = originalDisplay;
-
-        blazorContextMenu.Show(menuId, x, y, e.target).then(function () {
-            //Hide all other open submenus
-            var childSubMenus = findAllChildsByClass(menu, "blazor-context-submenu");
-            var i = childSubMenus.length;
-            while (i--) {
-                var subMenu = childSubMenus[i];
-                blazorContextMenu.Hide(subMenu.id);
+        blazorContextMenu.Show(menuId, e.x, e.y, e.target).then(function () {
+            //check for overflow
+            var leftOverflownPixels = menu.offsetLeft + menu.clientWidth - window.innerWidth;
+            if (leftOverflownPixels > 0) {
+                menu.style.left = (menu.offsetLeft - menu.clientWidth) + "px";
             }
 
-            var menuItems = findAllChildsByClass(menu, "blazor-context-menu__item");
+            var topOverflownPixels = menu.offsetTop + menu.clientHeight - window.innerHeight;
+            if (topOverflownPixels > 0) {
+                menu.style.top = (menu.offsetTop - menu.clientHeight) + "px";
+            }
         });
         e.preventDefault();
         return false;
@@ -144,39 +131,38 @@
     }
 
     var subMenuTimeout = null;
-    blazorContextMenu.OnMenuItemMouseOver = function (e, xOffset, boundItem) {
-        if (closest(e.target, ".blazor-context-menu__wrapper") != closest(boundItem, ".blazor-context-menu__wrapper")) {
+    blazorContextMenu.OnMenuItemMouseOver = function (e, xOffset, currentItemElement) {
+        if (closest(e.target, ".blazor-context-menu__wrapper") != closest(currentItemElement, ".blazor-context-menu__wrapper")) {
             //skip child menu mouseovers
             return;
         }
-        var currentItem = boundItem;
-        if (currentItem.getAttribute("itemEnabled") != "true") return;
+        if (currentItemElement.getAttribute("itemEnabled") != "true") return;
 
-        var subMenu = findFirstChildByClass(currentItem, "blazor-context-submenu");
+        var subMenu = findFirstChildByClass(currentItemElement, "blazor-context-submenu");
         if (!subMenu) return; //item does not contain a submenu
 
         subMenuTimeout = setTimeout(function () {
             subMenuTimeout = null;
-            var originalDisplay = subMenu.style.display;
-            subMenu.style.display = ""; //this is required to get the menu's width
 
-            var currentMenu = closest(currentItem, ".blazor-context-menu__wrapper");
+            var currentMenu = closest(currentItemElement, ".blazor-context-menu__wrapper");
             var currentMenuList = currentMenu.children[0];
-            var targetRect = currentItem.getBoundingClientRect();
+            var targetRect = currentItemElement.getBoundingClientRect();
             var x = targetRect.left + currentMenu.clientWidth - xOffset;
             var y = targetRect.top;
-            if (x + subMenu.offsetWidth > window.innerWidth) {
-                x -= x + subMenu.offsetWidth + subMenu.clientWidth - window.innerWidth;
-            }
 
-            if (y + subMenu.offsetHeight > window.innerHeight) {
-                y -= y + subMenu.offsetHeight - window.innerHeight;
-            }
-
-            subMenu.style.display = originalDisplay;
             blazorContextMenu.Show(subMenu.id, x, y, openMenuTarget).then(function () {
+                var leftOverflownPixels = subMenu.offsetLeft + subMenu.clientWidth - window.innerWidth;
+                if (leftOverflownPixels > 0) {
+                    subMenu.style.left = (subMenu.offsetLeft - subMenu.clientWidth - currentMenu.clientWidth - xOffset) + "px"
+                }
+
+                var topOverflownPixels = subMenu.offsetTop + subMenu.clientHeight - window.innerHeight;
+                if (topOverflownPixels > 0) {
+                    subMenu.style.top = (subMenu.offsetTop - topOverflownPixels) + "px";
+                }
+
                 var closeSubMenus = function () {
-                    var childSubMenus = findAllChildsByClass(currentItem, "blazor-context-submenu");
+                    var childSubMenus = findAllChildsByClass(currentItemElement, "blazor-context-submenu");
                     var i = childSubMenus.length;
                     while (i--) {
                         var subMenu = childSubMenus[i];
@@ -186,7 +172,7 @@
                     i = currentMenuList.childNodes.length;
                     while (i--) {
                         var childNode = currentMenuList.childNodes[i];
-                        if (childNode == currentItem) continue;
+                        if (childNode == currentItemElement) continue;
                         childNode.removeEventListener("mouseover", closeSubMenus);
                     }
                 };
@@ -194,7 +180,7 @@
                 var i = currentMenuList.childNodes.length;
                 while (i--) {
                     var childNode = currentMenuList.childNodes[i];
-                    if (childNode == currentItem) continue;
+                    if (childNode == currentItemElement) continue;
 
                     childNode.addEventListener("mouseover", closeSubMenus);
                 }
