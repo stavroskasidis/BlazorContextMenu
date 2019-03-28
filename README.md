@@ -13,7 +13,7 @@ A context menu component for [Blazor](https://github.com/aspnet/Blazor) and [Raz
 You can find a live demo [here](https://blazor-context-menu-demo.azurewebsites.net/).
 
 ## Installation
-**1. Add the nuget package in your Blazor client project**
+**1. Add the nuget package in your Blazor Client / Razor Components project**
 ```
 > dotnet add package Blazor.ContextMenu
 
@@ -23,7 +23,7 @@ PM> Install-Package Blazor.ContextMenu
 ```
 *Nuget package page can be found [here](https://www.nuget.org/packages/Blazor.ContextMenu).*
 
-**2. Add the following line in your Blazor client project's startup class**
+**2. Add the following line in your Blazor Client / Razor Component project's startup class**
 
 ```csharp
 public class Startup
@@ -39,8 +39,11 @@ public class Startup
 @using BlazorContextMenu
 @addTagHelper *, BlazorContextMenu
 ```
+**4. Reference the static files (Temporary requirement ONLY for Razor Component projects)**
 
-### Sample usage
+Download and reference the .css and .js from the `/BlazorContextMenu/content` folder or use the following package from SQL-MisterMagoo https://github.com/SQL-MisterMagoo/BlazorEmbedLibrary 
+
+### Basic usage
 
 ```xml
 
@@ -62,7 +65,7 @@ public class Startup
 </ContextMenuTrigger>
 
 @functions{
-    void OnClick(MenuItemClickEventArgs e)
+    void OnClick(ItemClickEventArgs e)
     {
         Console.WriteLine($"Item Clicked => Menu: {e.ContextMenuId}, MenuTarget: {e.ContextMenuTargetId}, IsCanceled: {e.IsCanceled}, MenuItem: {e.MenuItemElement}, MouseEvent: {e.MouseEvent}");
     }
@@ -205,6 +208,7 @@ Upgrating from 0.1 to 0.2
 ### 0.12
 >- Updated to Blazor 0.9.0
 >- Changed event handlers to the new `EventCallback<>`. As a consequence the following handlers are no longer needed and they are removed: `ClickAsync`, `EnabledHandlerAsync`, `VisibleHandlerAsync`
+>- Fixed menu display position when it doesn't fit on screen
 >- The `Click` handler has been renamed to `OnClick` to keep consistency with the framework/suggested event names
 >- The `MenuItemClickEventArgs` class has been renamed to the more appropriate `ItemClickEventArgs`
 >- The `EnabledHandler` and `VisibleHandler` parameters have been removed and replaced with the new `OnAppearing` event handler
