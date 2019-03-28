@@ -202,7 +202,7 @@ Upgrating from 0.1 to 0.2
 >- Replace "MenuItemWithSubmenu" with a regular "Item" component
 
 ## Release Notes
-### 0.12-beta
+### 0.12
 >- Updated to Blazor 0.9.0
 >- Changed event handlers to the new `EventCallback<>`. As a consequence the following handlers are no longer needed and they are removed: `ClickAsync`, `EnabledHandlerAsync`, `VisibleHandlerAsync`
 >- The `Click` handler has been renamed to `OnClick` to keep consistency with the framework/suggested event names
