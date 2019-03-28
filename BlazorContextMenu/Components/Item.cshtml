@@ -59,11 +59,11 @@
     public string CssClassWithSubMenu { get; protected set; }
 
     /// <summary>
-    /// The menu item's onclick handler. A <see cref="MenuItemClickEventArgs"/> is passed to the action.
+    /// The menu item's onclick handler. A <see cref="ItemClickEventArgs"/> is passed to the action.
     /// If you want to cancel the click (i.e. stop the menu from closing), then set the "IsCanceled" event args property to "true".
     /// </summary>
     [Parameter]
-    protected EventCallback<MenuItemClickEventArgs> Click { get; set; }
+    protected EventCallback<ItemClickEventArgs> OnClick { get; set; }
 
     /// <summary>
     /// Sets the item's enabled state. Default <see cref="true" />
@@ -72,22 +72,16 @@
     public bool Enabled { get; protected set; } = true;
 
     /// <summary>
-    /// A handler that can be used to set the item's <see cref="Enabled"/> status dynamically by setting the <see cref="MenuItemEnabledHandlerArgs.IsEnabled"/> property
-    /// </summary>
-    [Parameter]
-    protected EventCallback<MenuItemEnabledHandlerArgs> EnabledHandler { get; set; }
-
-    /// <summary>
     /// Sets the item's visible state. Default <see cref="true" />
     /// </summary>
     [Parameter]
     public bool Visible { get; protected set; } = true;
 
     /// <summary>
-    /// A handler that can be used to set the item's <see cref="Visible"/> status dynamically by setting the <see cref="MenuItemVisibleHandlerArgs.IsVisible"/> property
+    /// A handler that can be used to set the item's <see cref="Visible"/> or <see cref="Enabled"/> status dynamically
     /// </summary>
     [Parameter]
-    protected EventCallback<MenuItemVisibleHandlerArgs> VisibleHandler { get; set; }
+    protected EventCallback<ItemAppearingEventArgs> OnAppearing { get; set; }
 
     /// <summary>
     /// The id of the li element. This is optional
@@ -151,20 +145,14 @@
         ParentMenu = menuTreeTraverser.GetClosestContextMenu(this);
         Template = ParentMenu.GetActiveTemplate();
         var contextMenuTarget = RootMenu.GetTarget();
-        if (VisibleHandler.HasDelegate)
-        {
-            //TODO: Remove casting when 'this' is fixed in blazor
-            var visibleArgs = new MenuItemVisibleHandlerArgs(RootMenu.Id, contextMenuTarget, (Item)(object)this, Visible);
-            await VisibleHandler.InvokeAsync(visibleArgs);
-            Visible = visibleArgs.IsVisible;
-        }
 
-        if (EnabledHandler.HasDelegate)
+        if (OnAppearing.HasDelegate)
         {
             //TODO: Remove casting when 'this' is fixed in blazor
-            var enabledArgs = new MenuItemEnabledHandlerArgs(RootMenu.Id, contextMenuTarget, (Item)(object)this, Enabled);
-            await EnabledHandler.InvokeAsync(enabledArgs);
-            Enabled = enabledArgs.IsEnabled;
+            var appearingArgs = new ItemAppearingEventArgs(RootMenu.Id, contextMenuTarget, (Item)(object)this, Visible, Enabled);
+            await OnAppearing.InvokeAsync(appearingArgs);
+            Visible = appearingArgs.IsVisible;
+            Enabled = appearingArgs.IsEnabled;
         }
     }
 
@@ -173,12 +161,12 @@
     {
         if (!Enabled) return;
 
-        var contextMenuTarget = RootMenu.GetTarget();
-        //TODO: Remove casting when 'this' is fixed in blazor
-        var args = new MenuItemClickEventArgs(e, RootMenu.Id, contextMenuTarget, MenuItemElement, (Item)(object)this);
-        if (Click.HasDelegate)
+        if (OnClick.HasDelegate)
         {
-            await Click.InvokeAsync(args);
+            var contextMenuTarget = RootMenu.GetTarget();
+            //TODO: Remove casting when 'this' is fixed in blazor
+            var args = new ItemClickEventArgs(e, RootMenu.Id, contextMenuTarget, MenuItemElement, (Item)(object)this);
+            await OnClick.InvokeAsync(args);
             if (!args.IsCanceled)
             {
                 contextMenuHandler.HideMenu(RootMenu.Id);

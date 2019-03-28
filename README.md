@@ -45,14 +45,14 @@ public class Startup
 ```xml
 
 <ContextMenu Id="myMenu">
-    <Item Click="OnClick">Item 1</Item>
-    <Item Click="OnClick">Item 2</Item>
-    <Item Click="OnClick" Enabled="false">Item 3 (disabled)</Item>
+    <Item OnClick="OnClick">Item 1</Item>
+    <Item OnClick="OnClick">Item 2</Item>
+    <Item OnClick="OnClick" Enabled="false">Item 3 (disabled)</Item>
     <Seperator />
     <Item>Submenu
         <SubMenu>
-            <Item Click="OnClick">Submenu Item 1</Item>
-            <Item Click="OnClick">Submenu Item 2</Item>
+            <Item OnClick="OnClick">Submenu Item 1</Item>
+            <Item OnClick="OnClick">Submenu Item 2</Item>
         </SubMenu>
     </Item>
 </ContextMenu>
@@ -184,6 +184,10 @@ public class Startup
 ## ⚠️ Breaking changes ⚠️
 Upgrading from 0.11 to 0.12
 >- The following handlers are removed as they are no longer needed: `ClickAsync`, `EnabledHandlerAsync`, `VisibleHandlerAsync`
+>- The `Click` handler has been renamed to `OnClick` to keep consistency with the framework/suggested event names
+>- The `MenuItemClickEventArgs` class has been renamed to the more appropriate `ItemClickEventArgs`
+>- The `EnabledHandler` and `VisibleHandler` parameters have been removed and replaced with the new `OnAppearing` event handler
+>- The `MenuItemEnabledHandlerArgs` and `MenuItemVisibleHandlerArgs` classes have been removed and replaced with the new `ItemAppearingEventArgs`
 
 Upgrading from 0.10 to 0.11
 >- The `CssOverrides` API is removed and override configuration is moved into templates. The `DefaultCssOverrides` of the `ConfigureTemplate` API must be used.
@@ -201,6 +205,10 @@ Upgrating from 0.1 to 0.2
 ### 0.12-beta
 >- Updated to Blazor 0.9.0
 >- Changed event handlers to the new `EventCallback<>`. As a consequence the following handlers are no longer needed and they are removed: `ClickAsync`, `EnabledHandlerAsync`, `VisibleHandlerAsync`
+>- The `Click` handler has been renamed to `OnClick` to keep consistency with the framework/suggested event names
+>- The `MenuItemClickEventArgs` class has been renamed to the more appropriate `ItemClickEventArgs`
+>- The `EnabledHandler` and `VisibleHandler` parameters have been removed and replaced with the new `OnAppearing` event handler
+>- The `MenuItemEnabledHandlerArgs` and `MenuItemVisibleHandlerArgs` classes have been removed and replaced with the new `ItemAppearingEventArgs`
 
 ### 0.11
 >- Updated to Blazor 0.8.0

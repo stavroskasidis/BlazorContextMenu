@@ -7,9 +7,9 @@ using System.Threading.Tasks;
 
 namespace BlazorContextMenu
 {
-    public class MenuItemClickEventArgs
+    public class ItemClickEventArgs
     {
-        public MenuItemClickEventArgs(UIMouseEventArgs mouseEvent,string contextMenuId, string contextMenuTargetId, ElementRef menuItemElement, Item menuItem)
+        public ItemClickEventArgs(UIMouseEventArgs mouseEvent,string contextMenuId, string contextMenuTargetId, ElementRef menuItemElement, Item menuItem)
         {
             MouseEvent = mouseEvent;
             ContextMenuId = contextMenuId;
