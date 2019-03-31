@@ -17,6 +17,9 @@
             <li class="nav-item">
                 <a class="nav-link" data-target="#dark-css" data-toggle="tab" role="tab" aria-controls="css" aria-selected="false">site.css</a>
             </li>
+            <li class="nav-item">
+                <a class="nav-link" data-target="#dark-menucode" data-toggle="tab" role="tab" aria-controls="css" aria-selected="false">Menu code</a>
+            </li>
         </ul>
     </div>
     <div class="card-body">
@@ -64,6 +67,9 @@
     background-color: #000000;
 }</CodeBlock>
             </div>
+            <div class="tab-pane fade" id="dark-menucode" role="tabpanel" aria-labelledby="css-tab">
+                <CodeBlock Language="html">@darkMenuCode</CodeBlock>
+            </div>
         </div>
     </div>
 </div>
@@ -80,6 +86,9 @@
             </li>
             <li class="nav-item">
                 <a class="nav-link" data-target="#pink-css" data-toggle="tab" role="tab" aria-controls="css" aria-selected="false">site.css</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" data-target="#pink-menucode" data-toggle="tab" role="tab" aria-controls="css" aria-selected="false">Menu code</a>
             </li>
         </ul>
     </div>
@@ -133,6 +142,9 @@
     color: white;
 }</CodeBlock>
             </div>
+            <div class="tab-pane fade" id="pink-menucode" role="tabpanel" aria-labelledby="css-tab">
+                <CodeBlock Language="html">@pinkMenuCode</CodeBlock>
+            </div>
         </div>
     </div>
 </div>
@@ -140,11 +152,99 @@
 <div class="card mt-10">
     <div class="card-header">
         <label><strong>Example of combining templates by using a template for the parent menu but a different template for a submenu</strong></label>
+        <ul class="nav nav-tabs card-header-tabs" role="tablist">
+            <li class="nav-item">
+                <a class="nav-link active" data-target="#darkpink-demo" data-toggle="tab" role="tab" aria-controls="demo" aria-selected="true">Demo</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" data-target="#darkpink-startup" data-toggle="tab" role="tab" aria-controls="startup" aria-selected="false">Startup.cs</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" data-target="#darkpink-css" data-toggle="tab" role="tab" aria-controls="css" aria-selected="false">site.css</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" data-target="#darkpink-menucode" data-toggle="tab" role="tab" aria-controls="css" aria-selected="false">Menu code</a>
+            </li>
+        </ul>
     </div>
     <div class="card-body">
-        <ContextMenuTrigger MenuId="dark-pink-menu">
-            <p>Right click here to view the "dark-pink" menu</p>
-        </ContextMenuTrigger>
+       
+        <div class="tab-content">
+            <div class="tab-pane fade show active" id="darkpink-demo" role="tabpanel" aria-labelledby="demo-tab">
+                <ContextMenuTrigger MenuId="dark-pink-menu">
+                    <p>Right click here to view the "dark-pink" menu</p>
+                </ContextMenuTrigger>
+            </div>
+            <div class="tab-pane fade" id="darkpink-startup" role="tabpanel" aria-labelledby="startup-tab">
+                <CodeBlock Language="csharp">public class Startup
+{
+    public void ConfigureServices(IServiceCollection services)
+    {
+        services.AddBlazorContextMenu(options=>
+        {
+            options.ConfigureTemplate("dark", template =>
+            {
+                template.MenuCssClass = "dark-menu";
+                template.MenuItemCssClass = "dark-menu-item";
+                template.MenuItemDisabledCssClass = "dark-menu-item--disabled";
+                template.MenuItemWithSubMenuCssClass = "dark-menu-item--with-submenu";
+                template.Animation = Animation.FadeIn;
+            });
+            options.ConfigureTemplate("pink", template =>
+            {
+                template.MenuCssClass = "pink-menu";
+                template.MenuItemCssClass = "pink-menu-item";
+                template.MenuItemDisabledCssClass = "pink-menu-item--disabled";
+                template.SeperatorHrCssClass = "pink-menu-seperator-hr";
+                template.MenuItemWithSubMenuCssClass = "pink-menu-item--with-submenu";
+                template.Animation = Animation.Slide;
+            });
+            //...
+        });
+    }            
+    //...
+}</CodeBlock>
+            </div>
+            <div class="tab-pane fade" id="darkpink-css" role="tabpanel" aria-labelledby="css-tab">
+                <CodeBlock Language="css">div.dark-menu {
+    color: #FFFFFF;
+    background-color: #444;
+}
+.dark-menu .dark-menu-item--with-submenu:after {
+    border-left-color: #d3d3d3;
+}
+.dark-menu .dark-menu-item--disabled,
+.dark-menu .dark-menu-item {
+    background-color: #444;
+}
+.dark-menu .dark-menu-item--disabled:hover,
+.dark-menu .dark-menu-item:hover {
+    background-color: #000000;
+}
+div.pink-menu {
+    color: #000000;
+    background-color: #ffb3b3;
+}
+.pink-menu .pink-menu-item--with-submenu:after {
+    border-left-color: #FFFFFF;
+}
+.pink-menu .pink-menu-seperator-hr {
+    border-color: red;
+}
+.pink-menu .pink-menu-item--disabled,
+.pink-menu .pink-menu-item {
+    background-color: #ffb3b3;
+}
+.pink-menu .pink-menu-item--disabled:hover,
+.pink-menu .pink-menu-item:hover {
+    background-color: #c11515;
+    color: white;
+}</CodeBlock>
+            </div>
+            <div class="tab-pane fade" id="darkpink-menucode" role="tabpanel" aria-labelledby="css-tab">
+                <CodeBlock Language="html">@darkpinkMenuCode</CodeBlock>
+            </div>
+        </div>
     </div>
 </div>
 
@@ -155,6 +255,37 @@
 
 
 @functions{ 
+    private string menuCodeTemplate = @"<ContextMenu Id=""@{id}"" Template=""@{templateName}"">
+    <Item OnClick=""@OnClick"">Item 1</Item>
+    <Item OnClick=""@OnClick"">Item 2</Item>
+    <Item OnClick=""@OnClick"" Enabled=""false"">Item 3 (disabled)</Item>
+    <Seperator />
+    <Item>
+        Submenu
+        <SubMenu@{submenuTemplateName}>
+            <Item OnClick=""@OnClick"">Submenu Item 1</Item>
+            <Item OnClick=""@OnClick"">Submenu Item 2</Item>
+        </SubMenu>
+    </Item>
+</ContextMenu>
+<ContextMenuTrigger MenuId=""@{id}"">
+    @{triggerText}
+</ContextMenuTrigger>";
+    private string darkMenuCode;
+    private string pinkMenuCode;
+    private string darkpinkMenuCode;
+
+    protected override void OnInit()
+    {
+        base.OnInit();
+        darkMenuCode = menuCodeTemplate.Replace("@{id}","dark-menu").Replace("@{templateName}", "dark").Replace("@{submenuTemplateName}", "")
+                                       .Replace("@{triggerText}",@"<p>Right click here to view the ""dark"" menu</p>");
+        pinkMenuCode = menuCodeTemplate.Replace("@{id}","pink-menu").Replace("@{templateName}", "pink").Replace("@{submenuTemplateName}", "")
+                                       .Replace("@{triggerText}",@"<p>Right click here to view the ""pink"" menu</p>");
+        darkpinkMenuCode= menuCodeTemplate.Replace("@{id}","dark-pink-menu").Replace("@{templateName}", "dark").Replace("@{submenuTemplateName}", " Template=\"pink\"")
+                                       .Replace("@{triggerText}",@"<p>Right click here to view the ""dark-pink"" menu</p>");
+    }
+
     protected override async Task OnAfterRenderAsync()
     {
         await jsRuntime.InvokeAsync<object>("DemoApp_RunPrism");

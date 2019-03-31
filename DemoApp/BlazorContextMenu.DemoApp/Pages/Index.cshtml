@@ -1,11 +1,54 @@
 ﻿@page "/"
-
+@inject IJSRuntime jsRuntime
 <h1>Blazor Context Menu Samples App</h1>
-
 <!-- Menu is in Shared/MainLayout-->
-<ContextMenuTrigger MenuId="indexMenu">
+@{
+    var tabItems = new List<TabItem>()
+    {
+        new TabItem
+        {
+            HeaderText = "Demo",
+            Contents = @<ContextMenuTrigger MenuId="indexMenu">
+                            <p>Right-click on this text to show a basic context menu sample</p>
+                       </ContextMenuTrigger>
+        },
+        new TabItem
+        {
+            HeaderText = "Menu code",
+            Contents = @<CodeBlock Language="html">@menuCode</CodeBlock> 
+        },
+    };
+}
+<TabStrip Title="Basic Usage" TabItems="tabItems" />
+<i style="visibility:hidden" class="fas fa-exclamation"></i> @*Added to force fa load *@
+@functions{
+    private string menuCode = @"<ContextMenu Id=""indexMenu"">
+    <Item OnClick=""@OnClick"">Item 1</Item>
+    <Item OnClick=""@OnClick"">Item 2</Item>
+    <Item OnClick=""@OnClick"" Enabled=""false"">Item 3 (disabled)</Item>
+    <Seperator />
+    <Item>
+        Submenu
+        <SubMenu>
+            <Item OnClick=""@OnClick"">Submenu Item 1</Item>
+            <Item OnClick=""@OnClick"">Submenu Item 2</Item>
+        </SubMenu>
+    </Item>
+</ContextMenu>
 
+<ContextMenuTrigger MenuId=""indexMenu"">
     <p>Right-click on this text to show a basic context menu sample</p>
-    <i style="visibility:hidden" class="fas fa-exclamation"></i> @*Added to force fa load *@
 </ContextMenuTrigger>
 
+@functions{
+    void OnClick(ItemClickEventArgs e)
+    {
+        Console.WriteLine($""Item Clicked => Menu: {e.ContextMenuId}, MenuTarget: {e.ContextMenuTargetId}, IsCanceled: {e.IsCanceled}, MenuItem: {e.MenuItemElement}, MouseEvent: {e.MouseEvent}"");
+    }
+}";
+
+    protected override async Task OnAfterRenderAsync()
+    {
+        await jsRuntime.InvokeAsync<object>("DemoApp_RunPrism");
+    }
+}
