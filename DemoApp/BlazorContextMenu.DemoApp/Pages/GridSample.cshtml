@@ -37,24 +37,24 @@
         </ContextMenu>
     </div>;
 
-var tabItems = new List<TabItem>()
-{
-        new TabItem
-        {
-            HeaderText = "Demo",
-            Contents = demoFragment
-        },
-        new TabItem
-        {
-            HeaderText = "Menu code",
-            Contents = @<CodeBlock Language="html">@menuCode</CodeBlock>
-        },
-        new TabItem
-        {
-            HeaderText = "interop.js",
-            Contents = @<CodeBlock Language="javascript">@jsCode</CodeBlock>
-        }
-    };
+    var tabItems = new List<TabItem>()
+    {
+            new TabItem
+            {
+                HeaderText = "Demo",
+                Contents = demoFragment
+            },
+            new TabItem
+            {
+                HeaderText = "Menu code",
+                Contents = @<CodeBlock Language="html">@menuCode</CodeBlock>
+            },
+            new TabItem
+            {
+                HeaderText = "interop.js",
+                Contents = @<CodeBlock Language="javascript">@jsCode</CodeBlock>
+            }
+        };
 }
 <TabStrip Title="Grid demo" TabItems="tabItems"></TabStrip>
 

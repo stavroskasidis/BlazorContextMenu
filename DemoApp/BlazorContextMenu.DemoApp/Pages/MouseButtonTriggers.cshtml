@@ -2,19 +2,35 @@
 
 <h1>Mouse Button Triggers</h1>
 
-<p>You can set the trigger to left or either click</p>
+@*<p>You can set the trigger to left or either click</p>*@
+@{
 
-<div class="btn-group">
+    RenderFragment demoFragment =
+    @<div class="btn-group">
+        <!-- Menu is in Shared/MainLayout-->
+        <ContextMenuTrigger MenuId="triggerMenu" MouseButtonTrigger="MouseButtonTrigger.Left">
+            <button class="btn btn-info">Click me!</button>
+        </ContextMenuTrigger>
 
-    <!-- Menu is in Shared/MainLayout-->
-    <ContextMenuTrigger MenuId="triggerMenu" MouseButtonTrigger="MouseButtonTrigger.Left">
-        <button class="btn btn-info">Click me!</button>
-    </ContextMenuTrigger>
+        <!-- Menu is in Shared/MainLayout-->
+        <ContextMenuTrigger MenuId="triggerMenu" MouseButtonTrigger="MouseButtonTrigger.Both">
+            <button class="btn btn-primary ml-10">Click or right-click me!</button>
+        </ContextMenuTrigger>
 
-    <!-- Menu is in Shared/MainLayout-->
-    <ContextMenuTrigger MenuId="triggerMenu" MouseButtonTrigger="MouseButtonTrigger.Both">
-        <button class="btn btn-primary ml-10">Click or right-click me!</button>
-    </ContextMenuTrigger>
+    </div>;
 
-</div>
+    var tabItems = new List<TabItem>
+    {
+        new TabItem
+        {
+            HeaderText = "Demo",
+            Contents = demoFragment
+        },
+        new TabItem
+        {
 
+        }
+    };
+}
+
+<TabStrip Title="You can set the trigger to left or either click" TabItems="tabItems"/>
