@@ -14,13 +14,12 @@
         },
         new TabItem
         {
-            HeaderText = "Menu code",
+            HeaderText = "Razor",
             Contents = @<CodeBlock Language="html">@menuCode</CodeBlock> 
         },
     };
 }
 <TabStrip Title="Basic Usage" TabItems="tabItems" />
-<i style="visibility:hidden" class="fas fa-exclamation"></i> @*Added to force fa load *@
 @functions{
     private string menuCode = @"<ContextMenu Id=""indexMenu"">
     <Item OnClick=""@OnClick"">Item 1</Item>

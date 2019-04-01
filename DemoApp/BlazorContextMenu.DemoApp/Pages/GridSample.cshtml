@@ -3,8 +3,6 @@
 @inject IJSRuntime jsRuntime
 
 <h1>Grid Sample</h1>
-
-<p>Right-click on the rows to show the context menu.</p>
 @{
     RenderFragment demoFragment = @<div>
         <ContextMenuTrigger MenuId="tableContextMenu">
@@ -46,17 +44,17 @@
             },
             new TabItem
             {
-                HeaderText = "Menu code",
+                HeaderText = "Razor",
                 Contents = @<CodeBlock Language="html">@menuCode</CodeBlock>
             },
             new TabItem
             {
-                HeaderText = "interop.js",
+                HeaderText = "Javascript",
                 Contents = @<CodeBlock Language="javascript">@jsCode</CodeBlock>
             }
         };
 }
-<TabStrip Title="Grid demo" TabItems="tabItems"></TabStrip>
+<TabStrip Title="Right-click on the rows to show the context menu." TabItems="tabItems"></TabStrip>
 
 @functions {
     List<WeatherForecast> forecasts = new List<WeatherForecast>();
@@ -93,7 +91,6 @@
     async Task ReloadClick(ItemClickEventArgs e)
     {
         forecasts = (await Http.GetJsonAsync<WeatherForecast[]>(""/sample-data/weather.json"")).ToList();
-        StateHasChanged();
     }
 
     async Task DeleteClick(ItemClickEventArgs e)
@@ -104,7 +101,6 @@
         {
             var currentItem = forecasts.ElementAt(itemIndex);
             forecasts.Remove(currentItem);
-            StateHasChanged();
         }
     }
 }";
@@ -143,7 +139,6 @@
     async Task ReloadClick(ItemClickEventArgs e)
     {
         forecasts = (await Http.GetJsonAsync<WeatherForecast[]>("/sample-data/weather.json")).ToList();
-        StateHasChanged();
     }
 
     async Task DeleteClick(ItemClickEventArgs e)
@@ -154,7 +149,6 @@
         {
             var currentItem = forecasts.ElementAt(itemIndex);
             forecasts.Remove(currentItem);
-            StateHasChanged();
         }
     }
 
