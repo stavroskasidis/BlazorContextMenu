@@ -206,6 +206,18 @@ div.pink-menu {
         color: white;
     }
 
-.nav-item a.nav-link:not(.active){
+.nav-tabs .nav-item a.nav-link:not(.active) {
     cursor: pointer;
+}
+
+.nav-tabs .nav-item a.nav-link {
+    font-family: Consolas, Monaco, 'Andale Mono', 'Ubuntu Mono', monospace;
+}
+
+.code-block .card-body {
+    padding: 0px 10px 10px 10px;
+}
+
+.code-block {
+    margin-bottom: 5px;
 }

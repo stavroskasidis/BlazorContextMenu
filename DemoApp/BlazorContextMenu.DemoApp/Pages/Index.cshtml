@@ -14,8 +14,8 @@
         },
         new TabItem
         {
-            HeaderText = "Razor",
-            Contents = @<CodeBlock Language="html">@menuCode</CodeBlock> 
+            HeaderText = "<> Source",
+            Contents = @<CodeBlock Title="Razor" Language="html">@menuCode</CodeBlock>
         },
     };
 }
@@ -42,7 +42,8 @@
 @functions{
     void OnClick(ItemClickEventArgs e)
     {
-        Console.WriteLine($""Item Clicked => Menu: {e.ContextMenuId}, MenuTarget: {e.ContextMenuTargetId}, IsCanceled: {e.IsCanceled}, MenuItem: {e.MenuItemElement}, MouseEvent: {e.MouseEvent}"");
+        Console.WriteLine($""Item Clicked => Menu: {e.ContextMenuId}, MenuTarget: {e.ContextMenuTargetId},
+                          IsCanceled: {e.IsCanceled}, MenuItem: {e.MenuItemElement}, MouseEvent: {e.MouseEvent}"");
     }
 }";
 

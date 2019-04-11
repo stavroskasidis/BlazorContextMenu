@@ -44,13 +44,11 @@
             },
             new TabItem
             {
-                HeaderText = "Razor",
-                Contents = @<CodeBlock Language="html">@menuCode</CodeBlock>
-            },
-            new TabItem
-            {
-                HeaderText = "Javascript",
-                Contents = @<CodeBlock Language="javascript">@jsCode</CodeBlock>
+                HeaderText = "<> Source",
+                Contents = @<div>
+                                <CodeBlock Title="Razor" Language="html">@menuCode</CodeBlock>
+                                <CodeBlock Title="Javascript" Language="javascript">@jsCode</CodeBlock>
+                            </div>
             }
         };
 }

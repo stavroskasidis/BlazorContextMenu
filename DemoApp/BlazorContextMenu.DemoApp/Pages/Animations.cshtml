@@ -25,8 +25,8 @@
         },
         new TabItem
         {
-            HeaderText = "Razor",
-            Contents = @<CodeBlock Language="html">@animationsCode</CodeBlock> 
+            HeaderText = "<> Source",
+            Contents = @<CodeBlock Title="Razor" Language="html">@animationsCode</CodeBlock> 
         },
     };
 
@@ -41,8 +41,8 @@
         },
         new TabItem
         {
-            HeaderText = "Razor",
-            Contents = @<CodeBlock Language="html">@combinedAnimationsCode</CodeBlock> 
+            HeaderText = "<> Source",
+            Contents = @<CodeBlock Title="Razor" Language="html">@combinedAnimationsCode</CodeBlock> 
         },
     };
 }
@@ -115,7 +115,8 @@
     private BlazorContextMenu.Animation animation = Animation.FadeIn;
     void OnClick(ItemClickEventArgs e)
     {
-        Console.WriteLine($""Item Clicked => Menu: {e.ContextMenuId}, MenuTarget: {e.ContextMenuTargetId}, IsCanceled: {e.IsCanceled}, MenuItem: {e.MenuItemElement}, MouseEvent: {e.MouseEvent}"");
+        Console.WriteLine($""Item Clicked => Menu: {e.ContextMenuId}, MenuTarget: {e.ContextMenuTargetId}, 
+                          IsCanceled: {e.IsCanceled}, MenuItem: {e.MenuItemElement}, MouseEvent: {e.MouseEvent}"");
     }
 }";
 
@@ -146,7 +147,8 @@
 @functions{
     void OnClick(ItemClickEventArgs e)
     {
-        Console.WriteLine($""Item Clicked => Menu: {e.ContextMenuId}, MenuTarget: {e.ContextMenuTargetId}, IsCanceled: {e.IsCanceled}, MenuItem: {e.MenuItemElement}, MouseEvent: {e.MouseEvent}"");
+        Console.WriteLine($""Item Clicked => Menu: {e.ContextMenuId}, MenuTarget: {e.ContextMenuTargetId},
+                          IsCanceled: {e.IsCanceled}, MenuItem: {e.MenuItemElement}, MouseEvent: {e.MouseEvent}"");
     }
 }";
 
