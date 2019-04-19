@@ -88,7 +88,7 @@
 @functions{
     async Task ReloadClick(ItemClickEventArgs e)
     {
-        forecasts = (await Http.GetJsonAsync<WeatherForecast[]>(""/sample-data/weather.json"")).ToList();
+        forecasts = (await Http.GetJsonAsync<WeatherForecast[]>(""sample-data/weather.json"")).ToList();
     }
 
     async Task DeleteClick(ItemClickEventArgs e)
@@ -123,7 +123,7 @@
 
     protected override async Task OnInitAsync()
     {
-        forecasts = (await Http.GetJsonAsync<WeatherForecast[]>("/sample-data/weather.json")).ToList();
+        forecasts = (await Http.GetJsonAsync<WeatherForecast[]>("sample-data/weather.json")).ToList();
     }
 
     class WeatherForecast
@@ -136,7 +136,7 @@
 
     async Task ReloadClick(ItemClickEventArgs e)
     {
-        forecasts = (await Http.GetJsonAsync<WeatherForecast[]>("/sample-data/weather.json")).ToList();
+        forecasts = (await Http.GetJsonAsync<WeatherForecast[]>("sample-data/weather.json")).ToList();
     }
 
     async Task DeleteClick(ItemClickEventArgs e)

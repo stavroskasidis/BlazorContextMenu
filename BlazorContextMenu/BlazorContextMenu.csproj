@@ -38,11 +38,15 @@
   </ItemGroup>
   
   <ItemGroup>
+    <Content Update="*.razor">
+      <Pack>false</Pack>
+    </Content>
     <Compile Remove="node_modules\**" />
     <Content Remove="node_modules\**" />
     <EmbeddedResource Remove="node_modules\**" />
     <None Remove="node_modules\**" />
-  </ItemGroup>  
+  </ItemGroup>
+  
 
   <ItemGroup>
     <PackageReference Include="Microsoft.AspNetCore.Components.Browser" Version="3.0.0-preview4-19216-03" />
