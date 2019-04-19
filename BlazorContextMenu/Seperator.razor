@@ -1,5 +1,4 @@
-﻿@using Microsoft.JSInterop
-@inherits MenuTreeComponent
+﻿@inherits MenuTreeComponent
 @inject BlazorContextMenuSettings settings
 @inject MenuTreeTraverser menuTreeTraverser
 
@@ -7,13 +6,12 @@
     <hr class="@HrClassCalc" />
 </li>
 
-@functions{
+@functions {
 
-#pragma warning disable BL9993, CS4014 // Component parameter is marked public
 
-    /// <summary>
-    /// Allows you to override the default css class of the menu's li seperator element for full customization.
-    /// </summary>
+        /// <summary>
+        /// Allows you to override the default css class of the menu's li seperator element for full customization.
+        /// </summary>
     [Parameter]
     public string OverrideDefaultCssClass { get; protected set; }
 
@@ -42,7 +40,6 @@
     public string HrCssClass { get; protected set; }
 
 
-#pragma warning restore BL9993 // Component parameter is marked public
 
     protected ElementRef MenuItemElement { get; set; }
     protected string Template { get; set; }
@@ -74,7 +71,10 @@
         base.OnInit();
 
         var rootMenu = menuTreeTraverser.GetRootContextMenu(this);
-        if (rootMenu == null) throw new Exception("Seperator component must be a child of a ContextMenu component");
+        if (rootMenu == null)
+        {
+            throw new Exception("Seperator component must be a child of a ContextMenu component");
+        }
         var parentMenu = menuTreeTraverser.GetClosestContextMenu(this);
         Template = parentMenu.GetActiveTemplate();
     }

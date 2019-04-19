@@ -4,6 +4,8 @@
     <TargetFramework>netstandard2.0</TargetFramework>
     <LangVersion>7.3</LangVersion>
     <IsPackable>true</IsPackable>
+    <RazorLangVersion>3.0</RazorLangVersion>
+    <AddRazorSupportForMvc>true</AddRazorSupportForMvc>
 
     <!-- This custom package feed is required only when using nightly builds of Blazor -->
     <!-- <RestoreSources>https://dotnet.myget.org/F/blazor-dev/api/v3/index.json;$(RestoreSources)</RestoreSources> -->
@@ -12,61 +14,12 @@
     <Authors>Stavros Kasidis (AkiraGTX)</Authors>
     <PackageLicenseUrl>https://github.com/stavroskasidis/blazor-context-menu/blob/master/LICENSE</PackageLicenseUrl>
     <PackageProjectUrl>https://github.com/stavroskasidis/blazor-context-menu</PackageProjectUrl>
-    <Description>Context menu component for Blazor and Razor Components</Description>
-    <PackageReleaseNotes>0.12
-- Updated to Blazor 0.9.0
-- Changed event handlers to the new EventCallback. As a consequence the following handlers are no longer needed and they are removed: ClickAsync, EnabledHandlerAsync, VisibleHandlerAsync
-- The Click handler has been renamed to OnClick to keep consistency with the framework/suggested event names
-- The MenuItemClickEventArgs class has been renamed to the more appropriate ItemClickEventArgs
-- The EnabledHandler and VisibleHandler have been removed and replaced with the new OnAppearing event handler
-- The MenuItemEnabledHandlerArgs and MenuItemVisibleHandlerArgs have been removed and replaced with the new ItemAppearingEventArgs
-
-0.11
-- Updated to Blazor 0.8.0
-- Added animations
-- Default css overrides are now part of the Templates API so that you can easily have multiple custom overriden menus
-
-0.10
-- Added proper support for Razor Components (aka server-side Blazor)
-
-0.9
-- Updated to Blazor 0.7.0
-- Removed some js interop in favor of the new Cascading Values feature
-
-0.8
-- Updated to Blazor 0.6.0
-
-0.7
--Added left-click trigger support
-
-0.6
-- Updated to Blazor 0.5.1
-- Changed configuration setup
-- Added templates
-
-0.5
-- Updated to Blazor 0.5.0
-
-0.4
-- Added minification for included css/js
-- Updated to Blazor 0.4.0
-
-0.3
-- Added dynamic EnabledHandlers for menu items
-- Added Active and dynamic ActiveHandlers for menu items
-
-0.2
-- Updated to Blazor 0.3.0
-- Renamed "MenuItem" to "Item" to avoid conflicts with the html element "menuitem"
-- Renamed "MenuSeperator" to "Seperator" for consistency
-- Removed "MenuItemWithSubmenu" (just use a regular "Item")
-
-0.1
-- Initial release</PackageReleaseNotes>
+    <Description>Context menu component for Blazor</Description>
+    <PackageReleaseNotes>https://github.com/stavroskasidis/BlazorContextMenu/blob/develop/README.md</PackageReleaseNotes>
     <Copyright />
     <PackageTags>blazor blazor-component blazor-context-menu context-menu contextmenu menu blazor-menu blazorcontextmenu razor razor-components razorcomponents</PackageTags>
     <VersionSuffix>$(VersionSuffix)</VersionSuffix>
-    <Version>0.12.0</Version>
+    <Version>0.13.0</Version>
     <Version Condition=" '$(VersionSuffix)' != '' ">$(Version)-$(VersionSuffix)</Version>
     <Product>Blazor.ContextMenu</Product>
   </PropertyGroup>
@@ -85,15 +38,18 @@
   </ItemGroup>
   
   <ItemGroup>
+    <Content Update="*.razor">
+      <Pack>false</Pack>
+    </Content>
     <Compile Remove="node_modules\**" />
     <Content Remove="node_modules\**" />
     <EmbeddedResource Remove="node_modules\**" />
     <None Remove="node_modules\**" />
-  </ItemGroup>  
+  </ItemGroup>
+  
 
   <ItemGroup>
-    <PackageReference Include="Microsoft.AspNetCore.Components.Browser" Version="3.0.0-preview3-19153-02" />
-    <PackageReference Include="Microsoft.AspNetCore.Components.Build" Version="3.0.0-preview3-19153-02" PrivateAssets="all" />
+    <PackageReference Include="Microsoft.AspNetCore.Components.Browser" Version="3.0.0-preview4-19216-03" />
   </ItemGroup>  
 
   <Target Name="PostBuild" AfterTargets="PostBuildEvent">

@@ -11,12 +11,17 @@
     <link href="css/prism.css" rel="stylesheet" />
 </head>
 <body>
-    <app>Loading...</app>
+    <app>
+        Loading...
+        <!-- Added to force fa load -->
+        <i style="visibility:hidden" class="fas fa-exclamation"></i>
+    </app>
+    
 
     <script src="interop.js"></script>
     <script src="jquery-3.2.1.slim.min.js"></script>
     <script src="bootstrap.min.js"></script>
     <script src="prism.js" data-manual></script>
-    <script src="_framework/components.webassembly.js"></script>
+    <script src="_framework/blazor.webassembly.js"></script>
 </body>
 </html>

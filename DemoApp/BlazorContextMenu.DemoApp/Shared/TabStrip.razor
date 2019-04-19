@@ -1,0 +1,30 @@
+﻿
+@functions{
+    [Parameter] protected string Title { get; set; }
+    [Parameter] protected List<TabItem> TabItems { get; set; }
+}
+<div class="card mt-10">
+    <div class="card-header">
+        <label><strong>@Title</strong></label>
+        <ul class="nav nav-tabs card-header-tabs" role="tablist">
+            @foreach (var tabItem in TabItems)
+            {
+                <li class="nav-item">
+                    <a class="nav-link @(TabItems.IndexOf(tabItem) == 0 ? "active" : "")" data-target="#@(tabItem.Id)" data-toggle="tab" role="tab">
+                        @tabItem.HeaderText
+                    </a>
+                </li>
+            }
+        </ul>
+    </div>
+    <div class="card-body">
+        <div class="tab-content">
+            @foreach (var tabItem in TabItems)
+            {
+                <div class="tab-pane fade @(TabItems.IndexOf(tabItem) == 0 ? "show active" : "")" id="@tabItem.Id" role="tabpanel">
+                    @tabItem.Contents
+                </div>
+            }
+        </div>
+    </div>
+</div>

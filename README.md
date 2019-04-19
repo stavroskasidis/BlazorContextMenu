@@ -1,7 +1,8 @@
 # Blazor Context Menu
-![Build Status](https://stavros-kasidis.visualstudio.com/_apis/public/build/definitions/9942c317-bff6-4b9f-9c78-0e97ce00de51/12/badge) ![NuGet Badge](https://buildstats.info/nuget/Blazor.ContextMenu?includePreReleases=true) [![Donate](https://img.shields.io/badge/Donate-PayPal-green.svg)](https://www.paypal.com/cgi-bin/webscr?cmd=_donations&business=7CRGWPYB5AKJQ&currency_code=EUR&source=url)
 
-A context menu component for [Blazor](https://github.com/aspnet/Blazor) and [Razor Components](https://github.com/aspnet/AspNetCore/tree/master/src/Components) (aka server-side Blazor)!
+[![Build status](https://stavros-kasidis.visualstudio.com/Blazor%20Context%20Menu/_apis/build/status/BlazorContextMenu)](https://stavros-kasidis.visualstudio.com/Blazor%20Context%20Menu/_build/latest?definitionId=12) ![NuGet Badge](https://buildstats.info/nuget/Blazor.ContextMenu?includePreReleases=true) [![Donate](https://img.shields.io/badge/Donate-PayPal-green.svg)](https://www.paypal.com/cgi-bin/webscr?cmd=_donations&business=7CRGWPYB5AKJQ&currency_code=EUR&source=url)
+
+A context menu component for [Blazor](https://blazor.net)!
 
 ![demo-img](ReadmeResources/blazor-context-menu-demo-2.gif)
 
@@ -13,7 +14,7 @@ A context menu component for [Blazor](https://github.com/aspnet/Blazor) and [Raz
 You can find a live demo [here](https://blazor-context-menu-demo.azurewebsites.net/).
 
 ## Installation
-**1. Add the nuget package in your Blazor Client / Razor Components project**
+**1. Add the nuget package in your Blazor project**
 ```
 > dotnet add package Blazor.ContextMenu
 
@@ -23,7 +24,7 @@ PM> Install-Package Blazor.ContextMenu
 ```
 *Nuget package page can be found [here](https://www.nuget.org/packages/Blazor.ContextMenu).*
 
-**2. Add the following line in your Blazor Client / Razor Component project's startup class**
+**2. Add the following line in your Blazor project's startup class**
 
 ```csharp
 public class Startup
@@ -34,12 +35,11 @@ public class Startup
     }
 }
 ```
-**3. Add the following lines in your `_ViewImports.cshtml`**
+**3. Add the following line in your `_Imports.razor`**
 ```csharp
 @using BlazorContextMenu
-@addTagHelper *, BlazorContextMenu
 ```
-**4. Reference the static files (Temporary requirement ONLY for Razor Component projects)**
+**4. Reference the static files (Temporary requirement ONLY for Blazor Server-Side projects)**
 
 Download and reference the .css and .js from the `/BlazorContextMenu/content` folder or use the following package from SQL-MisterMagoo https://github.com/SQL-MisterMagoo/BlazorEmbedLibrary 
 
@@ -48,14 +48,14 @@ Download and reference the .css and .js from the `/BlazorContextMenu/content` fo
 ```xml
 
 <ContextMenu Id="myMenu">
-    <Item OnClick="OnClick">Item 1</Item>
-    <Item OnClick="OnClick">Item 2</Item>
-    <Item OnClick="OnClick" Enabled="false">Item 3 (disabled)</Item>
+    <Item OnClick="@OnClick">Item 1</Item>
+    <Item OnClick="@OnClick">Item 2</Item>
+    <Item OnClick="@OnClick" Enabled="false">Item 3 (disabled)</Item>
     <Seperator />
     <Item>Submenu
         <SubMenu>
-            <Item OnClick="OnClick">Submenu Item 1</Item>
-            <Item OnClick="OnClick">Submenu Item 2</Item>
+            <Item OnClick="@OnClick">Submenu Item 1</Item>
+            <Item OnClick="@OnClick">Submenu Item 2</Item>
         </SubMenu>
     </Item>
 </ContextMenu>
@@ -185,27 +185,46 @@ public class Startup
 
 
 ## ⚠️ Breaking changes ⚠️
-Upgrading from 0.11 to 0.12
+<details open="open"><summary>Upgrading from 0.12 to 0.13</summary>
+
+>- Remove the `@addTagHelper *, BlazorContextMenu` as it is no longer needed
+</details>
+
+<details><summary>Upgrading from 0.11 to 0.12</summary>
+
 >- The following handlers are removed as they are no longer needed: `ClickAsync`, `EnabledHandlerAsync`, `VisibleHandlerAsync`
 >- The `Click` handler has been renamed to `OnClick` to keep consistency with the framework/suggested event names
 >- The `MenuItemClickEventArgs` class has been renamed to the more appropriate `ItemClickEventArgs`
 >- The `EnabledHandler` and `VisibleHandler` parameters have been removed and replaced with the new `OnAppearing` event handler
 >- The `MenuItemEnabledHandlerArgs` and `MenuItemVisibleHandlerArgs` classes have been removed and replaced with the new `ItemAppearingEventArgs`
+</details>
 
-Upgrading from 0.10 to 0.11
+<details><summary>Upgrading from 0.10 to 0.11</summary>
+    
 >- The `CssOverrides` API is removed and override configuration is moved into templates. The `DefaultCssOverrides` of the `ConfigureTemplate` API must be used.
+</details>
 
-Upgrating from 0.5 to 0.6
+<details><summary>Upgrading from 0.5 to 0.6</summary>
+    
 >- You must add in `Startup.ConfigureServices` of your Blazor client side project the following line `services.AddBlazorContextMenu();`
 >- The `BlazorContextMenu.BlazorContextMenuDefaults` API is removed. Use the API provided in the service configuration.
+</details>
 
-Upgrating from 0.1 to 0.2
+<details><summary>Upgrading from 0.1 to 0.2</summary>
+    
 >- Rename "MenuItem" to "Item"
 >- Rename "MenuSeperator" to "Seperator"
 >- Replace "MenuItemWithSubmenu" with a regular "Item" component
+</details>
 
 ## Release Notes
-### 0.12
+<details open="open"><summary>0.13</summary>
+    
+>- Updated to 3.0 preview 4
+</details>
+
+<details><summary>0.12</summary>
+    
 >- Updated to Blazor 0.9.0
 >- Changed event handlers to the new `EventCallback<>`. As a consequence the following handlers are no longer needed and they are removed: `ClickAsync`, `EnabledHandlerAsync`, `VisibleHandlerAsync`
 >- Fixed menu display position when it doesn't fit on screen
@@ -213,51 +232,74 @@ Upgrating from 0.1 to 0.2
 >- The `MenuItemClickEventArgs` class has been renamed to the more appropriate `ItemClickEventArgs`
 >- The `EnabledHandler` and `VisibleHandler` parameters have been removed and replaced with the new `OnAppearing` event handler
 >- The `MenuItemEnabledHandlerArgs` and `MenuItemVisibleHandlerArgs` classes have been removed and replaced with the new `ItemAppearingEventArgs`
+</details>
 
-### 0.11
+<details><summary>0.11</summary>
+
 >- Updated to Blazor 0.8.0
 >- Added animations
 >- Default css overrides are now part of the `Templates` API so that you can easily have multiple custom overriden menus
 >- Razor Components are not loading the static files included in the library => [#6349](https://github.com/aspnet/AspNetCore/issues/6349). As a workaround you can download and reference directly the **.css** and **.js** from the `/BlazorContextMenu/content` folder until the issue is resolved.
+</details>
 
-### 0.10
+<details><summary>0.10</summary>
+    
 >- Added proper support for Razor Components (aka server-side Blazor)
+</details>
 
-### 0.9
+<details><summary>0.9</summary>
+    
 >- Updated to Blazor 0.7.0
 >- Removed some js interop in favor of the new Cascading Values feature
+</details>
 
-### 0.8
+<details><summary>0.8</summary>
+    
 >- Updated to Blazor 0.6.0
+</details>
 
-### 0.7
+<details><summary>0.7</summary>
+
 >- Added left-click trigger support
+</details>
 
-### 0.6
+<details><summary>0.6</summary>
+    
 >- Updated to Blazor 0.5.1
 >- Changed configuration setup
 >- Added templates
+</details>
 
-### 0.5
+<details><summary>0.5</summary>
+    
 >- Updated to Blazor 0.5.0
+</details>
 
-### 0.4
+<details><summary>0.4</summary>
+    
 >- Added minification for included css/js
 >- Updated to Blazor 0.4.0
+</details>
 
-### 0.3
+<details><summary>0.3</summary>
+    
 >- Added dynamic EnabledHandlers for menu items
 >- Added Active and dynamic ActiveHandlers for menu items
+</details>
 
-### 0.2
+<details><summary>0.2</summary>
+    
 >- Updated to Blazor 0.3.0
 >- Renamed "MenuItem" to "Item" to avoid conflicts with the html element "menuitem"
 >- Renamed "MenuSeperator" to "Seperator" for consistency
 >- Removed "MenuItemWithSubmenu" (just use a regular "Item")
+</details>
 
-### 0.1
+<details><summary>0.1</summary>
+    
 >- Initial release
+</details>
 
 ## Special Thanks
 
-This project is inspired by https://github.com/fkhadra/react-contexify and https://github.com/vkbansal/react-contextmenu
+This project was inspired by https://github.com/fkhadra/react-contexify and https://github.com/vkbansal/react-contextmenu

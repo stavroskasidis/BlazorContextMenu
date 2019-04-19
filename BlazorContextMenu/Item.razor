@@ -1,5 +1,4 @@
-﻿@using Microsoft.JSInterop
-@inherits MenuTreeComponent
+﻿@inherits MenuTreeComponent
 @inject BlazorContextMenuSettings settings
 @inject MenuTreeTraverser menuTreeTraverser
 @inject BlazorContextMenuHandler contextMenuHandler
@@ -20,11 +19,9 @@
 
 @functions{
 
-#pragma warning disable BL9993, CS4014 // Component parameter is marked public
-
-    /// <summary>
-    /// Allows you to override the default css class of the menu's li element for full customization.
-    /// </summary>
+        /// <summary>
+        /// Allows you to override the default css class of the menu's li element for full customization.
+        /// </summary>
     [Parameter]
     public string OverrideDefaultCssClass { get; protected set; }
 
@@ -141,7 +138,11 @@
         }
 
         RootMenu = menuTreeTraverser.GetRootContextMenu(this);
-        if (RootMenu == null) throw new Exception("Item component must be a child of a ContextMenu component");
+        if (RootMenu == null)
+        {
+            throw new Exception("Item component must be a child of a ContextMenu component");
+        }
+
         ParentMenu = menuTreeTraverser.GetClosestContextMenu(this);
         Template = ParentMenu.GetActiveTemplate();
         var contextMenuTarget = RootMenu.GetTarget();
@@ -159,7 +160,10 @@
 
     protected async Task OnClickInternal(UIMouseEventArgs e)
     {
-        if (!Enabled) return;
+        if (!Enabled)
+        {
+            return;
+        }
 
         if (OnClick.HasDelegate)
         {
@@ -173,5 +177,4 @@
             }
         }
     }
-#pragma warning restore BL9993, CS4014 // Component parameter is marked public
 }

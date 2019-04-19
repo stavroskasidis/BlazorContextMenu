@@ -1,0 +1,231 @@
+@page "/templating"
+@inject IJSRuntime jsRuntime
+<h1>Templating</h1>
+
+<p>You can create templates that you can easily apply to your context menus</p>
+@{ 
+    var darkMenuTabItems = new List<TabItem>()
+    {
+        new TabItem
+        {
+            HeaderText = "Demo",
+            Contents = @<ContextMenuTrigger MenuId="dark-menu">
+                            <p>Right click here to view the "dark" menu</p>
+                        </ContextMenuTrigger>
+        },
+        new TabItem
+        {
+            HeaderText = "<> Source",
+            Contents = @<div>
+                            <CodeBlock Title="Startup.cs" Language="csharp">@darkStartupCode</CodeBlock>
+                            <CodeBlock Title="CSS" Language="css">@darkCssCode</CodeBlock> 
+                            <CodeBlock Title="Razor" Language="html">@darkMenuCode</CodeBlock>
+                        </div>
+        }
+    };
+
+    var pinkMenuTabItems = new List<TabItem>()
+    {
+        new TabItem
+        {
+            HeaderText = "Demo",
+            Contents = @<ContextMenuTrigger MenuId="pink-menu">
+                            <p>Right click here to view the "pink" menu</p>
+                        </ContextMenuTrigger>
+        },
+        new TabItem
+        {
+            HeaderText = "<> Source",
+            Contents = @<div>
+                            <CodeBlock Title="Startup.cs" Language="csharp">@pinkStartupCode</CodeBlock>
+                            <CodeBlock Title="CSS" Language="css">@pinkCssCode</CodeBlock> 
+                            <CodeBlock Title="Razor" Language="html">@pinkMenuCode</CodeBlock> 
+                        </div>
+        }
+    };
+
+    var darkPinkMenuTabItems = new List<TabItem>()
+    {
+        new TabItem
+        {
+            HeaderText = "Demo",
+            Contents = @<ContextMenuTrigger MenuId="dark-pink-menu">
+                            <p>Right click here to view the "pink" menu</p>
+                        </ContextMenuTrigger>
+        },
+        new TabItem
+        {
+            HeaderText = "<> Source",
+            Contents = @<div>
+                            <CodeBlock Title="Startup.cs" Language="csharp">@darkPinkStartupCode</CodeBlock>
+                            <CodeBlock Title="CSS" Language="css">@darkPinkCssCode</CodeBlock>
+                            <CodeBlock Title="Razor" Language="html">@darkPinkMenuCode</CodeBlock>
+                        </div>
+        }
+    };
+}
+
+<TabStrip Title="Example of a 'dark' template" TabItems="darkMenuTabItems"/>
+<TabStrip Title="Example of a 'pink' template" TabItems="pinkMenuTabItems" />
+<TabStrip Title="Example of combining templates by using a template for the parent menu but a different template for a submenu" TabItems="darkPinkMenuTabItems" />
+
+
+<!-- located in Shared/ThemedMenuSample -->
+<ThemedMenuSample Id="dark-menu" Template="dark" />
+<ThemedMenuSample Id="pink-menu" Template="pink" />
+<ThemedMenuSample Id="dark-pink-menu" Template="dark" SubMenuTemplate="pink" />
+
+
+@functions{ 
+    private string darkStartupCode =
+@"public class Startup
+{
+    public void ConfigureServices(IServiceCollection services)
+    {
+        services.AddBlazorContextMenu(options=>
+        {
+            options.ConfigureTemplate(""dark"", template =>
+            {
+                template.MenuCssClass = ""dark-menu"";
+                template.MenuItemCssClass = ""dark-menu-item"";
+                template.MenuItemDisabledCssClass = ""dark-menu-item--disabled"";
+                template.MenuItemWithSubMenuCssClass = ""dark-menu-item--with-submenu"";
+                template.Animation = Animation.FadeIn;
+            });
+            //...
+        });
+    }            
+    //...
+}";
+    private string darkCssCode =
+@"div.dark-menu {
+    color: #FFFFFF;
+    background-color: #444;
+}
+.dark-menu .dark-menu-item--with-submenu:after {
+    border-left-color: #d3d3d3;
+}
+.dark-menu .dark-menu-item--disabled,
+.dark-menu .dark-menu-item {
+    background-color: #444;
+}
+.dark-menu .dark-menu-item--disabled:hover,
+.dark-menu .dark-menu-item:hover {
+    background-color: #000000;
+}
+";
+
+    private string pinkStartupCode =
+@"public class Startup
+{
+    public void ConfigureServices(IServiceCollection services)
+    {
+        services.AddBlazorContextMenu(options=>
+        {
+            options.ConfigureTemplate(""pink"", template =>
+            {
+                template.MenuCssClass = ""pink-menu"";
+                template.MenuItemCssClass = ""pink-menu-item"";
+                template.MenuItemDisabledCssClass = ""pink-menu-item--disabled"";
+                template.SeperatorHrCssClass = ""pink-menu-seperator-hr"";
+                template.MenuItemWithSubMenuCssClass = ""pink-menu-item--with-submenu"";
+                template.Animation = Animation.Slide;
+            });
+            //...
+        });
+    }            
+    //...
+}";
+
+    private string pinkCssCode = 
+@"div.pink-menu {
+    color: #000000;
+    background-color: #ffb3b3;
+}
+.pink-menu .pink-menu-item--with-submenu:after {
+    border-left-color: #FFFFFF;
+}
+.pink-menu .pink-menu-seperator-hr {
+    border-color: red;
+}
+.pink-menu .pink-menu-item--disabled,
+.pink-menu .pink-menu-item {
+    background-color: #ffb3b3;
+}
+.pink-menu .pink-menu-item--disabled:hover,
+.pink-menu .pink-menu-item:hover {
+    background-color: #c11515;
+    color: white;
+}";
+
+    private string darkPinkStartupCode = 
+@"public class Startup
+{
+    public void ConfigureServices(IServiceCollection services)
+    {
+        services.AddBlazorContextMenu(options=>
+        {
+            options.ConfigureTemplate(""dark"", template =>
+            {
+                template.MenuCssClass = ""dark-menu"";
+                template.MenuItemCssClass = ""dark-menu-item"";
+                template.MenuItemDisabledCssClass = ""dark-menu-item--disabled"";
+                template.MenuItemWithSubMenuCssClass = ""dark-menu-item--with-submenu"";
+                template.Animation = Animation.FadeIn;
+            });
+            options.ConfigureTemplate(""pink"", template =>
+            {
+                template.MenuCssClass = ""pink-menu"";
+                template.MenuItemCssClass = ""pink-menu-item"";
+                template.MenuItemDisabledCssClass = ""pink-menu-item--disabled"";
+                template.SeperatorHrCssClass = ""pink-menu-seperator-hr"";
+                template.MenuItemWithSubMenuCssClass = ""pink-menu-item--with-submenu"";
+                template.Animation = Animation.Slide;
+            });
+            //...
+        });
+    }            
+    //...
+}";
+
+    private string darkPinkCssCode;
+
+    private string menuCodeTemplate = @"<ContextMenu Id=""@{id}"" Template=""@{templateName}"">
+    <Item OnClick=""@OnClick"">Item 1</Item>
+    <Item OnClick=""@OnClick"">Item 2</Item>
+    <Item OnClick=""@OnClick"" Enabled=""false"">Item 3 (disabled)</Item>
+    <Seperator />
+    <Item>
+        Submenu
+        <SubMenu@{submenuTemplateName}>
+            <Item OnClick=""@OnClick"">Submenu Item 1</Item>
+            <Item OnClick=""@OnClick"">Submenu Item 2</Item>
+        </SubMenu>
+    </Item>
+</ContextMenu>
+<ContextMenuTrigger MenuId=""@{id}"">
+    @{triggerText}
+</ContextMenuTrigger>";
+    private string darkMenuCode;
+    private string pinkMenuCode;
+    private string darkPinkMenuCode;
+
+
+    protected override void OnInit()
+    {
+        base.OnInit();
+        darkMenuCode = menuCodeTemplate.Replace("@{id}","dark-menu").Replace("@{templateName}", "dark").Replace("@{submenuTemplateName}", "")
+                                       .Replace("@{triggerText}",@"<p>Right click here to view the ""dark"" menu</p>");
+        pinkMenuCode = menuCodeTemplate.Replace("@{id}","pink-menu").Replace("@{templateName}", "pink").Replace("@{submenuTemplateName}", "")
+                                       .Replace("@{triggerText}",@"<p>Right click here to view the ""pink"" menu</p>");
+        darkPinkMenuCode= menuCodeTemplate.Replace("@{id}","dark-pink-menu").Replace("@{templateName}", "dark").Replace("@{submenuTemplateName}", " Template=\"pink\"")
+                                       .Replace("@{triggerText}",@"<p>Right click here to view the ""dark-pink"" menu</p>");
+
+        darkPinkCssCode = darkCssCode + pinkCssCode;
+    }
+
+    protected override async Task OnAfterRenderAsync()
+    {
+        await jsRuntime.InvokeAsync<object>("DemoApp_RunPrism");
+    }
+}

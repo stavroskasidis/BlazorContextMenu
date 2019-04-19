@@ -19,7 +19,7 @@ namespace BlazorContextMenu.BlazorTestApp.Client.Services
 
         public async Task<string[]> GetSampleData()
         {
-            var summaries = await _http.GetJsonAsync<string[]>("/api/SampleData/Summaries");
+            var summaries = await _http.GetJsonAsync<string[]>("api/SampleData/Summaries");
             return summaries;
         }
     }

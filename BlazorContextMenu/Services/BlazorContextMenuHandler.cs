@@ -1,5 +1,4 @@
-﻿using BlazorContextMenu.Components;
-using BlazorContextMenu.Services;
+﻿using BlazorContextMenu.Services;
 using Microsoft.JSInterop;
 using System;
 using System.Collections.Generic;

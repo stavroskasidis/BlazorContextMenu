@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace BlazorContextMenu.Components
+namespace BlazorContextMenu
 {
     public class SubMenu : ContextMenu
     {

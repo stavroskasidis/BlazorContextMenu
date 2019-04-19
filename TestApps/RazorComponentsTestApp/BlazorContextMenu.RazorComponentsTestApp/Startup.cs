@@ -2,7 +2,6 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
-using BlazorContextMenu.RazorComponentsTestApp.Components;
 using BlazorContextMenu.RazorComponentsTestApp.Services;
 using BlazorContextMenu.TestAppsCommon;
 using Microsoft.AspNetCore.Builder;
@@ -20,10 +19,8 @@ namespace BlazorContextMenu.RazorComponentsTestApp
         // For more information on how to configure your application, visit https://go.microsoft.com/fwlink/?LinkID=398940
         public void ConfigureServices(IServiceCollection services)
         {
-            services.AddMvc()
-                .AddNewtonsoftJson();
-
-            services.AddRazorComponents();
+            services.AddRazorPages();
+            services.AddServerSideBlazor();
             services.AddSingleton<ISampleDataService, SampleDataService>();
 
             services.AddBlazorContextMenu(options =>
@@ -71,11 +68,12 @@ namespace BlazorContextMenu.RazorComponentsTestApp
 
             app.UseHttpsRedirection();
             app.UseStaticFiles();
+            app.UseRouting();
 
-            app.UseRouting(routes =>
+            app.UseEndpoints(endpoints =>
             {
-                routes.MapRazorPages();
-                routes.MapComponentHub<App>("app");
+                endpoints.MapBlazorHub();
+                endpoints.MapFallbackToPage("/_Host");
             });
         }
     }
