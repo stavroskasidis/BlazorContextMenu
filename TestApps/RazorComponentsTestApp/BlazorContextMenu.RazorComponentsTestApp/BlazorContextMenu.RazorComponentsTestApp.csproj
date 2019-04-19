@@ -7,16 +7,6 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <_ContentIncludedByDefault Remove="wwwroot\css\bootstrap\bootstrap.min.css" />
-    <_ContentIncludedByDefault Remove="wwwroot\css\fonts\glyphicons-halflings-regular.eot" />
-    <_ContentIncludedByDefault Remove="wwwroot\css\fonts\glyphicons-halflings-regular.svg" />
-    <_ContentIncludedByDefault Remove="wwwroot\css\fonts\glyphicons-halflings-regular.ttf" />
-    <_ContentIncludedByDefault Remove="wwwroot\css\fonts\glyphicons-halflings-regular.woff" />
-    <_ContentIncludedByDefault Remove="wwwroot\css\fonts\glyphicons-halflings-regular.woff2" />
-    <_ContentIncludedByDefault Remove="wwwroot\css\open-iconic\font\css\open-iconic-bootstrap.min.css" />
-  </ItemGroup>
-
-  <ItemGroup>
     <ProjectReference Include="..\..\BlazorContextMenu.TestAppsCommon\BlazorContextMenu.TestAppsCommon.csproj" />
   </ItemGroup>
 
