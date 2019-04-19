@@ -161,7 +161,7 @@ public class Startup
     {
         services.AddBlazorContextMenu(options =>
         {
-            //This will override the default css classes for the default tenplate
+            //This will override the default css classes for the default template
             options.ConfigureTemplate(defaultTemplate =>
             {
                 defaultTemplate.DefaultCssOverrides.MenuCssClass  = "custom-menu";
