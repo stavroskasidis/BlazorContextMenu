@@ -4,7 +4,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace BlazorContextMenu.Components
+namespace BlazorContextMenu
 {
     public abstract class MenuTreeComponent : ComponentBase, IDisposable
     {

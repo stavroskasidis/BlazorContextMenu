@@ -1,7 +1,7 @@
 # Blazor Context Menu
 ![Build Status](https://stavros-kasidis.visualstudio.com/_apis/public/build/definitions/9942c317-bff6-4b9f-9c78-0e97ce00de51/12/badge) ![NuGet Badge](https://buildstats.info/nuget/Blazor.ContextMenu?includePreReleases=true) [![Donate](https://img.shields.io/badge/Donate-PayPal-green.svg)](https://www.paypal.com/cgi-bin/webscr?cmd=_donations&business=7CRGWPYB5AKJQ&currency_code=EUR&source=url)
 
-A context menu component for [Blazor](https://github.com/aspnet/Blazor)!
+A context menu component for [Blazor](https://blazor.net)!
 
 ![demo-img](ReadmeResources/blazor-context-menu-demo-2.gif)
 
@@ -34,10 +34,9 @@ public class Startup
     }
 }
 ```
-**3. Add the following lines in your `_ViewImports.cshtml`**
+**3. Add the following line in your `_Imports.razor`**
 ```csharp
 @using BlazorContextMenu
-@using BlazorContextMenu.Components
 ```
 **4. Reference the static files (Temporary requirement ONLY for Blazor Server-Side projects)**
 
@@ -187,7 +186,7 @@ public class Startup
 ## ⚠️ Breaking changes ⚠️
 <details open="open"><summary>Upgrading from 0.12 to 0.13</summary>
 
->- TODO: Write
+>- Remove the `@addTagHelper *, BlazorContextMenu` as it is no longer needed
 </details>
 
 <details><summary>Upgrading from 0.11 to 0.12</summary>

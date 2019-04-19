@@ -1,4 +1,7 @@
-﻿@page "{*clientPath}"
+﻿@page "/"
+@namespace BlazorContextMenu.RazorComponentsTestApp.Pages
+@addTagHelper *, Microsoft.AspNetCore.Mvc.TagHelpers
+
 <!DOCTYPE html>
 <html>
 <head>
@@ -12,13 +15,11 @@
     <link href="styles.css" rel="stylesheet" /> <!-- TODO: Remove when razor components work with libraries -->
 </head>
 <body>
-    @*<app>@(await Html.RenderComponentAsync<App>())</app>*@
-    <app>Loading...</app>
+    <app>@(await Html.RenderComponentAsync<App>())</app>
 
     <script src="interop.js"></script>
     <script src="BlazorContextMenu.js"></script> <!-- TODO: Remove when razor components work with libraries -->
-    <script src="css/bootstrap/bootstrap-native.min.js"></script>
 
-    <script src="_framework/components.server.js"></script>
+    <script src="_framework/blazor.server.js"></script>
 </body>
 </html>

@@ -34,19 +34,14 @@
         {
             throw new ArgumentNullException(nameof(MenuId));
         }
+    }
 
+    protected override async Task OnAfterRenderAsync()
+    {
         if (!blazorContextMenuHandler.ReferencePassedToJs)
         {
-            try
-            {
-                jsRuntime.InvokeAsync<object>("blazorContextMenu.SetMenuHandlerReference", new DotNetObjectRef(blazorContextMenuHandler));
-                blazorContextMenuHandler.ReferencePassedToJs = true;
-            }
-            catch (InvalidOperationException ex) when (ex.Message == "The JavaScript runtime is not available during prerendering.")
-            {
-                //prerendering
-                //TODO: Change if the framework provides a better way to check if prerendering
-            }
+            await jsRuntime.InvokeAsync<object>("blazorContextMenu.SetMenuHandlerReference", new DotNetObjectRef(blazorContextMenuHandler));
+            blazorContextMenuHandler.ReferencePassedToJs = true;
         }
     }
 }

@@ -259,5 +259,8 @@ paket-files/
 # Python Tools for Visual Studio (PTVS)
 __pycache__/
 *.pyc
-*.min.css
-*.min.js
+
+/BlazorContextMenu/content/*.min.css
+/BlazorContextMenu/content/*.min.js
+/TestApps/RazorComponentsTestApp/BlazorContextMenu.RazorComponentsTestApp/wwwroot/BlazorContextMenu.min.js
+/TestApps/RazorComponentsTestApp/BlazorContextMenu.RazorComponentsTestApp/wwwroot/styles.min.css
