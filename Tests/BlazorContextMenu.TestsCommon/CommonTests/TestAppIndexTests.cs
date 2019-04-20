@@ -175,9 +175,9 @@ namespace BlazorContextMenu.E2ETests.Tests
             //Act
             await OpenContextMenuAt(triggerId, mouseButton);
             MouseOverElement("submenu1-trigger");
-            await Task.Delay(1000); //wait for submenu to popup
+            await Task.Delay(500); //wait for submenu to popup
             MouseOverElement("menu2-item1");
-            await Task.Delay(1000); //wait for submenu to close
+            await Task.Delay(500); //wait for submenu to close
 
             //Assert
             var menuElement = Browser.FindElement(By.Id("submenu1"));
