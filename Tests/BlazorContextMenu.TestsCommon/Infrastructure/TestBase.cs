@@ -39,7 +39,7 @@ namespace BlazorContextMenu.TestsCommon.Infrastructure
                 action.ContextClick(element).Perform();
             }
 
-            await Task.Delay(1000);
+            await Task.Delay(500);
         }
 
         protected void MouseOverElement(string elementId)
