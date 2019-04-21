@@ -56,7 +56,10 @@
 
 @functions {
     List<WeatherForecast> forecasts = new List<WeatherForecast>();
-    string menuCode = @"<ContextMenuTrigger MenuId=""tableContextMenu"">
+    string menuCode = @"@inject HttpClient Http
+@inject IJSRuntime jsRuntime
+
+<ContextMenuTrigger MenuId=""tableContextMenu"">
     <table class=""table"">
         <thead>
             <tr>
