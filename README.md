@@ -1,6 +1,6 @@
 # Blazor Context Menu
 
-[![Build status](https://stavros-kasidis.visualstudio.com/Blazor%20Context%20Menu/_apis/build/status/BlazorContextMenu)](https://stavros-kasidis.visualstudio.com/Blazor%20Context%20Menu/_build/latest?definitionId=12) ![NuGet Badge](https://buildstats.info/nuget/Blazor.ContextMenu?includePreReleases=true) [![Donate](https://img.shields.io/badge/Donate-PayPal-green.svg)](https://www.paypal.com/cgi-bin/webscr?cmd=_donations&business=7CRGWPYB5AKJQ&currency_code=EUR&source=url)
+[![Build status](https://stavros-kasidis.visualstudio.com/Blazor%20Context%20Menu/_apis/build/status/BlazorContextMenu)](https://stavros-kasidis.visualstudio.com/Blazor%20Context%20Menu/_build/latest?definitionId=12) [![NuGet Badge](https://buildstats.info/nuget/Blazor.ContextMenu?includePreReleases=true)](https://www.nuget.org/packages/Blazor.ContextMenu) [![Donate](https://img.shields.io/badge/Donate-PayPal-green.svg)](https://www.paypal.com/cgi-bin/webscr?cmd=_donations&business=7CRGWPYB5AKJQ&currency_code=EUR&source=url)
 
 A context menu component for [Blazor](https://blazor.net)!
 
