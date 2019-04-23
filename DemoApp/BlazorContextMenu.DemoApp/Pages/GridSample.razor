@@ -97,7 +97,7 @@
     async Task DeleteClick(ItemClickEventArgs e)
     {
         //Interop is required here due to current blazor limitations
-        var itemIndex = await jsRuntime.InvokeAsync<int>(""DemoApp_GetItemIndex"", e.ContextMenuTargetId);
+        var itemIndex = await jsRuntime.InvokeAsync<int>(""DemoApp_GetRowIndex"", e.ContextMenuTargetId);
         if (itemIndex >= 0)
         {
             var currentItem = forecasts.ElementAt(itemIndex);
@@ -106,14 +106,13 @@
     }
 }";
     string jsCode = 
-@"DemoApp_GetItemIndex = function (targetItemId) {
+@"DemoApp_GetRowIndex = function (targetItemId) {
     var targetItem = document.getElementById(targetItemId);
     var tr = targetItem.closest(""tr"");
     if (tr.parentNode.tagName == ""THEAD"")
     {
         return -1;
     }
-
     var children = tr.parentNode.childNodes;
     var num = 0;
     for (var i = 0; i < children.length; i++)
@@ -145,7 +144,7 @@
     async Task DeleteClick(ItemClickEventArgs e)
     {
         //Interop is required here due to current blazor limitations
-        var itemIndex = await jsRuntime.InvokeAsync<int>("DemoApp_GetItemIndex", e.ContextMenuTargetId);
+        var itemIndex = await jsRuntime.InvokeAsync<int>("DemoApp_GetRowIndex", e.ContextMenuTargetId);
         if (itemIndex >= 0)
         {
             var currentItem = forecasts.ElementAt(itemIndex);
