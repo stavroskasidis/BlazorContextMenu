@@ -54,6 +54,7 @@ namespace BlazorContextMenu.TestsCommon.Infrastructure
             Browser.Manage().Window.Maximize();
             new WebDriverWait(Browser, TimeSpan.FromSeconds(30)).Until(
                 driver => driver.FindElement(By.TagName("app")).Text != "Loading...");
+            Task.Delay(1000).Wait();
         }
 
         public void Navigate(string relativeUrl, bool noReload = false)

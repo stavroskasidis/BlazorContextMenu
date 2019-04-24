@@ -72,7 +72,7 @@ namespace BlazorContextMenu.RazorComponentsTestApp
 
             app.UseEndpoints(endpoints =>
             {
-                endpoints.MapBlazorHub();
+                endpoints.MapBlazorHub<App>("app");
                 endpoints.MapFallbackToPage("/_Host");
             });
         }
