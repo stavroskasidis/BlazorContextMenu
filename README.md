@@ -10,7 +10,7 @@ A context menu component for [Blazor](https://blazor.net)!
 
 > This project is build on top of an experimental framework. There are many limitations and there is a high probability that there will be breaking changes each version.
 
-## Demo
+## Samples / Demo
 You can find a live demo [here](https://blazor-context-menu-demo.azurewebsites.net/).
 
 ## Installation
