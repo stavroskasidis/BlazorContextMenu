@@ -42,8 +42,8 @@ namespace BlazorContextMenu
 
         }
 
-        [InjectAttribute] private IJSRuntime jsRuntime { get; set; }
-        [InjectAttribute] private BlazorContextMenuHandler blazorContextMenuHandler { get; set; }
+        [Inject] private IJSRuntime jsRuntime { get; set; }
+        [Inject] private BlazorContextMenuHandler blazorContextMenuHandler { get; set; }
 
         /// <summary>
         /// The id of the <see cref="ContextMenu" /> to open. This parameter is required.
