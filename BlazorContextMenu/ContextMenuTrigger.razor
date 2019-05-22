@@ -9,9 +9,9 @@
 
 @functions{
 
-    /// <summary>
-    /// The id of the <see cref="ContextMenu" /> to open. This parameter is required
-    /// </summary>
+        /// <summary>
+        /// The id of the <see cref="ContextMenu" /> to open. This parameter is required
+        /// </summary>
     [Parameter]
     public string MenuId { get; protected set; }
 
@@ -22,8 +22,16 @@
     public string CssClass { get; protected set; }
 
     /// <summary>
+    /// The mouse button that triggers the menu
+    /// </summary>
     [Parameter]
     public MouseButtonTrigger MouseButtonTrigger { get; protected set; }
+
+    /// <summary>
+    /// The div 
+    /// </summary>
+    [Parameter]
+    public string WrapperTag { get; protected set; } = "div"
 
     [Parameter]
     protected RenderFragment ChildContent { get; set; }
