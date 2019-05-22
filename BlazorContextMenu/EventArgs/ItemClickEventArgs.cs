@@ -38,9 +38,13 @@ namespace BlazorContextMenu
         public string ContextMenuTargetId { get; protected set; }
 
         /// <summary>
-        /// The ElementRef of the item's li. To be passed to javascript interop.
+        /// The ElementRef of the item's li that can be passed to javascript interop.
         /// </summary>
         public ElementRef MenuItemElement { get; protected set; }
+
+        /// <summary>
+        /// The menu item that triggered the event.
+        /// </summary>
         public Item MenuItem { get; protected set; }
     }
 }
