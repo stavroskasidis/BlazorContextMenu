@@ -46,13 +46,13 @@ namespace BlazorContextMenu
         [Inject] private BlazorContextMenuHandler blazorContextMenuHandler { get; set; }
 
         /// <summary>
-        /// The id of the <see cref="ContextMenu" /> to open. This parameter is required.
+        /// The Id of the <see cref="ContextMenu" /> to open. This parameter is required.
         /// </summary>
         [Parameter]
         public string MenuId { get; protected set; }
 
         /// <summary>
-        /// Additional css class for the trigger's div wrapper element.
+        /// Additional css class for the trigger's wrapper element.
         /// </summary>
         [Parameter]
         public string CssClass { get; protected set; }
@@ -65,7 +65,7 @@ namespace BlazorContextMenu
         public MouseButtonTrigger MouseButtonTrigger { get; protected set; }
 
         /// <summary>
-        /// The trigger wrapper element tag (default: div).
+        /// The trigger's wrapper element tag (default: "div").
         /// </summary>
         [Parameter]
         public string WrapperTag { get; protected set; } = "div";
