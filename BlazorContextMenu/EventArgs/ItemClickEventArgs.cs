@@ -17,11 +17,34 @@ namespace BlazorContextMenu
             MenuItem = menuItem;
         }
 
+        /// <summary>
+        /// The args of the mouse event.
+        /// </summary>
         public UIMouseEventArgs MouseEvent { get; protected set; }
+        
+        /// <summary>
+        /// If set to true, then the ContextMenu will not close after clicking on the item.
+        /// </summary>
         public bool IsCanceled { get; set; }
+        
+        /// <summary>
+        /// The id of the <see cref="ContextMenu"/> that contains the triggering item.
+        /// </summary>
         public string ContextMenuId { get; protected set; }
+
+        /// <summary>
+        /// The id of the target element that the <see cref="ContextMenu"/> was triggered from.
+        /// </summary>
         public string ContextMenuTargetId { get; protected set; }
+
+        /// <summary>
+        /// The ElementRef of the item's li that can be passed to javascript interop.
+        /// </summary>
         public ElementRef MenuItemElement { get; protected set; }
+
+        /// <summary>
+        /// The menu item that triggered the event.
+        /// </summary>
         public Item MenuItem { get; protected set; }
     }
 }
