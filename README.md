@@ -218,7 +218,14 @@ public class Startup
 </details>
 
 ## Release Notes
-<details open="open"><summary>0.14</summary>
+<details open="open"><summary>0.15</summary>
+    
+>- Added new `OnAppearing` event to `ContextMenu` conponent, that can be used to prevent the menu from showing.
+>- Added the `WrapperTag` parameter to the `ContextMenuTrigger` component, that can be used to change the `ContextMenuTrigger` component's element tag (default: div).
+>- Added the `Id` parameter to the `ContextMenuTrigger` component.
+</details>
+
+<details><summary>0.14</summary>
     
 >- Updated to 3.0 preview 5
 </details>
