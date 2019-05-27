@@ -23,13 +23,13 @@
     protected virtual string BaseClass => "blazor-context-menu blazor-context-menu__wrapper";
 
     /// <summary>
-    /// The id that the <see cref="Components.ContextMenuTrigger" /> will use to bind to. This parameter is required
+    /// The id that the <see cref="ContextMenuTrigger" /> will use to bind to. This parameter is required
     /// </summary>
     [Parameter]
     public string Id { get; protected set; }
 
     /// <summary>
-    /// The name of the template to use for this <see cref="BlazorContextMenu.Components.ContextMenu" /> and all its <see cref="BlazorContextMenu.Components.SubMenu" />.
+    /// The name of the template to use for this <see cref="ContextMenu" /> and all its <see cref="SubMenu" />.
     /// </summary>
     [Parameter]
     public string Template { get; protected set; }
@@ -86,7 +86,7 @@
     public string ListCssClass { get; protected set; }
 
     /// <summary>
-    /// Allows you to set the <see cref="BlazorContextMenu.Animation" /> used by this <see cref="BlazorContextMenu.Components.ContextMenu" /> and all its <see cref="BlazorContextMenu.Components.SubMenu" />
+    /// Allows you to set the <see cref="BlazorContextMenu.Animation" /> used by this <see cref="ContextMenu" /> and all its <see cref="SubMenu" />
     /// </summary>
     [Parameter]
     public Animation? Animation { get; protected set; }

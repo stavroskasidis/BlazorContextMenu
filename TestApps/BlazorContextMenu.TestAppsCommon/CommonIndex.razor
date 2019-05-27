@@ -42,6 +42,13 @@
     <p id="test6-trigger">Right or left-click me (menu2 - with icons and sub-menus)</p>
 </ContextMenuTrigger>
 
+<ContextMenuTrigger MenuId="menu1" MouseButtonTrigger="MouseButtonTrigger.Right" WrapperTag="span">
+    <p id="test7-trigger">(span trigger) Right-click me (menu1)</p>
+</ContextMenuTrigger>
+
+<ContextMenuTrigger MenuId="menu1" Id="test8-trigger" MouseButtonTrigger="MouseButtonTrigger.Right" WrapperTag="textarea">
+    (textarea trigger) Right-click me (menu1)
+</ContextMenuTrigger>
 
 <ContextMenu Id="menu1" Template="dark">
     <Item Id="menu1-item1" OnClick="FetchDataClick">Fetch Data</Item>

@@ -37,13 +37,21 @@ namespace BlazorContextMenu
             }
 
             builder.AddAttribute(3, "class", CssClass);
-            builder.AddContent(4, ChildContent);
+            builder.AddAttribute(4, "id", Id);
+            builder.AddContent(5, ChildContent);
             builder.CloseElement();
 
         }
 
         [Inject] private IJSRuntime jsRuntime { get; set; }
         [Inject] private BlazorContextMenuHandler blazorContextMenuHandler { get; set; }
+
+
+        /// <summary>
+        /// The id of the <see cref="ContextMenuTrigger" /> wrapper element.
+        /// </summary>
+        [Parameter]
+        public string Id { get; protected set; }
 
         /// <summary>
         /// The Id of the <see cref="ContextMenu" /> to open. This parameter is required.
