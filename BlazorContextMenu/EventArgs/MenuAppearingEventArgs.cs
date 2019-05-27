@@ -6,11 +6,23 @@ namespace BlazorContextMenu
 {
     public class MenuAppearingEventArgs
     {
-        public MenuAppearingEventArgs(string contextMenuId, string contextMenuTargetId)
+        public MenuAppearingEventArgs(string contextMenuId, string contextMenuTargetId, string x, string y)
         {
             ContextMenuId = contextMenuId;
             ContextMenuTargetId = contextMenuTargetId;
+            X = x;
+            Y = y;
         }
+
+        /// <summary>
+        /// The X position of the <see cref="ContextMenu"/>.
+        /// </summary>
+        public string X { get; set; }
+
+        /// <summary>
+        /// The Y position of the <see cref="ContextMenu"/>.
+        /// </summary>
+        public string Y { get; set; }
 
         /// <summary>
         /// The id of the <see cref="ContextMenu"/> that triggered this event.
@@ -23,7 +35,7 @@ namespace BlazorContextMenu
         public string ContextMenuTargetId { get; protected set; }
 
         /// <summary>
-        /// If set to true, then the menu will not appear.
+        /// If set to true, then the <see cref="ContextMenu"/> will not appear.
         /// </summary>
         public bool PreventShow { get; set; }
     }

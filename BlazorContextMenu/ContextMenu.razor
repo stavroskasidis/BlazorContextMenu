@@ -224,8 +224,10 @@
     {
         if (OnAppearing.HasDelegate)
         {
-            var eventArgs = new MenuAppearingEventArgs(Id, targetId);
+            var eventArgs = new MenuAppearingEventArgs(Id, targetId, x, y);
             await OnAppearing.InvokeAsync(eventArgs);
+            x = eventArgs.X;
+            y = eventArgs.Y;
             if (eventArgs.PreventShow)
             {
                 return;
