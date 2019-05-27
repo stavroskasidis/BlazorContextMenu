@@ -6,35 +6,34 @@
     <hr class="@HrClassCalc" />
 </li>
 
-@functions {
+@functions{
 
-
-        /// <summary>
-        /// Allows you to override the default css class of the menu's li seperator element for full customization.
-        /// </summary>
+    /// <summary>
+    /// Allows you to override the default css class of the <see cref="Seperator"/>'s li element, for full customization.
+    /// </summary>
     [Parameter]
     public string OverrideDefaultCssClass { get; protected set; }
 
     /// <summary>
-    /// Allows you to override the default css class of the menu's seperator hr element for full customization.>
+    /// Allows you to override the default css class of the <see cref="Seperator"/>'s hr element, for full customization.
     /// </summary>
     [Parameter]
     public string OverrideDefaultHrCssClass { get; protected set; }
 
     /// <summary>
-    /// The id of the li element. This is optional
+    /// The id of the <see cref="Seperator"/>'s li element. This is optional
     /// </summary>
     [Parameter]
     public string Id { get; protected set; }
 
     /// <summary>
-    /// Additional css class for the menu's li seperator element. Use this to extend the default css
+    /// Additional css class for the <see cref="Seperator"/>'s li element. Use this to extend the default css.
     /// </summary>
     [Parameter]
     public string CssClass { get; protected set; }
 
     /// <summary>
-    /// Additional css class for the menu's seperator hr element. Use this to extend the default css
+    /// Additional css class for the <see cref="Seperator"/>'s hr element. Use this to extend the default css.
     /// </summary>
     [Parameter]
     public string HrCssClass { get; protected set; }
