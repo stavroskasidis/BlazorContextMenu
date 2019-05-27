@@ -226,7 +226,7 @@
         {
             var eventArgs = new MenuAppearingEventArgs(Id, targetId);
             await OnAppearing.InvokeAsync(eventArgs);
-            if (eventArgs.IsCanceled)
+            if (eventArgs.PreventShow)
             {
                 return;
             }
