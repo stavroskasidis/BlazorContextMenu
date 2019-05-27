@@ -102,6 +102,13 @@
     [Parameter]
     public Animation? Animation { get; protected set; }
 
+    /// <summary>
+    /// A handler that is triggered before the menu appears. Can be used to prevent the menu from showing.
+    /// </summary>
+    [Parameter]
+    protected EventCallback<MenuAppearingEventArgs> OnAppearing { get; set; }
+
+
     [CascadingParameter(Name = "CascadingAnimation")]
     protected Animation? CascadingAnimation { get; set; }
 
@@ -213,13 +220,23 @@
         contextMenuHandler.Unregister((ContextMenu)(object)this);
     }
 
-    internal void Show(string x, string y, string targetId)
+    internal async Task Show(string x, string y, string targetId)
     {
+        if (OnAppearing.HasDelegate)
+        {
+            var eventArgs = new MenuAppearingEventArgs(Id, targetId);
+            await OnAppearing.InvokeAsync(eventArgs);
+            if (eventArgs.IsCanceled)
+            {
+                return;
+            }
+        }
+
         IsShowing = true;
         X = x;
         Y = y;
         TargetId = targetId;
-        Invoke(() => StateHasChanged());
+        await Invoke(() => StateHasChanged());
     }
 
     internal void Hide()
