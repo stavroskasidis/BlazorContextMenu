@@ -6,13 +6,19 @@ namespace BlazorContextMenu
 {
     public class MenuAppearingEventArgs
     {
-        public MenuAppearingEventArgs(string contextMenuId, string contextMenuTargetId, string x, string y)
+        public MenuAppearingEventArgs(string contextMenuId, string contextMenuTargetId, string x, string y, string contextMenuTriggerId)
         {
             ContextMenuId = contextMenuId;
             ContextMenuTargetId = contextMenuTargetId;
             X = x;
             Y = y;
+            ContextMenuTriggerId = contextMenuTriggerId;
         }
+
+        /// <summary>
+        /// The Id of the <see cref="ContextMenuTrigger"/> that is showing this menu.
+        /// </summary>
+        public string ContextMenuTriggerId { get; protected set; }
 
         /// <summary>
         /// The X position of the <see cref="ContextMenu"/>.

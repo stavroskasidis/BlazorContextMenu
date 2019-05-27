@@ -109,6 +109,8 @@
     protected string X { get; set; }
     protected string Y { get; set; }
     protected string TargetId { get; set; }
+    protected string TriggerId { get; set; }
+
     protected string ClassCalc
     {
         get
@@ -209,11 +211,11 @@
         contextMenuHandler.Unregister((ContextMenu)(object)this);
     }
 
-    internal async Task Show(string x, string y, string targetId)
+    internal async Task Show(string x, string y, string targetId, string triggerId)
     {
         if (OnAppearing.HasDelegate)
         {
-            var eventArgs = new MenuAppearingEventArgs(Id, targetId, x, y);
+            var eventArgs = new MenuAppearingEventArgs(Id, targetId, x, y, triggerId);
             await OnAppearing.InvokeAsync(eventArgs);
             x = eventArgs.X;
             y = eventArgs.Y;
@@ -227,6 +229,7 @@
         X = x;
         Y = y;
         TargetId = targetId;
+        TriggerId = triggerId;
         await Invoke(() => StateHasChanged());
     }
 
@@ -239,5 +242,10 @@
     internal string GetTarget()
     {
         return TargetId;
+    }
+
+    internal string GetTrigger()
+    {
+        return TriggerId;
     }
 }

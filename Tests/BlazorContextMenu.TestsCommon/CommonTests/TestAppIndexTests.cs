@@ -52,6 +52,22 @@ namespace BlazorContextMenu.E2ETests.Tests
         }
 
         [Theory]
+        [InlineData("test9-trigger", MouseButton.Right)]
+        public async Task Menu1_PreventShow_IsNotShown(string triggerId, MouseButton mouseButton)
+        {
+            //Arrange
+            var expectedDisplay = "none";
+
+            //Act
+            await OpenContextMenuAt(triggerId, mouseButton);
+
+            //Assert
+            var menuElement = Browser.FindElement(By.Id("menu1"));
+            var display = menuElement.GetCssValue("display");
+            Assert.Equal(expectedDisplay, display);
+        }
+
+        [Theory]
         [InlineData("test1-trigger", MouseButton.Right)]
         [InlineData("test3-trigger", MouseButton.Left)]
         [InlineData("test4-trigger", MouseButton.Right)]

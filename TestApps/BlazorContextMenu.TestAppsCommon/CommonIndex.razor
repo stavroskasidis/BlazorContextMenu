@@ -42,15 +42,20 @@
     <p id="test6-trigger">Right or left-click me (menu2 - with icons and sub-menus)</p>
 </ContextMenuTrigger>
 
-<ContextMenuTrigger MenuId="menu1" MouseButtonTrigger="MouseButtonTrigger.Right" WrapperTag="span">
+<ContextMenuTrigger MenuId="menu1" WrapperTag="span">
     <p id="test7-trigger">(span trigger) Right-click me (menu1)</p>
 </ContextMenuTrigger>
 
-<ContextMenuTrigger MenuId="menu1" Id="test8-trigger" MouseButtonTrigger="MouseButtonTrigger.Right" WrapperTag="textarea">
+<ContextMenuTrigger MenuId="menu1" Id="test8-trigger" WrapperTag="textarea">
     (textarea trigger) Right-click me (menu1)
 </ContextMenuTrigger>
 
-<ContextMenu Id="menu1" Template="dark">
+<ContextMenuTrigger Id="test9-trigger" MenuId="menu1" WrapperTag="pre">
+    (pre) Right-click me (menu1). Menu show is prevented!
+    this is a preformated text
+</ContextMenuTrigger>
+
+<ContextMenu Id="menu1" Template="dark" OnAppearing="@OnAppearingMenu1">
     <Item Id="menu1-item1" OnClick="FetchDataClick">Fetch Data</Item>
     <Item Id="menu1-item2" OnClick="ClearDataClick">Clear Data</Item>
     <Seperator />
@@ -110,9 +115,16 @@
         StateHasChanged();
     }
 
-
     void OnClick(ItemClickEventArgs e)
     {
         Console.WriteLine($"Item Clicked => Menu: {e.ContextMenuId}, MenuTarget: {e.ContextMenuTargetId}, IsCanceled: {e.IsCanceled}, MenuItem: {e.MenuItemElement}, MouseEvent: {e.MouseEvent}");
+    }
+
+    void OnAppearingMenu1(MenuAppearingEventArgs e)
+    {
+        if(e.ContextMenuTriggerId == "test9-trigger")
+        {
+            e.PreventShow = true;
+        }
     }
 }

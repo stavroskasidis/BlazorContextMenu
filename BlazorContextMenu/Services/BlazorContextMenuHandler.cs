@@ -30,11 +30,11 @@ namespace BlazorContextMenu
         }
 
         [JSInvokable]
-        public async Task ShowMenu(string id, string x, string y, string target)
+        public async Task ShowMenu(string id, string x, string y, string targetId, string triggerId)
         {
             if (_initializedMenus.ContainsKey(id))
             {
-                await _initializedMenus[id].Show(x, y, target);
+                await _initializedMenus[id].Show(x, y, targetId, triggerId);
             }
         }
 
