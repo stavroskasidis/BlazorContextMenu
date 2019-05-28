@@ -19,38 +19,38 @@
 
 @functions{
 
-        /// <summary>
-        /// Allows you to override the default css class of the menu's li element for full customization.
-        /// </summary>
+    /// <summary>
+    /// Allows you to override the default css class of the <see cref="Item"/>'s li element, for full customization.
+    /// </summary>
     [Parameter]
     public string OverrideDefaultCssClass { get; protected set; }
 
     /// <summary>
-    /// Allows you to override the default "disabled" css class of the menu's li element for full customization.
+    /// Allows you to override the default css class of the <see cref="Item"/>'s li element when disabled, for full customization.
     /// </summary>
     [Parameter]
     public string OverrideDefaultDisabledCssClass { get; protected set; }
 
     /// <summary>
-    /// Allows you to override the default css class of the menu's li element when it contains a <see cref="SubMenu"/> for full customization.
+    /// Allows you to override the default css class of the <see cref="Item"/>'s li element when it contains a <see cref="SubMenu"/>, for full customization.
     /// </summary>
     [Parameter]
     public string OverrideDefaultCssClassWithSubMenu { get; protected set; }
 
     /// <summary>
-    /// Additional css class for the menu's li element. Use this to extend the default css
+    /// Additional css class for the <see cref="Item"/>'s li element. Use this to extend the default css.
     /// </summary>
     [Parameter]
     public string CssClass { get; protected set; }
 
     /// <summary>
-    /// Additional css class for the menu's li element when disabled. Use this to extend the default css
+    /// Additional css class for the <see cref="Item"/>'s li element when disabled. Use this to extend the default css.
     /// </summary>
     [Parameter]
     public string DisabledCssClass { get; protected set; }
 
     /// <summary>
-    /// Additional css class for the menu's li element when it contains a <see cref="SubMenu"/>. Use this to extend the default css
+    /// Additional css class for the <see cref="Item"/>'s li element when it contains a <see cref="SubMenu"/>. Use this to extend the default css.
     /// </summary>
     [Parameter]
     public string CssClassWithSubMenu { get; protected set; }
@@ -63,25 +63,25 @@
     protected EventCallback<ItemClickEventArgs> OnClick { get; set; }
 
     /// <summary>
-    /// Sets the item's enabled state. Default <see cref="true" />
+    /// Sets the item's enabled state. Default <see cref="true" />.
     /// </summary>
     [Parameter]
     public bool Enabled { get; protected set; } = true;
 
     /// <summary>
-    /// Sets the item's visible state. Default <see cref="true" />
+    /// Sets the item's visible state. Default <see cref="true" />.
     /// </summary>
     [Parameter]
     public bool Visible { get; protected set; } = true;
 
     /// <summary>
-    /// A handler that can be used to set the item's <see cref="Visible"/> or <see cref="Enabled"/> status dynamically
+    /// A handler that can be used to set the item's <see cref="Visible"/> or <see cref="Enabled"/> status dynamically.
     /// </summary>
     [Parameter]
     protected EventCallback<ItemAppearingEventArgs> OnAppearing { get; set; }
 
     /// <summary>
-    /// The id of the li element. This is optional
+    /// The id of the li element. This is optional.
     /// </summary>
     [Parameter]
     public string Id { get; protected set; }
@@ -145,12 +145,13 @@
 
         ParentMenu = menuTreeTraverser.GetClosestContextMenu(this);
         Template = ParentMenu.GetActiveTemplate();
+        var contextMenuTrigger = RootMenu.GetTrigger();
         var contextMenuTarget = RootMenu.GetTarget();
 
         if (OnAppearing.HasDelegate)
         {
             //TODO: Remove casting when 'this' is fixed in blazor
-            var appearingArgs = new ItemAppearingEventArgs(RootMenu.Id, contextMenuTarget, (Item)(object)this, Visible, Enabled);
+            var appearingArgs = new ItemAppearingEventArgs(RootMenu.Id, contextMenuTrigger, contextMenuTarget, (Item)(object)this, Visible, Enabled);
             await OnAppearing.InvokeAsync(appearingArgs);
             Visible = appearingArgs.IsVisible;
             Enabled = appearingArgs.IsEnabled;

@@ -35,6 +35,8 @@ namespace BlazorContextMenu.E2ETests.Tests
         [InlineData("test3-trigger", MouseButton.Left)]
         [InlineData("test4-trigger", MouseButton.Right)]
         [InlineData("test4-trigger", MouseButton.Left)]
+        [InlineData("test7-trigger", MouseButton.Right)]
+        [InlineData("test8-trigger", MouseButton.Right)]
         public async Task Menu1_Triggers_Shown(string triggerId, MouseButton mouseButton)
         {
             //Arrange
@@ -50,10 +52,28 @@ namespace BlazorContextMenu.E2ETests.Tests
         }
 
         [Theory]
+        [InlineData("test9-trigger", MouseButton.Right)]
+        public async Task Menu1_PreventShow_IsNotShown(string triggerId, MouseButton mouseButton)
+        {
+            //Arrange
+            var expectedDisplay = "none";
+
+            //Act
+            await OpenContextMenuAt(triggerId, mouseButton);
+
+            //Assert
+            var menuElement = Browser.FindElement(By.Id("menu1"));
+            var display = menuElement.GetCssValue("display");
+            Assert.Equal(expectedDisplay, display);
+        }
+
+        [Theory]
         [InlineData("test1-trigger", MouseButton.Right)]
         [InlineData("test3-trigger", MouseButton.Left)]
         [InlineData("test4-trigger", MouseButton.Right)]
         [InlineData("test4-trigger", MouseButton.Left)]
+        [InlineData("test7-trigger", MouseButton.Right)]
+        [InlineData("test8-trigger", MouseButton.Right)]
         public async Task Menu1_TriggerAndClickOutside_MenuCloses(string triggerId, MouseButton mouseButton)
         {
             //Arrange
@@ -75,6 +95,8 @@ namespace BlazorContextMenu.E2ETests.Tests
         [InlineData("test3-trigger", MouseButton.Left)]
         [InlineData("test4-trigger", MouseButton.Right)]
         [InlineData("test4-trigger", MouseButton.Left)]
+        [InlineData("test7-trigger", MouseButton.Right)]
+        [InlineData("test8-trigger", MouseButton.Right)]
         public async Task Menu1_SelectFetchData_DataFetched(string triggerId, MouseButton mouseButton)
         {
             //Arrange
@@ -101,6 +123,8 @@ namespace BlazorContextMenu.E2ETests.Tests
         [InlineData("test3-trigger", MouseButton.Left)]
         [InlineData("test4-trigger", MouseButton.Right)]
         [InlineData("test4-trigger", MouseButton.Left)]
+        [InlineData("test7-trigger", MouseButton.Right)]
+        [InlineData("test8-trigger", MouseButton.Right)]
         public async Task Menu1_SelectClearData_DataCleared(string triggerId, MouseButton mouseButton)
         {
             //Arrange
@@ -125,6 +149,8 @@ namespace BlazorContextMenu.E2ETests.Tests
         [InlineData("test3-trigger", MouseButton.Left)]
         [InlineData("test4-trigger", MouseButton.Right)]
         [InlineData("test4-trigger", MouseButton.Left)]
+        [InlineData("test7-trigger", MouseButton.Right)]
+        [InlineData("test8-trigger", MouseButton.Right)]
         public async Task Menu1_SelectDisabledItem_MenuStaysOpen(string triggerId, MouseButton mouseButton)
         {
             //Arrange

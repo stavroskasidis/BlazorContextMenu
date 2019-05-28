@@ -30,7 +30,7 @@ namespace BlazorContextMenu.E2ETests.Tests
         public async Task TodoItemsMenu_TriggerForFirstItemAndSelectCopy_ItemCopied(string listId, MouseButton mouseButton)
         {
             //Arrange
-            var expectedItemsCount = 4;
+            var expectedItemsCount = 5;
             //Act
             await OpenContextMenuAt($"{listId}-0", mouseButton);
             var menuItem = Browser.FindElement(By.Id("menuitem-copy"));
@@ -49,7 +49,7 @@ namespace BlazorContextMenu.E2ETests.Tests
         public async Task TodoItemsMenu_TriggerForSecondItemAndSelectDelete_ItemDeleted(string listId, MouseButton mouseButton)
         {
             //Arrange
-            var expectedItemsCount = 2;
+            var expectedItemsCount = 3;
             //Act
             await OpenContextMenuAt($"{listId}-1", mouseButton);
             var menuItem = Browser.FindElement(By.Id("menuitem-delete"));
@@ -203,6 +203,23 @@ namespace BlazorContextMenu.E2ETests.Tests
 
             //Assert
             Assert.Contains(expectedDisplay, styles);
+        }
+
+        [Theory]
+        [InlineData("list1", MouseButton.Right)]
+        [InlineData("list2", MouseButton.Left)]
+        public async Task TodoItemsMenu_TriggerForFourthItem_MenuIsNotShown(string listId, MouseButton mouseButton)
+        {
+            //Arrange
+            var expectedDisplay = "none";
+
+            //Act
+            await OpenContextMenuAt($"{listId}-3", mouseButton);
+
+            //Assert
+            var menuElement = Browser.FindElement(By.Id("todoItemsMenu"));
+            var display = menuElement.GetCssValue("display");
+            Assert.Equal(expectedDisplay, display);
         }
     }
 }

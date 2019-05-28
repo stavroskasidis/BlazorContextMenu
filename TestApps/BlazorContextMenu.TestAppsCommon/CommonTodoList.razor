@@ -20,7 +20,7 @@
     </ul>
 </ContextMenuTrigger>
 
-<ContextMenu Id="todoItemsMenu">
+<ContextMenu Id="todoItemsMenu" OnAppearing="@TodoItemsMenuOnAppearing">
     <Item id="menuitem-copy" OnClick="CopyClick"> <i class="fas fa-file blue-icon"></i> Copy</Item>
     <Item id="menuitem-check" OnClick="CheckClick" OnAppearing="CheckAppearingHandler"> <i class="fas fa-file blue-icon"></i> Check</Item>
     <Item id="menuitem-delete" OnClick="DeleteClick" OnAppearing="DeleteAppearingHandler"> <i class="fas fa-trash-alt red-icon"></i> Delete</Item>
@@ -28,6 +28,16 @@
 </ContextMenu>
 
 @functions{
+
+    async Task TodoItemsMenuOnAppearing(MenuAppearingEventArgs e)
+    {
+        var itemIndex = await jsRuntime.InvokeAsync<int>("TestApp_GetItemIndex", e.ContextMenuTargetId);
+        if (itemIndex >= 0)
+        {
+            var currentTodoItem = TodoItems.ElementAt(itemIndex);
+            e.PreventShow = !currentTodoItem.CanShowMenu;
+        }
+    }
 
     async Task CopyClick(ItemClickEventArgs e)
     {
@@ -114,6 +124,11 @@
         {
             Text="Item 3 (Cannot be deleted)",
             CanBeDeleted = false
+        },
+         new TodoItem
+        {
+            Text="Item 4 (Does not show the menu)",
+            CanShowMenu = false
         }
     };
 
@@ -122,6 +137,7 @@
         public string Text { get; set; }
         public bool IsChecked { get; set; }
         public bool CanBeDeleted { get; set; } = true;
+        public bool CanShowMenu { get; set; } = true;
     }
 
 }

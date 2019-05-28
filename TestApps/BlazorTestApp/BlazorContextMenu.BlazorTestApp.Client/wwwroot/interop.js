@@ -13,14 +13,16 @@ if (window.Element && !Element.prototype.closest) {
         };
 }
 
-TestApp_GetItemIndex =  function (targetItemId) {
+TestApp_GetItemIndex = function (targetItemId) {
     var targetItem = document.getElementById(targetItemId);
     var li = targetItem.closest("li");
-    var children = li.parentNode.childNodes;
-    var num = 0;
-    for (var i = 0; i < children.length; i++) {
-        if (children[i] == li) return num;
-        if (children[i].nodeType == 1) num++;
+    if (li) {
+        var children = li.parentNode.childNodes;
+        var num = 0;
+        for (var i = 0; i < children.length; i++) {
+            if (children[i] == li) return num;
+            if (children[i].nodeType == 1) num++;
+        }
     }
     return -1;
 };

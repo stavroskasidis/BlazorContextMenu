@@ -34,10 +34,10 @@
 
 <TabStrip Title="You can have menu items be enabled/visible dynamically depending on the targeted element" TabItems="tabItems" />
 
-<ContextMenu Id="dynamicItemsMenu">
-    <Item Id="menuitem-check" OnClick="@ItemClick" OnAppearing="@OnAppearingHandler"> <i class="far fa-check-square blue-icon"></i> Check</Item>
-    <Item Id="menuitem-uncheck" OnClick="@ItemClick" OnAppearing="@OnAppearingHandler"> <i class="far fa-square blue-icon"></i> Uncheck</Item>
-    <Item Id="menuitem-delete" OnClick="@ItemClick" OnAppearing="@OnAppearingHandler"> <i class="fas fa-trash-alt red-icon"></i> Delete</Item>
+<ContextMenu Id="dynamicItemsMenu" OnAppearing="@MenuOnAppearingHandler">
+    <Item Id="menuitem-check" OnClick="@ItemClick" OnAppearing="@ItemOnAppearingHandler"> <i class="far fa-check-square blue-icon"></i> Check</Item>
+    <Item Id="menuitem-uncheck" OnClick="@ItemClick" OnAppearing="@ItemOnAppearingHandler"> <i class="far fa-square blue-icon"></i> Uncheck</Item>
+    <Item Id="menuitem-delete" OnClick="@ItemClick" OnAppearing="@ItemOnAppearingHandler"> <i class="fas fa-trash-alt red-icon"></i> Delete</Item>
 </ContextMenu>
 
 
@@ -47,6 +47,7 @@
         public string Text { get; set; }
         public bool IsChecked { get; set; }
         public bool CanBeDeleted { get; set; } = true;
+        public bool CanShowMenu { get; set; } = true;
     }
 
     List<TodoItem> TodoItems = null;
@@ -85,10 +86,25 @@
                 Text="Item 4 (Cannot be deleted)",
                 CanBeDeleted = false
             },
+            new TodoItem
+            {
+                Text="Item 5 (Does NOT show the menu)",
+                CanShowMenu = false
+            },
         };
     }
 
-    async Task OnAppearingHandler(ItemAppearingEventArgs e)
+    async Task MenuOnAppearingHandler(MenuAppearingEventArgs e)
+    {
+        var itemIndex = await jsRuntime.InvokeAsync<int>("DemoApp_GetListItemIndex", e.ContextMenuTargetId);
+        if (itemIndex >= 0)
+        {
+            var currentTodoItem = TodoItems.ElementAt(itemIndex);
+            e.PreventShow = !currentTodoItem.CanShowMenu;
+        }
+    }
+
+    async Task ItemOnAppearingHandler(ItemAppearingEventArgs e)
     {
         var itemIndex = await jsRuntime.InvokeAsync<int>("DemoApp_GetListItemIndex", e.ContextMenuTargetId);
         if (itemIndex >= 0)
@@ -147,10 +163,10 @@
 </ContextMenuTrigger>
 <button type=""button"" onclick=""@ResetList"">Reset list</button>
 
-<ContextMenu Id=""dynamicItemsMenu"">
-    <Item Id=""menuitem-check"" OnClick=""@ItemClick"" OnAppearing=""@OnAppearingHandler""> <i class=""far fa-check-square blue-icon""></i> Check</Item>
-    <Item Id=""menuitem-uncheck"" OnClick=""@ItemClick"" OnAppearing=""@OnAppearingHandler""> <i class=""far fa-square blue-icon""></i> Uncheck</Item>
-    <Item Id=""menuitem-delete"" OnClick=""@ItemClick"" OnAppearing=""@OnAppearingHandler""> <i class=""fas fa-trash-alt red-icon""></i> Delete</Item>
+<ContextMenu Id=""dynamicItemsMenu"" OnAppearing=""@MenuOnAppearingHandler"">
+    <Item Id=""menuitem-check"" OnClick=""@ItemClick"" OnAppearing=""@ItemOnAppearingHandler""> <i class=""far fa-check-square blue-icon""></i> Check</Item>
+    <Item Id=""menuitem-uncheck"" OnClick=""@ItemClick"" OnAppearing=""@ItemOnAppearingHandler""> <i class=""far fa-square blue-icon""></i> Uncheck</Item>
+    <Item Id=""menuitem-delete"" OnClick=""@ItemClick"" OnAppearing=""@ItemOnAppearingHandler""> <i class=""fas fa-trash-alt red-icon""></i> Delete</Item>
 </ContextMenu>
 
 @functions{
@@ -200,7 +216,17 @@
         };
     }
 
-    async Task OnAppearingHandler(ItemAppearingEventArgs e)
+    async Task MenuOnAppearingHandler(MenuAppearingEventArgs e)
+    {
+        var itemIndex = await jsRuntime.InvokeAsync<int>(""DemoApp_GetListItemIndex"", e.ContextMenuTargetId);
+        if (itemIndex >= 0)
+        {
+            var currentTodoItem = TodoItems.ElementAt(itemIndex);
+            e.PreventShow = !currentTodoItem.CanShowMenu;
+        }
+    }
+
+    async Task ItemOnAppearingHandler(ItemAppearingEventArgs e)
     {
         //Interop is required here due to current blazor limitations
         var itemIndex = await jsRuntime.InvokeAsync<int>(""DemoApp_GetListItemIndex"", e.ContextMenuTargetId);
