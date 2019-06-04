@@ -1,0 +1,69 @@
+﻿<label><strong>Example of a 'dark' template</strong></label>
+<ContextMenuTrigger MenuId="dark-menu">
+    <p>Right click here to view the "dark" menu</p>
+</ContextMenuTrigger>
+
+<hr />
+
+<label><strong>Example of a 'pink' template</strong></label>
+<ContextMenuTrigger MenuId="pink-menu">
+    <p>Right click here to view the "pink" menu</p>
+</ContextMenuTrigger>
+
+<hr />
+
+<label><strong>Example of combining templates by using a template for the parent menu but a different template for a submenu</strong></label>
+<ContextMenuTrigger MenuId="dark-pink-menu">
+    <p>Right click here to view the "dark-pink" menu</p>
+</ContextMenuTrigger>
+
+<ContextMenu Id="dark-menu" Template="dark">
+    <Item OnClick="@OnClick">Item 1</Item>
+    <Item OnClick="@OnClick">Item 2</Item>
+    <Item OnClick="@OnClick" Enabled="false">Item 3 (disabled)</Item>
+    <Seperator />
+    <Item>
+        Submenu
+        <SubMenu>
+            <Item OnClick="@OnClick">Submenu Item 1</Item>
+            <Item OnClick="@OnClick">Submenu Item 2</Item>
+        </SubMenu>
+    </Item>
+</ContextMenu>
+
+<ContextMenu Id="pink-menu" Template="pink">
+    <Item OnClick="@OnClick">Item 1</Item>
+    <Item OnClick="@OnClick">Item 2</Item>
+    <Item OnClick="@OnClick" Enabled="false">Item 3 (disabled)</Item>
+    <Seperator />
+    <Item>
+        Submenu
+        <SubMenu>
+            <Item OnClick="@OnClick">Submenu Item 1</Item>
+            <Item OnClick="@OnClick">Submenu Item 2</Item>
+        </SubMenu>
+    </Item>
+</ContextMenu>
+
+<ContextMenu Id="dark-pink-menu" Template="dark">
+    <Item OnClick="@OnClick">Item 1</Item>
+    <Item OnClick="@OnClick">Item 2</Item>
+    <Item OnClick="@OnClick" Enabled="false">Item 3 (disabled)</Item>
+    <Seperator />
+    <Item>
+        Submenu
+        <SubMenu Template="pink">
+            <Item OnClick="@OnClick">Submenu Item 1</Item>
+            <Item OnClick="@OnClick">Submenu Item 2</Item>
+        </SubMenu>
+    </Item>
+</ContextMenu>
+
+@functions{
+
+    void OnClick(ItemClickEventArgs e)
+    {
+        Console.WriteLine($"Item Clicked => Menu: {e.ContextMenuId}, MenuTarget: {e.ContextMenuTargetId}, " +
+            $"IsCanceled: {e.IsCanceled}, MenuItem: {e.MenuItemElement}, MouseEvent: {e.MouseEvent}");
+    }
+}

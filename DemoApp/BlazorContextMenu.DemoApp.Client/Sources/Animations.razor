@@ -1,0 +1,64 @@
+﻿<div>
+    <label><strong>Select Animation:</strong></label>
+    <select bind="@animation">
+        <option value="@Animation.None">@Animation.None</option>
+        <option value="@Animation.FadeIn">@Animation.FadeIn</option>
+        <option value="@Animation.Grow">@Animation.Grow</option>
+        <option value="@Animation.Slide">@Animation.Slide</option>
+        <option value="@Animation.Zoom">@Animation.Zoom</option>
+    </select>
+
+    <ContextMenuTrigger MenuId="animationsMenu">
+        <p>Right-click on this text to show the animated context menu.</p>
+    </ContextMenuTrigger>
+</div>
+
+<hr />
+
+<label><strong>You can have different animations for each submenu.</strong></label>
+
+<ContextMenuTrigger MenuId="animationsMenu2">
+    <p>Right-click on this text to show the animated context menu with different animations per submenu.</p>
+</ContextMenuTrigger>
+
+<ContextMenu Id="animationsMenu" Animation="@animation">
+    <Item OnClick="@OnClick">Item 1</Item>
+    <Item OnClick="@OnClick">Item 2</Item>
+    <Seperator />
+    <Item>
+        Submenu
+        <SubMenu>
+            <Item OnClick="@OnClick">Submenu Item 1</Item>
+            <Item OnClick="@OnClick">Submenu Item 2</Item>
+        </SubMenu>
+    </Item>
+</ContextMenu>
+
+<ContextMenu Id="animationsMenu2" Animation="@Animation.FadeIn">
+    <Item OnClick="@OnClick">Item 1</Item>
+    <Item OnClick="@OnClick">Item 2</Item>
+    <Seperator />
+    <Item>
+        Submenu With '@Animation.Zoom'
+        <SubMenu Animation="@Animation.Zoom">
+            <Item OnClick="@OnClick">Submenu Item 1</Item>
+            <Item OnClick="@OnClick">
+                Submenu with '@Animation.Slide'
+                <SubMenu Animation="@Animation.Slide">
+                    <Item OnClick="@OnClick">Subsubmenu Item 1</Item>
+                    <Item OnClick="@OnClick">Subsubmenu Item 2</Item>
+                </SubMenu>
+            </Item>
+        </SubMenu>
+    </Item>
+</ContextMenu>
+
+@functions{
+    private BlazorContextMenu.Animation animation = Animation.FadeIn;
+
+    void OnClick(ItemClickEventArgs e)
+    {
+        Console.WriteLine($"Item Clicked => Menu: {e.ContextMenuId}, MenuTarget: {e.ContextMenuTargetId}, " +
+            $"IsCanceled: {e.IsCanceled}, MenuItem: {e.MenuItemElement}, MouseEvent: {e.MouseEvent}");
+    }
+}

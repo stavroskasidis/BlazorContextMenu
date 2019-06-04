@@ -1,0 +1,18 @@
+﻿div.dark-menu {
+    color: #FFFFFF;
+    background-color: #444;
+}
+
+.dark-menu .dark-menu-item--with-submenu:after {
+    border-left-color: #d3d3d3;
+}
+
+.dark-menu .dark-menu-item--disabled,
+.dark-menu .dark-menu-item {
+    background-color: #444;
+}
+
+    .dark-menu .dark-menu-item--disabled:hover,
+    .dark-menu .dark-menu-item:hover {
+        background-color: #000000;
+    }

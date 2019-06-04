@@ -1,6 +1,8 @@
-﻿<div class="card code-block">
-    @if(!string.IsNullOrWhiteSpace(Title))
-    { 
+﻿@inject IJSRuntime jsRuntime
+
+<div class="card code-block">
+    @if (!string.IsNullOrWhiteSpace(Title))
+    {
         <div class="card-header">
             @Title
         </div>
@@ -12,6 +14,11 @@
 
 @functions{
     [Parameter] string Title { get; set; }
-    [Parameter] RenderFragment ChildContent { get; set; }
     [Parameter] string Language { get; set; }
+    [Parameter] RenderFragment ChildContent { get; set; }
+
+    protected override async Task OnAfterRenderAsync()
+    {
+        await jsRuntime.InvokeAsync<object>("DemoApp_RunPrism");
+    }
 }
