@@ -2,7 +2,7 @@
 using Microsoft.Extensions.DependencyInjection;
 using System;
 
-namespace BlazorContextMenu.DemoApp
+namespace BlazorContextMenu.DemoApp.Client
 {
     public class Program
     {

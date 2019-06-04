@@ -121,7 +121,7 @@
 
     protected override async Task OnInitAsync()
     {
-        forecasts = (await Http.GetJsonAsync<WeatherForecast[]>("sample-data/weather.json")).ToList();
+        forecasts = (await Http.GetJsonAsync<WeatherForecast[]>("api/SampleData/WeatherForecasts")).ToList();
     }
 
     class WeatherForecast
@@ -134,7 +134,7 @@
 
     async Task ReloadClick(ItemClickEventArgs e)
     {
-        forecasts = (await Http.GetJsonAsync<WeatherForecast[]>("sample-data/weather.json")).ToList();
+        forecasts = (await Http.GetJsonAsync<WeatherForecast[]>("api/SampleData/WeatherForecasts")).ToList();
     }
 
     async Task DeleteClick(ItemClickEventArgs e)

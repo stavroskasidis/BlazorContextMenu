@@ -1,6 +1,6 @@
 {
   "profiles": {
-    "BlazorContextMenu.DemoApp": {
+    "BlazorContextMenu.DemoApp.Client": {
       "commandName": "Project",
       "launchBrowser": true,
       "environmentVariables": {

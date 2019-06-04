@@ -4,7 +4,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace BlazorContextMenu.DemoApp.Shared
+namespace BlazorContextMenu.DemoApp.Client.Shared
 {
     public class TabItem
     {
