@@ -1,0 +1,19 @@
+﻿@page "/mousebuttontriggers"
+<h1>Mouse Button Triggers</h1>
+@{
+    var tabItems = new List<TabItem>
+    {
+        new TabItem
+        {
+            HeaderText = "Demo",
+            Contents = @<BlazorContextMenu.DemoApp.Client.Sources.MouseButtonTriggers />
+        },
+        new TabItem
+        {
+            HeaderText = "<> Source",
+            Contents = @<SourceFileLoader SourceFilePath="Sources/MouseButtonTriggers.razor" />
+        }
+    };
+}
+
+<TabStrip Title="You can set the trigger to left or either click" TabItems="tabItems"/>

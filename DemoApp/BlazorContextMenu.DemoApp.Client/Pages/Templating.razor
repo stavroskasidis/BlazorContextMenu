@@ -1,0 +1,24 @@
+@page "/templating"
+<h1>Templating</h1>
+@{ 
+    var darkMenuTabItems = new List<TabItem>()
+    {
+        new TabItem
+        {
+            HeaderText = "Demo",
+            Contents = @<BlazorContextMenu.DemoApp.Client.Sources.Templating />
+        },
+        new TabItem
+        {
+            HeaderText = "<> Source",
+            Contents = @<div>
+                            <SourceFileLoader SourceFilePath="Startup.cs" />
+                            <SourceFileLoader SourceFilePath="wwwroot/css/pink-menu.css" />
+                            <SourceFileLoader SourceFilePath="wwwroot/css/dark-menu.css" />
+                            <SourceFileLoader SourceFilePath="Sources/Templating.razor" />
+                        </div>
+        }
+    };
+}
+
+<TabStrip Title="You can create templates that you can easily apply to your context menus" TabItems="darkMenuTabItems"/>

@@ -1,0 +1,23 @@
+﻿div.pink-menu {
+    color: #000000;
+    background-color: #ffb3b3;
+}
+
+.pink-menu .pink-menu-item--with-submenu:after {
+    border-left-color: #FFFFFF;
+}
+
+.pink-menu .pink-menu-seperator-hr {
+    border-color: red;
+}
+
+.pink-menu .pink-menu-item--disabled,
+.pink-menu .pink-menu-item {
+    background-color: #ffb3b3;
+}
+
+    .pink-menu .pink-menu-item--disabled:hover,
+    .pink-menu .pink-menu-item:hover {
+        background-color: #c11515;
+        color: white;
+    }

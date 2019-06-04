@@ -1,0 +1,32 @@
+﻿<Project Sdk="Microsoft.NET.Sdk.Web">
+
+  <PropertyGroup>
+    <TargetFramework>netcoreapp3.0</TargetFramework>
+    <RestoreAdditionalProjectSources>
+      https://dotnet.myget.org/F/aspnetcore-dev/api/v3/index.json;
+      https://dotnet.myget.org/F/blazor-dev/api/v3/index.json;
+    </RestoreAdditionalProjectSources>
+    <LangVersion>7.3</LangVersion>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <Compile Remove="ClientSources\**" />
+    <Content Remove="ClientSources\**" />
+    <None Include="ClientSources\**" CopyToPublishDirectory="Always" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Microsoft.AspNetCore.Blazor.Server" Version="3.0.0-preview5-19227-01" />
+    <PackageReference Include="Microsoft.AspNetCore.Mvc.NewtonsoftJson" Version="3.0.0-preview5-19227-01" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\BlazorContextMenu.DemoApp.Client\BlazorContextMenu.DemoApp.Client.csproj" />
+    <ProjectReference Include="..\BlazorContextMenu.DemoApp.Shared\BlazorContextMenu.DemoApp.Shared.csproj" />
+  </ItemGroup>
+
+  <Target Name="PreBuild" BeforeTargets="PreBuildEvent">
+    <Exec Command="del /s /f /q &quot;$(ProjectDir)ClientSources\&quot;&#xD;&#xA;xcopy &quot;$(ProjectDir)..\BlazorContextMenu.DemoApp.Client\*.razor&quot; &quot;$(ProjectDir)ClientSources\&quot; /y /s&#xD;&#xA;xcopy &quot;$(ProjectDir)..\BlazorContextMenu.DemoApp.Client\*.cs&quot; &quot;$(ProjectDir)ClientSources\&quot; /y /s&#xD;&#xA;xcopy &quot;$(ProjectDir)..\BlazorContextMenu.DemoApp.Client\*.js&quot; &quot;$(ProjectDir)ClientSources\&quot; /y /s&#xD;&#xA;xcopy &quot;$(ProjectDir)..\BlazorContextMenu.DemoApp.Client\*.css&quot; &quot;$(ProjectDir)ClientSources\&quot; /y /s" />
+  </Target>
+
+</Project>

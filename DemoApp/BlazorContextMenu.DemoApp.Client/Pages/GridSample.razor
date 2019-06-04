@@ -1,0 +1,21 @@
+﻿@page "/gridsample"
+<h1>Grid Sample</h1>
+@{
+    var tabItems = new List<TabItem>()
+    {
+            new TabItem
+            {
+                HeaderText = "Demo",
+                Contents = @<BlazorContextMenu.DemoApp.Client.Sources.GridSample />
+            },
+            new TabItem
+            {
+                HeaderText = "<> Source",
+                Contents = @<div>
+                                <SourceFileLoader SourceFilePath="Sources/GridSample.razor" />
+                                <SourceFileLoader SourceFilePath="wwwroot/gridSampleInterop.js" />
+                            </div>
+            }
+    };
+}
+<TabStrip Title="Right-click on the rows to show the context menu." TabItems="tabItems"></TabStrip>

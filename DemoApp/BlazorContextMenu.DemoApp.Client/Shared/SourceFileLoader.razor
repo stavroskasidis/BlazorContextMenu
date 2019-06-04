@@ -1,0 +1,41 @@
+﻿@inject HttpClient httpClient
+
+@if(sourceFileContents == null)
+{
+    <p>Loading ...</p>
+}
+else
+{
+    <CodeBlock Title="@sourceFileName" Language="@sourceFileLanguage">@sourceFileContents</CodeBlock>
+}
+
+@functions{
+    [Parameter] protected string SourceFilePath { get; set; }
+
+    private string sourceFileContents { get; set; }
+    private string sourceFileName { get; set; }
+    private string sourceFileLanguage { get; set; }
+    protected override async Task OnParametersSetAsync()
+    {
+        sourceFileName = SourceFilePath.Split('/').Last();
+        sourceFileLanguage = GetLanguageByFileExtension(System.IO.Path.GetExtension(SourceFilePath));
+        sourceFileContents = await httpClient.GetStringAsync($"api/Source/{SourceFilePath.Replace(".", "_dot_")}");
+    }
+
+    private string GetLanguageByFileExtension(string fileExtension)
+    {
+        switch (fileExtension)
+        {
+            case ".razor":
+                return "html";
+            case ".js":
+                return "javascript";
+            case ".cs":
+                return "csharp";
+            case ".css":
+                return "css";
+            default:
+                throw new Exception("Unknown file extension");
+        }
+    }
+}

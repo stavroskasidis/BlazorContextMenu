@@ -1,0 +1,19 @@
+﻿@page "/animations"
+<h1>Animations</h1>
+@{
+    var animationsTabItems = new List<TabItem>
+    {
+        new TabItem
+        {
+            HeaderText = "Demo",
+            Contents = @<BlazorContextMenu.DemoApp.Client.Sources.Animations />
+        },
+        new TabItem
+        {
+            HeaderText = "<> Source",
+            Contents = @<SourceFileLoader SourceFilePath="Sources/Animations.razor" />
+        },
+    };
+}
+
+<TabStrip Title="Build-in animations" TabItems="animationsTabItems" />

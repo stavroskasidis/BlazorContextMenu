@@ -1,0 +1,20 @@
+﻿@page "/"
+<h1>Blazor Context Menu Samples App</h1>
+
+@{
+    var tabItems = new List<TabItem>()
+    {
+        new TabItem
+        {
+            HeaderText = "Demo",
+            Contents = @<BlazorContextMenu.DemoApp.Client.Sources.Index />
+        },
+        new TabItem
+        {
+            HeaderText = "<> Source",
+            Contents = @<SourceFileLoader SourceFilePath="Sources/Index.razor" />
+        },
+    };
+}
+
+<TabStrip Title="Basic Usage" TabItems="tabItems" />
