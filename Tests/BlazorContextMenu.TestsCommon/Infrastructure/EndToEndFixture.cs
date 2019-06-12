@@ -92,6 +92,7 @@ namespace BlazorContextMenu.TestsCommon.Infrastructure
             return WebHost.CreateDefaultBuilder()
                 .UseWebRoot(webRoot)
                 .UseContentRoot(contentRoot)
+                .UseStaticWebAssets()
                 .UseUrls("http://127.0.0.1:0")
                 .UseStartup<TStartup>()
                 .Build();

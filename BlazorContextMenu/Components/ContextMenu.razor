@@ -1,7 +1,7 @@
-﻿@using System.ComponentModel
-@inherits MenuTreeComponent
+﻿@inherits MenuTreeComponent
 @inject BlazorContextMenuSettings settings
 @inject BlazorContextMenuHandler contextMenuHandler
+@namespace BlazorContextMenu
 
 <div class="@($"{BaseClass} {ClassCalc} {DisplayClassCalc}")" id="@Id" style="@($"left:{X}px;top:{Y}px;")">
     @if (IsShowing)
@@ -18,7 +18,7 @@
     }
 </div>
 
-@functions{
+@code{
 
     protected virtual string BaseClass => "blazor-context-menu blazor-context-menu__wrapper";
 

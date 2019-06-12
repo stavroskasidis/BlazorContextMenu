@@ -1,8 +1,9 @@
 ﻿@inherits MenuTreeComponent
 @inject BlazorContextMenuSettings settings
 @inject MenuTreeTraverser menuTreeTraverser
+@namespace BlazorContextMenu
 
-<li id="@Id" class="@ClassCalc" ref="@MenuItemElement">
+<li id="@Id" class="@ClassCalc">
     <hr class="@HrClassCalc" />
 </li>
 
@@ -38,9 +39,6 @@
     [Parameter]
     public string HrCssClass { get; protected set; }
 
-
-
-    protected ElementRef MenuItemElement { get; set; }
     protected string Template { get; set; }
 
     protected string ClassCalc

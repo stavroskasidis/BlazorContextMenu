@@ -6,15 +6,15 @@
 
 
 gulp.task("clean:js", function (cb) {
-    rimraf("content/**/*.min.js", cb);
+    rimraf("wwwroot/**/*.min.js", cb);
 });
 
 gulp.task("clean:css", function (cb) {
-    rimraf("content/**/*.min.css", cb);
+    rimraf("wwwroot/**/*.min.css", cb);
 });
 
 gulp.task("min:css", function () {
-    return gulp.src(["content/**/*.css", "!content/**/*.css.js"], { base: "." })
+    return gulp.src(["wwwroot/**/*.css", "!wwwroot/**/*.css.js"], { base: "." })
         .pipe(cssmin())
         .pipe(rename({
             suffix: ".min"
@@ -23,7 +23,7 @@ gulp.task("min:css", function () {
 });
 
 gulp.task("min:js", function () {
-    return gulp.src(["content/**/*.js", "!content/**/*.min.js"], { base: "." })
+    return gulp.src(["wwwroot/**/*.js", "!wwwroot/**/*.min.js"], { base: "." })
         .pipe(uglify())
         .pipe(rename({
             suffix: ".min"
