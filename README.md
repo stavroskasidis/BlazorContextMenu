@@ -8,7 +8,7 @@ A context menu component for [Blazor](https://blazor.net)!
 
 > ⚠️ Warning
 
-> This project is build on top of an experimental framework. There are many limitations and there is a high probability that there will be breaking changes each version.
+> This project is build on top of an experimental framework. There are many limitations and there is a high propability that there will be breaking changes each version.
 
 ## Samples / Demo
 You can find a live demo [here](https://blazor-context-menu-demo.azurewebsites.net/).
@@ -39,11 +39,18 @@ public class Startup
 ```csharp
 @using BlazorContextMenu
 ```
-**4. Reference the static files (Temporary requirement ONLY for Blazor Server-Side projects)**
+**4. Reference the static files (Currently ONLY required for Blazor Server-Side projects)**
 
-Download and reference the .css and .js from the `/BlazorContextMenu/content` folder or use the following package from SQL-MisterMagoo https://github.com/SQL-MisterMagoo/BlazorEmbedLibrary 
+Add the following static file references in your `_Host.cshtml`
 
-### Basic usage
+```html
+<link href="_content/BlazorContextMenu/blazorContextMenu.min.css" rel="stylesheet" />
+```
+```html
+<script src="_content/BlazorContextMenu/blazorContextMenu.min.js"></script>
+```
+
+## Basic usage
 
 ```xml
 
@@ -64,7 +71,7 @@ Download and reference the .css and .js from the `/BlazorContextMenu/content` fo
     <p>Right-click on me to show the context menu !!</p>
 </ContextMenuTrigger>
 
-@functions{
+@code{
     void OnClick(ItemClickEventArgs e)
     {
         Console.WriteLine($"Item Clicked => Menu: {e.ContextMenuId}, MenuTarget: {e.ContextMenuTargetId}, IsCanceled: {e.IsCanceled}, MenuItem: {e.MenuItemElement}, MouseEvent: {e.MouseEvent}");
@@ -73,9 +80,9 @@ Download and reference the .css and .js from the `/BlazorContextMenu/content` fo
 
 ```
 
-### Customization
+## Customization
 
-#### Templates
+### Templates
 
 You can create templates in the configuration that you can then apply to context menus. 
 
@@ -138,7 +145,7 @@ public class Startup
     }
 }
 ```
-#### Explicit customization
+### Explicit customization
 All components expose `CssClass` parameters that you can use to add css classes. These take precedence over any template configuration.
 
 ```xml
@@ -148,11 +155,11 @@ All components expose `CssClass` parameters that you can use to add css classes.
 </ContextMenu>
 ```
 
-### Overriding default css
+## Overriding default css
 
 You can override the default css classes completely in the following ways (not recommended unless  you want to achieve advanced customization).
 
-#### Override default css using templates
+### Override default css using templates
 
 ```csharp
 public class Startup
@@ -174,7 +181,7 @@ public class Startup
 }
 ```
 
-#### Using the `OverrideDefaultXXX` parameters on components. These take precedence over the template overrides.
+### Using the `OverrideDefaultXXX` parameters on components. These take precedence over the template overrides.
 
 ```xml
 <ContextMenu Id="myMenu" OverrideDefaultCssClass="custom-menu">
@@ -185,7 +192,12 @@ public class Startup
 
 
 ## ⚠️ Breaking changes ⚠️
-<details open="open"><summary>Upgrading from 0.12 to 0.13</summary>
+<details open="open"><summary>Upgrading from 0.15 to 0.16</summary>
+
+>- Only for Blazor Server-Side projects: You must reference the static files as described in the "Installation" section
+</details>
+
+<details><summary>Upgrading from 0.12 to 0.13</summary>
 
 >- Remove the `@addTagHelper *, BlazorContextMenu` as it is no longer needed
 </details>
@@ -218,7 +230,12 @@ public class Startup
 </details>
 
 ## Release Notes
-<details open="open"><summary>0.15</summary>
+<details open="open"><summary>0.16</summary>
+    
+>- Updated to 3.0 preview 6
+</details>
+
+<details><summary>0.15</summary>
     
 >- Added new `OnAppearing` event to `ContextMenu` conponent, that can be used to prevent the menu from showing.
 >- Added the `WrapperTag` parameter to the `ContextMenuTrigger` component, that can be used to change the `ContextMenuTrigger` component's element tag (default: div).

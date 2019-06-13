@@ -93,7 +93,7 @@ namespace BlazorContextMenu
         {
             if (!blazorContextMenuHandler.ReferencePassedToJs)
             {
-                await jsRuntime.InvokeAsync<object>("blazorContextMenu.SetMenuHandlerReference", new DotNetObjectRef(blazorContextMenuHandler));
+                await jsRuntime.InvokeAsync<object>("blazorContextMenu.SetMenuHandlerReference", DotNetObjectRef.Create(blazorContextMenuHandler));
                 blazorContextMenuHandler.ReferencePassedToJs = true;
             }
         }

@@ -3,6 +3,7 @@ cd "%~dp0"
 set version-suffix=%1
 
 cd BlazorContextMenu
+call npm install
 call npm run minify
 cd "%~dp0"
 

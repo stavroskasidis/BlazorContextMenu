@@ -265,3 +265,5 @@ __pycache__/
 /TestApps/RazorComponentsTestApp/BlazorContextMenu.RazorComponentsTestApp/wwwroot/BlazorContextMenu.min.js
 /TestApps/RazorComponentsTestApp/BlazorContextMenu.RazorComponentsTestApp/wwwroot/styles.min.css
 /DemoApp/BlazorContextMenu.DemoApp.Server/ClientSources
+/BlazorContextMenu/wwwroot/BlazorContextMenu.min.css
+/BlazorContextMenu/wwwroot/BlazorContextMenu.min.js

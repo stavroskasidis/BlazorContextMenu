@@ -4,7 +4,7 @@
 <h1 id="header">Hello, Blazor context menu !</h1>
 
 <label>Menu 2 animation: </label>
-<select bind="Animation">
+<select @bind="Animation">
     <option value="@BlazorContextMenu.Animation.None">@BlazorContextMenu.Animation.None</option>
     <option value="@BlazorContextMenu.Animation.FadeIn">@BlazorContextMenu.Animation.FadeIn</option>
     <option value="@BlazorContextMenu.Animation.Grow">@BlazorContextMenu.Animation.Grow</option>
@@ -17,7 +17,7 @@
     <p id="test1-trigger">Right-click me (menu1)</p>
 </ContextMenuTrigger>
 
-<textarea style="@($"display:{TextAreaDisplay};")" id="test1-textarea" rows="20" cols="50" readonly wrap="hard" bind="@Summaries"></textarea>
+<textarea style="@($"display:{TextAreaDisplay};")" id="test1-textarea" rows="20" cols="50" readonly wrap="hard" @bind="Summaries"></textarea>
 
 
 
@@ -55,7 +55,7 @@
     this is a preformated text
 </ContextMenuTrigger>
 
-<ContextMenu Id="menu1" Template="dark" OnAppearing="@OnAppearingMenu1">
+<ContextMenu Id="menu1" Template="dark" OnAppearing="OnAppearingMenu1">
     <Item Id="menu1-item1" OnClick="FetchDataClick">Fetch Data</Item>
     <Item Id="menu1-item2" OnClick="ClearDataClick">Clear Data</Item>
     <Seperator />
@@ -65,7 +65,7 @@
 <ContextMenu Id="menu2" Template="red" Animation="Animation">
     <Item Id="menu2-item1" OnClick="OnClick"> <i class="far fa-file"></i> New</Item>
     <Item OnClick="OnClick"><i class="fas fa-edit"></i> Edit</Item>
-    <Item OnClick="OnClick" Enabled="false" > <i class="fas fa-trash-alt"></i> Delete</Item>
+    <Item OnClick="OnClick" Enabled="false"> <i class="fas fa-trash-alt"></i> Delete</Item>
     <Seperator />
     <Item Id="submenu1-trigger">
         <i class="fas fa-cogs"></i> More
@@ -91,7 +91,7 @@
 </ContextMenu>
 
 <NavLink href="/TodoList">Go to Todo List</NavLink>
-@functions{
+@code{
     protected string TextAreaDisplay { get; set; } = "none";
 
     protected string Summaries { get; set; }
@@ -122,7 +122,7 @@
 
     void OnAppearingMenu1(MenuAppearingEventArgs e)
     {
-        if(e.ContextMenuTriggerId == "test9-trigger")
+        if (e.ContextMenuTriggerId == "test9-trigger")
         {
             e.PreventShow = true;
         }

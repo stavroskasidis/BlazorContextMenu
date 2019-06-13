@@ -10,7 +10,6 @@ using Xunit.Abstractions;
 using System.Threading.Tasks;
 using OpenQA.Selenium.Interactions;
 using BlazorContextMenu.TestsCommon.Infrastructure;
-
 namespace BlazorContextMenu.E2ETests.Tests
 {
     public abstract class TestAppIndexTests<TStartup,TFixture> : TestBase<TStartup, TFixture> 
@@ -107,7 +106,7 @@ namespace BlazorContextMenu.E2ETests.Tests
             var menuItem = Browser.FindElement(By.Id("menu1-item1"));
             menuItem.Click();
             new WebDriverWait(Browser, TimeSpan.FromSeconds(10))
-                .Until(ExpectedConditions.ElementIsVisible(By.Id("test1-textarea")));
+                .Until(SeleniumExtras.WaitHelpers.ExpectedConditions.ElementIsVisible(By.Id("test1-textarea")));
 
             //Assert
             var menuElement = Browser.FindElement(By.Id("menu1"));

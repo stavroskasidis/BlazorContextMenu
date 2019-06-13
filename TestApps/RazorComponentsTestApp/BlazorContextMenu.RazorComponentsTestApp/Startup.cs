@@ -68,6 +68,7 @@ namespace BlazorContextMenu.RazorComponentsTestApp
 
             app.UseHttpsRedirection();
             app.UseStaticFiles();
+
             app.UseRouting();
 
             app.UseEndpoints(endpoints =>

@@ -1,6 +1,6 @@
 ﻿<div>
     <label><strong>Select Animation:</strong></label>
-    <select bind="@animation">
+    <select @bind="animation">
         <option value="@Animation.None">@Animation.None</option>
         <option value="@Animation.FadeIn">@Animation.FadeIn</option>
         <option value="@Animation.Grow">@Animation.Grow</option>
@@ -21,32 +21,32 @@
     <p>Right-click on this text to show the animated context menu with different animations per submenu.</p>
 </ContextMenuTrigger>
 
-<ContextMenu Id="animationsMenu" Animation="@animation">
-    <Item OnClick="@OnClick">Item 1</Item>
-    <Item OnClick="@OnClick">Item 2</Item>
+<ContextMenu Id="animationsMenu" Animation="animation">
+    <Item OnClick="OnClick">Item 1</Item>
+    <Item OnClick="OnClick">Item 2</Item>
     <Seperator />
     <Item>
         Submenu
         <SubMenu>
-            <Item OnClick="@OnClick">Submenu Item 1</Item>
-            <Item OnClick="@OnClick">Submenu Item 2</Item>
+            <Item OnClick="OnClick">Submenu Item 1</Item>
+            <Item OnClick="OnClick">Submenu Item 2</Item>
         </SubMenu>
     </Item>
 </ContextMenu>
 
-<ContextMenu Id="animationsMenu2" Animation="@Animation.FadeIn">
-    <Item OnClick="@OnClick">Item 1</Item>
-    <Item OnClick="@OnClick">Item 2</Item>
+<ContextMenu Id="animationsMenu2" Animation="Animation.FadeIn">
+    <Item OnClick="OnClick">Item 1</Item>
+    <Item OnClick="OnClick">Item 2</Item>
     <Seperator />
     <Item>
-        Submenu With '@Animation.Zoom'
-        <SubMenu Animation="@Animation.Zoom">
-            <Item OnClick="@OnClick">Submenu Item 1</Item>
-            <Item OnClick="@OnClick">
+        Submenu With 'Animation.Zoom'
+        <SubMenu Animation="Animation.Zoom">
+            <Item OnClick="OnClick">Submenu Item 1</Item>
+            <Item OnClick="OnClick">
                 Submenu with '@Animation.Slide'
-                <SubMenu Animation="@Animation.Slide">
-                    <Item OnClick="@OnClick">Subsubmenu Item 1</Item>
-                    <Item OnClick="@OnClick">Subsubmenu Item 2</Item>
+                <SubMenu Animation="Animation.Slide">
+                    <Item OnClick="OnClick">Subsubmenu Item 1</Item>
+                    <Item OnClick="OnClick">Subsubmenu Item 2</Item>
                 </SubMenu>
             </Item>
         </SubMenu>

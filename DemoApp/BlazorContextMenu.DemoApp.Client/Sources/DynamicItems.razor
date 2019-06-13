@@ -5,16 +5,16 @@
     <ul>
         @foreach (var item in TodoItems)
         {
-            <li><input type="checkbox" bind="item.IsChecked" /> @item.Text</li>
+            <li><input type="checkbox" @bind="item.IsChecked" /> @item.Text</li>
         }
     </ul>
 </ContextMenuTrigger>
-<button type="button" onclick="@ResetList">Reset list</button>
+<button type="button" @onclick="@ResetList">Reset list</button>
 
-<ContextMenu Id="dynamicItemsMenu" OnAppearing="@MenuOnAppearingHandler">
-    <Item Id="menuitem-check" OnClick="@ItemClick" OnAppearing="@ItemOnAppearingHandler"> <i class="far fa-check-square blue-icon"></i> Check</Item>
-    <Item Id="menuitem-uncheck" OnClick="@ItemClick" OnAppearing="@ItemOnAppearingHandler"> <i class="far fa-square blue-icon"></i> Uncheck</Item>
-    <Item Id="menuitem-delete" OnClick="@ItemClick" OnAppearing="@ItemOnAppearingHandler"> <i class="fas fa-trash-alt red-icon"></i> Delete</Item>
+<ContextMenu Id="dynamicItemsMenu" OnAppearing="MenuOnAppearingHandler">
+    <Item Id="menuitem-check" OnClick="ItemClick" OnAppearing="ItemOnAppearingHandler"> <i class="far fa-check-square blue-icon"></i> Check</Item>
+    <Item Id="menuitem-uncheck" OnClick="ItemClick" OnAppearing="ItemOnAppearingHandler"> <i class="far fa-square blue-icon"></i> Uncheck</Item>
+    <Item Id="menuitem-delete" OnClick="ItemClick" OnAppearing="ItemOnAppearingHandler"> <i class="fas fa-trash-alt red-icon"></i> Delete</Item>
 </ContextMenu>
 
 @functions{

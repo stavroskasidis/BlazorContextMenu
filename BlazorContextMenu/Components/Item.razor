@@ -2,22 +2,23 @@
 @inject BlazorContextMenuSettings settings
 @inject MenuTreeTraverser menuTreeTraverser
 @inject BlazorContextMenuHandler contextMenuHandler
+@namespace BlazorContextMenu
 
 <li id="@Id"
-    onclick="@((e) => OnClickInternal(e))"
+    @onclick="@((e) => OnClickInternal(e))"
     class="@("blazor-context-menu__item " + ClassCalc)"
     style="@(Visible ? "display:block;" : "display:none;")"
     itemEnabled="@Enabled.ToString().ToLower()"
     onmouseover="@(Enabled ? $"blazorContextMenu.OnMenuItemMouseOver(event, {SubmenuXOffset ?? settings.GetTemplate(Template).SubMenuXPositionPixelsOffset}, this);" : "")"
     onmouseout="@(Enabled ? "blazorContextMenu.OnMenuItemMouseOut(event);" : "")"
-    ref="@MenuItemElement">
+    @ref="@MenuItemElement">
     <CascadingValue Value="(MenuTreeComponent)this" Name="ParentComponent">
         @ChildContent
     </CascadingValue>
 </li>
 
 
-@functions{
+@code{
 
     /// <summary>
     /// Allows you to override the default css class of the <see cref="Item"/>'s li element, for full customization.

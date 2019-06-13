@@ -5,7 +5,7 @@
     <ul id="list1">
         @foreach (var item in TodoItems)
         {
-            <li id="@($"list1-{TodoItems.IndexOf(item)}")"><input type="checkbox" bind="item.IsChecked" readonly /> @item.Text</li>
+            <li id="@($"list1-{TodoItems.IndexOf(item)}")" @key="item"><input type="checkbox" @bind="item.IsChecked" readonly /> @item.Text</li>
         }
     </ul>
 </ContextMenuTrigger>
@@ -15,7 +15,7 @@
     <ul id="list2">
         @foreach (var item in TodoItems)
         {
-            <li id="@($"list2-{TodoItems.IndexOf(item)}")"><input type="checkbox" bind="item.IsChecked" readonly /> @item.Text</li>
+            <li id="@($"list2-{TodoItems.IndexOf(item)}")" @key="item"><input type="checkbox" @bind="item.IsChecked" readonly /> @item.Text</li>
         }
     </ul>
 </ContextMenuTrigger>
@@ -27,7 +27,7 @@
     <Item id="menuitem-invisible" Visible="false">I am invisible</Item>
 </ContextMenu>
 
-@functions{
+@code{
 
     async Task TodoItemsMenuOnAppearing(MenuAppearingEventArgs e)
     {
