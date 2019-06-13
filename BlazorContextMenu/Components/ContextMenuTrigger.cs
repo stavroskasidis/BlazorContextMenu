@@ -89,11 +89,25 @@ namespace BlazorContextMenu
             }
         }
 
+        #region Hack to fix https://github.com/aspnet/AspNetCore/issues/11159
+
+        public static object CreateDotNetObjectRefSyncObj = new object();
+
+        protected DotNetObjectRef<T> CreateDotNetObjectRef<T>(T value) where T : class
+        {
+            lock (CreateDotNetObjectRefSyncObj)
+            {
+                JSRuntime.SetCurrentJSRuntime(jsRuntime);
+                return DotNetObjectRef.Create(value);
+            }
+        }
+        #endregion
+
         protected override async Task OnAfterRenderAsync()
         {
             if (!blazorContextMenuHandler.ReferencePassedToJs)
             {
-                await jsRuntime.InvokeAsync<object>("blazorContextMenu.SetMenuHandlerReference", DotNetObjectRef.Create(blazorContextMenuHandler));
+                await jsRuntime.InvokeAsync<object>("blazorContextMenu.SetMenuHandlerReference", CreateDotNetObjectRef(blazorContextMenuHandler));
                 blazorContextMenuHandler.ReferencePassedToJs = true;
             }
         }
