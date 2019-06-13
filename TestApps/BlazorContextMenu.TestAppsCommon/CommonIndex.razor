@@ -65,7 +65,7 @@
 <ContextMenu Id="menu2" Template="red" Animation="Animation">
     <Item Id="menu2-item1" OnClick="OnClick"> <i class="far fa-file"></i> New</Item>
     <Item OnClick="OnClick"><i class="fas fa-edit"></i> Edit</Item>
-    <Item OnClick="OnClick" Enabled="false" > <i class="fas fa-trash-alt"></i> Delete</Item>
+    <Item OnClick="OnClick" Enabled="false"> <i class="fas fa-trash-alt"></i> Delete</Item>
     <Seperator />
     <Item Id="submenu1-trigger">
         <i class="fas fa-cogs"></i> More
@@ -91,7 +91,7 @@
 </ContextMenu>
 
 <NavLink href="/TodoList">Go to Todo List</NavLink>
-@functions{
+@code{
     protected string TextAreaDisplay { get; set; } = "none";
 
     protected string Summaries { get; set; }
@@ -122,7 +122,7 @@
 
     void OnAppearingMenu1(MenuAppearingEventArgs e)
     {
-        if(e.ContextMenuTriggerId == "test9-trigger")
+        if (e.ContextMenuTriggerId == "test9-trigger")
         {
             e.PreventShow = true;
         }
