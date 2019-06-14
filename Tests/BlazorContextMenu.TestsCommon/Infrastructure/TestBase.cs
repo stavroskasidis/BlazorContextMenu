@@ -26,18 +26,23 @@ namespace BlazorContextMenu.TestsCommon.Infrastructure
             _fixture = fixture;
             _browser.Value = fixture.Browser;
         }
-        protected async Task OpenContextMenuAt(string triggerElementId, MouseButton mouseButton)
+        protected async Task OpenContextMenuAt(string triggerElementId, MouseButtonTrigger mouseButton)
         {
             var element = Browser.FindElement(By.Id(triggerElementId));
             var action = new Actions(Browser);
-            if (mouseButton == MouseButton.Left)
+            switch (mouseButton)
             {
-                action.Click(element).Perform();
+                case MouseButtonTrigger.Left:
+                    action.Click(element).Perform();
+                    break;
+                case MouseButtonTrigger.DoubleClick:
+                    action.DoubleClick(element).Perform();
+                    break;
+                case MouseButtonTrigger.Right:
+                    action.ContextClick(element).Perform();
+                    break;
             }
-            else
-            {
-                action.ContextClick(element).Perform();
-            }
+            
 
             await Task.Delay(500);
         }
