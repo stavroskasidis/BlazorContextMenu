@@ -48,8 +48,8 @@
   </Target>-->
 
 
-  <!--The following is STILL required for blazor client side :(-->
-  <!--TODO: Remove when no longer needed-->
+  <!--The following is STILL required for blazor client side :(--><!--
+  --><!--TODO: Remove when no longer needed--><!--
   
   <ItemGroup Condition="'$(Configuration)' == 'Debug'">
     <EmbeddedResource Include="wwwroot\*.js" Exclude="wwwroot\*.min.js" LogicalName="blazor:js:%(RecursiveDir)%(Filename)%(Extension)" />
@@ -59,6 +59,6 @@
   <ItemGroup Condition="'$(Configuration)' == 'Release'">
     <EmbeddedResource Include="wwwroot\*.min.js" LogicalName="blazor:js:%(RecursiveDir)%(Filename)%(Extension)" />
     <EmbeddedResource Include="wwwroot\*.min.css" LogicalName="blazor:css:%(RecursiveDir)%(Filename)%(Extension)" />
-  </ItemGroup>
+  </ItemGroup>-->
 
 </Project>
