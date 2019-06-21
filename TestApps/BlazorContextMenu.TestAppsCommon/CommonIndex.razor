@@ -55,6 +55,15 @@
     this is a preformated text
 </ContextMenuTrigger>
 
+<ContextMenuTrigger MenuId="menu1" MouseButtonTrigger="MouseButtonTrigger.DoubleClick">
+    <p id="test10-trigger">Double click me (menu1)</p>
+</ContextMenuTrigger>
+
+<ContextMenuTrigger MenuId="menu2" MouseButtonTrigger="MouseButtonTrigger.DoubleClick">
+    <p id="test11-trigger">Double click me (menu2 - with icons and sub-menus)</p>
+</ContextMenuTrigger>
+
+
 <ContextMenu Id="menu1" Template="dark" OnAppearing="OnAppearingMenu1">
     <Item Id="menu1-item1" OnClick="FetchDataClick">Fetch Data</Item>
     <Item Id="menu1-item2" OnClick="ClearDataClick">Clear Data</Item>

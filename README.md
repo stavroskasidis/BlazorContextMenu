@@ -230,7 +230,12 @@ public class Startup
 </details>
 
 ## Release Notes
-<details open="open"><summary>0.16</summary>
+<details open="open"><summary>0.17</summary>
+    
+>- Added double click mouse trigger
+</details>
+
+<details><summary>0.16</summary>
     
 >- Updated to 3.0 preview 6
 </details>
