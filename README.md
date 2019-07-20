@@ -195,7 +195,7 @@ public class Startup
 ## ⚠️ Breaking changes ⚠️
 <details open="open"><summary>Upgrading from 0.16 to 0.17</summary>
 
->-Removed the deprecated automatic embed of resources in blazor client-side. You must reference the static files as described in the "Installation" section.
+>- Removed the deprecated automatic embed of resources in blazor client-side. You must reference the static files as described in the "Installation" section.
 </details>
 
 <details><summary>Upgrading from 0.15 to 0.16</summary>
