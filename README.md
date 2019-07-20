@@ -45,10 +45,10 @@ Add the following static file references in your `_Host.cshtml` (server-side bla
 Make sure that there is a call to `app.UseStaticFiles();` in your server project's `Startup.cs`.
 
 ```html
-<link href="_content/BlazorContextMenu/blazorContextMenu.min.css" rel="stylesheet" />
+<link href="_content/blazorcontextmenu/blazorContextMenu.min.css" rel="stylesheet" />
 ```
 ```html
-<script src="_content/BlazorContextMenu/blazorContextMenu.min.js"></script>
+<script src="_content/blazorcontextmenu/blazorContextMenu.min.js"></script>
 ```
 
 ## Basic usage
