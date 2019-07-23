@@ -30,13 +30,14 @@ namespace BlazorContextMenu.E2ETests.Tests
         }
 
         [Theory]
-        [InlineData("test1-trigger", MouseButton.Right)]
-        [InlineData("test3-trigger", MouseButton.Left)]
-        [InlineData("test4-trigger", MouseButton.Right)]
-        [InlineData("test4-trigger", MouseButton.Left)]
-        [InlineData("test7-trigger", MouseButton.Right)]
-        [InlineData("test8-trigger", MouseButton.Right)]
-        public async Task Menu1_Triggers_Shown(string triggerId, MouseButton mouseButton)
+        [InlineData("test1-trigger",MouseButtonTrigger.Right)]
+        [InlineData("test3-trigger",MouseButtonTrigger.Left)]
+        [InlineData("test4-trigger",MouseButtonTrigger.Right)]
+        [InlineData("test4-trigger",MouseButtonTrigger.Left)]
+        [InlineData("test7-trigger",MouseButtonTrigger.Right)]
+        [InlineData("test8-trigger", MouseButtonTrigger.Right)]
+        [InlineData("test10-trigger", MouseButtonTrigger.DoubleClick)]
+        public async Task Menu1_Triggers_Shown(string triggerId, MouseButtonTrigger mouseButton)
         {
             //Arrange
             var expectedDisplay = "block";
@@ -51,8 +52,8 @@ namespace BlazorContextMenu.E2ETests.Tests
         }
 
         [Theory]
-        [InlineData("test9-trigger", MouseButton.Right)]
-        public async Task Menu1_PreventShow_IsNotShown(string triggerId, MouseButton mouseButton)
+        [InlineData("test9-trigger", MouseButtonTrigger.Right)]
+        public async Task Menu1_PreventShow_IsNotShown(string triggerId, MouseButtonTrigger mouseButton)
         {
             //Arrange
             var expectedDisplay = "none";
@@ -67,13 +68,14 @@ namespace BlazorContextMenu.E2ETests.Tests
         }
 
         [Theory]
-        [InlineData("test1-trigger", MouseButton.Right)]
-        [InlineData("test3-trigger", MouseButton.Left)]
-        [InlineData("test4-trigger", MouseButton.Right)]
-        [InlineData("test4-trigger", MouseButton.Left)]
-        [InlineData("test7-trigger", MouseButton.Right)]
-        [InlineData("test8-trigger", MouseButton.Right)]
-        public async Task Menu1_TriggerAndClickOutside_MenuCloses(string triggerId, MouseButton mouseButton)
+        [InlineData("test1-trigger", MouseButtonTrigger.Right)]
+        [InlineData("test3-trigger", MouseButtonTrigger.Left)]
+        [InlineData("test4-trigger", MouseButtonTrigger.Right)]
+        [InlineData("test4-trigger", MouseButtonTrigger.Left)]
+        [InlineData("test7-trigger", MouseButtonTrigger.Right)]
+        [InlineData("test8-trigger", MouseButtonTrigger.Right)]
+        [InlineData("test10-trigger", MouseButtonTrigger.DoubleClick)]
+        public async Task Menu1_TriggerAndClickOutside_MenuCloses(string triggerId, MouseButtonTrigger mouseButton)
         {
             //Arrange
             var expectedDisplay = "none";
@@ -90,13 +92,14 @@ namespace BlazorContextMenu.E2ETests.Tests
         }
 
         [Theory]
-        [InlineData("test1-trigger", MouseButton.Right)]
-        [InlineData("test3-trigger", MouseButton.Left)]
-        [InlineData("test4-trigger", MouseButton.Right)]
-        [InlineData("test4-trigger", MouseButton.Left)]
-        [InlineData("test7-trigger", MouseButton.Right)]
-        [InlineData("test8-trigger", MouseButton.Right)]
-        public async Task Menu1_SelectFetchData_DataFetched(string triggerId, MouseButton mouseButton)
+        [InlineData("test1-trigger", MouseButtonTrigger.Right)]
+        [InlineData("test3-trigger", MouseButtonTrigger.Left)]
+        [InlineData("test4-trigger", MouseButtonTrigger.Right)]
+        [InlineData("test4-trigger", MouseButtonTrigger.Left)]
+        [InlineData("test7-trigger", MouseButtonTrigger.Right)]
+        [InlineData("test8-trigger", MouseButtonTrigger.Right)]
+        [InlineData("test10-trigger", MouseButtonTrigger.DoubleClick)]
+        public async Task Menu1_SelectFetchData_DataFetched(string triggerId, MouseButtonTrigger mouseButton)
         {
             //Arrange
             var expectedDisplay = "none";
@@ -118,13 +121,14 @@ namespace BlazorContextMenu.E2ETests.Tests
         }
 
         [Theory]
-        [InlineData("test1-trigger", MouseButton.Right)]
-        [InlineData("test3-trigger", MouseButton.Left)]
-        [InlineData("test4-trigger", MouseButton.Right)]
-        [InlineData("test4-trigger", MouseButton.Left)]
-        [InlineData("test7-trigger", MouseButton.Right)]
-        [InlineData("test8-trigger", MouseButton.Right)]
-        public async Task Menu1_SelectClearData_DataCleared(string triggerId, MouseButton mouseButton)
+        [InlineData("test1-trigger", MouseButtonTrigger.Right)]
+        [InlineData("test3-trigger", MouseButtonTrigger.Left)]
+        [InlineData("test4-trigger", MouseButtonTrigger.Right)]
+        [InlineData("test4-trigger", MouseButtonTrigger.Left)]
+        [InlineData("test7-trigger", MouseButtonTrigger.Right)]
+        [InlineData("test8-trigger", MouseButtonTrigger.Right)]
+        [InlineData("test10-trigger", MouseButtonTrigger.DoubleClick)]
+        public async Task Menu1_SelectClearData_DataCleared(string triggerId, MouseButtonTrigger mouseButton)
         {
             //Arrange
             var expectedDisplay = "none";
@@ -144,13 +148,14 @@ namespace BlazorContextMenu.E2ETests.Tests
         }
 
         [Theory]
-        [InlineData("test1-trigger", MouseButton.Right)]
-        [InlineData("test3-trigger", MouseButton.Left)]
-        [InlineData("test4-trigger", MouseButton.Right)]
-        [InlineData("test4-trigger", MouseButton.Left)]
-        [InlineData("test7-trigger", MouseButton.Right)]
-        [InlineData("test8-trigger", MouseButton.Right)]
-        public async Task Menu1_SelectDisabledItem_MenuStaysOpen(string triggerId, MouseButton mouseButton)
+        [InlineData("test1-trigger",MouseButtonTrigger.Right)]
+        [InlineData("test3-trigger",MouseButtonTrigger.Left)]
+        [InlineData("test4-trigger",MouseButtonTrigger.Right)]
+        [InlineData("test4-trigger",MouseButtonTrigger.Left)]
+        [InlineData("test7-trigger",MouseButtonTrigger.Right)]
+        [InlineData("test8-trigger", MouseButtonTrigger.Right)]
+        [InlineData("test10-trigger", MouseButtonTrigger.DoubleClick)]
+        public async Task Menu1_SelectDisabledItem_MenuStaysOpen(string triggerId, MouseButtonTrigger mouseButton)
         {
             //Arrange
             var expectedDisplay = "block";
@@ -167,11 +172,12 @@ namespace BlazorContextMenu.E2ETests.Tests
         }
 
         [Theory]
-        [InlineData("test2-trigger", MouseButton.Right)]
-        [InlineData("test5-trigger", MouseButton.Left)]
-        [InlineData("test6-trigger", MouseButton.Right)]
-        [InlineData("test6-trigger", MouseButton.Left)]
-        public async Task Menu2_MouseOverSubMenu_SubMenuOpens(string triggerId, MouseButton mouseButton)
+        [InlineData("test2-trigger", MouseButtonTrigger.Right)]
+        [InlineData("test5-trigger", MouseButtonTrigger.Left)]
+        [InlineData("test6-trigger", MouseButtonTrigger.Right)]
+        [InlineData("test6-trigger", MouseButtonTrigger.Left)]
+        [InlineData("test11-trigger", MouseButtonTrigger.DoubleClick)]
+        public async Task Menu2_MouseOverSubMenu_SubMenuOpens(string triggerId, MouseButtonTrigger mouseButton)
         {
             //Arrange
             var expectedDisplay = "block";
@@ -188,11 +194,12 @@ namespace BlazorContextMenu.E2ETests.Tests
         }
 
         [Theory]
-        [InlineData("test2-trigger", MouseButton.Right)]
-        [InlineData("test5-trigger", MouseButton.Left)]
-        [InlineData("test6-trigger", MouseButton.Right)]
-        [InlineData("test6-trigger", MouseButton.Left)]
-        public async Task Menu2_MouseOverSubMenuAndThenToOtherItem_SubMenuCloses(string triggerId, MouseButton mouseButton)
+        [InlineData("test2-trigger", MouseButtonTrigger.Right)]
+        [InlineData("test5-trigger", MouseButtonTrigger.Left)]
+        [InlineData("test6-trigger", MouseButtonTrigger.Right)]
+        [InlineData("test6-trigger", MouseButtonTrigger.Left)]
+        [InlineData("test11-trigger", MouseButtonTrigger.DoubleClick)]
+        public async Task Menu2_MouseOverSubMenuAndThenToOtherItem_SubMenuCloses(string triggerId, MouseButtonTrigger mouseButton)
         {
             //Arrange
             var expectedDisplay = "none";
@@ -211,11 +218,12 @@ namespace BlazorContextMenu.E2ETests.Tests
         }
 
         [Theory]
-        [InlineData("test2-trigger", MouseButton.Right)]
-        [InlineData("test5-trigger", MouseButton.Left)]
-        [InlineData("test6-trigger", MouseButton.Right)]
-        [InlineData("test6-trigger", MouseButton.Left)]
-        public async Task Menu2_MouseOverSubMenuAndThenToSecondSubMenu_SecondSubMenuOpens(string triggerId, MouseButton mouseButton)
+        [InlineData("test2-trigger", MouseButtonTrigger.Right)]
+        [InlineData("test5-trigger", MouseButtonTrigger.Left)]
+        [InlineData("test6-trigger", MouseButtonTrigger.Right)]
+        [InlineData("test6-trigger", MouseButtonTrigger.Left)]
+        [InlineData("test11-trigger", MouseButtonTrigger.DoubleClick)]
+        public async Task Menu2_MouseOverSubMenuAndThenToSecondSubMenu_SecondSubMenuOpens(string triggerId, MouseButtonTrigger mouseButton)
         {
             //Arrange
             var expectedDisplay = "block";
@@ -232,11 +240,5 @@ namespace BlazorContextMenu.E2ETests.Tests
             var display = menuElement.GetCssValue("display");
             Assert.Equal(expectedDisplay, display);
         }
-
-        //public void Dispose()
-        //{
-        //    GoToPage();
-        //    WaitUntilLoaded();
-        //}
     }
 }

@@ -36,9 +36,15 @@ namespace BlazorContextMenu
                     EventCallback.Factory.Create<UIMouseEventArgs>(this, $"blazorContextMenu.OnContextMenu(event, '{MenuId.Replace("'", "\\'")}');"));
             }
 
-            builder.AddAttribute(3, "class", CssClass);
-            builder.AddAttribute(4, "id", Id);
-            builder.AddContent(5, ChildContent);
+            if(MouseButtonTrigger == MouseButtonTrigger.DoubleClick)
+            {
+                builder.AddAttribute(3, "ondblclick",
+                   EventCallback.Factory.Create<UIMouseEventArgs>(this, $"blazorContextMenu.OnContextMenu(event, '{MenuId.Replace("'", "\\'")}');"));
+            }
+
+            builder.AddAttribute(4, "class", CssClass);
+            builder.AddAttribute(5, "id", Id);
+            builder.AddContent(6, ChildContent);
             builder.CloseElement();
 
         }

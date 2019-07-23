@@ -39,15 +39,16 @@ public class Startup
 ```csharp
 @using BlazorContextMenu
 ```
-**4. Reference the static files (Currently ONLY required for Blazor Server-Side projects)**
+**4. Reference the static files**
 
-Add the following static file references in your `_Host.cshtml`
+Add the following static file references in your `_Host.cshtml` (server-side blazor) or in your `index.html` (client-side blazor). 
+Make sure that there is a call to `app.UseStaticFiles();` in your server project's `Startup.cs`.
 
 ```html
-<link href="_content/BlazorContextMenu/blazorContextMenu.min.css" rel="stylesheet" />
+<link href="_content/Blazor.ContextMenu/blazorContextMenu.min.css" rel="stylesheet" />
 ```
 ```html
-<script src="_content/BlazorContextMenu/blazorContextMenu.min.js"></script>
+<script src="_content/Blazor.ContextMenu/blazorContextMenu.min.js"></script>
 ```
 
 ## Basic usage
@@ -192,23 +193,29 @@ public class Startup
 
 
 ## ⚠️ Breaking changes ⚠️
-<details open="open"><summary>Upgrading from 0.15 to 0.16</summary>
+<details open="open"><summary>Upgrading from 0.16 to 0.17</summary>
 
->- Only for Blazor Server-Side projects: You must reference the static files as described in the "Installation" section
+>- Removed the deprecated automatic embed of resources in blazor client-side. You must reference the static files as described in the "Installation" section.
+>- The static resources path has changed in preview 7 from `_content/blazorcontextmenu/` to `_content/Blazor.ContextMenu/`
+</details>
+
+<details><summary>Upgrading from 0.15 to 0.16</summary>
+
+>- Only for Blazor Server-Side projects: You must reference the static files as described in the "Installation" section.
 </details>
 
 <details><summary>Upgrading from 0.12 to 0.13</summary>
 
->- Remove the `@addTagHelper *, BlazorContextMenu` as it is no longer needed
+>- Remove the `@addTagHelper *, BlazorContextMenu` as it is no longer needed.
 </details>
 
 <details><summary>Upgrading from 0.11 to 0.12</summary>
 
->- The following handlers are removed as they are no longer needed: `ClickAsync`, `EnabledHandlerAsync`, `VisibleHandlerAsync`
->- The `Click` handler has been renamed to `OnClick` to keep consistency with the framework/suggested event names
->- The `MenuItemClickEventArgs` class has been renamed to the more appropriate `ItemClickEventArgs`
->- The `EnabledHandler` and `VisibleHandler` parameters have been removed and replaced with the new `OnAppearing` event handler
->- The `MenuItemEnabledHandlerArgs` and `MenuItemVisibleHandlerArgs` classes have been removed and replaced with the new `ItemAppearingEventArgs`
+>- The following handlers are removed as they are no longer needed: `ClickAsync`, `EnabledHandlerAsync`, `VisibleHandlerAsync`.
+>- The `Click` handler has been renamed to `OnClick` to keep consistency with the framework/suggested event names.
+>- The `MenuItemClickEventArgs` class has been renamed to the more appropriate `ItemClickEventArgs`.
+>- The `EnabledHandler` and `VisibleHandler` parameters have been removed and replaced with the new `OnAppearing` event handler.
+>- The `MenuItemEnabledHandlerArgs` and `MenuItemVisibleHandlerArgs` classes have been removed and replaced with the new `ItemAppearingEventArgs`.
 </details>
 
 <details><summary>Upgrading from 0.10 to 0.11</summary>
@@ -224,15 +231,22 @@ public class Startup
 
 <details><summary>Upgrading from 0.1 to 0.2</summary>
     
->- Rename "MenuItem" to "Item"
->- Rename "MenuSeperator" to "Seperator"
->- Replace "MenuItemWithSubmenu" with a regular "Item" component
+>- Rename "MenuItem" to "Item".
+>- Rename "MenuSeperator" to "Seperator".
+>- Replace "MenuItemWithSubmenu" with a regular "Item" component.
 </details>
 
 ## Release Notes
-<details open="open"><summary>0.16</summary>
+<details open="open"><summary>0.17</summary>
+
+>- Updated to 3.0 preview 7.
+>- Added double click mouse trigger.
+>- Removed the deprecated automatic embed of resources in blazor client-side. You now have to reference the static files just like the server-side blazor projects.
+</details>
+
+<details><summary>0.16</summary>
     
->- Updated to 3.0 preview 6
+>- Updated to 3.0 preview 6.
 </details>
 
 <details><summary>0.15</summary>
@@ -244,89 +258,89 @@ public class Startup
 
 <details><summary>0.14</summary>
     
->- Updated to 3.0 preview 5
+>- Updated to 3.0 preview 5.
 </details>
 
 <details><summary>0.13</summary>
     
->- Updated to 3.0 preview 4
+>- Updated to 3.0 preview 4.
 </details>
 
 <details><summary>0.12</summary>
     
->- Updated to Blazor 0.9.0
->- Changed event handlers to the new `EventCallback<>`. As a consequence the following handlers are no longer needed and they are removed: `ClickAsync`, `EnabledHandlerAsync`, `VisibleHandlerAsync`
->- Fixed menu display position when it doesn't fit on screen
->- The `Click` handler has been renamed to `OnClick` to keep consistency with the framework/suggested event names
->- The `MenuItemClickEventArgs` class has been renamed to the more appropriate `ItemClickEventArgs`
->- The `EnabledHandler` and `VisibleHandler` parameters have been removed and replaced with the new `OnAppearing` event handler
->- The `MenuItemEnabledHandlerArgs` and `MenuItemVisibleHandlerArgs` classes have been removed and replaced with the new `ItemAppearingEventArgs`
+>- Updated to Blazor 0.9.0.
+>- Changed event handlers to the new `EventCallback<>`. As a consequence the following handlers are no longer needed and they are removed: `ClickAsync`, `EnabledHandlerAsync`, `VisibleHandlerAsync`.
+>- Fixed menu display position when it doesn't fit on screen.
+>- The `Click` handler has been renamed to `OnClick` to keep consistency with the framework/suggested event names.
+>- The `MenuItemClickEventArgs` class has been renamed to the more appropriate `ItemClickEventArgs`.
+>- The `EnabledHandler` and `VisibleHandler` parameters have been removed and replaced with the new `OnAppearing` event handler.
+>- The `MenuItemEnabledHandlerArgs` and `MenuItemVisibleHandlerArgs` classes have been removed and replaced with the new `ItemAppearingEventArgs`.
 </details>
 
 <details><summary>0.11</summary>
 
->- Updated to Blazor 0.8.0
->- Added animations
->- Default css overrides are now part of the `Templates` API so that you can easily have multiple custom overriden menus
+>- Updated to Blazor 0.8.0.
+>- Added animations.
+>- Default css overrides are now part of the `Templates` API so that you can easily have multiple custom overriden menus.
 >- Razor Components are not loading the static files included in the library => [#6349](https://github.com/aspnet/AspNetCore/issues/6349). As a workaround you can download and reference directly the **.css** and **.js** from the `/BlazorContextMenu/content` folder until the issue is resolved.
 </details>
 
 <details><summary>0.10</summary>
     
->- Added proper support for Razor Components (aka server-side Blazor)
+>- Added proper support for Razor Components (aka server-side Blazor).
 </details>
 
 <details><summary>0.9</summary>
     
->- Updated to Blazor 0.7.0
->- Removed some js interop in favor of the new Cascading Values feature
+>- Updated to Blazor 0.7.0.
+>- Removed some js interop in favor of the new Cascading Values feature.
 </details>
 
 <details><summary>0.8</summary>
     
->- Updated to Blazor 0.6.0
+>- Updated to Blazor 0.6.0.
 </details>
 
 <details><summary>0.7</summary>
 
->- Added left-click trigger support
+>- Added left-click trigger support.
 </details>
 
 <details><summary>0.6</summary>
     
->- Updated to Blazor 0.5.1
->- Changed configuration setup
->- Added templates
+>- Updated to Blazor 0.5.1.
+>- Changed configuration setup.
+>- Added templates.
 </details>
 
 <details><summary>0.5</summary>
     
->- Updated to Blazor 0.5.0
+>- Updated to Blazor 0.5.0.
 </details>
 
 <details><summary>0.4</summary>
     
->- Added minification for included css/js
->- Updated to Blazor 0.4.0
+>- Added minification for included css/js.
+>- Updated to Blazor 0.4.0.
 </details>
 
 <details><summary>0.3</summary>
     
->- Added dynamic EnabledHandlers for menu items
->- Added Active and dynamic ActiveHandlers for menu items
+>- Added dynamic EnabledHandlers for menu items.
+>- Added Active and dynamic ActiveHandlers for menu items.
 </details>
 
 <details><summary>0.2</summary>
     
->- Updated to Blazor 0.3.0
->- Renamed "MenuItem" to "Item" to avoid conflicts with the html element "menuitem"
->- Renamed "MenuSeperator" to "Seperator" for consistency
->- Removed "MenuItemWithSubmenu" (just use a regular "Item")
+>- Updated to Blazor 0.3.0.
+>- Renamed "MenuItem" to "Item" to avoid conflicts with the html element "menuitem".
+>- Renamed "MenuSeperator" to "Seperator" for consistency.
+>- Removed "MenuItemWithSubmenu" (just use a regular "Item").
 </details>
 
 <details><summary>0.1</summary>
     
->- Initial release
+>- Initial release.
 </details>
 
 ## Special Thanks

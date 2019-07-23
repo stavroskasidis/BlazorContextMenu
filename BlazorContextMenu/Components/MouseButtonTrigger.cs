@@ -9,6 +9,7 @@ namespace BlazorContextMenu
     {
         Right = 0,
         Left = 1,
-        Both = 2
+        Both = 2,
+        DoubleClick=3
     }
 }

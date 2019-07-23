@@ -25,9 +25,9 @@ namespace BlazorContextMenu.E2ETests.Tests
         }
 
         [Theory]
-        [InlineData("list1",MouseButton.Right)]
-        [InlineData("list2", MouseButton.Left)]
-        public async Task TodoItemsMenu_TriggerForFirstItemAndSelectCopy_ItemCopied(string listId, MouseButton mouseButton)
+        [InlineData("list1", MouseButtonTrigger.Right)]
+        [InlineData("list2", MouseButtonTrigger.Left)]
+        public async Task TodoItemsMenu_TriggerForFirstItemAndSelectCopy_ItemCopied(string listId, MouseButtonTrigger mouseButton)
         {
             //Arrange
             var expectedItemsCount = 5;
@@ -44,9 +44,9 @@ namespace BlazorContextMenu.E2ETests.Tests
         }
 
         [Theory]
-        [InlineData("list1", MouseButton.Right)]
-        [InlineData("list2", MouseButton.Left)]
-        public async Task TodoItemsMenu_TriggerForSecondItemAndSelectDelete_ItemDeleted(string listId, MouseButton mouseButton)
+        [InlineData("list1", MouseButtonTrigger.Right)]
+        [InlineData("list2", MouseButtonTrigger.Left)]
+        public async Task TodoItemsMenu_TriggerForSecondItemAndSelectDelete_ItemDeleted(string listId, MouseButtonTrigger mouseButton)
         {
             //Arrange
             var expectedItemsCount = 3;
@@ -64,9 +64,9 @@ namespace BlazorContextMenu.E2ETests.Tests
 
 
         [Theory]
-        [InlineData("list1", MouseButton.Right)]
-        [InlineData("list2", MouseButton.Left)]
-        public async Task TodoItemsMenu_TriggerForFirstItemAndSelectCheck_CheckIsDisabled(string listId, MouseButton mouseButton)
+        [InlineData("list1", MouseButtonTrigger.Right)]
+        [InlineData("list2", MouseButtonTrigger.Left)]
+        public async Task TodoItemsMenu_TriggerForFirstItemAndSelectCheck_CheckIsDisabled(string listId, MouseButtonTrigger mouseButton)
         {
             //Arrange
             var settings = new BlazorContextMenuDefaultCssSettings();
@@ -82,9 +82,9 @@ namespace BlazorContextMenu.E2ETests.Tests
         }
 
         [Theory]
-        [InlineData("list1", MouseButton.Right)]
-        [InlineData("list2", MouseButton.Left)]
-        public async Task TodoItemsMenu_TriggerForSecondItemAndSelectCheck_ItemIsChecked(string listId, MouseButton mouseButton)
+        [InlineData("list1", MouseButtonTrigger.Right)]
+        [InlineData("list2", MouseButtonTrigger.Left)]
+        public async Task TodoItemsMenu_TriggerForSecondItemAndSelectCheck_ItemIsChecked(string listId, MouseButtonTrigger mouseButton)
         {
             //Arrange
             var expectedCheckedStatus = true;
@@ -105,9 +105,9 @@ namespace BlazorContextMenu.E2ETests.Tests
 
 
         [Theory]
-        [InlineData("list1", MouseButton.Right)]
-        [InlineData("list2", MouseButton.Left)]
-        public async Task TodoItemsMenu_TriggerForSecondItemAndSelectCheckAndThenTriggerAgain_CheckIsDisabled(string listId, MouseButton mouseButton)
+        [InlineData("list1", MouseButtonTrigger.Right)]
+        [InlineData("list2", MouseButtonTrigger.Left)]
+        public async Task TodoItemsMenu_TriggerForSecondItemAndSelectCheckAndThenTriggerAgain_CheckIsDisabled(string listId, MouseButtonTrigger mouseButton)
         {
             //Arrange
             var expectedCheckedStatus = true;
@@ -134,8 +134,8 @@ namespace BlazorContextMenu.E2ETests.Tests
 
 
         [Theory]
-        [InlineData("list1", MouseButton.Right)]
-        public async Task TodoItemsMenu_UnckeckFirstItemAndTriggerMenu_CheckIsEnabled(string listId, MouseButton mouseButton)
+        [InlineData("list1", MouseButtonTrigger.Right)]
+        public async Task TodoItemsMenu_UnckeckFirstItemAndTriggerMenu_CheckIsEnabled(string listId, MouseButtonTrigger mouseButton)
         {
             //Arrange
             var settings = new BlazorContextMenuDefaultCssSettings();
@@ -155,9 +155,9 @@ namespace BlazorContextMenu.E2ETests.Tests
         }
 
         [Theory]
-        [InlineData("list1", MouseButton.Right)]
-        [InlineData("list2", MouseButton.Left)]
-        public async Task TodoItemsMenu_TriggerForFirstItemAndCheckVisibilityOfLastItem_ItemIsInvisible(string listId, MouseButton mouseButton)
+        [InlineData("list1", MouseButtonTrigger.Right)]
+        [InlineData("list2", MouseButtonTrigger.Left)]
+        public async Task TodoItemsMenu_TriggerForFirstItemAndCheckVisibilityOfLastItem_ItemIsInvisible(string listId, MouseButtonTrigger mouseButton)
         {
             //Arrange
             var expectedDisplay = "none";
@@ -172,9 +172,9 @@ namespace BlazorContextMenu.E2ETests.Tests
         }
 
         [Theory]
-        [InlineData("list1", MouseButton.Right)]
-        [InlineData("list2", MouseButton.Left)]
-        public async Task TodoItemsMenu_TriggerForFirstItemAndCheckVisibilityOfDelete_ItemIsVisible(string listId, MouseButton mouseButton)
+        [InlineData("list1", MouseButtonTrigger.Right)]
+        [InlineData("list2", MouseButtonTrigger.Left)]
+        public async Task TodoItemsMenu_TriggerForFirstItemAndCheckVisibilityOfDelete_ItemIsVisible(string listId, MouseButtonTrigger mouseButton)
         {
             //Arrange
             var expectedDisplay = "block";
@@ -189,9 +189,9 @@ namespace BlazorContextMenu.E2ETests.Tests
         }
 
         [Theory]
-        [InlineData("list1", MouseButton.Right)]
-        [InlineData("list2", MouseButton.Left)]
-        public async Task TodoItemsMenu_TriggerForThirdItemAndCheckVisibilityOfDelete_ItemIsInvisible(string listId, MouseButton mouseButton)
+        [InlineData("list1", MouseButtonTrigger.Right)]
+        [InlineData("list2", MouseButtonTrigger.Left)]
+        public async Task TodoItemsMenu_TriggerForThirdItemAndCheckVisibilityOfDelete_ItemIsInvisible(string listId, MouseButtonTrigger mouseButton)
         {
             //Arrange
             var expectedDisplay = "none";
@@ -206,9 +206,9 @@ namespace BlazorContextMenu.E2ETests.Tests
         }
 
         [Theory]
-        [InlineData("list1", MouseButton.Right)]
-        [InlineData("list2", MouseButton.Left)]
-        public async Task TodoItemsMenu_TriggerForFourthItem_MenuIsNotShown(string listId, MouseButton mouseButton)
+        [InlineData("list1", MouseButtonTrigger.Right)]
+        [InlineData("list2", MouseButtonTrigger.Left)]
+        public async Task TodoItemsMenu_TriggerForFourthItem_MenuIsNotShown(string listId, MouseButtonTrigger mouseButton)
         {
             //Arrange
             var expectedDisplay = "none";
