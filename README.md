@@ -45,10 +45,10 @@ Add the following static file references in your `_Host.cshtml` (server-side bla
 Make sure that there is a call to `app.UseStaticFiles();` in your server project's `Startup.cs`.
 
 ```html
-<link href="_content/blazorcontextmenu/blazorContextMenu.min.css" rel="stylesheet" />
+<link href="_content/Blazor.ContextMenu/blazorContextMenu.min.css" rel="stylesheet" />
 ```
 ```html
-<script src="_content/blazorcontextmenu/blazorContextMenu.min.js"></script>
+<script src="_content/Blazor.ContextMenu/blazorContextMenu.min.js"></script>
 ```
 
 ## Basic usage
@@ -196,6 +196,7 @@ public class Startup
 <details open="open"><summary>Upgrading from 0.16 to 0.17</summary>
 
 >- Removed the deprecated automatic embed of resources in blazor client-side. You must reference the static files as described in the "Installation" section.
+>- The static resources path has changed in preview 7 from `_content/blazorcontextmenu/` to `_content/Blazor.ContextMenu/`
 </details>
 
 <details><summary>Upgrading from 0.15 to 0.16</summary>
@@ -237,7 +238,8 @@ public class Startup
 
 ## Release Notes
 <details open="open"><summary>0.17</summary>
-    
+
+>- Updated to 3.0 preview 7.
 >- Added double click mouse trigger.
 >- Removed the deprecated automatic embed of resources in blazor client-side. You now have to reference the static files just like the server-side blazor projects.
 </details>
