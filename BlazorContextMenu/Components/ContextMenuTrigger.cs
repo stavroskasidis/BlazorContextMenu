@@ -24,27 +24,33 @@ namespace BlazorContextMenu
              */
 
             builder.OpenElement(0, WrapperTag);
+
+            builder.AddMultipleAttributes(1, RuntimeHelpers.TypeCheck<IEnumerable<KeyValuePair<string, object>>>(Attributes));
+
             if (MouseButtonTrigger == MouseButtonTrigger.Left || MouseButtonTrigger == MouseButtonTrigger.Both)
             {
-                builder.AddAttribute(1, "onclick",
+                builder.AddAttribute(2, "onclick",
                     EventCallback.Factory.Create<UIMouseEventArgs>(this, $"blazorContextMenu.OnContextMenu(event, '{MenuId.Replace("'", "\\'")}');"));
             }
 
             if (MouseButtonTrigger == MouseButtonTrigger.Right || MouseButtonTrigger == MouseButtonTrigger.Both)
             {
-                builder.AddAttribute(2, "oncontextmenu",
+                builder.AddAttribute(3, "oncontextmenu",
                     EventCallback.Factory.Create<UIMouseEventArgs>(this, $"blazorContextMenu.OnContextMenu(event, '{MenuId.Replace("'", "\\'")}');"));
             }
 
             if(MouseButtonTrigger == MouseButtonTrigger.DoubleClick)
             {
-                builder.AddAttribute(3, "ondblclick",
+                builder.AddAttribute(4, "ondblclick",
                    EventCallback.Factory.Create<UIMouseEventArgs>(this, $"blazorContextMenu.OnContextMenu(event, '{MenuId.Replace("'", "\\'")}');"));
             }
 
-            builder.AddAttribute(4, "class", CssClass);
-            builder.AddAttribute(5, "id", Id);
-            builder.AddContent(6, ChildContent);
+            if (!string.IsNullOrWhiteSpace(CssClass))
+            {
+                builder.AddAttribute(5, "class", CssClass);
+            }
+            builder.AddAttribute(6, "id", Id);
+            builder.AddContent(7, ChildContent);
             builder.CloseElement();
 
         }
@@ -52,6 +58,8 @@ namespace BlazorContextMenu
         [Inject] private IJSRuntime jsRuntime { get; set; }
         [Inject] private BlazorContextMenuHandler blazorContextMenuHandler { get; set; }
 
+        [Parameter(CaptureUnmatchedValues = true)]
+        private Dictionary<string, object> Attributes { get; set; }
 
         /// <summary>
         /// The id of the <see cref="ContextMenuTrigger" /> wrapper element.

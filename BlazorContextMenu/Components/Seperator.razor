@@ -3,11 +3,14 @@
 @inject MenuTreeTraverser menuTreeTraverser
 @namespace BlazorContextMenu
 
-<li id="@Id" class="@ClassCalc">
+<li @attributes="@Attributes" id="@Id" class="@ClassCalc">
     <hr class="@HrClassCalc" />
 </li>
 
 @code{
+
+    [Parameter(CaptureUnmatchedValues = true)]
+    private Dictionary<string, object> Attributes { get; set; }
 
     /// <summary>
     /// Allows you to override the default css class of the <see cref="Seperator"/>'s li element, for full customization.

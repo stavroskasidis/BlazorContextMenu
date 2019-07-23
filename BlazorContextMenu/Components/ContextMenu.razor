@@ -3,7 +3,7 @@
 @inject BlazorContextMenuHandler contextMenuHandler
 @namespace BlazorContextMenu
 
-<div class="@($"{BaseClass} {ClassCalc} {DisplayClassCalc}")" id="@Id" style="@($"left:{X}px;top:{Y}px;")">
+<div @attributes="@Attributes" class="@($"{BaseClass} {ClassCalc} {DisplayClassCalc}")" id="@Id" style="@($"left:{X}px;top:{Y}px;")">
     @if (IsShowing)
     {
         <ul class="@ListClassCalc">
@@ -19,6 +19,9 @@
 </div>
 
 @code{
+
+    [Parameter(CaptureUnmatchedValues = true)]
+    private Dictionary<string, object> Attributes { get; set; }
 
     protected virtual string BaseClass => "blazor-context-menu blazor-context-menu__wrapper";
 
