@@ -19,7 +19,7 @@
     <Copyright />
     <PackageTags>blazor blazor-component blazor-context-menu context-menu contextmenu menu blazor-menu blazorcontextmenu razor razor-components razorcomponents</PackageTags>
     <VersionSuffix>$(VersionSuffix)</VersionSuffix>
-    <Version>0.16.1</Version>
+    <Version>0.17.0</Version>
     <Version Condition=" '$(VersionSuffix)' != '' ">$(Version)-$(VersionSuffix)</Version>
     <Product>Blazor.ContextMenu</Product>
   </PropertyGroup>
@@ -34,7 +34,7 @@
 
 
   <ItemGroup>
-    <PackageReference Include="Microsoft.AspNetCore.Components.Browser" Version="3.0.0-preview6.19307.2" />
+    <PackageReference Include="Microsoft.AspNetCore.Components.Browser" Version="3.0.0-preview7.19365.7" />
   </ItemGroup>
 
   <!--<Target Name="EnsureNpmRestored" BeforeTargets="BeforeBuild" Condition="!Exists('node_modules')">
@@ -48,8 +48,8 @@
   </Target>-->
 
 
-  <!--The following is STILL required for blazor client side :(-->
-  <!--TODO: Remove when no longer needed-->
+  <!--The following is STILL required for blazor client side :(--><!--
+  --><!--TODO: Remove when no longer needed--><!--
   
   <ItemGroup Condition="'$(Configuration)' == 'Debug'">
     <EmbeddedResource Include="wwwroot\*.js" Exclude="wwwroot\*.min.js" LogicalName="blazor:js:%(RecursiveDir)%(Filename)%(Extension)" />
@@ -59,6 +59,6 @@
   <ItemGroup Condition="'$(Configuration)' == 'Release'">
     <EmbeddedResource Include="wwwroot\*.min.js" LogicalName="blazor:js:%(RecursiveDir)%(Filename)%(Extension)" />
     <EmbeddedResource Include="wwwroot\*.min.css" LogicalName="blazor:css:%(RecursiveDir)%(Filename)%(Extension)" />
-  </ItemGroup>
+  </ItemGroup>-->
 
 </Project>
