@@ -47,24 +47,25 @@ Confirm-Process $proc "Could not find npm, please install and run again ..."
 $proc = Start-Process "dotnet" -ArgumentList "--version" -PassThru
 Confirm-Process $proc "Could not find dotnet sdk, please install and run again ..."
 
-
-if ( $RunTests ) {
-    # Start selenium
-    Write-Message "Installing selenium-standalone ..."
-    npx selenium-standalone install
-    
-    Write-Message "Starting selenium-standalone ..."
-    $selenium = Start-Process "npx" -ArgumentList "selenium-standalone start" -PassThru
-}
+Push-Location BlazorContextMenu
 
 Write-Message "Installing npm dependencies ..."
-Push-Location BlazorContextMenu
 npm install
 Confirm-PreviousCommand
 
 Write-Message "Minifying ..."
 npm run minify
 Confirm-PreviousCommand
+
+if ( $RunTests ) {
+    # Start selenium
+    Write-Message "Installing selenium-standalone ..."
+    npm run selenium-install
+
+    Write-Message "Starting selenium-standalone ..."
+    $selenium = Start-Process "npm" -ArgumentList "run selenium-start" -PassThru
+}
+
 
 Pop-Location
 
