@@ -9,6 +9,6 @@ namespace BlazorContextMenu.BlazorE2ETests
 {
     public class BlazorE2EFixture : EndToEndFixture<Startup>
     {
-        protected override string PathBase => "..\\..\\..\\..\\..\\TestApps\\BlazorTestApp\\BlazorContextMenu.BlazorTestApp.Server\\";
+        protected override string PathBase => "../../../../../TestApps/BlazorTestApp/BlazorContextMenu.BlazorTestApp.Server/";
     }
 }
