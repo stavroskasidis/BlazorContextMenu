@@ -50,16 +50,11 @@ Confirm-Process $proc "Could not find dotnet sdk, please install and run again .
 
 if ( $RunTests ) {
     # Start selenium
-
-    $seleniumVersion = npm -g list | Select-String selenium-standalone
-    if([string]::IsNullOrWhiteSpace($seleniumVersion)) 
-    {
-        Write-Message "Installing selenium-standalone ..."
-        npm install -g selenium-standalone
-        selenium-standalone install
-    }
+    Write-Message "Installing selenium-standalone ..."
+    npx selenium-standalone install
+    
     Write-Message "Starting selenium-standalone ..."
-    $selenium = Start-Process "selenium-standalone" -ArgumentList "start" -PassThru
+    $selenium = Start-Process "npx" -ArgumentList "selenium-standalone start" -PassThru
 }
 
 Write-Message "Installing npm dependencies ..."
