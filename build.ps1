@@ -49,14 +49,6 @@ Confirm-Process $proc "Could not find dotnet sdk, please install and run again .
 
 Push-Location BlazorContextMenu
 
-Write-Message "Installing npm dependencies ..."
-npm install
-Confirm-PreviousCommand
-
-Write-Message "Minifying ..."
-npm run minify
-Confirm-PreviousCommand
-
 if ( $RunTests ) {
     # Start selenium
     Write-Message "Installing selenium-standalone ..."
