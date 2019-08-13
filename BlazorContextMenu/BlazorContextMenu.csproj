@@ -23,7 +23,18 @@
     <Version Condition=" '$(VersionSuffix)' != '' ">$(Version)-$(VersionSuffix)</Version>
     <Product>Blazor.ContextMenu</Product>
   </PropertyGroup>
+  
+  <Target Name="EnsureNpmRestored" BeforeTargets="GenerateStaticWebAssetsManifest" Condition="!Exists('node_modules')">
+    <Message Importance="high" Text="Restoring dependencies using 'npm'. This may take several minutes..." />
+    <Exec Command="npm install" />
+  </Target>
 
+  <Target Name="Minification" BeforeTargets="GenerateStaticWebAssetsManifest">
+    <Message Importance="high" Text="Minifying static assets ..." />
+    <Exec Command="npm run minify" />
+  </Target>
+  
+  
   <ItemGroup>
     <Compile Remove="node_modules\**" />
     <Content Remove="node_modules\**" />
