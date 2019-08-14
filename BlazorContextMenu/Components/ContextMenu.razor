@@ -3,7 +3,7 @@
 @inject BlazorContextMenuHandler contextMenuHandler
 @namespace BlazorContextMenu
 
-<div class="@($"{BaseClass} {ClassCalc} {DisplayClassCalc}")" id="@Id" style="@($"left:{X}px;top:{Y}px;")">
+<div @attributes="@Attributes" class="@($"{BaseClass} {ClassCalc} {DisplayClassCalc}")" id="@Id" style="@($"left:{X}px;top:{Y}px;")">
     @if (IsShowing)
     {
         <ul class="@ListClassCalc">
@@ -20,19 +20,22 @@
 
 @code{
 
+    [Parameter(CaptureUnmatchedValues = true)]
+    public Dictionary<string, object> Attributes { get; set; }
+
     protected virtual string BaseClass => "blazor-context-menu blazor-context-menu__wrapper";
 
     /// <summary>
     /// The id that the <see cref="ContextMenuTrigger" /> will use to bind to. This parameter is required
     /// </summary>
     [Parameter]
-    public string Id { get; protected set; }
+    public string Id { get; set; }
 
     /// <summary>
     /// The name of the template to use for this <see cref="ContextMenu" /> and all its <see cref="SubMenu" />.
     /// </summary>
     [Parameter]
-    public string Template { get; protected set; }
+    public string Template { get; set; }
 
     [CascadingParameter(Name = "CascadingTemplate")]
     protected string CascadingTemplate { get; set; }
@@ -41,68 +44,68 @@
     /// Allows you to override the default css class of the <see cref="ContextMenu"/>'s div element, for full customization.
     /// </summary>
     [Parameter]
-    public string OverrideDefaultCssClass { get; protected set; }
+    public string OverrideDefaultCssClass { get; set; }
 
     /// <summary>
     /// Allows you to override the default css class of the <see cref="ContextMenu"/>'s div element while it's shown, for full customization.
     /// </summary>
     [Parameter]
-    public string OverrideDefaultShownCssClass { get; protected set; }
+    public string OverrideDefaultShownCssClass { get; set; }
 
     /// <summary>
     /// Allows you to override the default css class of the <see cref="ContextMenu"/>'s div element while it's hidden, for full customization.
     /// </summary>
     [Parameter]
-    public string OverrideDefaultHiddenCssClass { get; protected set; }
+    public string OverrideDefaultHiddenCssClass { get; set; }
 
     /// <summary>
     /// Allows you to override the default css class of the <see cref="ContextMenu"/>'s ul element, for full customization.
     /// </summary>
     [Parameter]
-    public string OverrideDefaultListCssClass { get; protected set; }
+    public string OverrideDefaultListCssClass { get; set; }
 
     /// <summary>
     /// Additional css class that is applied to the <see cref="ContextMenu"/>'s div element. Use this to extend the default css.
     /// </summary>
     [Parameter]
-    public string CssClass { get; protected set; }
+    public string CssClass { get; set; }
 
     /// <summary>
     /// Additional css class that is applied to the <see cref="ContextMenu"/>'s div element while is shown. Use this to extend the default css.
     /// </summary>
     [Parameter]
-    public string ShownCssClass { get; protected set; }
+    public string ShownCssClass { get; set; }
 
     /// <summary>
     /// Additional css class that is applied to the <see cref="ContextMenu"/>'s div element while is hidden. Use this to extend the default css.
     /// </summary>
     [Parameter]
-    public string HiddenCssClass { get; protected set; }
+    public string HiddenCssClass { get; set; }
 
     /// <summary>
     /// Additional css class that is applied to the <see cref="ContextMenu"/>'s ul element. Use this to extend the default css.
     /// </summary>
     [Parameter]
-    public string ListCssClass { get; protected set; }
+    public string ListCssClass { get; set; }
 
     /// <summary>
     /// Allows you to set the <see cref="BlazorContextMenu.Animation" /> used by this <see cref="ContextMenu" /> and all its <see cref="SubMenu" />
     /// </summary>
     [Parameter]
-    public Animation? Animation { get; protected set; }
+    public Animation? Animation { get; set; }
 
     /// <summary>
     /// A handler that is triggered before the menu appears. Can be used to prevent the menu from showing.
     /// </summary>
     [Parameter]
-    protected EventCallback<MenuAppearingEventArgs> OnAppearing { get; set; }
+    public EventCallback<MenuAppearingEventArgs> OnAppearing { get; set; }
 
 
     [CascadingParameter(Name = "CascadingAnimation")]
     protected Animation? CascadingAnimation { get; set; }
 
     [Parameter]
-    protected RenderFragment ChildContent { get; set; }
+    public RenderFragment ChildContent { get; set; }
 
 
     protected bool IsShowing;
@@ -195,9 +198,9 @@
         }
     }
 
-    protected override void OnInit()
+    protected override void OnInitialized()
     {
-        base.OnInit();
+        base.OnInitialized();
         if (string.IsNullOrEmpty(Id))
         {
             throw new ArgumentNullException(nameof(Id));
@@ -230,13 +233,13 @@
         Y = y;
         TargetId = targetId;
         TriggerId = triggerId;
-        await Invoke(() => StateHasChanged());
+        await InvokeAsync(() => StateHasChanged());
     }
 
     internal void Hide()
     {
         IsShowing = false;
-        Invoke(() => StateHasChanged());
+        InvokeAsync(() => StateHasChanged());
     }
 
     internal string GetTarget()

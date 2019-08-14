@@ -8,7 +8,7 @@ namespace BlazorContextMenu
 {
     public class ItemClickEventArgs
     {
-        public ItemClickEventArgs(UIMouseEventArgs mouseEvent,string contextMenuId, string contextMenuTargetId, ElementRef menuItemElement, Item menuItem)
+        public ItemClickEventArgs(UIMouseEventArgs mouseEvent,string contextMenuId, string contextMenuTargetId, ElementReference menuItemElement, Item menuItem)
         {
             MouseEvent = mouseEvent;
             ContextMenuId = contextMenuId;
@@ -40,7 +40,7 @@ namespace BlazorContextMenu
         /// <summary>
         /// The ElementRef of the item's li that can be passed to javascript interop.
         /// </summary>
-        public ElementRef MenuItemElement { get; protected set; }
+        public ElementReference MenuItemElement { get; protected set; }
 
         /// <summary>
         /// The menu item that triggered the event.

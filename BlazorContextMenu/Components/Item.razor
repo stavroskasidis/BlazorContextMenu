@@ -4,14 +4,16 @@
 @inject BlazorContextMenuHandler contextMenuHandler
 @namespace BlazorContextMenu
 
-<li id="@Id"
+<li @attributes="Attributes"
+    id="@Id"
     @onclick="@((e) => OnClickInternal(e))"
     class="@("blazor-context-menu__item " + ClassCalc)"
     style="@(Visible ? "display:block;" : "display:none;")"
     itemEnabled="@Enabled.ToString().ToLower()"
     onmouseover="@(Enabled ? $"blazorContextMenu.OnMenuItemMouseOver(event, {SubmenuXOffset ?? settings.GetTemplate(Template).SubMenuXPositionPixelsOffset}, this);" : "")"
     onmouseout="@(Enabled ? "blazorContextMenu.OnMenuItemMouseOut(event);" : "")"
-    @ref="@MenuItemElement">
+    @ref="MenuItemElement" 
+    @ref:suppressField>
     <CascadingValue Value="(MenuTreeComponent)this" Name="ParentComponent">
         @ChildContent
     </CascadingValue>
@@ -20,81 +22,84 @@
 
 @code{
 
+    [Parameter(CaptureUnmatchedValues = true)]
+    public Dictionary<string, object> Attributes { get; set; }
+
     /// <summary>
     /// Allows you to override the default css class of the <see cref="Item"/>'s li element, for full customization.
     /// </summary>
     [Parameter]
-    public string OverrideDefaultCssClass { get; protected set; }
+    public string OverrideDefaultCssClass { get; set; }
 
     /// <summary>
     /// Allows you to override the default css class of the <see cref="Item"/>'s li element when disabled, for full customization.
     /// </summary>
     [Parameter]
-    public string OverrideDefaultDisabledCssClass { get; protected set; }
+    public string OverrideDefaultDisabledCssClass { get; set; }
 
     /// <summary>
     /// Allows you to override the default css class of the <see cref="Item"/>'s li element when it contains a <see cref="SubMenu"/>, for full customization.
     /// </summary>
     [Parameter]
-    public string OverrideDefaultCssClassWithSubMenu { get; protected set; }
+    public string OverrideDefaultCssClassWithSubMenu { get; set; }
 
     /// <summary>
     /// Additional css class for the <see cref="Item"/>'s li element. Use this to extend the default css.
     /// </summary>
     [Parameter]
-    public string CssClass { get; protected set; }
+    public string CssClass { get; set; }
 
     /// <summary>
     /// Additional css class for the <see cref="Item"/>'s li element when disabled. Use this to extend the default css.
     /// </summary>
     [Parameter]
-    public string DisabledCssClass { get; protected set; }
+    public string DisabledCssClass { get; set; }
 
     /// <summary>
     /// Additional css class for the <see cref="Item"/>'s li element when it contains a <see cref="SubMenu"/>. Use this to extend the default css.
     /// </summary>
     [Parameter]
-    public string CssClassWithSubMenu { get; protected set; }
+    public string CssClassWithSubMenu { get; set; }
 
     /// <summary>
     /// The menu item's onclick handler. A <see cref="ItemClickEventArgs"/> is passed to the action.
     /// If you want to cancel the click (i.e. stop the menu from closing), then set the "IsCanceled" event args property to "true".
     /// </summary>
     [Parameter]
-    protected EventCallback<ItemClickEventArgs> OnClick { get; set; }
+    public EventCallback<ItemClickEventArgs> OnClick { get; set; }
 
     /// <summary>
     /// Sets the item's enabled state. Default <see cref="true" />.
     /// </summary>
     [Parameter]
-    public bool Enabled { get; protected set; } = true;
+    public bool Enabled { get; set; } = true;
 
     /// <summary>
     /// Sets the item's visible state. Default <see cref="true" />.
     /// </summary>
     [Parameter]
-    public bool Visible { get; protected set; } = true;
+    public bool Visible { get; set; } = true;
 
     /// <summary>
     /// A handler that can be used to set the item's <see cref="Visible"/> or <see cref="Enabled"/> status dynamically.
     /// </summary>
     [Parameter]
-    protected EventCallback<ItemAppearingEventArgs> OnAppearing { get; set; }
+    public EventCallback<ItemAppearingEventArgs> OnAppearing { get; set; }
 
     /// <summary>
     /// The id of the li element. This is optional.
     /// </summary>
     [Parameter]
-    public string Id { get; protected set; }
+    public string Id { get; set; }
 
     /// <summary>
     /// Allows you to override the default x position offset of the submenu (i.e. the distance of the submenu from it's parent menu).
     /// </summary>
     [Parameter]
-    public int? SubmenuXOffset { get; protected set; }
+    public int? SubmenuXOffset { get; set; }
 
     [Parameter]
-    protected RenderFragment ChildContent { get; set; }
+    public RenderFragment ChildContent { get; set; }
 
 
     protected string ClassCalc
@@ -126,12 +131,12 @@
         }
     }
 
-    protected ElementRef MenuItemElement { get; set; }
+    protected ElementReference MenuItemElement { get; set; }
     protected string Template { get; set; }
     protected ContextMenu RootMenu { get; set; }
     protected ContextMenu ParentMenu { get; set; }
 
-    protected override async Task OnInitAsync()
+    protected override async Task OnInitializedAsync()
     {
         if (string.IsNullOrEmpty(Id))
         {

@@ -237,7 +237,13 @@ public class Startup
 </details>
 
 ## Release Notes
-<details open="open"><summary>0.17</summary>
+<details open="open"><summary>0.18</summary>
+
+>- Updated to 3.0 preview 8.
+>- Added attribute splatting to components
+</details>
+
+<details><summary>0.17</summary>
 
 >- Updated to 3.0 preview 7.
 >- Added double click mouse trigger.

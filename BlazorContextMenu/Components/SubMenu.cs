@@ -9,13 +9,13 @@ namespace BlazorContextMenu
     {
         protected override string BaseClass => "blazor-context-submenu blazor-context-menu__wrapper";
 
-        protected override void OnInit()
+        protected override void OnInitialized()
         {
             if (string.IsNullOrEmpty(Id))
             {
                 Id = Guid.NewGuid().ToString();
             }
-            base.OnInit();
+            base.OnInitialized();
         }
     }
 }
