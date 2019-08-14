@@ -27,9 +27,9 @@ namespace BlazorContextMenu
             _childComponents.Remove(childComponent);
         }
 
-        protected override void OnInit()
+        protected override void OnInitialized()
         {
-            base.OnInit();
+            base.OnInitialized();
             if(ParentComponent != null)
             {
                 ParentComponent.RegisterChild(this);

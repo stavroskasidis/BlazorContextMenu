@@ -4,11 +4,11 @@ using System.Linq;
 using System.Threading.Tasks;
 using System.Net.Http;
 using Microsoft.AspNetCore.Components;
-using Microsoft.AspNetCore.Components.Layouts;
 using Microsoft.AspNetCore.Components.Routing;
 using BlazorContextMenu.Services;
 using Microsoft.JSInterop;
 using Microsoft.AspNetCore.Components.RenderTree;
+using System.Runtime.CompilerServices;
 
 namespace BlazorContextMenu
 {
@@ -17,32 +17,32 @@ namespace BlazorContextMenu
         protected override void BuildRenderTree(RenderTreeBuilder builder)
         {
             /*
-                <div onclick="@(MouseButtonTrigger == MouseButtonTrigger.Left || MouseButtonTrigger == MouseButtonTrigger.Both ? $"blazorContextMenu.OnContextMenu(event, '{MenuId.Replace("'","\\'")}'); " : "")"
-                    oncontextmenu="@(MouseButtonTrigger == MouseButtonTrigger.Right || MouseButtonTrigger == MouseButtonTrigger.Both ? $"blazorContextMenu.OnContextMenu(event, '{MenuId.Replace("'","\\'")}');": "")" 
-                    class="@CssClass"> @ChildContent
+                <div @attributes="Attributes"
+                     onclick="@(MouseButtonTrigger == MouseButtonTrigger.Left || MouseButtonTrigger == MouseButtonTrigger.Both ? $"blazorContextMenu.OnContextMenu(event, '{MenuId.Replace("'","\\'")}'); " : "")"
+                     ondblclick="@(MouseButtonTrigger == MouseButtonTrigger.DoubleClick ? $"blazorContextMenu.OnContextMenu(event, '{MenuId.Replace("'","\\'")}'); " : "")"
+                     oncontextmenu="@(MouseButtonTrigger == MouseButtonTrigger.Right || MouseButtonTrigger == MouseButtonTrigger.Both ? $"blazorContextMenu.OnContextMenu(event, '{MenuId.Replace("'","\\'")}');": "")"
+                     class="@CssClass">
+                    @ChildContent
                 </div>
              */
 
             builder.OpenElement(0, WrapperTag);
 
-            builder.AddMultipleAttributes(1, RuntimeHelpers.TypeCheck<IEnumerable<KeyValuePair<string, object>>>(Attributes));
+            builder.AddMultipleAttributes(1, Microsoft.AspNetCore.Components.CompilerServices.RuntimeHelpers.TypeCheck<global::System.Collections.Generic.IEnumerable<global::System.Collections.Generic.KeyValuePair<string, object>>>(Attributes));
 
             if (MouseButtonTrigger == MouseButtonTrigger.Left || MouseButtonTrigger == MouseButtonTrigger.Both)
             {
-                builder.AddAttribute(2, "onclick",
-                    EventCallback.Factory.Create<UIMouseEventArgs>(this, $"blazorContextMenu.OnContextMenu(event, '{MenuId.Replace("'", "\\'")}');"));
+                builder.AddAttribute(2, "onclick", $"blazorContextMenu.OnContextMenu(event, '{MenuId.Replace("'", "\\'")}');");
             }
 
             if (MouseButtonTrigger == MouseButtonTrigger.Right || MouseButtonTrigger == MouseButtonTrigger.Both)
             {
-                builder.AddAttribute(3, "oncontextmenu",
-                    EventCallback.Factory.Create<UIMouseEventArgs>(this, $"blazorContextMenu.OnContextMenu(event, '{MenuId.Replace("'", "\\'")}');"));
+                builder.AddAttribute(3, "oncontextmenu", $"blazorContextMenu.OnContextMenu(event, '{MenuId.Replace("'", "\\'")}');");
             }
 
             if(MouseButtonTrigger == MouseButtonTrigger.DoubleClick)
             {
-                builder.AddAttribute(4, "ondblclick",
-                   EventCallback.Factory.Create<UIMouseEventArgs>(this, $"blazorContextMenu.OnContextMenu(event, '{MenuId.Replace("'", "\\'")}');"));
+                builder.AddAttribute(4, "ondblclick",$"blazorContextMenu.OnContextMenu(event, '{MenuId.Replace("'", "\\'")}');");
             }
 
             if (!string.IsNullOrWhiteSpace(CssClass))
@@ -59,43 +59,43 @@ namespace BlazorContextMenu
         [Inject] private BlazorContextMenuHandler blazorContextMenuHandler { get; set; }
 
         [Parameter(CaptureUnmatchedValues = true)]
-        private Dictionary<string, object> Attributes { get; set; }
+        public Dictionary<string, object> Attributes { get; set; }
 
         /// <summary>
         /// The id of the <see cref="ContextMenuTrigger" /> wrapper element.
         /// </summary>
         [Parameter]
-        public string Id { get; protected set; }
+        public string Id { get; set; }
 
         /// <summary>
         /// The Id of the <see cref="ContextMenu" /> to open. This parameter is required.
         /// </summary>
         [Parameter]
-        public string MenuId { get; protected set; }
+        public string MenuId { get; set; }
 
         /// <summary>
         /// Additional css class for the trigger's wrapper element.
         /// </summary>
         [Parameter]
-        public string CssClass { get; protected set; }
+        public string CssClass { get; set; }
 
         /// <summary>
         /// The mouse button that triggers the menu.
         ///
         /// </summary>
         [Parameter]
-        public MouseButtonTrigger MouseButtonTrigger { get; protected set; }
+        public MouseButtonTrigger MouseButtonTrigger { get; set; }
 
         /// <summary>
         /// The trigger's wrapper element tag (default: "div").
         /// </summary>
         [Parameter]
-        public string WrapperTag { get; protected set; } = "div";
+        public string WrapperTag { get; set; } = "div";
 
         [Parameter]
-        protected RenderFragment ChildContent { get; set; }
+        public RenderFragment ChildContent { get; set; }
 
-        protected override void OnInit()
+        protected override void OnInitialized()
         {
             if (string.IsNullOrEmpty(MenuId))
             {
