@@ -10,37 +10,37 @@
 @code{
 
     [Parameter(CaptureUnmatchedValues = true)]
-    private Dictionary<string, object> Attributes { get; set; }
+    public Dictionary<string, object> Attributes { get; set; }
 
     /// <summary>
     /// Allows you to override the default css class of the <see cref="Seperator"/>'s li element, for full customization.
     /// </summary>
     [Parameter]
-    public string OverrideDefaultCssClass { get; protected set; }
+    public string OverrideDefaultCssClass { get; set; }
 
     /// <summary>
     /// Allows you to override the default css class of the <see cref="Seperator"/>'s hr element, for full customization.
     /// </summary>
     [Parameter]
-    public string OverrideDefaultHrCssClass { get; protected set; }
+    public string OverrideDefaultHrCssClass { get; set; }
 
     /// <summary>
     /// The id of the <see cref="Seperator"/>'s li element. This is optional
     /// </summary>
     [Parameter]
-    public string Id { get; protected set; }
+    public string Id { get; set; }
 
     /// <summary>
     /// Additional css class for the <see cref="Seperator"/>'s li element. Use this to extend the default css.
     /// </summary>
     [Parameter]
-    public string CssClass { get; protected set; }
+    public string CssClass { get; set; }
 
     /// <summary>
     /// Additional css class for the <see cref="Seperator"/>'s hr element. Use this to extend the default css.
     /// </summary>
     [Parameter]
-    public string HrCssClass { get; protected set; }
+    public string HrCssClass { get; set; }
 
     protected string Template { get; set; }
 
@@ -66,9 +66,9 @@
         }
     }
 
-    protected override void OnInit()
+    protected override void OnInitialized()
     {
-        base.OnInit();
+        base.OnInitialized();
 
         var rootMenu = menuTreeTraverser.GetRootContextMenu(this);
         if (rootMenu == null)
