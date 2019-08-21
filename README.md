@@ -237,10 +237,15 @@ public class Startup
 </details>
 
 ## Release Notes
-<details open="open"><summary>0.18</summary>
+<details open="open"><summary>0.19</summary>
+
+>- Fix for Blazor server-side prerendering: [#53](https://github.com/stavroskasidis/BlazorContextMenu/issues/53).
+</details>
+
+<details><summary>0.18</summary>
 
 >- Updated to 3.0 preview 8.
->- Added attribute splatting to components
+>- Added attribute splatting to components.
 </details>
 
 <details><summary>0.17</summary>
