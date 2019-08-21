@@ -58,7 +58,7 @@ namespace BlazorContextMenu.TestsCommon.Infrastructure
         {
             Browser.Manage().Window.Maximize();
             new WebDriverWait(Browser, TimeSpan.FromSeconds(30)).Until(
-                driver => driver.FindElement(By.TagName("app")).Text != "Loading...");
+                driver => !string.IsNullOrWhiteSpace(driver.FindElement(By.Id("app-loaded")).Text));
             Task.Delay(1000).Wait();
         }
 

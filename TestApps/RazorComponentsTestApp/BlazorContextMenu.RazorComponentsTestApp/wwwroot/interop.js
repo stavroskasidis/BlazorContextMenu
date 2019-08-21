@@ -26,3 +26,8 @@ TestApp_GetItemIndex =  function (targetItemId) {
     }
     return -1;
 };
+
+TestApp_AppLoaded = function () {
+    var appLoadedElement = document.getElementById("app-loaded");
+    appLoadedElement.innerHTML = "true";
+}

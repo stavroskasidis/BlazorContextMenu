@@ -57,6 +57,7 @@ namespace BlazorContextMenu
 
         [Inject] private IJSRuntime jsRuntime { get; set; }
         [Inject] private BlazorContextMenuHandler blazorContextMenuHandler { get; set; }
+        [Inject] IComponentContext ComponentContext { get; set; }
 
         [Parameter(CaptureUnmatchedValues = true)]
         public Dictionary<string, object> Attributes { get; set; }
@@ -119,7 +120,7 @@ namespace BlazorContextMenu
 
         protected override async Task OnAfterRenderAsync()
         {
-            if (!blazorContextMenuHandler.ReferencePassedToJs)
+            if (!blazorContextMenuHandler.ReferencePassedToJs && ComponentContext.IsConnected)
             {
                 await jsRuntime.InvokeAsync<object>("blazorContextMenu.SetMenuHandlerReference", CreateDotNetObjectRef(blazorContextMenuHandler));
                 blazorContextMenuHandler.ReferencePassedToJs = true;
