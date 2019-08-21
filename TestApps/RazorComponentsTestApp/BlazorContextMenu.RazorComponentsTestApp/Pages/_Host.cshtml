@@ -15,8 +15,9 @@
     <link href="_content/Blazor.ContextMenu/blazorContextMenu.min.css" rel="stylesheet" />
 </head>
 <body>
-    <app>Loading...</app>
-
+    @*<app>Loading...</app>*@
+    <app>@(await Html.RenderStaticComponentAsync<App>())</app>
+    <div id="app-loaded"></div>
     <script src="interop.js"></script>
     <script src="_content/Blazor.ContextMenu/blazorContextMenu.min.js"></script>
     <script src="_framework/blazor.server.js"></script>

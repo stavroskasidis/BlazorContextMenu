@@ -31,7 +31,7 @@
 @functions{
 
     List<WeatherForecast> forecasts = new List<WeatherForecast>();
-    protected override async Task OnInitAsync()
+    protected override async Task OnInitializedAsync()
     {
         forecasts = (await httpClient.GetJsonAsync<WeatherForecast[]>("api/SampleData/WeatherForecasts")).ToList();
     }

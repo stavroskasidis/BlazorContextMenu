@@ -5,3 +5,16 @@
         </NotFoundContent>
     </Router>
 </CascadingAuthenticationState>
+
+
+@inject IComponentContext ComponentContext
+@inject IJSRuntime jsRuntime
+@code{
+    protected override async Task OnAfterRenderAsync()
+    {
+        if (ComponentContext.IsConnected)
+        {
+            await jsRuntime.InvokeAsync<object>("TestApp_AppLoaded");
+        }
+    }
+}

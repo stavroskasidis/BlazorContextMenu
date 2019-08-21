@@ -3,3 +3,12 @@
         <p>Sorry, there's nothing at this address.</p>
     </NotFoundContent>
 </Router>
+
+
+@inject IJSRuntime jsRuntime
+@code{
+    protected override async Task OnAfterRenderAsync()
+    {
+        await jsRuntime.InvokeAsync<object>("TestApp_AppLoaded");
+    }
+}
