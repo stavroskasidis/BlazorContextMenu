@@ -1,14 +1,14 @@
 ﻿@inject IJSRuntime jsRuntime
 
 <p>Right-click on the list items to view the context menu with dynamic items</p>
-<ContextMenuTrigger MenuId="dynamicItemsMenu">
-    <ul>
-        @foreach (var item in TodoItems)
-        {
-            <li><input type="checkbox" @bind="item.IsChecked" /> @item.Text</li>
-        }
-    </ul>
-</ContextMenuTrigger>
+<ul>
+    @foreach (var item in TodoItems)
+    {
+        <ContextMenuTrigger MenuId="dynamicItemsMenu" Data="item" WrapperTag="li">
+            <input type="checkbox" @bind="item.IsChecked" /> @item.Text
+        </ContextMenuTrigger>
+    }
+</ul>
 <button type="button" @onclick="@ResetList">Reset list</button>
 
 <ContextMenu Id="dynamicItemsMenu" OnAppearing="MenuOnAppearingHandler">
@@ -70,55 +70,43 @@
         };
     }
 
-    async Task MenuOnAppearingHandler(MenuAppearingEventArgs e)
+    void MenuOnAppearingHandler(MenuAppearingEventArgs e)
     {
-        var itemIndex = await jsRuntime.InvokeAsync<int>("dynamicItemsInterop.getListItemIndex", e.ContextMenuTargetId);
-        if (itemIndex >= 0)
+        var currentTodoItem = e.ContextMenuTrigger.Data as TodoItem;
+        e.PreventShow = !currentTodoItem.CanShowMenu;
+    }
+
+    void ItemOnAppearingHandler(ItemAppearingEventArgs e)
+    {
+        var currentTodoItem = e.ContextMenuTrigger.Data as TodoItem;
+        switch (e.MenuItem.Id)
         {
-            var currentTodoItem = TodoItems.ElementAt(itemIndex);
-            e.PreventShow = !currentTodoItem.CanShowMenu;
+            case "menuitem-delete":
+                e.IsEnabled = currentTodoItem.CanBeDeleted;
+                break;
+            case "menuitem-check":
+                e.IsVisible = !currentTodoItem.IsChecked;
+                break;
+            case "menuitem-uncheck":
+                e.IsVisible = currentTodoItem.IsChecked;
+                break;
         }
     }
 
-    async Task ItemOnAppearingHandler(ItemAppearingEventArgs e)
+    void ItemClick(ItemClickEventArgs e)
     {
-        var itemIndex = await jsRuntime.InvokeAsync<int>("dynamicItemsInterop.getListItemIndex", e.ContextMenuTargetId);
-        if (itemIndex >= 0)
+        var currentTodoItem = e.ContextMenuTrigger.Data as TodoItem;
+        switch (e.MenuItem.Id)
         {
-            var currentTodoItem = TodoItems.ElementAt(itemIndex);
-            switch (e.MenuItem.Id)
-            {
-                case "menuitem-delete":
-                    e.IsEnabled = currentTodoItem.CanBeDeleted;
-                    break;
-                case "menuitem-check":
-                    e.IsVisible = !currentTodoItem.IsChecked;
-                    break;
-                case "menuitem-uncheck":
-                    e.IsVisible = currentTodoItem.IsChecked;
-                    break;
-            }
-        }
-    }
-
-    async Task ItemClick(ItemClickEventArgs e)
-    {
-        var itemIndex = await jsRuntime.InvokeAsync<int>("dynamicItemsInterop.getListItemIndex", e.ContextMenuTargetId);
-        if (itemIndex >= 0)
-        {
-            var currentTodoItem = TodoItems.ElementAt(itemIndex);
-            switch (e.MenuItem.Id)
-            {
-                case "menuitem-delete":
-                    TodoItems.Remove(currentTodoItem);
-                    break;
-                case "menuitem-check":
-                    currentTodoItem.IsChecked = true;
-                    break;
-                case "menuitem-uncheck":
-                    currentTodoItem.IsChecked = false;
-                    break;
-            }
+            case "menuitem-delete":
+                TodoItems.Remove(currentTodoItem);
+                break;
+            case "menuitem-check":
+                currentTodoItem.IsChecked = true;
+                break;
+            case "menuitem-uncheck":
+                currentTodoItem.IsChecked = false;
+                break;
         }
     }
 }
