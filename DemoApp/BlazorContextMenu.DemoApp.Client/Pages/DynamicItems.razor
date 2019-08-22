@@ -3,17 +3,16 @@
 @{
     var tabItems = new List<TabItem>
     {
-            new TabItem
-            {
-                HeaderText = "Demo",
-                Contents = @<BlazorContextMenu.DemoApp.Client.Sources.DynamicItems />
+        new TabItem
+        {
+            HeaderText = "Demo",
+            Contents = @<BlazorContextMenu.DemoApp.Client.Sources.DynamicItems />
         },
         new TabItem
         {
             HeaderText = "<> Source",
             Contents = @<div>
                             <SourceFileLoader SourceFilePath="Sources/DynamicItems.razor" />
-                            <SourceFileLoader SourceFilePath="wwwroot/dynamicItemsInterop.js" />
                         </div>
         }
     };

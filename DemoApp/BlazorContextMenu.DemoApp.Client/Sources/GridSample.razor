@@ -13,14 +13,14 @@
     <tbody>
         @foreach (var forecast in forecasts)
         {
-            <ContextMenuTrigger WrapperTag="tr" MenuId="tableContextMenu">
+            <ContextMenuTrigger WrapperTag="tr" MenuId="tableContextMenu" Data="forecast">
                 <td>@forecast.Date.ToShortDateString()</td>
                 <td>@forecast.TemperatureC</td>
                 <td>@forecast.TemperatureF</td>
                 <td>@forecast.Summary</td>
             </ContextMenuTrigger>
         }
-    </tbody>
+     </tbody>
 </table>
 
 <ContextMenu Id="tableContextMenu">
@@ -29,7 +29,6 @@
 </ContextMenu>
 
 @functions{
-
     List<WeatherForecast> forecasts = new List<WeatherForecast>();
     protected override async Task OnInitializedAsync()
     {
@@ -41,14 +40,9 @@
         forecasts = (await httpClient.GetJsonAsync<WeatherForecast[]>("api/SampleData/WeatherForecasts")).ToList();
     }
 
-    async Task DeleteClick(ItemClickEventArgs e)
+    void DeleteClick(ItemClickEventArgs e)
     {
-        //Interop is required here due to current blazor limitations
-        var itemIndex = await jsRuntime.InvokeAsync<int>("gridSampleInterop.getRowIndex", e.ContextMenuTargetId);
-        if (itemIndex >= 0)
-        {
-            var currentItem = forecasts.ElementAt(itemIndex);
-            forecasts.Remove(currentItem);
-        }
+        var currentForecast = e.ContextMenuTrigger.Data as WeatherForecast;
+        forecasts.Remove(currentForecast);
     }
 }
