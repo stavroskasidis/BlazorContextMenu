@@ -86,9 +86,9 @@
         if (!menu) throw new Error("No context menu with id '" + menuId + "' was found");
         openMenuId = menuId;
         openMenuTarget = e.target;
-        var triggerId = e.currentTarget.id;
+        var triggerDotnetRef = JSON.parse(e.currentTarget.dataset["dotnetref"]);
         //show context menu
-        blazorContextMenu.Show(menuId, e.x, e.y, e.target, triggerId).then(function () {
+        blazorContextMenu.Show(menuId, e.x, e.y, e.target, triggerDotnetRef).then(function () {
             //check for overflow
             var leftOverflownPixels = menu.offsetLeft + menu.clientWidth - window.innerWidth;
             if (leftOverflownPixels > 0) {
@@ -118,13 +118,13 @@
         });
     };
 
-    blazorContextMenu.Show = function (menuId, x, y, target, triggerId) {
+    blazorContextMenu.Show = function (menuId, x, y, target, triggerDotnetRef) {
         if (!target.id) {
             //add an id to the target dynamically so that it can be referenced later 
             //TODO: Rewrite this once this Blazor limitation is lifted
             target.id = guid();
         }
-        return menuHandlerReference.invokeMethodAsync('ShowMenu', menuId, x.toString(), y.toString(), target.id, triggerId);
+        return menuHandlerReference.invokeMethodAsync('ShowMenu', menuId, x.toString(), y.toString(), target.id, triggerDotnetRef);
     }
 
     blazorContextMenu.Hide = function (menuId) {
@@ -193,6 +193,11 @@
         if (subMenuTimeout) {
             clearTimeout(subMenuTimeout);
         }
+    }
+
+
+    blazorContextMenu.RegisterTriggerReference = function (triggerElement, triggerDotNetRef) {
+        triggerElement.dataset["dotnetref"] = JSON.stringify(triggerDotNetRef.serializeAsArg());
     }
 
     return blazorContextMenu;

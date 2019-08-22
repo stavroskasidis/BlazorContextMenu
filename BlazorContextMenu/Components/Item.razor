@@ -157,7 +157,7 @@
         if (OnAppearing.HasDelegate)
         {
             //TODO: Remove casting when 'this' is fixed in blazor
-            var appearingArgs = new ItemAppearingEventArgs(RootMenu.Id, contextMenuTrigger, contextMenuTarget, (Item)(object)this, Visible, Enabled);
+            var appearingArgs = new ItemAppearingEventArgs(RootMenu.Id, contextMenuTarget, contextMenuTrigger ,(Item)(object)this, Visible, Enabled);
             await OnAppearing.InvokeAsync(appearingArgs);
             Visible = appearingArgs.IsVisible;
             Enabled = appearingArgs.IsEnabled;
@@ -175,8 +175,9 @@
         if (OnClick.HasDelegate)
         {
             var contextMenuTarget = RootMenu.GetTarget();
+            var contextMenuTrigger = RootMenu.GetTrigger();
             //TODO: Remove casting when 'this' is fixed in blazor
-            var args = new ItemClickEventArgs(e, RootMenu.Id, contextMenuTarget, MenuItemElement, (Item)(object)this);
+            var args = new ItemClickEventArgs(e, RootMenu.Id, contextMenuTarget ,contextMenuTrigger ,MenuItemElement,(Item)(object)this);
             await OnClick.InvokeAsync(args);
             if (!args.IsCanceled)
             {
