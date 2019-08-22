@@ -1,6 +1,7 @@
 ﻿@inherits MenuTreeComponent
 @inject BlazorContextMenuSettings settings
 @inject BlazorContextMenuHandler contextMenuHandler
+@inject MenuTreeTraverser menuTreeTraverser
 @namespace BlazorContextMenu
 
 <div @attributes="@Attributes" class="@($"{BaseClass} {ClassCalc} {DisplayClassCalc}")" id="@Id" style="@($"left:{X}px;top:{Y}px;")">
@@ -112,7 +113,7 @@
     protected string X { get; set; }
     protected string Y { get; set; }
     protected string TargetId { get; set; }
-    protected string TriggerId { get; set; }
+    protected ContextMenuTrigger Trigger { get; set; }
 
     protected string ClassCalc
     {
@@ -214,11 +215,18 @@
         contextMenuHandler.Unregister((ContextMenu)(object)this);
     }
 
-    internal async Task Show(string x, string y, string targetId, string triggerId)
+    internal async Task Show(string x, string y, string targetId, ContextMenuTrigger trigger)
     {
+
+        if(trigger is null)
+        {
+            var rootMenu = menuTreeTraverser.GetRootContextMenu(this);
+            trigger = rootMenu?.GetTrigger();
+        }
+
         if (OnAppearing.HasDelegate)
         {
-            var eventArgs = new MenuAppearingEventArgs(Id, targetId, x, y, triggerId);
+            var eventArgs = new MenuAppearingEventArgs(Id, targetId, x, y, trigger);
             await OnAppearing.InvokeAsync(eventArgs);
             x = eventArgs.X;
             y = eventArgs.Y;
@@ -232,7 +240,7 @@
         X = x;
         Y = y;
         TargetId = targetId;
-        TriggerId = triggerId;
+        Trigger = trigger;
         await InvokeAsync(() => StateHasChanged());
     }
 
@@ -247,8 +255,8 @@
         return TargetId;
     }
 
-    internal string GetTrigger()
+    internal ContextMenuTrigger GetTrigger()
     {
-        return TriggerId;
+        return Trigger;
     }
 }

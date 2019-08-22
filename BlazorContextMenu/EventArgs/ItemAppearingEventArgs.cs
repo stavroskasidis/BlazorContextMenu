@@ -7,14 +7,15 @@ namespace BlazorContextMenu
 {
     public class ItemAppearingEventArgs
     {
-        public ItemAppearingEventArgs(string contextMenuId, string contextMenuTriggerId,  string contextMenuTargetId, Item menuItem, bool isVisible, bool isEnabled)
+        public ItemAppearingEventArgs(string contextMenuId, string contextMenuTargetId, 
+                                      ContextMenuTrigger trigger, Item menuItem, bool isVisible, bool isEnabled)
         {
             ContextMenuId = contextMenuId;
             ContextMenuTargetId = contextMenuTargetId;
+            ContextMenuTrigger = trigger;
             MenuItem = menuItem;
             IsEnabled = isEnabled;
             IsVisible = isVisible;
-            ContextMenuTriggerId = contextMenuTriggerId;
         }
 
         /// <summary>
@@ -23,9 +24,9 @@ namespace BlazorContextMenu
         public string ContextMenuId { get; protected set; }
 
         /// <summary>
-        /// The id of the <see cref="ContextMenuTrigger"/> that triggered this menu.
+        /// The <see cref="ContextMenuTrigger"/> that triggered this menu.
         /// </summary>
-        public string ContextMenuTriggerId { get; protected set; }
+        public ContextMenuTrigger ContextMenuTrigger { get; protected set; }
 
         /// <summary>
         /// The id of the target element that the <see cref="ContextMenu"/> was triggered from.

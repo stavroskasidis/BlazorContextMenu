@@ -8,14 +8,15 @@ namespace BlazorContextMenu
 {
     public class ItemClickEventArgs
     {
-        public ItemClickEventArgs(UIMouseEventArgs mouseEvent,string contextMenuId, string contextMenuTargetId, string contextMenuTriggerId,ElementReference menuItemElement, Item menuItem)
+        public ItemClickEventArgs(UIMouseEventArgs mouseEvent,string contextMenuId, string contextMenuTargetId,
+            ContextMenuTrigger trigger, ElementReference menuItemElement, Item menuItem)
         {
             MouseEvent = mouseEvent;
             ContextMenuId = contextMenuId;
             ContextMenuTargetId = contextMenuTargetId;
+            ContextMenuTrigger = trigger;
             MenuItemElement = menuItemElement;
             MenuItem = menuItem;
-            ContextMenuTriggerId = contextMenuTriggerId;
         }
 
         /// <summary>
@@ -34,9 +35,9 @@ namespace BlazorContextMenu
         public string ContextMenuId { get; protected set; }
 
         /// <summary>
-        /// The id of the <see cref="ContextMenuTrigger"/> that triggered the <see cref="ContextMenu"/>.
+        /// The <see cref="ContextMenuTrigger"/> that triggered this menu.
         /// </summary>
-        public string ContextMenuTriggerId { get; protected set; }
+        public ContextMenuTrigger ContextMenuTrigger { get; protected set; }
 
         /// <summary>
         /// The id of the target element that the <see cref="ContextMenu"/> was triggered from.
