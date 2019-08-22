@@ -193,7 +193,13 @@ public class Startup
 
 
 ## ⚠️ Breaking changes ⚠️
-<details open="open"><summary>Upgrading from 0.16 to 0.17</summary>
+
+<details open="open"><summary>Upgrading from 0.19 to 0.20</summary>
+
+>- Replaced the `ContextMenuTriggerId` in events with the reference to the actual `ContextMenuTrigger`
+</details>
+
+<details><summary>Upgrading from 0.16 to 0.17</summary>
 
 >- Removed the deprecated automatic embed of resources in blazor client-side. You must reference the static files as described in the "Installation" section.
 >- The static resources path has changed in preview 7 from `_content/blazorcontextmenu/` to `_content/Blazor.ContextMenu/`
@@ -237,7 +243,13 @@ public class Startup
 </details>
 
 ## Release Notes
-<details open="open"><summary>0.19</summary>
+<details open="open"><summary>0.20</summary>
+
+>- Added `ContextMenuTrigger` data, that can be accessed from event args.
+>- Replaced the `ContextMenuTriggerId` in event args with the reference to the actual `ContextMenuTrigger`
+</details>
+
+<details><summary>0.19</summary>
 
 >- Fix for Blazor server-side prerendering: [#53](https://github.com/stavroskasidis/BlazorContextMenu/issues/53).
 </details>
