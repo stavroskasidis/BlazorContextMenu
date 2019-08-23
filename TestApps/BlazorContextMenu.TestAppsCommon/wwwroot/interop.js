@@ -28,6 +28,7 @@ TestApp_GetItemIndex =  function (targetItemId) {
 };
 
 TestApp_AppLoaded = function () {
-    var appLoadedElement = document.getElementById("app-loaded");
-    appLoadedElement.innerHTML = "true";
+    var appLoadedElement = document.createElement("div");
+    appLoadedElement.id = "app-loaded";
+    document.body.appendChild(appLoadedElement);
 }

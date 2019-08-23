@@ -57,8 +57,7 @@ namespace BlazorContextMenu.TestsCommon.Infrastructure
         protected void WaitUntilLoaded()
         {
             Browser.Manage().Window.Maximize();
-            new WebDriverWait(Browser, TimeSpan.FromSeconds(30)).Until(
-                driver => !string.IsNullOrWhiteSpace(driver.FindElement(By.Id("app-loaded")).Text));
+            new WebDriverWait(Browser, TimeSpan.FromSeconds(30)).Until(SeleniumExtras.WaitHelpers.ExpectedConditions.ElementExists(By.Id("app-loaded")));
             Task.Delay(1000).Wait();
         }
 
