@@ -32,7 +32,7 @@
     }
 
     function findFirstChildByClass(element, className) {
-        var foundElement = null, found;
+        var foundElement = null;
         function recurse(element, className, found) {
             for (var i = 0; i < element.childNodes.length && !found; i++) {
                 var el = element.childNodes[i];
