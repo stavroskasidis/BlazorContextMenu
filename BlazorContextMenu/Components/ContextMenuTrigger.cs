@@ -151,7 +151,7 @@ namespace BlazorContextMenu
                 blazorContextMenuHandler.ReferencePassedToJs = true;
             }
 
-            if (ComponentContext.IsConnected)
+            if (ComponentContext.IsConnected && dotNetObjectRef == null)
             {
                 dotNetObjectRef = CreateDotNetObjectRef(this);
                 await jsRuntime.InvokeAsync<object>("blazorContextMenu.RegisterTriggerReference", contextMenuTriggerElementRef , dotNetObjectRef);
@@ -161,6 +161,7 @@ namespace BlazorContextMenu
         public void Dispose()
         {
             DisposeDotNetObjectRef(dotNetObjectRef);
+            dotNetObjectRef = null;
         }
     }
 }
