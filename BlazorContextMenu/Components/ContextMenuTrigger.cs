@@ -9,6 +9,7 @@ using BlazorContextMenu.Services;
 using Microsoft.JSInterop;
 using Microsoft.AspNetCore.Components.RenderTree;
 using System.Runtime.CompilerServices;
+using Microsoft.AspNetCore.Components.Rendering;
 
 namespace BlazorContextMenu
 {
@@ -61,7 +62,6 @@ namespace BlazorContextMenu
 
         [Inject] private IJSRuntime jsRuntime { get; set; }
         [Inject] private BlazorContextMenuHandler blazorContextMenuHandler { get; set; }
-        [Inject] IComponentContext ComponentContext { get; set; }
 
         [Parameter(CaptureUnmatchedValues = true)]
         public Dictionary<string, object> Attributes { get; set; }
@@ -107,7 +107,7 @@ namespace BlazorContextMenu
         public RenderFragment ChildContent { get; set; }
 
         private ElementReference contextMenuTriggerElementRef;
-        private DotNetObjectRef<ContextMenuTrigger> dotNetObjectRef;
+        private DotNetObjectReference<ContextMenuTrigger> dotNetObjectRef;
         protected override void OnInitialized()
         {
             if (string.IsNullOrEmpty(MenuId))
@@ -116,56 +116,59 @@ namespace BlazorContextMenu
             }
         }
 
-        #region Hack to fix https://github.com/aspnet/AspNetCore/issues/11159
+        //#region Hack to fix https://github.com/aspnet/AspNetCore/issues/11159
 
-        public static object CreateDotNetObjectRefSyncObj = new object();
+        //public static object CreateDotNetObjectRefSyncObj = new object();
 
-        protected DotNetObjectRef<T> CreateDotNetObjectRef<T>(T value) where T : class
+        //protected DotNetObjectRef<T> CreateDotNetObjectRef<T>(T value) where T : class
+        //{
+        //    lock (CreateDotNetObjectRefSyncObj)
+        //    {
+        //        JSRuntime.SetCurrentJSRuntime(jsRuntime);
+        //        return DotNetObjectRef.Create(value);
+        //    }
+        //}
+
+        //protected void DisposeDotNetObjectRef<T>(DotNetObjectRef<T> value) where T : class
+        //{
+        //    if (value != null)
+        //    {
+        //        lock (CreateDotNetObjectRefSyncObj)
+        //        {
+        //            JSRuntime.SetCurrentJSRuntime(jsRuntime);
+        //            value.Dispose();
+        //        }
+        //    }
+        //}
+
+        //#endregion
+
+        protected override async Task OnAfterRenderAsync(bool firstRender)
         {
-            lock (CreateDotNetObjectRefSyncObj)
-            {
-                JSRuntime.SetCurrentJSRuntime(jsRuntime);
-                return DotNetObjectRef.Create(value);
-            }
-        }
-
-        protected void DisposeDotNetObjectRef<T>(DotNetObjectRef<T> value) where T : class
-        {
-            if (value != null)
-            {
-                lock (CreateDotNetObjectRefSyncObj)
-                {
-                    JSRuntime.SetCurrentJSRuntime(jsRuntime);
-                    value.Dispose();
-                }
-            }
-        }
-
-        #endregion
-
-        protected override async Task OnAfterRenderAsync()
-        {
-            if (ComponentContext.IsConnected)
-            {
+            //if (ComponentContext.IsConnected)
+            //{
                 if (!blazorContextMenuHandler.ReferencePassedToJs)
                 {
-                    await jsRuntime.InvokeAsync<object>("blazorContextMenu.SetMenuHandlerReference", CreateDotNetObjectRef(blazorContextMenuHandler));
+                    await jsRuntime.InvokeAsync<object>("blazorContextMenu.SetMenuHandlerReference", DotNetObjectReference.Create(blazorContextMenuHandler));
                     blazorContextMenuHandler.ReferencePassedToJs = true;
                 }
 
                 if (dotNetObjectRef == null)
                 {
-                    dotNetObjectRef = CreateDotNetObjectRef(this);
+                    dotNetObjectRef = DotNetObjectReference.Create(this);
                 }
 
                 await jsRuntime.InvokeAsync<object>("blazorContextMenu.RegisterTriggerReference", contextMenuTriggerElementRef, dotNetObjectRef);
-            }
+            //}
         }
 
         public void Dispose()
         {
-            DisposeDotNetObjectRef(dotNetObjectRef);
-            dotNetObjectRef = null;
+            if (dotNetObjectRef != null)
+            {
+                dotNetObjectRef.Dispose();
+                dotNetObjectRef = null;
+            }
         }
     }
 }

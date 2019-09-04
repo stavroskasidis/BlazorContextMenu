@@ -1,24 +1,24 @@
 ﻿@inject IJSRuntime jsRuntime
 
 <h1>Todo List (Right click)</h1>
-<ContextMenuTrigger MenuId="todoItemsMenu">
-    <ul id="list1">
-        @foreach (var item in TodoItems)
-        {
-            <li id="@($"list1-{TodoItems.IndexOf(item)}")" @key="item"><input type="checkbox" @bind="item.IsChecked" readonly /> @item.Text</li>
-        }
-    </ul>
-</ContextMenuTrigger>
+<ul id="list1">
+    @foreach (var item in TodoItems)
+    {
+        <ContextMenuTrigger Data="item" WrapperTag="li" MenuId="todoItemsMenu" Id="@($"list1-{TodoItems.IndexOf(item)}")">
+            <input type="checkbox" @bind="item.IsChecked" readonly /> @item.Text
+        </ContextMenuTrigger>
+    }
+</ul>
 
 <h1>Todo List (Left click)</h1>
-<ContextMenuTrigger MenuId="todoItemsMenu" MouseButtonTrigger="MouseButtonTrigger.Left">
-    <ul id="list2">
-        @foreach (var item in TodoItems)
-        {
-            <li id="@($"list2-{TodoItems.IndexOf(item)}")" @key="item"><input type="checkbox" @bind="item.IsChecked" readonly /> @item.Text</li>
-        }
-    </ul>
-</ContextMenuTrigger>
+<ul id="list2">
+    @foreach (var item in TodoItems)
+    {
+        <ContextMenuTrigger MouseButtonTrigger="MouseButtonTrigger.Left" Data="item" WrapperTag="li" MenuId="todoItemsMenu" Id="@($"list2-{TodoItems.IndexOf(item)}")">
+            <input type="checkbox" @bind="item.IsChecked" readonly /> @item.Text
+        </ContextMenuTrigger>
+    }
+</ul>
 
 <ContextMenu Id="todoItemsMenu" OnAppearing="@TodoItemsMenuOnAppearing">
     <Item id="menuitem-copy" OnClick="CopyClick"> <i class="fas fa-file blue-icon"></i> Copy</Item>
@@ -29,88 +29,55 @@
 
 @code{
 
-    async Task TodoItemsMenuOnAppearing(MenuAppearingEventArgs e)
+    void TodoItemsMenuOnAppearing(MenuAppearingEventArgs e)
     {
-        var itemIndex = await jsRuntime.InvokeAsync<int>("TestApp_GetItemIndex", e.ContextMenuTargetId);
-        if (itemIndex >= 0)
-        {
-            var currentTodoItem = TodoItems.ElementAt(itemIndex);
-            e.PreventShow = !currentTodoItem.CanShowMenu;
-        }
+        var currentTodoItem = e.ContextMenuTrigger.Data as TodoItem;
+        e.PreventShow = !currentTodoItem.CanShowMenu;
     }
 
-    async Task CopyClick(ItemClickEventArgs e)
+    void CopyClick(ItemClickEventArgs e)
     {
-        //Interop is required here due to current blazor limitations
-
-        var itemIndex = await jsRuntime.InvokeAsync<int>("TestApp_GetItemIndex", e.ContextMenuTargetId);
-        if (itemIndex >= 0)
+        var currentTodoItem = e.ContextMenuTrigger.Data as TodoItem;
+        TodoItems.Add(new TodoItem
         {
-            var currentTodoItem = TodoItems.ElementAt(itemIndex);
-            TodoItems.Add(new TodoItem
-            {
-                Text = currentTodoItem.Text + " Copy",
-                IsChecked = currentTodoItem.IsChecked,
-                CanBeDeleted = currentTodoItem.CanBeDeleted
-            });
-            StateHasChanged();
-        }
+            Text = currentTodoItem.Text + " Copy",
+            IsChecked = currentTodoItem.IsChecked,
+            CanBeDeleted = currentTodoItem.CanBeDeleted
+        });
+        StateHasChanged();
     }
 
-    async Task CheckAppearingHandler(ItemAppearingEventArgs e)
+    void CheckAppearingHandler(ItemAppearingEventArgs e)
     {
-        var itemIndex = await jsRuntime.InvokeAsync<int>("TestApp_GetItemIndex", e.ContextMenuTargetId);
-        if (itemIndex >= 0)
-        {
-            var currentTodoItem = TodoItems.ElementAt(itemIndex);
-            e.IsEnabled = !currentTodoItem.IsChecked;
-        }
-        else
-        {
-            e.IsEnabled = false;
-        }
+        var currentTodoItem = e.ContextMenuTrigger.Data as TodoItem;
+        e.IsEnabled = !currentTodoItem.IsChecked;
     }
 
-    async Task DeleteAppearingHandler(ItemAppearingEventArgs e)
+    void DeleteAppearingHandler(ItemAppearingEventArgs e)
     {
 
-        var itemIndex = await jsRuntime.InvokeAsync<int>("TestApp_GetItemIndex", e.ContextMenuTargetId);
-        if (itemIndex >= 0)
-        {
-            var currentTodoItem = TodoItems.ElementAt(itemIndex);
-            e.IsVisible = currentTodoItem.CanBeDeleted;
-        }
-        else
-        {
-            e.IsVisible = false;
-        }
+        var currentTodoItem = e.ContextMenuTrigger.Data as TodoItem;
+        e.IsVisible = currentTodoItem.CanBeDeleted;
     }
 
 
-    async Task CheckClick(ItemClickEventArgs e)
+    void CheckClick(ItemClickEventArgs e)
     {
-        var itemIndex = await jsRuntime.InvokeAsync<int>("TestApp_GetItemIndex", e.ContextMenuTargetId);
-        if (itemIndex >= 0)
-        {
-            var currentTodoItem = TodoItems.ElementAt(itemIndex);
-            currentTodoItem.IsChecked = true;
-            StateHasChanged();
-        }
+        var currentTodoItem = e.ContextMenuTrigger.Data as TodoItem;
+        currentTodoItem.IsChecked = true;
+        StateHasChanged();
     }
 
-    async Task DeleteClick(ItemClickEventArgs e)
+    void DeleteClick(ItemClickEventArgs e)
     {
-        var itemIndex = await jsRuntime.InvokeAsync<int>("TestApp_GetItemIndex", e.ContextMenuTargetId);
-        if (itemIndex >= 0)
-        {
-            var currentTodoItem = TodoItems.ElementAt(itemIndex);
-            TodoItems.Remove(currentTodoItem);
-            StateHasChanged();
-        }
+
+        var currentTodoItem = e.ContextMenuTrigger.Data as TodoItem;
+        TodoItems.Remove(currentTodoItem);
+        StateHasChanged();
     }
 
     List<TodoItem> TodoItems = new List<TodoItem>
-{
+    {
         new TodoItem
         {
             Text = "Item 1",
