@@ -1,4 +1,5 @@
 ﻿using Microsoft.AspNetCore.Components;
+using Microsoft.AspNetCore.Components.Web;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -8,7 +9,7 @@ namespace BlazorContextMenu
 {
     public class ItemClickEventArgs
     {
-        public ItemClickEventArgs(UIMouseEventArgs mouseEvent,string contextMenuId, string contextMenuTargetId,
+        public ItemClickEventArgs(MouseEventArgs mouseEvent,string contextMenuId, string contextMenuTargetId,
             ContextMenuTrigger trigger, ElementReference menuItemElement, Item menuItem)
         {
             MouseEvent = mouseEvent;
@@ -22,7 +23,7 @@ namespace BlazorContextMenu
         /// <summary>
         /// The args of the mouse event.
         /// </summary>
-        public UIMouseEventArgs MouseEvent { get; protected set; }
+        public MouseEventArgs MouseEvent { get; protected set; }
         
         /// <summary>
         /// If set to true, then the ContextMenu will not close after clicking on the item.

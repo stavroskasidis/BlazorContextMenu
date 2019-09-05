@@ -12,8 +12,7 @@
     itemEnabled="@Enabled.ToString().ToLower()"
     onmouseover="@(Enabled ? $"blazorContextMenu.OnMenuItemMouseOver(event, {SubmenuXOffset ?? settings.GetTemplate(Template).SubMenuXPositionPixelsOffset}, this);" : "")"
     onmouseout="@(Enabled ? "blazorContextMenu.OnMenuItemMouseOut(event);" : "")"
-    @ref="MenuItemElement" 
-    @ref:suppressField>
+    @ref="MenuItemElement">
     <CascadingValue Value="(MenuTreeComponent)this" Name="ParentComponent">
         @ChildContent
     </CascadingValue>
@@ -165,7 +164,7 @@
     }
 
 
-    protected async Task OnClickInternal(UIMouseEventArgs e)
+    protected async Task OnClickInternal(MouseEventArgs e)
     {
         if (!Enabled)
         {

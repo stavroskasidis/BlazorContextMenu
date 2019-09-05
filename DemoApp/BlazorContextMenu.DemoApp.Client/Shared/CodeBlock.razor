@@ -13,11 +13,11 @@
 </div>
 
 @functions{
-    [Parameter] string Title { get; set; }
-    [Parameter] string Language { get; set; }
-    [Parameter] RenderFragment ChildContent { get; set; }
+    [Parameter] public string Title { get; set; }
+    [Parameter] public string Language { get; set; }
+    [Parameter] public RenderFragment ChildContent { get; set; }
 
-    protected override async Task OnAfterRenderAsync()
+    protected override async Task OnAfterRenderAsync(bool firstRender)
     {
         await jsRuntime.InvokeAsync<object>("DemoApp_RunPrism");
     }

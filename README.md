@@ -243,7 +243,12 @@ public class Startup
 </details>
 
 ## Release Notes
-<details open="open"><summary>0.20</summary>
+<details open="open"><summary>0.21</summary>
+
+>- Updated to 3.0 preview 9.
+</details>
+
+<details><summary>0.20</summary>
 
 >- Added `ContextMenuTrigger` data, that can be accessed from event args.
 >- Replaced the `ContextMenuTriggerId` in event args with the reference to the actual `ContextMenuTrigger`
