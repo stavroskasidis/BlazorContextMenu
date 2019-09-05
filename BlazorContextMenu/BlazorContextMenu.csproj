@@ -39,6 +39,18 @@
     <EmbeddedResource Remove="node_modules\**" />
     <None Remove="node_modules\**" />
   </ItemGroup>
+  
+  <ItemGroup>
+    <Content Remove="package-lock.json" />
+    <Content Remove="package.json" />
+    <Content Remove="Properties\launchSettings.json" />
+  </ItemGroup>
+  
+  <ItemGroup>
+    <None Include="package-lock.json" />
+    <None Include="package.json" />
+    <None Include="Properties\launchSettings.json" />
+  </ItemGroup>
 
   <ItemGroup>
     <PackageReference Include="Microsoft.AspNetCore.Components" Version="3.0.0-preview9.19424.4" />
