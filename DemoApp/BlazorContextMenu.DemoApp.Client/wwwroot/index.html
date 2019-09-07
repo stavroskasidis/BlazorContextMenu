@@ -15,11 +15,22 @@
 </head>
 <body>
     <app>
-        Loading...
+        <div class="loader-box">
+            <img src="spinner.svg" width="70" />
+            <br />
+            <p id="loadingText" class="mt-0">Loading...</p>
+            <br /><br />
+            <progress id="pbar"></progress>
+        </div>
+
         <!-- Added to force fa load -->
         <i style="visibility:hidden" class="fas fa-exclamation"></i>
     </app>
 
+    <script src="loader.js"></script>
+    <script>
+        startLoader(document.getElementById("pbar"), document.getElementById("loadingText"));
+    </script>
     <script src="_content/Blazor.ContextMenu/blazorContextMenu.min.js"></script>
     <script src="interop.js"></script>
     <script src="jquery-3.2.1.slim.min.js"></script>
