@@ -24,7 +24,7 @@
                 progressElement.value = loaded;
             }
             if (textElement) {
-                textElement.innerHTML = "Loaded " + file + ", " + progress + " %..."
+                textElement.innerHTML = "Loaded " + file + " ..."; //+ ", " + progress + " %..."
             }
             if (loaded == total) {
                 // Reset override.
