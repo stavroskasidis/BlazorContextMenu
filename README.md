@@ -243,7 +243,12 @@ public class Startup
 </details>
 
 ## Release Notes
-<details open="open"><summary>0.21</summary>
+<details open="open"><summary>1.0</summary>
+
+>- Updated to 3.0 release.
+</details>
+
+<details><summary>0.21</summary>
 
 >- Updated to 3.0 preview 9.
 </details>
