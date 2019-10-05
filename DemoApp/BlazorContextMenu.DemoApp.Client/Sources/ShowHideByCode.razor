@@ -17,7 +17,7 @@
     </div>
 
     <div class="form-check mb-2 mr-sm-2">
-        <input class="form-check-input" type="checkbox" @bind="autoClose" id="autoClose" />
+        <input class="form-check-input" type="checkbox" @bind="autoHide" id="autoClose" />
         <label class="form-check-label" for="autoClose">
             Auto-close
         </label>
@@ -29,7 +29,7 @@
     <button @onclick="HideBtnClick" class="btn btn-info">Hide the context menu</button>
 </div>
 
-<ContextMenu Id="manualTriggerMenu" CssClass="z-10">
+<ContextMenu Id="manualTriggerMenu" CssClass="z-10" AutoHide="autoHide">
     <Item OnClick="@OnClick">Item 1</Item>
     <Item OnClick="@OnClick">Item 2</Item>
     <Item OnClick="@OnClick">Item 3</Item>
@@ -41,10 +41,10 @@
 
     private int x = 800;
     private int y = 600;
-    private bool autoClose;
+    private bool autoHide;
     async Task ShowBtnClick()
     {
-        await blazorContextMenuService.ShowMenu("manualTriggerMenu", x, y, autoClose);
+        await blazorContextMenuService.ShowMenu("manualTriggerMenu", x, y);
     }
     async Task HideBtnClick()
     {
