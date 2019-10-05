@@ -20,7 +20,6 @@
 
     var openMenuId = null;
     var openMenuTarget = null;
-    var autohide = true;
     //Helper functions
     //========================================
     function guid() {
@@ -87,7 +86,6 @@
         if (!menu) throw new Error("No context menu with id '" + menuId + "' was found");
         openMenuId = menuId;
         openMenuTarget = null;
-        autohide = menu.dataset["autohide"] == "true";
         showMenuCommon(menu, menuId, x, y, null, null);
     }
 
@@ -96,7 +94,6 @@
         if (!menu) throw new Error("No context menu with id '" + menuId + "' was found");
         openMenuId = menuId;
         openMenuTarget = e.target;
-        autohide = menu.dataset["autohide"] == "true";
         var triggerDotnetRef = JSON.parse(e.currentTarget.dataset["dotnetref"]);
         showMenuCommon(menu, menuId, e.x, e.y, e.target, triggerDotnetRef);
         e.preventDefault();
@@ -120,13 +117,15 @@
 
     blazorContextMenu.Init = function () {
         document.addEventListener("mouseup", function (e) {
-            if (openMenuId && autohide) {
+            if (openMenuId) {
                 var menuElement = document.getElementById(openMenuId);
-                var clickedInsideMenu = menuElement.contains(e.target);
-                if (!clickedInsideMenu) {
-                    blazorContextMenu.Hide(openMenuId);
-                    openMenuId = null;
-                    openMenuTarget = null;
+                if (menuElement && menuElement.dataset["autohide"] == "true") {
+                    var clickedInsideMenu = menuElement.contains(e.target);
+                    if (!clickedInsideMenu) {
+                        blazorContextMenu.Hide(openMenuId);
+                        openMenuId = null;
+                        openMenuTarget = null;
+                    }
                 }
             }
         });
