@@ -100,19 +100,26 @@
 </ContextMenu>
 
 <div>
-    <button id="handlerBtn" @onclick="HandlerBtnOnClick">Show menu1 in 300x300 using handler</button>
-    <button id="handlerBtnAutoClose" @onclick="HandlerBtnAutoCloseClick">Show menu1 in 300x300 using handler and hide after 2 seconds</button>
+    <button id="showMenuBtn" @onclick="ShowMenuBtnOnClick">Show menu1 in 300x300 using handler</button>
+    <button id="showNoAutoCloseBtn" @onclick="ShowNoAutoCloseBtnOnClick">Show menu1 in 300x300 using handler</button>
+    <button id="showAndHideMenuBtn" @onclick="ShowAndHideMenuBtnClick">Show menu1 in 300x300 using handler and hide after 2 seconds</button>
 </div>
 
 <NavLink href="/TodoList">Go to Todo List</NavLink>
 @code{
-    protected async Task HandlerBtnOnClick()
+    protected async Task ShowMenuBtnOnClick()
     {
         await blazorContextMenuService.ShowMenu("menu1", 300, 300);
     }
-     protected async Task HandlerBtnAutoCloseClick()
+
+    protected async Task ShowNoAutoCloseBtnOnClick()
     {
-        await blazorContextMenuService.ShowMenu("menu1", 300, 300);
+        await blazorContextMenuService.ShowMenu("menu1", 300, 300, false);
+    }
+
+    protected async Task ShowAndHideMenuBtnClick()
+    {
+        await blazorContextMenuService.ShowMenu("menu1", 300, 300, false);
         await Task.Delay(2000);
         await blazorContextMenuService.HideMenu("menu1");
     }

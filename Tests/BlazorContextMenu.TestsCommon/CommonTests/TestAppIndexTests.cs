@@ -178,7 +178,7 @@ namespace BlazorContextMenu.E2ETests.Tests
             var expectedDisplay = "block";
 
             //Act
-            var btn = Browser.FindElement(By.Id("handlerBtn"));
+            var btn = Browser.FindElement(By.Id("showMenuBtn"));
             btn.Click();
             await Task.Delay(500);
 
@@ -195,7 +195,26 @@ namespace BlazorContextMenu.E2ETests.Tests
             var expectedDisplay = "none";
 
             //Act
-            var btn = Browser.FindElement(By.Id("handlerBtn"));
+            var btn = Browser.FindElement(By.Id("showMenuBtn"));
+            btn.Click();
+            await Task.Delay(500);
+            var headerElement = Browser.FindElement(By.Id("header"));
+            headerElement.Click();
+
+            //Assert
+            var menuElement = Browser.FindElement(By.Id("menu1"));
+            var display = menuElement.GetCssValue("display");
+            Assert.Equal(expectedDisplay, display);
+        }
+
+        [Fact]
+        public async Task Menu1_ManualShowAndClickOutsideNoAutoClose_MenuStaysOpen()
+        {
+            //Arrange
+            var expectedDisplay = "block";
+
+            //Act
+            var btn = Browser.FindElement(By.Id("showNoAutoCloseBtn"));
             btn.Click();
             await Task.Delay(500);
             var headerElement = Browser.FindElement(By.Id("header"));
@@ -214,7 +233,7 @@ namespace BlazorContextMenu.E2ETests.Tests
             var expectedDisplay = "none";
 
             //Act
-            var btn = Browser.FindElement(By.Id("handlerBtnAutoClose"));
+            var btn = Browser.FindElement(By.Id("showAndHideMenuBtn"));
             btn.Click();
             await Task.Delay(3000);
 
