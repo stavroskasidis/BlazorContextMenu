@@ -1,4 +1,5 @@
 ﻿@inject IJSRuntime jsRuntime
+@inject IBlazorContextMenuService contextMenuService
 
 <h1>Todo List (Right click)</h1>
 <ul id="list1">
@@ -27,17 +28,24 @@
     <Item id="menuitem-invisible" Visible="false">I am invisible</Item>
 </ContextMenu>
 
+<button id="manualShowBtn" @onclick="BtnClick">Show menu for first item</button>
+
 @code{
+
+    async Task BtnClick()
+    {
+        await contextMenuService.ShowMenu("todoItemsMenu", 50, 25, TodoItems.First());
+    }
 
     void TodoItemsMenuOnAppearing(MenuAppearingEventArgs e)
     {
-        var currentTodoItem = e.ContextMenuTrigger.Data as TodoItem;
+        var currentTodoItem = e.Data as TodoItem;
         e.PreventShow = !currentTodoItem.CanShowMenu;
     }
 
     void CopyClick(ItemClickEventArgs e)
     {
-        var currentTodoItem = e.ContextMenuTrigger.Data as TodoItem;
+        var currentTodoItem = e.Data as TodoItem;
         TodoItems.Add(new TodoItem
         {
             Text = currentTodoItem.Text + " Copy",
@@ -49,21 +57,21 @@
 
     void CheckAppearingHandler(ItemAppearingEventArgs e)
     {
-        var currentTodoItem = e.ContextMenuTrigger.Data as TodoItem;
+        var currentTodoItem = e.Data as TodoItem;
         e.IsEnabled = !currentTodoItem.IsChecked;
     }
 
     void DeleteAppearingHandler(ItemAppearingEventArgs e)
     {
 
-        var currentTodoItem = e.ContextMenuTrigger.Data as TodoItem;
+        var currentTodoItem = e.Data as TodoItem;
         e.IsVisible = currentTodoItem.CanBeDeleted;
     }
 
 
     void CheckClick(ItemClickEventArgs e)
     {
-        var currentTodoItem = e.ContextMenuTrigger.Data as TodoItem;
+        var currentTodoItem = e.Data as TodoItem;
         currentTodoItem.IsChecked = true;
         StateHasChanged();
     }
@@ -71,7 +79,7 @@
     void DeleteClick(ItemClickEventArgs e)
     {
 
-        var currentTodoItem = e.ContextMenuTrigger.Data as TodoItem;
+        var currentTodoItem = e.Data as TodoItem;
         TodoItems.Remove(currentTodoItem);
         StateHasChanged();
     }

@@ -20,7 +20,7 @@
 
     var openMenuId = null;
     var openMenuTarget = null;
-    var autoClose = true;
+    var autohide = true;
     //Helper functions
     //========================================
     function guid() {
@@ -82,12 +82,12 @@
         }
     }
 
-    blazorContextMenu.ManualShow = function (menuId, x ,y, autoCloseParam) {
+    blazorContextMenu.ManualShow = function (menuId, x ,y) {
         var menu = document.getElementById(menuId);
         if (!menu) throw new Error("No context menu with id '" + menuId + "' was found");
         openMenuId = menuId;
         openMenuTarget = null;
-        autoClose = autoCloseParam;
+        autohide = menu.dataset["autohide"] == "true";
         showMenuCommon(menu, menuId, x, y, null, null);
     }
 
@@ -96,7 +96,7 @@
         if (!menu) throw new Error("No context menu with id '" + menuId + "' was found");
         openMenuId = menuId;
         openMenuTarget = e.target;
-        autoClose = true;
+        autohide = menu.dataset["autohide"] == "true";
         var triggerDotnetRef = JSON.parse(e.currentTarget.dataset["dotnetref"]);
         showMenuCommon(menu, menuId, e.x, e.y, e.target, triggerDotnetRef);
         e.preventDefault();
@@ -120,7 +120,7 @@
 
     blazorContextMenu.Init = function () {
         document.addEventListener("mouseup", function (e) {
-            if (openMenuId && autoClose) {
+            if (openMenuId && autohide) {
                 var menuElement = document.getElementById(openMenuId);
                 var clickedInsideMenu = menuElement.contains(e.target);
                 if (!clickedInsideMenu) {
