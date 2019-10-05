@@ -30,9 +30,10 @@ namespace Microsoft.Extensions.DependencyInjection
 
         private static void CommonRegistrations(IServiceCollection services)
         {
-            var traverser = new MenuTreeTraverser();
-            services.AddSingleton(traverser);
-            services.AddScoped<BlazorContextMenuHandler>();
+            services.AddSingleton<IMenuTreeTraverser>(x=> new MenuTreeTraverser());
+            services.AddScoped<IInternalContextMenuHandler, InternalContextMenuHandler>();
+            services.AddScoped<IContextMenuStorage, ContextMenuStorage>();
+            services.AddScoped<IBlazorContextMenuService, BlazorContextMenuService>();
         }
 
     }

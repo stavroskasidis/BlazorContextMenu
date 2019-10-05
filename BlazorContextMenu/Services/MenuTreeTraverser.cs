@@ -5,7 +5,14 @@ using System.Threading.Tasks;
 
 namespace BlazorContextMenu.Services
 {
-    internal class MenuTreeTraverser
+    public interface IMenuTreeTraverser
+    {
+        ContextMenu GetClosestContextMenu(MenuTreeComponent menuTreeComponent);
+        ContextMenu GetRootContextMenu(MenuTreeComponent menuTreeComponent);
+        bool HasSubMenu(MenuTreeComponent menuTreeComponent);
+    }
+
+    public class MenuTreeTraverser : IMenuTreeTraverser
     {
         public ContextMenu GetRootContextMenu(MenuTreeComponent menuTreeComponent)
         {
@@ -25,7 +32,7 @@ namespace BlazorContextMenu.Services
         {
             var children = menuTreeComponent.GetChildComponents();
             if (children.Any(x => x is SubMenu)) return true;
-            foreach(var child in children)
+            foreach (var child in children)
             {
                 if (HasSubMenu(child)) return true;
             }

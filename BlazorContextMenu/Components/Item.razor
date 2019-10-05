@@ -1,7 +1,7 @@
 ﻿@inherits MenuTreeComponent
 @inject BlazorContextMenuSettings settings
-@inject MenuTreeTraverser menuTreeTraverser
-@inject BlazorContextMenuHandler contextMenuHandler
+@inject IMenuTreeTraverser menuTreeTraverser
+@inject IInternalContextMenuHandler contextMenuHandler
 @namespace BlazorContextMenu
 
 <li @attributes="Attributes"
@@ -156,7 +156,7 @@
         if (OnAppearing.HasDelegate)
         {
             //TODO: Remove casting when 'this' is fixed in blazor
-            var appearingArgs = new ItemAppearingEventArgs(RootMenu.Id, contextMenuTarget, contextMenuTrigger ,(Item)(object)this, Visible, Enabled);
+            var appearingArgs = new ItemAppearingEventArgs(RootMenu.Id, contextMenuTarget, contextMenuTrigger ,(Item)(object)this, Visible, Enabled, RootMenu.Data);
             await OnAppearing.InvokeAsync(appearingArgs);
             Visible = appearingArgs.IsVisible;
             Enabled = appearingArgs.IsEnabled;
@@ -176,11 +176,12 @@
             var contextMenuTarget = RootMenu.GetTarget();
             var contextMenuTrigger = RootMenu.GetTrigger();
             //TODO: Remove casting when 'this' is fixed in blazor
-            var args = new ItemClickEventArgs(e, RootMenu.Id, contextMenuTarget ,contextMenuTrigger ,MenuItemElement,(Item)(object)this);
+            var args = new ItemClickEventArgs(e, RootMenu.Id, contextMenuTarget ,contextMenuTrigger ,MenuItemElement,(Item)(object)this, RootMenu.Data);
+            args.IsCanceled = !RootMenu.AutoHide;
             await OnClick.InvokeAsync(args);
             if (!args.IsCanceled)
             {
-                contextMenuHandler.HideMenu(RootMenu.Id);
+                await contextMenuHandler.HideMenu(RootMenu.Id);
             }
         }
     }

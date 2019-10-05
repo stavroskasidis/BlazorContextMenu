@@ -61,7 +61,7 @@ namespace BlazorContextMenu
         }
 
         [Inject] private IJSRuntime jsRuntime { get; set; }
-        [Inject] private BlazorContextMenuHandler blazorContextMenuHandler { get; set; }
+        [Inject] private IInternalContextMenuHandler internalContextMenuHandler { get; set; }
 
         [Parameter(CaptureUnmatchedValues = true)]
         public Dictionary<string, object> Attributes { get; set; }
@@ -116,50 +116,20 @@ namespace BlazorContextMenu
             }
         }
 
-        //#region Hack to fix https://github.com/aspnet/AspNetCore/issues/11159
-
-        //public static object CreateDotNetObjectRefSyncObj = new object();
-
-        //protected DotNetObjectRef<T> CreateDotNetObjectRef<T>(T value) where T : class
-        //{
-        //    lock (CreateDotNetObjectRefSyncObj)
-        //    {
-        //        JSRuntime.SetCurrentJSRuntime(jsRuntime);
-        //        return DotNetObjectRef.Create(value);
-        //    }
-        //}
-
-        //protected void DisposeDotNetObjectRef<T>(DotNetObjectRef<T> value) where T : class
-        //{
-        //    if (value != null)
-        //    {
-        //        lock (CreateDotNetObjectRefSyncObj)
-        //        {
-        //            JSRuntime.SetCurrentJSRuntime(jsRuntime);
-        //            value.Dispose();
-        //        }
-        //    }
-        //}
-
-        //#endregion
-
         protected override async Task OnAfterRenderAsync(bool firstRender)
         {
-            //if (ComponentContext.IsConnected)
-            //{
-                if (!blazorContextMenuHandler.ReferencePassedToJs)
-                {
-                    await jsRuntime.InvokeAsync<object>("blazorContextMenu.SetMenuHandlerReference", DotNetObjectReference.Create(blazorContextMenuHandler));
-                    blazorContextMenuHandler.ReferencePassedToJs = true;
-                }
+            if (!internalContextMenuHandler.ReferencePassedToJs)
+            {
+                await jsRuntime.InvokeAsync<object>("blazorContextMenu.SetMenuHandlerReference", DotNetObjectReference.Create(internalContextMenuHandler));
+                internalContextMenuHandler.ReferencePassedToJs = true;
+            }
 
-                if (dotNetObjectRef == null)
-                {
-                    dotNetObjectRef = DotNetObjectReference.Create(this);
-                }
+            if (dotNetObjectRef == null)
+            {
+                dotNetObjectRef = DotNetObjectReference.Create(this);
+            }
 
-                await jsRuntime.InvokeAsync<object>("blazorContextMenu.RegisterTriggerReference", contextMenuTriggerElementRef, dotNetObjectRef);
-            //}
+            await jsRuntime.InvokeAsync<object>("blazorContextMenu.RegisterTriggerReference", contextMenuTriggerElementRef, dotNetObjectRef);
         }
 
         public void Dispose()

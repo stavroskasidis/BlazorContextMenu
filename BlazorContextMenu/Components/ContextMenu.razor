@@ -1,10 +1,12 @@
 ﻿@inherits MenuTreeComponent
 @inject BlazorContextMenuSettings settings
-@inject BlazorContextMenuHandler contextMenuHandler
-@inject MenuTreeTraverser menuTreeTraverser
+@inject IContextMenuStorage contextMenuStorage
+@inject IMenuTreeTraverser menuTreeTraverser
+@inject IInternalContextMenuHandler contextMenuHandler
+@inject IJSRuntime jsRuntime
 @namespace BlazorContextMenu
 
-<div @attributes="@Attributes" class="@($"{BaseClass} {ClassCalc} {DisplayClassCalc}")" id="@Id" style="@($"left:{X}px;top:{Y}px;")">
+<div @attributes="@Attributes" class="@($"{BaseClass} {ClassCalc} {DisplayClassCalc}")" id="@Id" style="@($"left:{X}px;top:{Y}px;")" data-autohide="@AutoHide.ToString().ToLower()">
     @if (IsShowing)
     {
         <ul class="@ListClassCalc">
@@ -101,6 +103,11 @@
     [Parameter]
     public EventCallback<MenuAppearingEventArgs> OnAppearing { get; set; }
 
+    /// <summary>
+    /// Set to false if you want to close the menu programmatically. Default: true
+    /// </summary>
+    [Parameter]
+    public bool AutoHide { get; set; } = true;
 
     [CascadingParameter(Name = "CascadingAnimation")]
     protected Animation? CascadingAnimation { get; set; }
@@ -114,6 +121,7 @@
     protected string Y { get; set; }
     protected string TargetId { get; set; }
     protected ContextMenuTrigger Trigger { get; set; }
+    internal object Data { get; set; }
 
     protected string ClassCalc
     {
@@ -206,27 +214,41 @@
         {
             throw new ArgumentNullException(nameof(Id));
         }
-        contextMenuHandler.Register((ContextMenu)(object)this);
+        contextMenuStorage.Register((ContextMenu)(object)this);
+    }
+
+    protected override async Task OnAfterRenderAsync(bool firstRender)
+    {
+        if (!contextMenuHandler.ReferencePassedToJs)
+        {
+            await jsRuntime.InvokeAsync<object>("blazorContextMenu.SetMenuHandlerReference", DotNetObjectReference.Create(contextMenuHandler));
+            contextMenuHandler.ReferencePassedToJs = true;
+        }
     }
 
     public override void Dispose()
     {
         base.Dispose();
-        contextMenuHandler.Unregister((ContextMenu)(object)this);
+        contextMenuStorage.Unregister((ContextMenu)(object)this);
     }
 
-    internal async Task Show(string x, string y, string targetId, ContextMenuTrigger trigger)
+    internal async Task Show(string x, string y, string targetId = null, ContextMenuTrigger trigger = null)
     {
 
-        if(trigger is null)
+        if (trigger is null)
         {
             var rootMenu = menuTreeTraverser.GetRootContextMenu(this);
             trigger = rootMenu?.GetTrigger();
         }
 
+        if (trigger != null)
+        {
+            Data = trigger.Data;
+        }
+
         if (OnAppearing.HasDelegate)
         {
-            var eventArgs = new MenuAppearingEventArgs(Id, targetId, x, y, trigger);
+            var eventArgs = new MenuAppearingEventArgs(Id, targetId, x, y, trigger, Data);
             await OnAppearing.InvokeAsync(eventArgs);
             x = eventArgs.X;
             y = eventArgs.Y;
@@ -244,10 +266,10 @@
         await InvokeAsync(() => StateHasChanged());
     }
 
-    internal void Hide()
+    internal async Task Hide()
     {
         IsShowing = false;
-        InvokeAsync(() => StateHasChanged());
+        await InvokeAsync(() => StateHasChanged());
     }
 
     internal string GetTarget()
@@ -259,4 +281,5 @@
     {
         return Trigger;
     }
+
 }

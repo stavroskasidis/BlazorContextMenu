@@ -239,7 +239,14 @@ public class Startup
 </details>
 
 ## Release Notes
-<details open="open"><summary>1.0</summary>
+
+<details open="open"><summary>1.1</summary>
+
+>- Added the ability to show/hide a menu from code. (#63)
+</details>
+
+
+<details><summary>1.0</summary>
 
 >- Updated to 3.0 release.
 </details>
