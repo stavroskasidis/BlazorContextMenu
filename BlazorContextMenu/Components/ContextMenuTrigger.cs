@@ -61,7 +61,7 @@ namespace BlazorContextMenu
         }
 
         [Inject] private IJSRuntime jsRuntime { get; set; }
-        [Inject] private BlazorContextMenuHandler blazorContextMenuHandler { get; set; }
+        [Inject] private IInternalContextMenuHandler internalContextMenuHandler { get; set; }
 
         [Parameter(CaptureUnmatchedValues = true)]
         public Dictionary<string, object> Attributes { get; set; }
@@ -147,10 +147,10 @@ namespace BlazorContextMenu
         {
             //if (ComponentContext.IsConnected)
             //{
-                if (!blazorContextMenuHandler.ReferencePassedToJs)
+                if (!internalContextMenuHandler.ReferencePassedToJs)
                 {
-                    await jsRuntime.InvokeAsync<object>("blazorContextMenu.SetMenuHandlerReference", DotNetObjectReference.Create(blazorContextMenuHandler));
-                    blazorContextMenuHandler.ReferencePassedToJs = true;
+                    await jsRuntime.InvokeAsync<object>("blazorContextMenu.SetMenuHandlerReference", DotNetObjectReference.Create(internalContextMenuHandler));
+                    internalContextMenuHandler.ReferencePassedToJs = true;
                 }
 
                 if (dotNetObjectRef == null)

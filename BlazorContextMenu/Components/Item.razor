@@ -1,7 +1,7 @@
 ﻿@inherits MenuTreeComponent
 @inject BlazorContextMenuSettings settings
-@inject MenuTreeTraverser menuTreeTraverser
-@inject BlazorContextMenuHandler contextMenuHandler
+@inject IMenuTreeTraverser menuTreeTraverser
+@inject IInternalContextMenuHandler contextMenuHandler
 @namespace BlazorContextMenu
 
 <li @attributes="Attributes"

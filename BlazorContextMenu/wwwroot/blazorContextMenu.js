@@ -81,14 +81,27 @@
         }
     }
 
+    blazorContextMenu.ManualShow = function (menuId, x ,y ) {
+        var menu = document.getElementById(menuId);
+        if (!menu) throw new Error("No context menu with id '" + menuId + "' was found");
+        openMenuId = menuId;
+        openMenuTarget = null;
+        showMenuCommon(menu, menuId, x, y, null, null);
+    }
+
     blazorContextMenu.OnContextMenu = function (e, menuId) {
         var menu = document.getElementById(menuId);
         if (!menu) throw new Error("No context menu with id '" + menuId + "' was found");
         openMenuId = menuId;
         openMenuTarget = e.target;
         var triggerDotnetRef = JSON.parse(e.currentTarget.dataset["dotnetref"]);
-        //show context menu
-        blazorContextMenu.Show(menuId, e.x, e.y, e.target, triggerDotnetRef).then(function () {
+        showMenuCommon(menu, menuId, e.x, e.y, e.target, triggerDotnetRef);
+        e.preventDefault();
+        return false;
+    };
+
+    var showMenuCommon = function (menu, menuId, x, y, target, triggerDotnetRef) {
+        return blazorContextMenu.Show(menuId, x, y, target, triggerDotnetRef).then(function () {
             //check for overflow
             var leftOverflownPixels = menu.offsetLeft + menu.clientWidth - window.innerWidth;
             if (leftOverflownPixels > 0) {
@@ -100,9 +113,7 @@
                 menu.style.top = (menu.offsetTop - menu.clientHeight) + "px";
             }
         });
-        e.preventDefault();
-        return false;
-    };
+    }
 
     blazorContextMenu.Init = function () {
         document.addEventListener("mouseup", function (e) {
@@ -119,12 +130,14 @@
     };
 
     blazorContextMenu.Show = function (menuId, x, y, target, triggerDotnetRef) {
-        if (!target.id) {
+        var targetId = null;
+        if (target && !target.id) {
             //add an id to the target dynamically so that it can be referenced later 
             //TODO: Rewrite this once this Blazor limitation is lifted
             target.id = guid();
+            targetId = target.id;
         }
-        return menuHandlerReference.invokeMethodAsync('ShowMenu', menuId, x.toString(), y.toString(), target.id, triggerDotnetRef);
+        return menuHandlerReference.invokeMethodAsync('ShowMenu', menuId, x.toString(), y.toString(), targetId, triggerDotnetRef);
     }
 
     blazorContextMenu.Hide = function (menuId) {

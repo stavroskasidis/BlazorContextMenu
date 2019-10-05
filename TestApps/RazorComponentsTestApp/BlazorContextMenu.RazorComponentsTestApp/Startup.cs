@@ -20,7 +20,7 @@ namespace BlazorContextMenu.RazorComponentsTestApp
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddRazorPages();
-            services.AddServerSideBlazor();
+            services.AddServerSideBlazor(CircuitOptions => CircuitOptions.DetailedErrors = true);
             services.AddSingleton<ISampleDataService, SampleDataService>();
 
             services.AddBlazorContextMenu(options =>

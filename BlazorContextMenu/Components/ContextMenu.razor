@@ -1,7 +1,9 @@
 ﻿@inherits MenuTreeComponent
 @inject BlazorContextMenuSettings settings
-@inject BlazorContextMenuHandler contextMenuHandler
-@inject MenuTreeTraverser menuTreeTraverser
+@inject IContextMenuStorage contextMenuStorage
+@inject IMenuTreeTraverser menuTreeTraverser
+@inject IInternalContextMenuHandler contextMenuHandler
+@inject IJSRuntime jsRuntime
 @namespace BlazorContextMenu
 
 <div @attributes="@Attributes" class="@($"{BaseClass} {ClassCalc} {DisplayClassCalc}")" id="@Id" style="@($"left:{X}px;top:{Y}px;")">
@@ -206,19 +208,28 @@
         {
             throw new ArgumentNullException(nameof(Id));
         }
-        contextMenuHandler.Register((ContextMenu)(object)this);
+        contextMenuStorage.Register((ContextMenu)(object)this);
+    }
+
+    protected override async Task OnAfterRenderAsync(bool firstRender)
+    {
+        if (!contextMenuHandler.ReferencePassedToJs)
+        {
+            await jsRuntime.InvokeAsync<object>("blazorContextMenu.SetMenuHandlerReference", DotNetObjectReference.Create(contextMenuHandler));
+            contextMenuHandler.ReferencePassedToJs = true;
+        }
     }
 
     public override void Dispose()
     {
         base.Dispose();
-        contextMenuHandler.Unregister((ContextMenu)(object)this);
+        contextMenuStorage.Unregister((ContextMenu)(object)this);
     }
 
-    internal async Task Show(string x, string y, string targetId, ContextMenuTrigger trigger)
+    internal async Task Show(string x, string y, string targetId = null, ContextMenuTrigger trigger = null)
     {
 
-        if(trigger is null)
+        if (trigger is null)
         {
             var rootMenu = menuTreeTraverser.GetRootContextMenu(this);
             trigger = rootMenu?.GetTrigger();
@@ -244,10 +255,10 @@
         await InvokeAsync(() => StateHasChanged());
     }
 
-    internal void Hide()
+    internal async Task Hide()
     {
         IsShowing = false;
-        InvokeAsync(() => StateHasChanged());
+        await InvokeAsync(() => StateHasChanged());
     }
 
     internal string GetTarget()
@@ -259,4 +270,5 @@
     {
         return Trigger;
     }
+
 }

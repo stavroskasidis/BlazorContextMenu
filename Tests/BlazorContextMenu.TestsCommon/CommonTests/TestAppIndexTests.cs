@@ -171,6 +171,59 @@ namespace BlazorContextMenu.E2ETests.Tests
             Assert.Equal(expectedDisplay, display);
         }
 
+        [Fact]
+        public async Task Menu1_ManualShow_Shown()
+        {
+            //Arrange
+            var expectedDisplay = "block";
+
+            //Act
+            var btn = Browser.FindElement(By.Id("handlerBtn"));
+            btn.Click();
+            await Task.Delay(500);
+
+            //Assert
+            var menuElement = Browser.FindElement(By.Id("menu1"));
+            var display = menuElement.GetCssValue("display");
+            Assert.Equal(expectedDisplay, display);
+        }
+
+        [Fact]
+        public async Task Menu1_ManualShowAndClickOutside_MenuCloses()
+        {
+            //Arrange
+            var expectedDisplay = "none";
+
+            //Act
+            var btn = Browser.FindElement(By.Id("handlerBtn"));
+            btn.Click();
+            await Task.Delay(500);
+            var headerElement = Browser.FindElement(By.Id("header"));
+            headerElement.Click();
+
+            //Assert
+            var menuElement = Browser.FindElement(By.Id("menu1"));
+            var display = menuElement.GetCssValue("display");
+            Assert.Equal(expectedDisplay, display);
+        }
+
+        [Fact]
+        public async Task Menu1_ManualShowAndHide_ShownThenHiden()
+        {
+            //Arrange
+            var expectedDisplay = "none";
+
+            //Act
+            var btn = Browser.FindElement(By.Id("handlerBtnAutoClose"));
+            btn.Click();
+            await Task.Delay(3000);
+
+            //Assert
+            var menuElement = Browser.FindElement(By.Id("menu1"));
+            var display = menuElement.GetCssValue("display");
+            Assert.Equal(expectedDisplay, display);
+        }
+
         [Theory]
         [InlineData("test2-trigger", MouseButtonTrigger.Right)]
         [InlineData("test5-trigger", MouseButtonTrigger.Left)]
@@ -240,5 +293,7 @@ namespace BlazorContextMenu.E2ETests.Tests
             var display = menuElement.GetCssValue("display");
             Assert.Equal(expectedDisplay, display);
         }
+
+        
     }
 }
