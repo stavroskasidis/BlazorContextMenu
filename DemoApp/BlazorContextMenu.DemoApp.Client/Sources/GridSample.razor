@@ -42,7 +42,7 @@
 
     void DeleteClick(ItemClickEventArgs e)
     {
-        var currentForecast = e.ContextMenuTrigger.Data as WeatherForecast;
+        var currentForecast = e.Data as WeatherForecast;
         forecasts.Remove(currentForecast);
     }
 }
