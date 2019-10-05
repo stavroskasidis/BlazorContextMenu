@@ -3,11 +3,11 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 16
 VisualStudioVersion = 16.0.28917.182
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BlazorContextMenu.DemoApp.Server", "BlazorContextMenu.DemoApp.Server\BlazorContextMenu.DemoApp.Server.csproj", "{C5E1A7E2-F588-4E77-AFAA-DDD3D8080BE1}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "BlazorContextMenu.DemoApp.Server", "BlazorContextMenu.DemoApp.Server\BlazorContextMenu.DemoApp.Server.csproj", "{C5E1A7E2-F588-4E77-AFAA-DDD3D8080BE1}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BlazorContextMenu.DemoApp.Client", "BlazorContextMenu.DemoApp.Client\BlazorContextMenu.DemoApp.Client.csproj", "{BDEBA199-9C83-4AE8-A5C1-B4E2972098B4}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "BlazorContextMenu.DemoApp.Client", "BlazorContextMenu.DemoApp.Client\BlazorContextMenu.DemoApp.Client.csproj", "{BDEBA199-9C83-4AE8-A5C1-B4E2972098B4}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BlazorContextMenu.DemoApp.Shared", "BlazorContextMenu.DemoApp.Shared\BlazorContextMenu.DemoApp.Shared.csproj", "{19541AC5-1DFD-4F84-92A5-C062E07061CF}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "BlazorContextMenu.DemoApp.Shared", "BlazorContextMenu.DemoApp.Shared\BlazorContextMenu.DemoApp.Shared.csproj", "{19541AC5-1DFD-4F84-92A5-C062E07061CF}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
