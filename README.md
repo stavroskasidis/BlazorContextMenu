@@ -240,7 +240,12 @@ public class Startup
 
 ## Release Notes
 
-<details open="open"><summary>1.1</summary>
+<details open="open"><summary>1.2</summary>
+
+>- Fix for [#65](https://github.com/stavroskasidis/BlazorContextMenu/issues/65).
+</details>
+
+<details><summary>1.1</summary>
 
 >- Added the ability to show/hide a menu from code. (#63)
 </details>
