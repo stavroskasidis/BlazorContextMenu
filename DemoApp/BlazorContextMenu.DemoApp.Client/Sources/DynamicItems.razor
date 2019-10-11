@@ -72,13 +72,13 @@
 
     void MenuOnAppearingHandler(MenuAppearingEventArgs e)
     {
-        var currentTodoItem = e.ContextMenuTrigger.Data as TodoItem;
+        var currentTodoItem = e.Data as TodoItem;
         e.PreventShow = !currentTodoItem.CanShowMenu;
     }
 
     void ItemOnAppearingHandler(ItemAppearingEventArgs e)
     {
-        var currentTodoItem = e.ContextMenuTrigger.Data as TodoItem;
+        var currentTodoItem = e.Data as TodoItem;
         switch (e.MenuItem.Id)
         {
             case "menuitem-delete":
@@ -95,7 +95,7 @@
 
     void ItemClick(ItemClickEventArgs e)
     {
-        var currentTodoItem = e.ContextMenuTrigger.Data as TodoItem;
+        var currentTodoItem = e.Data as TodoItem;
         switch (e.MenuItem.Id)
         {
             case "menuitem-delete":

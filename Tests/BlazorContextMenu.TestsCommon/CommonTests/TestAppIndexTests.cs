@@ -178,7 +178,7 @@ namespace BlazorContextMenu.E2ETests.Tests
             var expectedDisplay = "block";
 
             //Act
-            var btn = Browser.FindElement(By.Id("handlerBtn"));
+            var btn = Browser.FindElement(By.Id("showMenuBtn"));
             btn.Click();
             await Task.Delay(500);
 
@@ -195,7 +195,7 @@ namespace BlazorContextMenu.E2ETests.Tests
             var expectedDisplay = "none";
 
             //Act
-            var btn = Browser.FindElement(By.Id("handlerBtn"));
+            var btn = Browser.FindElement(By.Id("showMenuBtn"));
             btn.Click();
             await Task.Delay(500);
             var headerElement = Browser.FindElement(By.Id("header"));
@@ -208,18 +208,57 @@ namespace BlazorContextMenu.E2ETests.Tests
         }
 
         [Fact]
-        public async Task Menu1_ManualShowAndHide_ShownThenHiden()
+        public async Task Menu3_ManualShowAndClickOutsideNoAutoClose_MenuStaysOpen()
+        {
+            //Arrange
+            var expectedDisplay = "block";
+
+            //Act
+            var btn = Browser.FindElement(By.Id("showNoAutoCloseBtn"));
+            btn.Click();
+            await Task.Delay(500);
+            var headerElement = Browser.FindElement(By.Id("header"));
+            headerElement.Click();
+
+            //Assert
+            var menuElement = Browser.FindElement(By.Id("menu3"));
+            var display = menuElement.GetCssValue("display");
+            Assert.Equal(expectedDisplay, display);
+        }
+
+        [Fact]
+        public async Task Menu3_ManualShowAndClickItemNoAutoClose_MenuStaysOpen()
+        {
+            //Arrange
+            var expectedDisplay = "block";
+
+            //Act
+            var btn = Browser.FindElement(By.Id("showNoAutoCloseBtn"));
+            btn.Click();
+            await Task.Delay(500);
+            var menuItem = Browser.FindElement(By.Id("menu3-item1"));
+            menuItem.Click();
+
+            //Assert
+            var menuElement = Browser.FindElement(By.Id("menu3"));
+            var display = menuElement.GetCssValue("display");
+            Assert.Equal(expectedDisplay, display);
+        }
+
+
+        [Fact]
+        public async Task Menu3_ManualShowAndHide_ShownThenHiden()
         {
             //Arrange
             var expectedDisplay = "none";
 
             //Act
-            var btn = Browser.FindElement(By.Id("handlerBtnAutoClose"));
+            var btn = Browser.FindElement(By.Id("showAndHideMenuBtn"));
             btn.Click();
             await Task.Delay(3000);
 
             //Assert
-            var menuElement = Browser.FindElement(By.Id("menu1"));
+            var menuElement = Browser.FindElement(By.Id("menu3"));
             var display = menuElement.GetCssValue("display");
             Assert.Equal(expectedDisplay, display);
         }

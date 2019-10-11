@@ -6,11 +6,12 @@ namespace BlazorContextMenu
 {
     public class MenuAppearingEventArgs
     {
-        public MenuAppearingEventArgs(string contextMenuId, string contextMenuTargetId, string x, string y, ContextMenuTrigger trigger)
+        public MenuAppearingEventArgs(string contextMenuId, string contextMenuTargetId, string x, string y, ContextMenuTrigger trigger, object data)
         {
             ContextMenuId = contextMenuId;
             ContextMenuTargetId = contextMenuTargetId;
             ContextMenuTrigger = trigger;
+            Data = data;
             X = x;
             Y = y;
         }
@@ -44,5 +45,10 @@ namespace BlazorContextMenu
         /// If set to true, then the <see cref="ContextMenu"/> will not appear.
         /// </summary>
         public bool PreventShow { get; set; }
+
+        /// <summary>
+        /// Extra data that were passed to the <see cref="ContextMenu"/>.
+        /// </summary>
+        public object Data { get; protected set; }
     }
 }

@@ -6,7 +6,7 @@
 @inject IJSRuntime jsRuntime
 @namespace BlazorContextMenu
 
-<div @attributes="@Attributes" class="@($"{BaseClass} {ClassCalc} {DisplayClassCalc}")" id="@Id" style="@($"left:{X}px;top:{Y}px;")">
+<div @attributes="@Attributes" class="@($"{BaseClass} {ClassCalc} {DisplayClassCalc}")" id="@Id" style="@($"left:{X}px;top:{Y}px;")" data-autohide="@AutoHide.ToString().ToLower()">
     @if (IsShowing)
     {
         <ul class="@ListClassCalc">
@@ -103,6 +103,11 @@
     [Parameter]
     public EventCallback<MenuAppearingEventArgs> OnAppearing { get; set; }
 
+    /// <summary>
+    /// Set to false if you want to close the menu programmatically. Default: true
+    /// </summary>
+    [Parameter]
+    public bool AutoHide { get; set; } = true;
 
     [CascadingParameter(Name = "CascadingAnimation")]
     protected Animation? CascadingAnimation { get; set; }
@@ -116,6 +121,7 @@
     protected string Y { get; set; }
     protected string TargetId { get; set; }
     protected ContextMenuTrigger Trigger { get; set; }
+    internal object Data { get; set; }
 
     protected string ClassCalc
     {
@@ -235,9 +241,14 @@
             trigger = rootMenu?.GetTrigger();
         }
 
+        if (trigger != null)
+        {
+            Data = trigger.Data;
+        }
+
         if (OnAppearing.HasDelegate)
         {
-            var eventArgs = new MenuAppearingEventArgs(Id, targetId, x, y, trigger);
+            var eventArgs = new MenuAppearingEventArgs(Id, targetId, x, y, trigger, Data);
             await OnAppearing.InvokeAsync(eventArgs);
             x = eventArgs.X;
             y = eventArgs.Y;

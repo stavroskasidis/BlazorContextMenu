@@ -10,7 +10,7 @@ namespace BlazorContextMenu
     public class ItemClickEventArgs
     {
         public ItemClickEventArgs(MouseEventArgs mouseEvent,string contextMenuId, string contextMenuTargetId,
-            ContextMenuTrigger trigger, ElementReference menuItemElement, Item menuItem)
+            ContextMenuTrigger trigger, ElementReference menuItemElement, Item menuItem, object data)
         {
             MouseEvent = mouseEvent;
             ContextMenuId = contextMenuId;
@@ -18,6 +18,7 @@ namespace BlazorContextMenu
             ContextMenuTrigger = trigger;
             MenuItemElement = menuItemElement;
             MenuItem = menuItem;
+            Data = data;
         }
 
         /// <summary>
@@ -54,5 +55,10 @@ namespace BlazorContextMenu
         /// The menu item that triggered the event.
         /// </summary>
         public Item MenuItem { get; protected set; }
+
+        /// <summary>
+        /// Extra data that were passed to the <see cref="ContextMenu"/>.
+        /// </summary>
+        public object Data { get; protected set; }
     }
 }

@@ -43,6 +43,46 @@ namespace BlazorContextMenu.E2ETests.Tests
             Assert.Equal(expectedItemsCount, itemsCount);
         }
 
+        [Fact]
+        public async Task TodoItemsMenu_TriggerUsingButtonForFirstItemAndSelectCopy_ItemCopied()
+        {
+            //Arrange
+            var expectedItemsCount = 5;
+
+            //Act
+            var btn = Browser.FindElement(By.Id("manualShowBtn"));
+            btn.Click();
+            await Task.Delay(500);
+            var menuItem = Browser.FindElement(By.Id("menuitem-copy"));
+            menuItem.Click();
+            await Task.Delay(500);
+
+            //Assert
+            var list = Browser.FindElement(By.Id("list1"));
+            var itemsCount = list.FindElements(By.TagName("li")).Count;
+            Assert.Equal(expectedItemsCount, itemsCount);
+        }
+
+        [Fact]
+        public async Task TodoItemsMenu_TriggerForUsingButtonForFirstItemAndSelectDelete_ItemDeleted()
+        {
+            //Arrange
+            var expectedItemsCount = 3;
+            //Act
+            var btn = Browser.FindElement(By.Id("manualShowBtn"));
+            btn.Click();
+            await Task.Delay(500);
+            var menuItem = Browser.FindElement(By.Id("menuitem-delete"));
+            menuItem.Click();
+            await Task.Delay(500);
+
+            //Assert
+            var list = Browser.FindElement(By.Id("list1"));
+            var itemsCount = list.FindElements(By.TagName("li")).Count;
+            Assert.Equal(expectedItemsCount, itemsCount);
+        }
+
+
         [Theory]
         [InlineData("list1", MouseButtonTrigger.Right)]
         [InlineData("list2", MouseButtonTrigger.Left)]

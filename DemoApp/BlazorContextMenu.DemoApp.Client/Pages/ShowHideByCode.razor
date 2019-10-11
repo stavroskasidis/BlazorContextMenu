@@ -1,0 +1,21 @@
+﻿@page "/showhidebycode"
+<h1>Show/Hide by Code</h1>
+@{
+    var tabItems = new List<TabItem>
+{
+        new TabItem
+        {
+            HeaderText = "Demo",
+            Contents = @<BlazorContextMenu.DemoApp.Client.Sources.ShowHideByCode />
+        },
+        new TabItem
+        {
+            HeaderText = "<> Source",
+            Contents = @<div>
+                            <SourceFileLoader SourceFilePath="Sources/ShowHideByCode.razor" />
+                        </div>
+        }
+    };
+}
+
+<TabStrip Title="You can show/hide a menu programmatically" TabItems="tabItems" />

@@ -8,13 +8,15 @@ namespace BlazorContextMenu
     public class ItemAppearingEventArgs
     {
         public ItemAppearingEventArgs(string contextMenuId, string contextMenuTargetId, 
-                                      ContextMenuTrigger trigger, Item menuItem, bool isVisible, bool isEnabled)
+                                      ContextMenuTrigger trigger, Item menuItem, bool isVisible, 
+                                      bool isEnabled, object data)
         {
             ContextMenuId = contextMenuId;
             ContextMenuTargetId = contextMenuTargetId;
             ContextMenuTrigger = trigger;
             MenuItem = menuItem;
             IsEnabled = isEnabled;
+            Data = data;
             IsVisible = isVisible;
         }
 
@@ -47,5 +49,10 @@ namespace BlazorContextMenu
         ///  Can be used to dynamically set the item enabled or disabled.
         /// </summary>
         public bool IsEnabled { get; set; }
+
+        /// <summary>
+        /// Extra data that were passed to the <see cref="ContextMenu"/>.
+        /// </summary>
+        public object Data { get; protected set; }
     }
 }

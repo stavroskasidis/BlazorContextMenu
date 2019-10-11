@@ -81,7 +81,7 @@
         }
     }
 
-    blazorContextMenu.ManualShow = function (menuId, x ,y ) {
+    blazorContextMenu.ManualShow = function (menuId, x ,y) {
         var menu = document.getElementById(menuId);
         if (!menu) throw new Error("No context menu with id '" + menuId + "' was found");
         openMenuId = menuId;
@@ -119,11 +119,13 @@
         document.addEventListener("mouseup", function (e) {
             if (openMenuId) {
                 var menuElement = document.getElementById(openMenuId);
-                var clickedInsideMenu = menuElement.contains(e.target);
-                if (!clickedInsideMenu) {
-                    blazorContextMenu.Hide(openMenuId);
-                    openMenuId = null;
-                    openMenuTarget = null;
+                if (menuElement && menuElement.dataset["autohide"] == "true") {
+                    var clickedInsideMenu = menuElement.contains(e.target);
+                    if (!clickedInsideMenu) {
+                        blazorContextMenu.Hide(openMenuId);
+                        openMenuId = null;
+                        openMenuTarget = null;
+                    }
                 }
             }
         });
