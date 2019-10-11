@@ -133,12 +133,15 @@
 
     blazorContextMenu.Show = function (menuId, x, y, target, triggerDotnetRef) {
         var targetId = null;
-        if (target && !target.id) {
-            //add an id to the target dynamically so that it can be referenced later 
-            //TODO: Rewrite this once this Blazor limitation is lifted
-            target.id = guid();
+        if (target) {
+            if (!target.id) {
+                //add an id to the target dynamically so that it can be referenced later 
+                //TODO: Rewrite this once this Blazor limitation is lifted
+                target.id = guid();
+            }
             targetId = target.id;
         }
+
         return menuHandlerReference.invokeMethodAsync('ShowMenu', menuId, x.toString(), y.toString(), targetId, triggerDotnetRef);
     }
 
