@@ -240,7 +240,12 @@ public class Startup
 
 ## Release Notes
 
-<details open="open"><summary>1.2</summary>
+<details open="open"><summary>1.3</summary>
+
+>- Added menu `OnHiding` event [#68](https://github.com/stavroskasidis/BlazorContextMenu/issues/68).
+</details>
+
+<details><summary>1.2</summary>
 
 >- Fix for [#65](https://github.com/stavroskasidis/BlazorContextMenu/issues/65).
 </details>
