@@ -11,7 +11,7 @@ namespace BlazorContextMenu
     public interface IInternalContextMenuHandler
     {
         bool ReferencePassedToJs { get; set; }
-        Task HideMenu(string id);
+        Task<bool> HideMenu(string id);
         Task ShowMenu(string id, string x, string y, string targetId = null, DotNetObjectReference<ContextMenuTrigger> trigger = null);
     }
 
@@ -50,13 +50,15 @@ namespace BlazorContextMenu
         /// </summary>
         /// <param name="id">The id of the menu.</param>
         [JSInvokable]
-        public async Task HideMenu(string id)
+        public async Task<bool> HideMenu(string id)
         {
             var menu = _contextMenuStorage.GetMenu(id);
             if (menu != null)
             {
-                await menu.Hide();
+                return await menu.Hide();
             }
+
+            return true;
         }
     }
 }

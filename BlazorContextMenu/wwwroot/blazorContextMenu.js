@@ -122,9 +122,12 @@
                 if (menuElement && menuElement.dataset["autohide"] == "true") {
                     var clickedInsideMenu = menuElement.contains(e.target);
                     if (!clickedInsideMenu) {
-                        blazorContextMenu.Hide(openMenuId);
-                        openMenuId = null;
-                        openMenuTarget = null;
+                        blazorContextMenu.Hide(openMenuId).then(function (hideSuccessful) {
+                            if (hideSuccessful) {
+                                openMenuId = null;
+                                openMenuTarget = null;
+                            }
+                        });
                     }
                 }
             }
@@ -146,7 +149,7 @@
     }
 
     blazorContextMenu.Hide = function (menuId) {
-        menuHandlerReference.invokeMethodAsync('HideMenu', menuId);
+        return menuHandlerReference.invokeMethodAsync('HideMenu', menuId);
     }
 
     var subMenuTimeout = null;

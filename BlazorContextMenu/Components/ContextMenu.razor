@@ -104,6 +104,12 @@
     public EventCallback<MenuAppearingEventArgs> OnAppearing { get; set; }
 
     /// <summary>
+    /// A handler that is triggered before the menu is hidden. Can be used to prevent the menu from hiding.
+    /// </summary>
+    [Parameter]
+    public EventCallback<MenuHidingEventArgs> OnHiding { get; set; }
+
+    /// <summary>
     /// Set to false if you want to close the menu programmatically. Default: true
     /// </summary>
     [Parameter]
@@ -266,10 +272,21 @@
         await InvokeAsync(() => StateHasChanged());
     }
 
-    internal async Task Hide()
+    internal async Task<bool> Hide()
     {
+        if (OnHiding.HasDelegate)
+        {
+            var eventArgs = new MenuHidingEventArgs(Id, TargetId, X, Y, Trigger, Data);
+            await OnHiding.InvokeAsync(eventArgs);
+            if (eventArgs.PreventHide)
+            {
+                return false;
+            }
+        }
+
         IsShowing = false;
         await InvokeAsync(() => StateHasChanged());
+        return true;
     }
 
     internal string GetTarget()
