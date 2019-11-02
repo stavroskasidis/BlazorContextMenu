@@ -333,6 +333,21 @@ namespace BlazorContextMenu.E2ETests.Tests
             Assert.Equal(expectedDisplay, display);
         }
 
-        
+        [Fact]
+        public async Task Menu4_TriggerAndClickOutside_MenuStaysOpen()
+        {
+            //Arrange
+            var expectedDisplay = "block";
+
+            //Act
+            await OpenContextMenuAt("test12-trigger", MouseButtonTrigger.Right);
+            var headerElement = Browser.FindElement(By.Id("header"));
+            headerElement.Click();
+
+            //Assert
+            var menuElement = Browser.FindElement(By.Id("menu4"));
+            var display = menuElement.GetCssValue("display");
+            Assert.Equal(expectedDisplay, display);
+        }
     }
 }
