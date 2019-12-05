@@ -18,8 +18,6 @@
     }
 
 
-    var openMenuId = null;
-    var openMenuTarget = null;
     //Helper functions
     //========================================
     function guid() {
@@ -74,6 +72,9 @@
     //===========================================
 
     var menuHandlerReference = null;
+    var openMenuId = null;
+    var openMenuTarget = null;
+    var openingMenu = false;
 
     blazorContextMenu.SetMenuHandlerReference = function (dotnetRef) {
         if (!menuHandlerReference) {
@@ -81,7 +82,8 @@
         }
     }
 
-    blazorContextMenu.ManualShow = function (menuId, x ,y) {
+    blazorContextMenu.ManualShow = function (menuId, x, y) {
+        openingMenu = true;
         var menu = document.getElementById(menuId);
         if (!menu) throw new Error("No context menu with id '" + menuId + "' was found");
         openMenuId = menuId;
@@ -90,6 +92,7 @@
     }
 
     blazorContextMenu.OnContextMenu = function (e, menuId) {
+        openingMenu = true;
         var menu = document.getElementById(menuId);
         if (!menu) throw new Error("No context menu with id '" + menuId + "' was found");
         openMenuId = menuId;
@@ -112,6 +115,8 @@
             if (topOverflownPixels > 0) {
                 menu.style.top = (menu.offsetTop - menu.clientHeight) + "px";
             }
+
+            openingMenu = false;
         });
     }
 
@@ -123,7 +128,7 @@
                     var clickedInsideMenu = menuElement.contains(e.target);
                     if (!clickedInsideMenu) {
                         blazorContextMenu.Hide(openMenuId).then(function (hideSuccessful) {
-                            if (hideSuccessful) {
+                            if (hideSuccessful && !openingMenu) {
                                 openMenuId = null;
                                 openMenuTarget = null;
                             }
