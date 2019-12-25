@@ -195,11 +195,15 @@ var blazorContextMenu = function (blazorContextMenu) {
 
             var currentMenu = closest(currentItemElement, ".blazor-context-menu__wrapper");
             var currentMenuList = currentMenu.children[0];
+            var rootMenu = closest(currentItemElement, ".blazor-context-menu");
             var targetRect = currentItemElement.getBoundingClientRect();
             var x = targetRect.left + currentMenu.clientWidth - xOffset;
             var y = targetRect.top;
+            var instanceId = rootMenu.dataset["instanceId"];
 
-            var openMenu = openMenus[currentMenu.getAttribute("id")];
+            var openMenu = openMenus.find(function (item) {
+                return item.instanceId == instanceId;
+            });
             blazorContextMenu.Show(subMenu.id, x, y, openMenu.target).then(function () {
                 var leftOverflownPixels = subMenu.offsetLeft + subMenu.clientWidth - window.innerWidth;
                 if (leftOverflownPixels > 0) {
