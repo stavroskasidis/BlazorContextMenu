@@ -240,7 +240,12 @@ public class Startup
 
 ## Release Notes
 
-<details open="open"><summary>1.4</summary>
+<details open="open"><summary>1.5</summary>
+
+>- Fixed a bug when opening multiple menus with different ids.
+</details>
+
+<details><summary>1.4</summary>
 
 >- Updated to 3.1 release.
 >- Fix for [#72](https://github.com/stavroskasidis/BlazorContextMenu/issues/72).

@@ -1,4 +1,6 @@
-﻿var blazorContextMenu = function (blazorContextMenu) {
+﻿"use strict";
+
+var blazorContextMenu = function (blazorContextMenu) {
 
     var closest = null;
     if (window.Element && !Element.prototype.closest) {
@@ -17,6 +19,8 @@
         };
     }
 
+
+    var openMenus = [];
 
     //Helper functions
     //========================================
@@ -69,12 +73,19 @@
         return foundElements;
     }
 
+    function removeItemFromArray(array, item) {
+        for (var i = 0; i < array.length; i++) {
+            if (array[i] === item) {
+                array.splice(i, 1);
+            }
+        }
+    }
+
+
     //===========================================
 
     var menuHandlerReference = null;
-    var openMenuId = null;
-    var openMenuTarget = null;
-    var openingMenu = false;
+    //var openingMenu = false;
 
     blazorContextMenu.SetMenuHandlerReference = function (dotnetRef) {
         if (!menuHandlerReference) {
@@ -82,21 +93,29 @@
         }
     }
 
+    var addToOpenMenus = function (menu, menuId, target) {
+        var instanceId = guid();
+        openMenus.push({
+            id: menuId,
+            target: target,
+            instanceId: instanceId
+        });
+        menu.dataset["instanceId"] = instanceId;
+    };
+
     blazorContextMenu.ManualShow = function (menuId, x, y) {
-        openingMenu = true;
+        //openingMenu = true;
         var menu = document.getElementById(menuId);
         if (!menu) throw new Error("No context menu with id '" + menuId + "' was found");
-        openMenuId = menuId;
-        openMenuTarget = null;
+        addToOpenMenus(menu,menuId, null);
         showMenuCommon(menu, menuId, x, y, null, null);
     }
 
     blazorContextMenu.OnContextMenu = function (e, menuId) {
-        openingMenu = true;
+        //openingMenu = true;
         var menu = document.getElementById(menuId);
         if (!menu) throw new Error("No context menu with id '" + menuId + "' was found");
-        openMenuId = menuId;
-        openMenuTarget = e.target;
+        addToOpenMenus(menu,menuId, e.target);
         var triggerDotnetRef = JSON.parse(e.currentTarget.dataset["dotnetref"]);
         showMenuCommon(menu, menuId, e.x, e.y, e.target, triggerDotnetRef);
         e.preventDefault();
@@ -116,28 +135,30 @@
                 menu.style.top = (menu.offsetTop - menu.clientHeight) + "px";
             }
 
-            openingMenu = false;
+            //openingMenu = false;
         });
     }
 
     blazorContextMenu.Init = function () {
         document.addEventListener("mouseup", function (e) {
-            if (openMenuId) {
-                var menuElement = document.getElementById(openMenuId);
-                if (menuElement && menuElement.dataset["autohide"] == "true") {
-                    var clickedInsideMenu = menuElement.contains(e.target);
-                    if (!clickedInsideMenu) {
-                        blazorContextMenu.Hide(openMenuId).then(function (hideSuccessful) {
-                            if (hideSuccessful && !openingMenu) {
-                                openMenuId = null;
-                                openMenuTarget = null;
-                            }
-                        });
+            if (openMenus.length > 0) {
+                for (var i = 0; i < openMenus.length; i++) {
+                    var currentMenu = openMenus[i];
+                    var menuElement = document.getElementById(currentMenu.id);
+                    if (menuElement && menuElement.dataset["autohide"] == "true") {
+                        var clickedInsideMenu = menuElement.contains(e.target);
+                        if (!clickedInsideMenu) {
+                            blazorContextMenu.Hide(currentMenu.id);
+                        }
                     }
+
                 }
             }
         });
+
+        
     };
+
 
     blazorContextMenu.Show = function (menuId, x, y, target, triggerDotnetRef) {
         var targetId = null;
@@ -154,7 +175,19 @@
     }
 
     blazorContextMenu.Hide = function (menuId) {
-        return menuHandlerReference.invokeMethodAsync('HideMenu', menuId);
+        var menuElement = document.getElementById(menuId);
+        var instanceId = menuElement.dataset["instanceId"];
+        return menuHandlerReference.invokeMethodAsync('HideMenu', menuId).then(function (hideSuccessful) {
+            if (menuElement.classList.contains("blazor-context-menu") && hideSuccessful) {
+                //this is a root menu. Remove from openMenus list
+                var openMenu = openMenus.find(function (item) {
+                    return item.instanceId == instanceId;
+                });
+                if (openMenu) {
+                    removeItemFromArray(openMenus, openMenu);
+                }
+            }
+        });
     }
 
     var subMenuTimeout = null;
@@ -173,11 +206,16 @@
 
             var currentMenu = closest(currentItemElement, ".blazor-context-menu__wrapper");
             var currentMenuList = currentMenu.children[0];
+            var rootMenu = closest(currentItemElement, ".blazor-context-menu");
             var targetRect = currentItemElement.getBoundingClientRect();
             var x = targetRect.left + currentMenu.clientWidth - xOffset;
             var y = targetRect.top;
+            var instanceId = rootMenu.dataset["instanceId"];
 
-            blazorContextMenu.Show(subMenu.id, x, y, openMenuTarget).then(function () {
+            var openMenu = openMenus.find(function (item) {
+                return item.instanceId == instanceId;
+            });
+            blazorContextMenu.Show(subMenu.id, x, y, openMenu.target).then(function () {
                 var leftOverflownPixels = subMenu.offsetLeft + subMenu.clientWidth - window.innerWidth;
                 if (leftOverflownPixels > 0) {
                     subMenu.style.left = (subMenu.offsetLeft - subMenu.clientWidth - currentMenu.clientWidth - xOffset) + "px"
