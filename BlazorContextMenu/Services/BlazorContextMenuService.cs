@@ -38,20 +38,23 @@ namespace BlazorContextMenu
 
     public class BlazorContextMenuService : IBlazorContextMenuService
     {
-        private readonly IInternalContextMenuHandler _internalContextMenuHandler;
         private readonly IJSRuntime _jSRuntime;
         private readonly IContextMenuStorage _contextMenuStorage;
 
-        public BlazorContextMenuService(IInternalContextMenuHandler internalContextMenuHandler, IJSRuntime jSRuntime, IContextMenuStorage contextMenuStorage)
+        public BlazorContextMenuService(IJSRuntime jSRuntime, IContextMenuStorage contextMenuStorage)
         {
-            _internalContextMenuHandler = internalContextMenuHandler;
             _jSRuntime = jSRuntime;
             _contextMenuStorage = contextMenuStorage;
         }
 
         public async Task HideMenu(string id)
         {
-            await _internalContextMenuHandler.HideMenu(id);
+            var menu = _contextMenuStorage.GetMenu(id);
+            if (menu == null)
+            {
+                throw new Exception($"No context menu with id '{id}' was found");
+            }
+            await _jSRuntime.InvokeVoidAsync("blazorContextMenu.Hide", id);
         }
         
         public async Task ShowMenu(string id, int x, int y, object data)

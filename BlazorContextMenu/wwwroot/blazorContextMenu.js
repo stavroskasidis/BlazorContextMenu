@@ -73,6 +73,15 @@ var blazorContextMenu = function (blazorContextMenu) {
         return foundElements;
     }
 
+    function removeItemFromArray(array, item) {
+        for (var i = 0; i < array.length; i++) {
+            if (array[i] === item) {
+                array.splice(i, 1);
+            }
+        }
+    }
+
+
     //===========================================
 
     var menuHandlerReference = null;
@@ -137,14 +146,9 @@ var blazorContextMenu = function (blazorContextMenu) {
                     var currentMenu = openMenus[i];
                     var menuElement = document.getElementById(currentMenu.id);
                     if (menuElement && menuElement.dataset["autohide"] == "true") {
-                        var instanceId = menuElement.dataset["instanceId"];
                         var clickedInsideMenu = menuElement.contains(e.target);
                         if (!clickedInsideMenu) {
-                            blazorContextMenu.Hide(currentMenu.id).then(function (hideSuccessful) {
-                                if (hideSuccessful && instanceId == currentMenu.instanceId) {
-                                    removeItemFromArray(openMenus, currentMenu);
-                                }
-                            });
+                            blazorContextMenu.Hide(currentMenu.id);
                         }
                     }
 
@@ -152,14 +156,9 @@ var blazorContextMenu = function (blazorContextMenu) {
             }
         });
 
-        var removeItemFromArray = function (array, item) {
-            for (var i = 0; i < array.length; i++) {
-                if (array[i] === item) {
-                    array.splice(i, 1);
-                }
-            }
-        }
+        
     };
+
 
     blazorContextMenu.Show = function (menuId, x, y, target, triggerDotnetRef) {
         var targetId = null;
@@ -176,7 +175,19 @@ var blazorContextMenu = function (blazorContextMenu) {
     }
 
     blazorContextMenu.Hide = function (menuId) {
-        return menuHandlerReference.invokeMethodAsync('HideMenu', menuId);
+        var menuElement = document.getElementById(menuId);
+        var instanceId = menuElement.dataset["instanceId"];
+        return menuHandlerReference.invokeMethodAsync('HideMenu', menuId).then(function (hideSuccessful) {
+            if (menuElement.classList.contains("blazor-context-menu") && hideSuccessful) {
+                //this is a root menu. Remove from openMenus list
+                var openMenu = openMenus.find(function (item) {
+                    return item.instanceId == instanceId;
+                });
+                if (openMenu) {
+                    removeItemFromArray(openMenus, openMenu);
+                }
+            }
+        });
     }
 
     var subMenuTimeout = null;
