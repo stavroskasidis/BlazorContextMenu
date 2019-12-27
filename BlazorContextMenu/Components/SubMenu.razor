@@ -8,10 +8,7 @@
             <CascadingValue Value="(MenuTreeComponent)this" Name="ParentComponent">
                 <CascadingValue Value="@(Template != null ? Template : CascadingTemplate)" Name="CascadingTemplate">
                     <CascadingValue Value="@(Animation.HasValue ? Animation.Value : CascadingAnimation)" Name="CascadingAnimation">
-                        @{
-                            var context = new MenuRenderingContext(Id, TargetId, X, Y, Trigger, Data);
-                            @ChildContent(context)
-                        }
+                        @ChildContent
                     </CascadingValue>
                 </CascadingValue>
             </CascadingValue>
@@ -22,5 +19,14 @@
 
 @code{
     [Parameter]
-    public RenderFragment<MenuRenderingContext> ChildContent { get; set; }
+    public RenderFragment ChildContent { get; set; }
+    protected override string BaseClass => "blazor-context-submenu blazor-context-menu__wrapper";
+    protected override void OnInitialized()
+    {
+        if (string.IsNullOrEmpty(Id))
+        {
+            Id = Guid.NewGuid().ToString();
+        }
+        base.OnInitialized();
+    }
 }

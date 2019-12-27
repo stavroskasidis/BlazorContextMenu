@@ -240,7 +240,13 @@ public class Startup
 
 ## Release Notes
 
-<details open="open"><summary>1.5</summary>
+<details open="open"><summary>1.6</summary>
+
+>- Added contextual render fragment for `ContextMenu`, exposing a `@context` variable that simplifies advanced scenarios.
+</details>
+
+
+<details><summary>1.5</summary>
 
 >- Fixed a bug when opening multiple menus with different ids.
 </details>
