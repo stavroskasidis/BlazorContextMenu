@@ -4,6 +4,7 @@
 <table class="table">
     <thead>
         <tr>
+            <th width="30px">Vacation?</th>
             <th>Date</th>
             <th>Temp. (C)</th>
             <th>Temp. (F)</th>
@@ -13,7 +14,15 @@
     <tbody>
         @foreach (var forecast in forecasts)
         {
-            <ContextMenuTrigger WrapperTag="tr" MenuId="tableContextMenu" Data="forecast">
+            <ContextMenuTrigger WrapperTag="tr" MenuId="tableContextMenu" Data="forecast" CssClass="@((forecast.MarkedDangerous ? "table-danger" : ""))">
+                <td>
+                @{
+                    if (forecast.Vacation)
+                    {
+                        <i class="fas fa-star" style="color:gold"></i>
+                    }
+                }
+                </td>
                 <td>@forecast.Date.ToShortDateString()</td>
                 <td>@forecast.TemperatureC</td>
                 <td>@forecast.TemperatureF</td>
@@ -26,6 +35,39 @@
 <ContextMenu Id="tableContextMenu">
     <Item OnClick="@ReloadClick"> <i class="fas fa-sync-alt blue-icon"></i> Reload</Item>
     <Item OnClick="@DeleteClick"> <i class="fas fa-trash-alt red-icon"></i> Delete</Item>
+    <Item>
+        Set
+        <SubMenu>
+            <Item OnClick="VacationClick">
+                @{
+                    var forecast = context.Data as WeatherForecast;
+                    if (forecast.Vacation)
+                    {
+                        <i class="far fa-star" style="color:gold"></i>
+                    }
+                    else
+                    {
+                        <i class="fas fa-star" style="color:gold"></i>
+                    }
+                }
+                Vacation
+            </Item>
+            <Item OnClick="DangerousClick">
+                @{
+                    var forecast = context.Data as WeatherForecast;
+                    if (forecast.MarkedDangerous)
+                    {
+                        <i class="far fa-flag" style="color:orangered"></i>
+                    }
+                    else
+                    {
+                        <i class="fas fa-flag" style="color:orangered"></i>
+                    }
+                }
+                Dangerous
+            </Item>
+        </SubMenu>
+    </Item>
 </ContextMenu>
 
 @functions{
@@ -44,5 +86,19 @@
     {
         var currentForecast = e.Data as WeatherForecast;
         forecasts.Remove(currentForecast);
+    }
+
+    void VacationClick(ItemClickEventArgs e)
+    {
+        e.IsCanceled = true;
+        var currentForecast = e.Data as WeatherForecast;
+        currentForecast.Vacation = !currentForecast.Vacation;
+    }
+
+    void DangerousClick(ItemClickEventArgs e)
+    {
+        e.IsCanceled = true;
+        var currentForecast = e.Data as WeatherForecast;
+        currentForecast.MarkedDangerous = !currentForecast.MarkedDangerous;
     }
 }
