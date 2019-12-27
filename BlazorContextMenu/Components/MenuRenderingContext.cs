@@ -4,9 +4,9 @@ using System.Text;
 
 namespace BlazorContextMenu
 {
-    public class ContextMenuRenderingContext
+    public class MenuRenderingContext
     {
-        public ContextMenuRenderingContext(string contextMenuId, string contextMenuTargetId, string x, string y, ContextMenuTrigger trigger, object data)
+        public MenuRenderingContext(string contextMenuId, string contextMenuTargetId, string x, string y, ContextMenuTrigger trigger, object data)
         {
             ContextMenuId = contextMenuId;
             ContextMenuTargetId = contextMenuTargetId;

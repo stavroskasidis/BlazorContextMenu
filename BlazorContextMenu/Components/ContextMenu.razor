@@ -9,7 +9,7 @@
                 <CascadingValue Value="@(Template != null ? Template : CascadingTemplate)" Name="CascadingTemplate">
                     <CascadingValue Value="@(Animation.HasValue ? Animation.Value : CascadingAnimation)" Name="CascadingAnimation">
                         @{
-                            var context = new ContextMenuRenderingContext(Id, TargetId, X, Y, Trigger, Data);
+                            var context = new MenuRenderingContext(Id, TargetId, X, Y, Trigger, Data);
                             @ChildContent(context)
                         }
                     </CascadingValue>
@@ -22,5 +22,5 @@
 
 @code{
     [Parameter]
-    public RenderFragment<ContextMenuRenderingContext> ChildContent { get; set; }
+    public RenderFragment<MenuRenderingContext> ChildContent { get; set; }
 }
