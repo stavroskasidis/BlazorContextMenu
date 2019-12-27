@@ -137,6 +137,7 @@ namespace BlazorContextMenu.E2ETests.Tests
             await OpenContextMenuAt(triggerId, mouseButton);
             var menuItem = Browser.FindElement(By.Id("menu1-item2"));
             menuItem.Click();
+            await Task.Delay(500);
 
             //Assert
             var menuElement = Browser.FindElement(By.Id("menu1"));
@@ -164,6 +165,7 @@ namespace BlazorContextMenu.E2ETests.Tests
             await OpenContextMenuAt(triggerId, mouseButton);
             var menuItem = Browser.FindElement(By.Id("menu1-item3"));
             menuItem.Click();
+            await Task.Delay(500);
 
             //Assert
             var menuElement = Browser.FindElement(By.Id("menu1"));
