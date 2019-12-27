@@ -6,25 +6,25 @@ namespace BlazorContextMenu.Services
 {
     public interface IContextMenuStorage
     {
-        ContextMenu GetMenu(string id);
-        void Register(ContextMenu menu);
-        void Unregister(ContextMenu menu);
+        ContextMenuBase GetMenu(string id);
+        void Register(ContextMenuBase menu);
+        void Unregister(ContextMenuBase menu);
     }
 
     public class ContextMenuStorage : IContextMenuStorage
     {
-        private Dictionary<string, ContextMenu> _initializedMenus = new Dictionary<string, ContextMenu>();
+        private Dictionary<string, ContextMenuBase> _initializedMenus = new Dictionary<string, ContextMenuBase>();
 
-        public void Register(ContextMenu menu)
+        public void Register(ContextMenuBase menu)
         {
             _initializedMenus[menu.Id] = menu;
         }
-        public void Unregister(ContextMenu menu)
+        public void Unregister(ContextMenuBase menu)
         {
             _initializedMenus.Remove(menu.Id);
         }
 
-        public ContextMenu GetMenu(string id)
+        public ContextMenuBase GetMenu(string id)
         {
             if (_initializedMenus.ContainsKey(id))
             {

@@ -22,10 +22,14 @@
 </ul>
 
 <ContextMenu Id="todoItemsMenu" OnAppearing="@TodoItemsMenuOnAppearing">
-    <Item id="menuitem-copy" OnClick="CopyClick"> <i class="fas fa-file blue-icon"></i> Copy</Item>
-    <Item id="menuitem-check" OnClick="CheckClick" OnAppearing="CheckAppearingHandler"> <i class="fas fa-file blue-icon"></i> Check</Item>
-    <Item id="menuitem-delete" OnClick="DeleteClick" OnAppearing="DeleteAppearingHandler"> <i class="fas fa-trash-alt red-icon"></i> Delete</Item>
-    <Item id="menuitem-invisible" Visible="false">I am invisible</Item>
+    @{
+        var currentTodoItem = context.Data as TodoItem;
+
+        <Item id="menuitem-copy" OnClick="CopyClick"> <i class="fas fa-file blue-icon"></i> Copy</Item>
+        <Item id="menuitem-check" OnClick="CheckClick" Enabled="!currentTodoItem.IsChecked"> <i class="fas fa-file blue-icon"></i> Check</Item>
+        <Item id="menuitem-delete" OnClick="DeleteClick" Visible="currentTodoItem.CanBeDeleted"> <i class="fas fa-trash-alt red-icon"></i> Delete</Item>
+        <Item id="menuitem-invisible" Visible="false">I am invisible</Item>
+    }
 </ContextMenu>
 
 <button id="manualShowBtn" @onclick="BtnClick">Show menu for first item</button>
@@ -55,20 +59,6 @@
         StateHasChanged();
     }
 
-    void CheckAppearingHandler(ItemAppearingEventArgs e)
-    {
-        var currentTodoItem = e.Data as TodoItem;
-        e.IsEnabled = !currentTodoItem.IsChecked;
-    }
-
-    void DeleteAppearingHandler(ItemAppearingEventArgs e)
-    {
-
-        var currentTodoItem = e.Data as TodoItem;
-        e.IsVisible = currentTodoItem.CanBeDeleted;
-    }
-
-
     void CheckClick(ItemClickEventArgs e)
     {
         var currentTodoItem = e.Data as TodoItem;
@@ -85,7 +75,7 @@
     }
 
     List<TodoItem> TodoItems = new List<TodoItem>
-    {
+{
         new TodoItem
         {
             Text = "Item 1",

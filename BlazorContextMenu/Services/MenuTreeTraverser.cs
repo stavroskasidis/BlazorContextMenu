@@ -7,7 +7,7 @@ namespace BlazorContextMenu.Services
 {
     public interface IMenuTreeTraverser
     {
-        ContextMenu GetClosestContextMenu(MenuTreeComponent menuTreeComponent);
+        ContextMenuBase GetClosestContextMenu(MenuTreeComponent menuTreeComponent);
         ContextMenu GetRootContextMenu(MenuTreeComponent menuTreeComponent);
         bool HasSubMenu(MenuTreeComponent menuTreeComponent);
     }
@@ -21,10 +21,10 @@ namespace BlazorContextMenu.Services
             return GetRootContextMenu(menuTreeComponent.ParentComponent);
         }
 
-        public ContextMenu GetClosestContextMenu(MenuTreeComponent menuTreeComponent)
+        public ContextMenuBase GetClosestContextMenu(MenuTreeComponent menuTreeComponent)
         {
             if (menuTreeComponent.ParentComponent == null) return null;
-            if (typeof(ContextMenu).IsAssignableFrom(menuTreeComponent.ParentComponent.GetType())) return menuTreeComponent.ParentComponent as ContextMenu;
+            if (typeof(ContextMenuBase).IsAssignableFrom(menuTreeComponent.ParentComponent.GetType())) return menuTreeComponent.ParentComponent as ContextMenuBase;
             return GetClosestContextMenu(menuTreeComponent.ParentComponent);
         }
 
