@@ -2,9 +2,9 @@
   "devDependencies": {
     "gulp": "^4.0.0",
     "gulp-cssmin": "^0.2.0",
-    "gulp-rename": "^1.4.0",
+    "gulp-rename": "^2.0.0",
     "gulp-uglify": "^3.0.2",
-    "rimraf": "^2.6.3"
+    "rimraf": "^3.0.2"
   },
   "scripts": {
     "minify": "gulp all"
