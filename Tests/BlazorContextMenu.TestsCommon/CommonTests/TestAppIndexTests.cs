@@ -351,5 +351,30 @@ namespace BlazorContextMenu.E2ETests.Tests
             var display = menuElement.GetCssValue("display");
             Assert.Equal(expectedDisplay, display);
         }
+
+
+        [Theory]
+        [InlineData("test-propagation-right-child", MouseButtonTrigger.Right)]
+        [InlineData("test-propagation-left-child", MouseButtonTrigger.Left)]
+        [InlineData("test-propagation-double-child", MouseButtonTrigger.DoubleClick)]
+        public async Task Menu1_TriggerNested_Menu1OpensButMenu2DoesNot(string triggerId,MouseButtonTrigger mouseButton)
+        {
+            //Arrange
+            var menu1ExpectedDisplay = "block";
+            var menu2ExpectedDisplay = "none";
+
+            //Act
+            await OpenContextMenuAt(triggerId, mouseButton);
+
+            //Assert
+            var menu1Element = Browser.FindElement(By.Id("menu1"));
+            var display1 = menu1Element.GetCssValue("display");
+            Assert.Equal(menu1ExpectedDisplay, display1);
+
+            var menu2Element = Browser.FindElement(By.Id("menu2"));
+            var display2 = menu2Element.GetCssValue("display");
+            Assert.Equal(menu2ExpectedDisplay, display2);
+
+        }
     }
 }

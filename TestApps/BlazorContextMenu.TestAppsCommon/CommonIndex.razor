@@ -119,6 +119,36 @@
     <button id="showAndHideMenuBtn" @onclick="ShowAndHideMenuBtnClick">Show menu1 in 300x300 using handler and hide after 2 seconds</button>
 </div>
 
+<hr />
+
+<ContextMenuTrigger MenuId="menu2">
+    <div>
+        <p id="test-propagation-right">Test Nested Menu. Here is menu2 (Right-click)</p>
+        <ContextMenuTrigger MenuId="menu1">
+            <p id="test-propagation-right-child">In here is menu1</p>
+        </ContextMenuTrigger>
+    </div>
+</ContextMenuTrigger>
+
+<ContextMenuTrigger MenuId="menu2" MouseButtonTrigger="MouseButtonTrigger.Left">
+    <div>
+        <p id="test-propagation-left">Test Nested Menu. Here is menu2 (Left-click)</p>
+        <ContextMenuTrigger MenuId="menu1" MouseButtonTrigger="MouseButtonTrigger.Left">
+            <p id="test-propagation-left-child">In here is menu1</p>
+        </ContextMenuTrigger>
+    </div>
+</ContextMenuTrigger>
+
+<ContextMenuTrigger MenuId="menu2" MouseButtonTrigger="MouseButtonTrigger.DoubleClick">
+    <div>
+        <p id="test-propagation-double">Test Nested Menu. Here is menu2 (Double-click)</p>
+        <ContextMenuTrigger MenuId="menu1" MouseButtonTrigger="MouseButtonTrigger.DoubleClick">
+            <p id="test-propagation-double-child">In here is menu1</p>
+        </ContextMenuTrigger>
+    </div>
+</ContextMenuTrigger>
+
+
 <NavLink href="/TodoList">Go to Todo List</NavLink>
 @code{
     private bool menu1Autoclose = true;

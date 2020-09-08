@@ -239,8 +239,13 @@ public class Startup
 </details>
 
 ## Release Notes
+<details open="open"><summary>1.7</summary>
 
-<details open="open"><summary>1.6</summary>
+>- Fix for [#81](https://github.com/stavroskasidis/BlazorContextMenu/issues/81).
+</details>
+
+
+<details><summary>1.6</summary>
 
 >- Added contextual render fragment for `ContextMenu`, exposing a `@context` variable that simplifies advanced scenarios.
 </details>
