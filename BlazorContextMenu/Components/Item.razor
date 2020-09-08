@@ -7,6 +7,7 @@
 <li @attributes="Attributes"
     id="@Id"
     @onclick="@((e) => OnClickInternal(e))"
+    @onclick:stopPropagation="true"
     class="@("blazor-context-menu__item " + ClassCalc)"
     style="@(Visible ? "display:block;" : "display:none;")"
     itemEnabled="@Enabled.ToString().ToLower()"

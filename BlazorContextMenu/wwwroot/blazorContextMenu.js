@@ -119,6 +119,7 @@ var blazorContextMenu = function (blazorContextMenu) {
         var triggerDotnetRef = JSON.parse(e.currentTarget.dataset["dotnetref"]);
         showMenuCommon(menu, menuId, e.x, e.y, e.target, triggerDotnetRef);
         e.preventDefault();
+        e.stopPropagation();
         return false;
     };
 
