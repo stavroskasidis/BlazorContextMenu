@@ -33,17 +33,17 @@ namespace BlazorContextMenu
 
             if (MouseButtonTrigger == MouseButtonTrigger.Left || MouseButtonTrigger == MouseButtonTrigger.Both)
             {
-                builder.AddAttribute(2, "onclick", $"blazorContextMenu.OnContextMenu(event, '{MenuId.Replace("'", "\\'")}');");
+                builder.AddAttribute(2, "onclick", $"blazorContextMenu.OnContextMenu(event, '{MenuId.Replace("'", "\\'")}', {StopPropagation.ToString().ToLower()});");
             }
 
             if (MouseButtonTrigger == MouseButtonTrigger.Right || MouseButtonTrigger == MouseButtonTrigger.Both)
             {
-                builder.AddAttribute(3, "oncontextmenu", $"blazorContextMenu.OnContextMenu(event, '{MenuId.Replace("'", "\\'")}');");
+                builder.AddAttribute(3, "oncontextmenu", $"blazorContextMenu.OnContextMenu(event, '{MenuId.Replace("'", "\\'")}', {StopPropagation.ToString().ToLower()});");
             }
 
             if (MouseButtonTrigger == MouseButtonTrigger.DoubleClick)
             {
-                builder.AddAttribute(4, "ondblclick", $"blazorContextMenu.OnContextMenu(event, '{MenuId.Replace("'", "\\'")}');");
+                builder.AddAttribute(4, "ondblclick", $"blazorContextMenu.OnContextMenu(event, '{MenuId.Replace("'", "\\'")}', {StopPropagation.ToString().ToLower()});");
             }
 
             if (!string.IsNullOrWhiteSpace(CssClass))
@@ -102,6 +102,12 @@ namespace BlazorContextMenu
         /// </summary>
         [Parameter]
         public object Data { get; set; }
+
+        /// <summary>
+        /// Set to false if you do not want the click event to stop propagating. Default: true
+        /// </summary>
+        [Parameter]
+        public bool StopPropagation { get; set; } = true;
 
         [Parameter]
         public RenderFragment ChildContent { get; set; }

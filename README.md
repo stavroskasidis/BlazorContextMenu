@@ -239,7 +239,12 @@ public class Startup
 </details>
 
 ## Release Notes
-<details open="open"><summary>1.7</summary>
+<details open="open"><summary>1.8</summary>
+
+>- Added `StopPropagation` parameter on `ContextMenuTrigger` (default `true`).
+</details>
+
+<details><summary>1.7</summary>
 
 >- Fix for [#81](https://github.com/stavroskasidis/BlazorContextMenu/issues/81).
 </details>

@@ -111,7 +111,7 @@ var blazorContextMenu = function (blazorContextMenu) {
         showMenuCommon(menu, menuId, x, y, null, null);
     }
 
-    blazorContextMenu.OnContextMenu = function (e, menuId) {
+    blazorContextMenu.OnContextMenu = function (e, menuId, stopPropagation) {
         //openingMenu = true;
         var menu = document.getElementById(menuId);
         if (!menu) throw new Error("No context menu with id '" + menuId + "' was found");
@@ -119,7 +119,9 @@ var blazorContextMenu = function (blazorContextMenu) {
         var triggerDotnetRef = JSON.parse(e.currentTarget.dataset["dotnetref"]);
         showMenuCommon(menu, menuId, e.x, e.y, e.target, triggerDotnetRef);
         e.preventDefault();
-        e.stopPropagation();
+        if (stopPropagation) {
+            e.stopPropagation();
+        }
         return false;
     };
 
