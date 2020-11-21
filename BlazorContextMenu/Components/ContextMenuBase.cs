@@ -108,6 +108,12 @@ namespace BlazorContextMenu
         [Parameter]
         public bool AutoHide { get; set; } = true;
 
+        /// <summary>
+        /// Set CSS z-index for overlapping other html elements. Default: 1000
+        /// </summary>
+        [Parameter]
+        public int Z { get; set; } = 1000;
+
         [CascadingParameter(Name = "CascadingAnimation")]
         protected Animation? CascadingAnimation { get; set; }
 

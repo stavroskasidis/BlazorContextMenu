@@ -1,7 +1,7 @@
 ﻿@inherits ContextMenuBase
 @namespace BlazorContextMenu
 
-<div @attributes="@Attributes" class="@($"{BaseClass} {ClassCalc} {DisplayClassCalc}")" id="@Id" style="@($"left:{X}px;top:{Y}px;")" data-autohide="@AutoHide.ToString().ToLower()">
+<div @attributes="@Attributes" class="@($"{BaseClass} {ClassCalc} {DisplayClassCalc}")" id="@Id" style="@($"left:{X}px;top:{Y}px;z-index:{Z};")" data-autohide="@AutoHide.ToString().ToLower()">
     @if (IsShowing)
     {
         <ul class="@ListClassCalc">
