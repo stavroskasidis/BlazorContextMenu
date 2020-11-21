@@ -159,7 +159,17 @@ var blazorContextMenu = function (blazorContextMenu) {
             }
         });
 
-        
+        window.addEventListener('resize', function () {
+            if (openMenus.length > 0) {
+                for (var i = 0; i < openMenus.length; i++) {
+                    var currentMenu = openMenus[i];
+                    var menuElement = document.getElementById(currentMenu.id);
+                    if (menuElement && menuElement.dataset["autohide"] == "true") {
+                        blazorContextMenu.Hide(currentMenu.id);
+                    }
+                }
+            }
+        }, true);
     };
 
 
