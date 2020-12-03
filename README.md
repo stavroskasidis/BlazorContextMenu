@@ -241,7 +241,8 @@ public class Startup
 ## Release Notes
 <details open="open"><summary>1.9</summary>
 
->- Added `ZIndex` support in `ContextMenu` component (default `1000`). Contributed by [grishat](https://github.com/grishat)
+>- Added `ZIndex` support in `ContextMenu` component (default `1000`). Contributed by [grishat](https://github.com/grishat).
+>- Added autohide support in `ContextMenu` when window is resizing. Contributed by [grishat](https://github.com/grishat).
 </details>
 
 <details><summary>1.8</summary>
