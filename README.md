@@ -239,7 +239,12 @@ public class Startup
 </details>
 
 ## Release Notes
-<details open="open"><summary>1.8</summary>
+<details open="open"><summary>1.9</summary>
+
+>- Added `ZIndex` support in `ContextMenu` component (default `1000`). [Contributed by @grishat]
+</details>
+
+<details><summary>1.8</summary>
 
 >- Added `StopPropagation` parameter on `ContextMenuTrigger` (default `true`).
 </details>
