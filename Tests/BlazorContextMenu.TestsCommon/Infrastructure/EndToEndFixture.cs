@@ -44,7 +44,17 @@ namespace BlazorContextMenu.TestsCommon.Infrastructure
 
             try
             {
-                var driver = new RemoteWebDriver(opts);
+                IWebDriver driver = null;
+                var cromewebdriverEnviromentPath = Environment.GetEnvironmentVariable("ChromeWebDriver");
+                if (!string.IsNullOrWhiteSpace(cromewebdriverEnviromentPath))
+                {
+                    driver = new ChromeDriver(cromewebdriverEnviromentPath);
+                }
+                else
+                {
+                    driver = new RemoteWebDriver(opts);
+                }
+
                 driver.Manage().Timeouts().ImplicitWait = TimeSpan.FromSeconds(3);
                 Browser = driver;
             }
