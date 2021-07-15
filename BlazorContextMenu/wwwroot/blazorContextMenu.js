@@ -144,11 +144,19 @@ var blazorContextMenu = function (blazorContextMenu) {
 
     blazorContextMenu.Init = function () {
         document.addEventListener("mouseup", function (e) {
+            handleAutoHideEvent(e, "mouseup");
+        });
+
+        document.addEventListener("mousedown", function (e) {
+            handleAutoHideEvent(e, "mousedown");
+        });
+
+        function handleAutoHideEvent(e, autoHideEvent) {
             if (openMenus.length > 0) {
                 for (var i = 0; i < openMenus.length; i++) {
                     var currentMenu = openMenus[i];
                     var menuElement = document.getElementById(currentMenu.id);
-                    if (menuElement && menuElement.dataset["autohide"] == "true") {
+                    if (menuElement && menuElement.dataset["autohide"] == "true" && menuElement.dataset["autohideevent"] == autoHideEvent) {
                         var clickedInsideMenu = menuElement.contains(e.target);
                         if (!clickedInsideMenu) {
                             blazorContextMenu.Hide(currentMenu.id);
@@ -157,7 +165,7 @@ var blazorContextMenu = function (blazorContextMenu) {
 
                 }
             }
-        });
+        }
 
         window.addEventListener('resize', function () {
             if (openMenus.length > 0) {
