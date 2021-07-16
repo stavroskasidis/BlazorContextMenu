@@ -190,7 +190,12 @@ public class Startup
 
 ## ⚠️ Breaking changes ⚠️
 
-<details open="open"><summary>Upgrading from 0.19 to 0.20</summary>
+<details open="open"><summary>Upgrading from 1.9.0 to 1.10.0</summary>
+
+>- The default auto-hide event is now on "mousedown". If you want the old behaviour, you can use the new `AutoHideEvent` parameter on the `ContextMenu` component to change it back to "mouseup".
+</details>
+
+<details><summary>Upgrading from 0.19 to 0.20</summary>
 
 >- Replaced the `ContextMenuTriggerId` in events with the reference to the actual `ContextMenuTrigger`
 </details>
@@ -239,7 +244,12 @@ public class Startup
 </details>
 
 ## Release Notes
-<details open="open"><summary>1.9</summary>
+<details open="open"><summary>1.10</summary>
+
+>- Changed default auto hide event to "mousedown". Old behaviour ("mouseup") is available by using the `AutoHideEvent` parameter on the `ContextMenu` component. Contributed by [KristofferStrube](https://github.com/KristofferStrube).
+</details>
+
+<details><summary>1.9</summary>
 
 >- Added `ZIndex` support in `ContextMenu` component (default `1000`). Contributed by [grishat](https://github.com/grishat).
 >- Added autohide support in `ContextMenu` when window is resizing. Contributed by [grishat](https://github.com/grishat).

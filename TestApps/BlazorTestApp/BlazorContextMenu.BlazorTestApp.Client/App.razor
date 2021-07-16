@@ -11,10 +11,13 @@
 
 
 
-@inject IJSRuntime jsRuntime
+@*@inject IJSRuntime jsRuntime
 @code{
     protected override async Task OnAfterRenderAsync(bool firstRender)
     {
-        await jsRuntime.InvokeAsync<object>("TestApp_AppLoaded");
+        if (firstRender)
+        {
+            await jsRuntime.InvokeVoidAsync("TestApp_AppLoaded");
+        }
     }
-}
+}*@

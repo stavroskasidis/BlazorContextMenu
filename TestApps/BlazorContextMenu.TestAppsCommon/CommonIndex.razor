@@ -67,6 +67,10 @@
     <p id="test12-trigger">Right-Click me (menu4 unhideable)</p>
 </ContextMenuTrigger>
 
+<ContextMenuTrigger MenuId="menu5">
+    <p id="test13-trigger">Right-Click me (menu5 hides on mouseup)</p>
+</ContextMenuTrigger>
+
 
 <ContextMenu Id="menu1" Template="dark" OnAppearing="OnAppearingMenu1">
     <Item Id="menu1-item1" OnClick="FetchDataClick">Fetch Data</Item>
@@ -113,6 +117,11 @@
     <Item Id="menu4-item2" OnClick="OnClick">Item 2</Item>
 </ContextMenu>
 
+<ContextMenu Id="menu5" AutoHideEvent="AutoHideEvent.MouseUp" >
+    <Item Id="menu4-item1" OnClick="OnClick">Item 1</Item>
+    <Item Id="menu4-item2" OnClick="OnClick">Item 2</Item>
+</ContextMenu>
+
 <div>
     <button id="showMenuBtn" @onclick="ShowMenuBtnOnClick">Show menu1 in 300x300 using handler</button>
     <button id="showNoAutoCloseBtn" @onclick="ShowNoAutoCloseBtnOnClick">Show menu1 in 300x300 using handler</button>
@@ -150,6 +159,8 @@
 
 
 <NavLink href="/TodoList">Go to Todo List</NavLink>
+<div id="app_loaded"></div>
+
 @code{
     private bool menu1Autoclose = true;
     protected async Task ShowMenuBtnOnClick()

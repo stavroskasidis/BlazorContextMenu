@@ -109,6 +109,12 @@ namespace BlazorContextMenu
         public bool AutoHide { get; set; } = true;
 
         /// <summary>
+        /// Set to AutoHideEvent.MouseUp if you want it to close the menu on the MouseUp event. Default: AutoHideEvent.MouseDown
+        /// </summary>
+        [Parameter]
+        public AutoHideEvent AutoHideEvent { get; set; } = AutoHideEvent.MouseDown;
+
+        /// <summary>
         /// Set CSS z-index for overlapping other html elements. Default: 1000
         /// </summary>
         [Parameter]
