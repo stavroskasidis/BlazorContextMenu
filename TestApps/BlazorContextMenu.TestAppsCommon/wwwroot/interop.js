@@ -29,6 +29,6 @@
 
 TestApp_AppLoaded = function () {
     var appLoadedElement = document.createElement("div");
-    appLoadedElement.id = "app-loaded";
+    appLoadedElement.id = "app_loaded";
     document.body.appendChild(appLoadedElement);
 }

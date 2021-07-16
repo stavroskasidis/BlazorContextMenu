@@ -376,5 +376,41 @@ namespace BlazorContextMenu.E2ETests.Tests
             Assert.Equal(menu2ExpectedDisplay, display2);
 
         }
+
+        [Fact]
+        public async Task Menu5_TriggerAndClickOnHeader_MenuCloses()
+        {
+            //Arrange
+            var expectedDisplay = "none";
+
+            //Act
+            await OpenContextMenuAt("test13-trigger", MouseButtonTrigger.Right);
+            var headerElement = Browser.FindElement(By.Id("header"));
+            headerElement.Click();
+
+            //Assert
+            var menuElement = Browser.FindElement(By.Id("menu5"));
+            var display = menuElement.GetCssValue("display");
+            Assert.Equal(expectedDisplay, display);
+        }
+
+
+        [Fact]
+        public async Task Menu5_TriggerAndMouseDownOnHeader_MenuStaysOpen()
+        {
+            //Arrange
+            var expectedDisplay = "block";
+
+            //Act
+            await OpenContextMenuAt("test13-trigger", MouseButtonTrigger.Right);
+            var headerElement = Browser.FindElement(By.Id("header"));
+            var builder = new Actions(Browser);
+            builder.MoveToElement(headerElement).ClickAndHold().Build().Perform();
+
+            //Assert
+            var menuElement = Browser.FindElement(By.Id("menu5"));
+            var display = menuElement.GetCssValue("display");
+            Assert.Equal(expectedDisplay, display);
+        }
     }
 }
