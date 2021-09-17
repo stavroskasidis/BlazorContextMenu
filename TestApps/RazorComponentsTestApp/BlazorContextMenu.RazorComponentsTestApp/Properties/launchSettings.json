@@ -17,11 +17,12 @@
     },
     "BlazorContextMenu.RazorComponentsTestApp": {
       "commandName": "Project",
+      "dotnetRunMessages": "true",
       "launchBrowser": true,
+      "applicationUrl": "https://localhost:7001;http://localhost:7000",
       "environmentVariables": {
         "ASPNETCORE_ENVIRONMENT": "Development"
-      },
-      "applicationUrl": "http://localhost:53073/"
+      }
     }
   }
 }

@@ -4,6 +4,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Net.Http;
+using System.Net.Http.Json;
 using System.Threading.Tasks;
 
 namespace BlazorContextMenu.BlazorTestApp.Client.Services
@@ -19,7 +20,7 @@ namespace BlazorContextMenu.BlazorTestApp.Client.Services
 
         public async Task<string[]> GetSampleData()
         {
-            var summaries = await _http.GetJsonAsync<string[]>("api/SampleData/Summaries");
+            var summaries = await _http.GetFromJsonAsync<string[]>("api/SampleData/Summaries");
             return summaries;
         }
     }
