@@ -112,7 +112,7 @@ namespace BlazorContextMenu
         [Parameter]
         public RenderFragment ChildContent { get; set; }
 
-        private ElementReference contextMenuTriggerElementRef;
+        private ElementReference? contextMenuTriggerElementRef;
         private DotNetObjectReference<ContextMenuTrigger> dotNetObjectRef;
         protected override void OnInitialized()
         {
@@ -135,7 +135,10 @@ namespace BlazorContextMenu
                 dotNetObjectRef = DotNetObjectReference.Create(this);
             }
 
-            await jsRuntime.InvokeAsync<object>("blazorContextMenu.RegisterTriggerReference", contextMenuTriggerElementRef, dotNetObjectRef);
+            if (contextMenuTriggerElementRef != null)
+            {
+                await jsRuntime.InvokeAsync<object>("blazorContextMenu.RegisterTriggerReference", contextMenuTriggerElementRef.Value, dotNetObjectRef);
+            }
         }
 
         public void Dispose()
