@@ -282,7 +282,9 @@ var blazorContextMenu = function (blazorContextMenu) {
 
 
     blazorContextMenu.RegisterTriggerReference = function (triggerElement, triggerDotNetRef) {
-        triggerElement.dataset["dotnetref"] = JSON.stringify(triggerDotNetRef.serializeAsArg());
+        if (triggerElement) {
+            triggerElement.dataset["dotnetref"] = JSON.stringify(triggerDotNetRef.serializeAsArg());
+        }
     }
 
     return blazorContextMenu;
