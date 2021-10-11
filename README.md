@@ -249,6 +249,11 @@ public class Startup
 >- Upgraded to dotnet 6.0
 </details>
 
+<details><summary>1.10.1</summary>
+
+>- Fix for [#80](https://github.com/stavroskasidis/BlazorContextMenu/issues/80).
+</details>
+
 <details><summary>1.10</summary>
 
 >- Changed default auto hide event to "mousedown". Old behaviour ("mouseup") is available by using the `AutoHideEvent` parameter on the `ContextMenu` component. Contributed by [KristofferStrube](https://github.com/KristofferStrube).
