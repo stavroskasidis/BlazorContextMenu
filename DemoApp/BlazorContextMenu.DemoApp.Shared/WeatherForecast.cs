@@ -14,7 +14,7 @@ namespace BlazorContextMenu.DemoApp.Shared
 
         public int TemperatureF => 32 + (int)(TemperatureC / 0.5556);
 
-        public bool Vacation { get; set; }
-        public bool MarkedDangerous { get; set; }
+        public bool Favorite { get; set; }
+        public bool Highlight { get; set; }
     }
 }
