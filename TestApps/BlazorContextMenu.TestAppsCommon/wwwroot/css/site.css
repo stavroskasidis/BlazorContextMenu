@@ -143,7 +143,10 @@ div.red-menu {
 
 div.dark-menu {
     color: #FFFFFF;
-    background-color: #444;
+    background-color: rgba(52, 58, 64, 0.95);
+    width: 200px;
+    margin: 0;
+    padding: 0;
 }
 
 .dark-menu .dark-menu-item--with-submenu:after {
@@ -153,6 +156,7 @@ div.dark-menu {
 .dark-menu .dark-menu-item--disabled,
 .dark-menu .dark-menu-item {
     background-color: #444;
+    backdrop-filter: blur(2px) contrast(.3);
 }
 
     .dark-menu .dark-menu-item--disabled:hover,
