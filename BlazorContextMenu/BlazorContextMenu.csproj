@@ -16,17 +16,17 @@
     <Copyright />
     <PackageTags>blazor blazor-component blazor-context-menu context-menu contextmenu menu blazor-menu blazorcontextmenu razor razor-components razorcomponents</PackageTags>
     <VersionSuffix>$(VersionSuffix)</VersionSuffix>
-    <Version>1.11.0</Version>
+    <Version>1.11.1</Version>
     <Version Condition=" '$(VersionSuffix)' != '' ">$(Version)-$(VersionSuffix)</Version>
     <Product>Blazor.ContextMenu</Product>
   </PropertyGroup>
   
-  <Target Name="EnsureNpmRestored" BeforeTargets="GenerateStaticWebAssetsManifest" Condition="!Exists('node_modules')">
+  <Target Name="EnsureNpmRestored" BeforeTargets="Minification" Condition="!Exists('node_modules')">
     <Message Importance="high" Text="Restoring dependencies using 'npm'. This may take several minutes..." />
     <Exec Command="npm install" />
   </Target>
 
-  <Target Name="Minification" BeforeTargets="GenerateStaticWebAssetsManifest">
+  <Target Name="Minification" BeforeTargets="BeforeBuild">
     <Message Importance="high" Text="Minifying static assets ..." />
     <Exec Command="npm run minify" />
   </Target>

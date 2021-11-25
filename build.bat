@@ -11,5 +11,5 @@ if %errorlevel% neq 0 exit /b %errorlevel%
 dotnet test Tests/BlazorContextMenu.RazorComponentsE2ETests -c Release --no-build -l:trx
 if %errorlevel% neq 0 exit /b %errorlevel%
 
-dotnet pack BlazorContextMenu -c Release --no-build /p:VersionSuffix="%version-suffix%" -o artifacts/nuget
+dotnet pack BlazorContextMenu -c Release /p:VersionSuffix="%version-suffix%" -o artifacts/nuget
 if %errorlevel% neq 0 exit /b %errorlevel%
