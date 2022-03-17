@@ -36,19 +36,19 @@ var blazorContextMenu = function (blazorContextMenu) {
     function findFirstChildByClass(element, className) {
         var foundElement = null;
         function recurse(element, className, found) {
-            for (var i = 0; i < element.childNodes.length && !found; i++) {
-                var el = element.childNodes[i];
+            for (var i = 0; i < element.children.length && !found; i++) {
+                var el = element.children[i];
                 var classes = el.className != undefined ? el.className.split(" ") : [];
                 for (var j = 0, jl = classes.length; j < jl; j++) {
                     if (classes[j] == className) {
                         found = true;
-                        foundElement = element.childNodes[i];
+                        foundElement = element.children[i];
                         break;
                     }
                 }
                 if (found)
                     break;
-                recurse(element.childNodes[i], className, found);
+                recurse(element.children[i], className, found);
             }
         }
         recurse(element, className, false);
@@ -58,15 +58,15 @@ var blazorContextMenu = function (blazorContextMenu) {
     function findAllChildsByClass(element, className) {
         var foundElements = new Array();
         function recurse(element, className) {
-            for (var i = 0; i < element.childNodes.length; i++) {
-                var el = element.childNodes[i];
+            for (var i = 0; i < element.children.length; i++) {
+                var el = element.children[i];
                 var classes = el.className != undefined ? el.className.split(" ") : [];
                 for (var j = 0, jl = classes.length; j < jl; j++) {
                     if (classes[j] == className) {
-                        foundElements.push(element.childNodes[i]);
+                        foundElements.push(element.children[i]);
                     }
                 }
-                recurse(element.childNodes[i], className);
+                recurse(element.children[i], className);
             }
         }
         recurse(element, className);
@@ -257,18 +257,18 @@ var blazorContextMenu = function (blazorContextMenu) {
 
                     i = currentMenuList.childNodes.length;
                     while (i--) {
-                        var childNode = currentMenuList.childNodes[i];
-                        if (childNode == currentItemElement) continue;
-                        childNode.removeEventListener("mouseover", closeSubMenus);
+                        var child = currentMenuList.children[i];
+                        if (child == currentItemElement) continue;
+                        child.removeEventListener("mouseover", closeSubMenus);
                     }
                 };
 
                 var i = currentMenuList.childNodes.length;
                 while (i--) {
-                    var childNode = currentMenuList.childNodes[i];
-                    if (childNode == currentItemElement) continue;
+                    var child = currentMenuList.childNodes[i];
+                    if (child == currentItemElement) continue;
 
-                    childNode.addEventListener("mouseover", closeSubMenus);
+                    child.addEventListener("mouseover", closeSubMenus);
                 }
             });
         }, 200);

@@ -244,7 +244,12 @@ public class Startup
 </details>
 
 ## Release Notes
-<details open="open"><summary>1.11</summary>
+<details open="open"><summary>1.12</summary>
+
+>- Fix for [#110](https://github.com/stavroskasidis/BlazorContextMenu/issues/110). Contributed by [SebastianWachsmuth](https://github.com/SebastianWachsmuth).
+</details>
+
+<details><summary>1.11</summary>
 
 >- Upgraded to dotnet 6.0
 </details>
