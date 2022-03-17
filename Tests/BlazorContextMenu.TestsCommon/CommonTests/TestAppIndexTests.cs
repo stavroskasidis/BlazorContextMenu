@@ -412,5 +412,22 @@ namespace BlazorContextMenu.E2ETests.Tests
             var display = menuElement.GetCssValue("display");
             Assert.Equal(expectedDisplay, display);
         }
+
+        [Fact]
+        public async Task Menu6_TriggerAndClickOutside_MenuCloses()
+        {
+            //Arrange
+            var expectedDisplay = "none";
+
+            //Act
+            await OpenContextMenuAt("test14-trigger", MouseButtonTrigger.Right);
+            var headerElement = Browser.FindElement(By.Id("header"));
+            headerElement.Click();
+
+            //Assert
+            var menuElement = Browser.FindElement(By.Id("menu6"));
+            var display = menuElement.GetCssValue("display");
+            Assert.Equal(expectedDisplay, display);
+        }
     }
 }

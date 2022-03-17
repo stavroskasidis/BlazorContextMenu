@@ -38,13 +38,10 @@ var blazorContextMenu = function (blazorContextMenu) {
         function recurse(element, className, found) {
             for (var i = 0; i < element.children.length && !found; i++) {
                 var el = element.children[i];
-                var classes = el.className != undefined ? el.className.split(" ") : [];
-                for (var j = 0, jl = classes.length; j < jl; j++) {
-                    if (classes[j] == className) {
-                        found = true;
-                        foundElement = element.children[i];
-                        break;
-                    }
+                if (el.classList.contains(className)) {
+                    found = true;
+                    foundElement = element.children[i];
+                    break;
                 }
                 if (found)
                     break;
@@ -60,11 +57,8 @@ var blazorContextMenu = function (blazorContextMenu) {
         function recurse(element, className) {
             for (var i = 0; i < element.children.length; i++) {
                 var el = element.children[i];
-                var classes = el.className != undefined ? el.className.split(" ") : [];
-                for (var j = 0, jl = classes.length; j < jl; j++) {
-                    if (classes[j] == className) {
-                        foundElements.push(element.children[i]);
-                    }
+                if (el.classList.contains(className)) {
+                    foundElements.push(element.children[i]);
                 }
                 recurse(element.children[i], className);
             }
@@ -107,7 +101,7 @@ var blazorContextMenu = function (blazorContextMenu) {
         //openingMenu = true;
         var menu = document.getElementById(menuId);
         if (!menu) throw new Error("No context menu with id '" + menuId + "' was found");
-        addToOpenMenus(menu,menuId, null);
+        addToOpenMenus(menu, menuId, null);
         showMenuCommon(menu, menuId, x, y, null, null);
     }
 
@@ -115,7 +109,7 @@ var blazorContextMenu = function (blazorContextMenu) {
         //openingMenu = true;
         var menu = document.getElementById(menuId);
         if (!menu) throw new Error("No context menu with id '" + menuId + "' was found");
-        addToOpenMenus(menu,menuId, e.target);
+        addToOpenMenus(menu, menuId, e.target);
         var triggerDotnetRef = JSON.parse(e.currentTarget.dataset["dotnetref"]);
         showMenuCommon(menu, menuId, e.x, e.y, e.target, triggerDotnetRef);
         e.preventDefault();
