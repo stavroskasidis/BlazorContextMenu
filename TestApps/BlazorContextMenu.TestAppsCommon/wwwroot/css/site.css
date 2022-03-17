@@ -156,7 +156,6 @@ div.dark-menu {
 .dark-menu .dark-menu-item--disabled,
 .dark-menu .dark-menu-item {
     background-color: #444;
-    backdrop-filter: blur(2px) contrast(.3);
 }
 
     .dark-menu .dark-menu-item--disabled:hover,
