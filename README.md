@@ -246,7 +246,7 @@ public class Startup
 ## Release Notes
 <details open="open"><summary>1.12</summary>
 
->- Fix for [#111](https://github.com/stavroskasidis/BlazorContextMenu/issues/110). Contributed by [SebastianWachsmuth](https://github.com/SebastianWachsmuth).
+>- Fix for [#110](https://github.com/stavroskasidis/BlazorContextMenu/issues/110). Contributed by [SebastianWachsmuth](https://github.com/SebastianWachsmuth).
 </details>
 
 <details><summary>1.11</summary>
