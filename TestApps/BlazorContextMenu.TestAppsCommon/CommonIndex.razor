@@ -75,6 +75,12 @@
     <p id="test14-trigger">Right-Click me (menu6 - items contain nested components)</p>
 </ContextMenuTrigger>
 
+<ContextMenuTrigger MenuId="menu1" MouseButtonTrigger="MouseButtonTrigger.Left">
+    <p id="test15-trigger">Left-click me (menu1)</p>
+    <p id="ignoreThis">Ignore this</p>
+</ContextMenuTrigger>
+
+
 
 <ContextMenu Id="menu1" Template="dark" OnAppearing="OnAppearingMenu1">
     <Item Id="menu1-item1" OnClick="FetchDataClick">Fetch Data</Item>
@@ -219,7 +225,11 @@
 
     void OnAppearingMenu1(MenuAppearingEventArgs e)
     {
-        if (e.ContextMenuTrigger != null && e.ContextMenuTrigger.Id == "test9-trigger")
+        if (e.ContextMenuTrigger != null && (e.ContextMenuTrigger.Id == "test9-trigger"))
+        {
+            e.PreventShow = true;
+        }
+        if (e.ContextMenuTargetId == "ignoreThis")
         {
             e.PreventShow = true;
         }
