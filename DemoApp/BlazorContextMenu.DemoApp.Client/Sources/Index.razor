@@ -10,7 +10,12 @@
     <Item>
         Submenu
         <SubMenu>
-            <Item OnClick="@OnClick">Submenu Item 1</Item>
+            <Item OnClick="@OnClick">Submenu Item 1
+                <SubMenu>
+                    <Item OnClick="@OnClick">SubSubmenu Item 1</Item>
+                    <Item OnClick="@OnClick">SubSubmenu Item 2</Item>
+                </SubMenu>
+            </Item>
             <Item OnClick="@OnClick">Submenu Item 2</Item>
         </SubMenu>
     </Item>
