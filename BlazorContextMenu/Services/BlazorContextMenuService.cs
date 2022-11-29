@@ -1,8 +1,6 @@
 ﻿using BlazorContextMenu.Services;
 using Microsoft.JSInterop;
 using System;
-using System.Collections.Generic;
-using System.Text;
 using System.Threading.Tasks;
 
 namespace BlazorContextMenu
@@ -34,6 +32,11 @@ namespace BlazorContextMenu
         /// <param name="data">Extra data that will be passed to menu events.</param>
         /// <returns></returns>
         Task ShowMenu(string id, int x, int y, object data);
+
+        /// <summary>Determines if a <see cref="ContextMenu" /> is already being shown.</summary>
+        /// <param name="id">The id of the <see cref="ContextMenu"/>.</param>
+        /// <returns>True if the <see cref="ContextMenu" /> is being shown, otherwise False.</returns>
+        Task<bool> IsMenuShown(string id);
     }
 
     public class BlazorContextMenuService : IBlazorContextMenuService
@@ -72,5 +75,7 @@ namespace BlazorContextMenu
         {
             return ShowMenu(id, x, y, null);
         }
+
+        public async Task<bool> IsMenuShown(string id) => await _jSRuntime.InvokeAsync<bool>("blazorContextMenu.IsMenuShown", id);
     }
 }
