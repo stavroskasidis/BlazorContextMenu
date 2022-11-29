@@ -205,6 +205,15 @@ var blazorContextMenu = function (blazorContextMenu) {
         });
     }
 
+    blazorContextMenu.IsMenuShown = function (menuId) {
+        var menuElement = document.getElementById(menuId);
+        var instanceId = menuElement.dataset["instanceId"];
+        var menu = openMenus.find(function (item) {
+            return item.instanceId == instanceId;
+        });
+        return typeof(menu) != 'undefined' && menu != null;
+    }
+
     var subMenuTimeout = null;
     blazorContextMenu.OnMenuItemMouseOver = function (e, xOffset, currentItemElement) {
         if (closest(e.target, ".blazor-context-menu__wrapper") != closest(currentItemElement, ".blazor-context-menu__wrapper")) {
