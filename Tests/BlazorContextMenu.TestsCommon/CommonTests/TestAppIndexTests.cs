@@ -442,7 +442,7 @@ namespace BlazorContextMenu.E2ETests.Tests
 
             //Assert
             var menuElement = Browser.FindElement(By.Id("menu7-isShownResult"));
-            var display = menuElement.GetAttribute("text");
+            var display = menuElement.Text;
             Assert.Equal(expectedDisplay, display);
         }
 
@@ -453,13 +453,13 @@ namespace BlazorContextMenu.E2ETests.Tests
             var expectedDisplay = bool.TrueString;
 
             //Act
-            await OpenContextMenuAt("menu7", MouseButtonTrigger.Left);
+            await OpenContextMenuAt("menu7-test1-trigger", MouseButtonTrigger.Left);
             var determineIfMenu7IsShownbtn = Browser.FindElement(By.Id("determineIfMenu7IsShownbtn"));
             determineIfMenu7IsShownbtn.Click();
 
             //Assert
             var menuElement = Browser.FindElement(By.Id("menu7-isShownResult"));
-            var display = menuElement.GetAttribute("text");
+            var display = menuElement.Text;
             Assert.Equal(expectedDisplay, display);
         }
     }
