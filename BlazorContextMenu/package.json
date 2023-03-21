@@ -1,6 +1,6 @@
 {
-  "devDependencies": {
-    "gulp": "^4.0.0",
+  "dependencies": {
+    "gulp": "^4.0.2",
     "gulp-cssmin": "^0.2.0",
     "gulp-rename": "^1.4.0",
     "gulp-uglify": "^3.0.2",
