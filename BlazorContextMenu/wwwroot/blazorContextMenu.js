@@ -75,6 +75,21 @@ var blazorContextMenu = function (blazorContextMenu) {
         }
     }
 
+    const sleepUntil = async (f, timeoutMs) => {
+        return new Promise((resolve, reject) => {
+            const timeWas = new Date();
+            const wait = setInterval(function () {
+                if (f()) {
+                    clearInterval(wait);
+                    resolve();
+                } else if (new Date() - timeWas > timeoutMs) {
+                    clearInterval(wait);
+                    reject();
+                }
+            }, 20);
+        });
+    }
+
 
     //===========================================
 
@@ -120,7 +135,10 @@ var blazorContextMenu = function (blazorContextMenu) {
     };
 
     var showMenuCommon = function (menu, menuId, x, y, target, triggerDotnetRef) {
-        return blazorContextMenu.Show(menuId, x, y, target, triggerDotnetRef).then(function () {
+        return blazorContextMenu.Show(menuId, x, y, target, triggerDotnetRef).then(async function () {
+
+            await sleepUntil(() => menu.clientWidth > 0, 1000); //Wait until the menu has spawned so clientWidth and offsetLeft report correctly
+
             //check for overflow
             var leftOverflownPixels = menu.offsetLeft + menu.clientWidth - window.innerWidth;
             if (leftOverflownPixels > 0) {
@@ -203,6 +221,15 @@ var blazorContextMenu = function (blazorContextMenu) {
                 }
             }
         });
+    }
+
+    blazorContextMenu.IsMenuShown = function (menuId) {
+        var menuElement = document.getElementById(menuId);
+        var instanceId = menuElement.dataset["instanceId"];
+        var menu = openMenus.find(function (item) {
+            return item.instanceId == instanceId;
+        });
+        return typeof(menu) != 'undefined' && menu != null;
     }
 
     var subMenuTimeout = null;

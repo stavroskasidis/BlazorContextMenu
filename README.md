@@ -244,7 +244,17 @@ public class Startup
 </details>
 
 ## Release Notes
-<details open="open"><summary>1.14</summary>
+<details open="open"><summary>1.16</summary>
+
+>- Fixes issue with opening a contextual menu on the far right side of the window for the first time not properly offsetting. Contributed by [matt-virtualitics](https://github.com/matt-virtualitics).
+</details>
+
+<details><summary>1.15</summary>
+
+>- Add IsMenuShown to BlazorContextMenuService. Contributed by [Adam Ashton](https://github.com/adamashton).
+</details>
+
+<details><summary>1.14</summary>
 
 >- Fix for [#121](https://github.com/stavroskasidis/BlazorContextMenu/issues/121).
 </details>

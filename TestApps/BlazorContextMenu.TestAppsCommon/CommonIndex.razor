@@ -80,6 +80,9 @@
     <p id="ignoreThis">Ignore this</p>
 </ContextMenuTrigger>
 
+<ContextMenuTrigger MenuId="menu7" MouseButtonTrigger="MouseButtonTrigger.Left">
+    <p id="menu7-test1-trigger">Left-click me (menu7)</p>
+</ContextMenuTrigger>
 
 
 <ContextMenu Id="menu1" Template="dark" OnAppearing="OnAppearingMenu1">
@@ -137,10 +140,20 @@
     <Item Id="menu6-item2" OnClick="OnClick"><ItemChild>Item 2</ItemChild></Item>
 </ContextMenu>
 
+<ContextMenu Id="menu7" AutoHide="false"> 
+    <Item Id="menu7-item1">Item 1</Item>
+    <Item Id="menu7-item2">Item 2</Item>
+</ContextMenu>
+
 <div>
     <button id="showMenuBtn" @onclick="ShowMenuBtnOnClick">Show menu1 in 300x300 using handler</button>
     <button id="showNoAutoCloseBtn" @onclick="ShowNoAutoCloseBtnOnClick">Show menu1 in 300x300 using handler</button>
     <button id="showAndHideMenuBtn" @onclick="ShowAndHideMenuBtnClick">Show menu1 in 300x300 using handler and hide after 2 seconds</button>
+</div>
+
+<div>
+    <button id="determineIfMenu7IsShownbtn" @onclick="DetermineIfMenu7IsShown">Determine if menu7 is shown</button>
+    <p id="menu7-isShownResult">@IsMenu7Shown</p>
 </div>
 
 <hr />
@@ -172,12 +185,12 @@
     </div>
 </ContextMenuTrigger>
 
-
 <NavLink href="/TodoList">Go to Todo List</NavLink>
 <div id="app_loaded"></div>
 
 @code{
     private bool menu1Autoclose = true;
+
     protected async Task ShowMenuBtnOnClick()
     {
         await blazorContextMenuService.ShowMenu("menu1", 300, 300);
@@ -200,6 +213,14 @@
     protected string Summaries { get; set; }
 
     protected Animation Animation { get; set; }
+
+    protected string IsMenu7Shown { get; set; } = bool.FalseString;
+
+    protected async Task DetermineIfMenu7IsShown() 
+    {
+        var isShown = await blazorContextMenuService.IsMenuShown("menu7");
+        IsMenu7Shown = isShown.ToString();
+    }
 
     async Task FetchDataClick(ItemClickEventArgs e)
     {

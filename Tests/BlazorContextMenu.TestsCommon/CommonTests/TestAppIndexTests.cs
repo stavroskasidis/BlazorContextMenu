@@ -429,5 +429,38 @@ namespace BlazorContextMenu.E2ETests.Tests
             var display = menuElement.GetCssValue("display");
             Assert.Equal(expectedDisplay, display);
         }
+
+        [Fact]
+        public void Menu7_InitialState_MenuIsShownReturnsFalse()
+        {
+            //Arrange
+            var expectedDisplay = bool.FalseString;
+
+            //Act
+            var determineIfMenu7IsShownbtn = Browser.FindElement(By.Id("determineIfMenu7IsShownbtn"));
+            determineIfMenu7IsShownbtn.Click();
+
+            //Assert
+            var menuElement = Browser.FindElement(By.Id("menu7-isShownResult"));
+            var display = menuElement.Text;
+            Assert.Equal(expectedDisplay, display);
+        }
+
+        [Fact]
+        public async Task Menu7_TriggerMenu_MenuIsShownReturnsTrue()
+        {
+            //Arrange
+            var expectedDisplay = bool.TrueString;
+
+            //Act
+            await OpenContextMenuAt("menu7-test1-trigger", MouseButtonTrigger.Left);
+            var determineIfMenu7IsShownbtn = Browser.FindElement(By.Id("determineIfMenu7IsShownbtn"));
+            determineIfMenu7IsShownbtn.Click();
+
+            //Assert
+            var menuElement = Browser.FindElement(By.Id("menu7-isShownResult"));
+            var display = menuElement.Text;
+            Assert.Equal(expectedDisplay, display);
+        }
     }
 }
