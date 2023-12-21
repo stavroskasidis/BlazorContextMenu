@@ -75,10 +75,10 @@ var blazorContextMenu = function (blazorContextMenu) {
         }
     }
 
-    const sleepUntil = async (f, timeoutMs) => {
-        return new Promise((resolve, reject) => {
-            const timeWas = new Date();
-            const wait = setInterval(function () {
+    var sleepUntil = function (f, timeoutMs) {
+        return new Promise(function (resolve, reject){
+            var timeWas = new Date();
+            var wait = setInterval(function () {
                 if (f()) {
                     clearInterval(wait);
                     resolve();
@@ -135,10 +135,9 @@ var blazorContextMenu = function (blazorContextMenu) {
     };
 
     var showMenuCommon = function (menu, menuId, x, y, target, triggerDotnetRef) {
-        return blazorContextMenu.Show(menuId, x, y, target, triggerDotnetRef).then(async function () {
-
-            await sleepUntil(() => menu.clientWidth > 0, 1000); //Wait until the menu has spawned so clientWidth and offsetLeft report correctly
-
+        return blazorContextMenu.Show(menuId, x, y, target, triggerDotnetRef).then(function () {
+            return sleepUntil(function () { return menu.clientWidth > 0 }, 1000); //Wait until the menu has spawned so clientWidth and offsetLeft report correctly
+        }).then(function () {
             //check for overflow
             var leftOverflownPixels = menu.offsetLeft + menu.clientWidth - window.innerWidth;
             if (leftOverflownPixels > 0) {

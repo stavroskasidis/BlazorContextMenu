@@ -14,7 +14,7 @@ gulp.task("clean:css", function (cb) {
 });
 
 gulp.task("min:css", function () {
-    return gulp.src(["wwwroot/**/*.css", "!wwwroot/**/*.css.js"], { base: "." })
+    return gulp.src(["wwwroot/**/*.css", "!wwwroot/**/*.min.css"], { base: "." })
         .pipe(cssmin())
         .pipe(rename({
             suffix: ".min"
