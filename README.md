@@ -244,7 +244,12 @@ public class Startup
 </details>
 
 ## Release Notes
-<details open="open"><summary>1.16</summary>
+<details open="open"><summary>1.17</summary>
+
+>- Upgraded asp .net packages dependencies to 6.0.25 due to security concerns.
+</details>
+
+<details><summary>1.16</summary>
 
 >- Fixes issue with opening a contextual menu on the far right side of the window for the first time not properly offsetting. Contributed by [matt-virtualitics](https://github.com/matt-virtualitics).
 </details>
