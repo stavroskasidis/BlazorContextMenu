@@ -244,7 +244,12 @@ public class Startup
 </details>
 
 ## Release Notes
-<details open="open"><summary>1.17</summary>
+<details open="open"><summary>2.0</summary>
+
+>- Upgrade to dotnet 8.0
+</details>
+
+<details><summary>1.17</summary>
 
 >- Upgraded asp .net packages dependencies to 6.0.25 due to security concerns.
 </details>
