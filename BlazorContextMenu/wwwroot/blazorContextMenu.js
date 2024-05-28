@@ -275,7 +275,7 @@ var blazorContextMenu = function (blazorContextMenu) {
                         blazorContextMenu.Hide(subMenu.id);
                     }
 
-                    i = currentMenuList.childNodes.length;
+                    i = currentMenuList.children.length;
                     while (i--) {
                         var child = currentMenuList.children[i];
                         if (child == currentItemElement) continue;
@@ -283,9 +283,9 @@ var blazorContextMenu = function (blazorContextMenu) {
                     }
                 };
 
-                var i = currentMenuList.childNodes.length;
+                var i = currentMenuList.children.length;
                 while (i--) {
-                    var child = currentMenuList.childNodes[i];
+                    var child = currentMenuList.children[i];
                     if (child == currentItemElement) continue;
 
                     child.addEventListener("mouseover", closeSubMenus);
