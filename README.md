@@ -244,7 +244,12 @@ public class Startup
 </details>
 
 ## Release Notes
-<details open="open"><summary>2.0</summary>
+<details open="open"><summary>2.1</summary>
+
+>- Fix for [#155](https://github.com/stavroskasidis/BlazorContextMenu/issues/155). Contributed by [adrien426](https://github.com/adrien426).
+</details>
+
+<details><summary>2.0</summary>
 
 >- Upgrade to dotnet 8.0
 </details>
